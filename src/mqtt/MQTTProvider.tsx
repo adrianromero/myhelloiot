@@ -64,14 +64,13 @@ export const useMQTTSubscribe = (
   topic: string,
   callback: (topic: string, message: Buffer) => void,
   options?: IClientSubscribeOptions
-) => {
+): void => {
   const [{ status }, { subscribe }] = useMQTTContext();
   useEffect(() => {
-    if (status === "connect") {
+    if (status === "connect" && topic !== "") {
       subscribe(topic, callback, options);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
+  }, [status, topic]); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
 export type MQTTProviderProps = { children: ReactNode };

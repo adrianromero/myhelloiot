@@ -1,0 +1,53 @@
+import React, { useEffect, useState } from "react"; // FC functional control.
+import { Switch, Card, Row, Col } from "antd";
+import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
+import { StringFormat, ToString } from "../mqtt/StringFormat";
+
+import "antd/dist/antd.css";
+import "./InputCard.css";
+
+type SwitchCardProps = {
+  title: string;
+  topicpub: string;
+  topicsub: string;
+  format?: StringFormat;
+};
+
+const SwitchCard: React.FC<SwitchCardProps> = ({
+  title,
+  topicpub,
+  topicsub,
+  format = ToString,
+}) => {
+  const [{ connected }, { publish }] = useMQTTContext();
+  const [checked, setChecked] = useState<boolean>(false);
+
+  useEffect(() => {
+    setChecked(false);
+  }, [connected]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useMQTTSubscribe(topicsub, (topic: string, mqttmessage: Buffer) => {
+    setChecked(format.toString(mqttmessage) === "1");
+  });
+
+  const onChange = (value: boolean) => {
+    setChecked(value);
+    publish(topicpub, format.fromString(value ? "1" : "0"));
+  };
+
+  return (
+    <Card
+      className="myh-switch-card"
+      size="small"
+      title={title}
+      style={{ height: "100%" }}
+    >
+      <Row justify="center">
+        <Col>
+          <Switch checked={checked} onChange={onChange} disabled={!connected} />
+        </Col>
+      </Row>
+    </Card>
+  );
+};
+export default SwitchCard;

@@ -1,9 +1,8 @@
 import React, { MouseEvent } from "react"; // FC functional control.
 import { Story, Meta } from "@storybook/react";
-
 import "antd/dist/antd.css";
 
-import { Button, message } from "antd";
+import { Button, Row, Col, message } from "antd";
 
 import MQTTProvider, {
   useMQTTContext,
@@ -12,6 +11,7 @@ import MQTTProvider, {
 
 import { ToHEX, ToBase64 } from "../mqtt/StringFormat";
 import InputCard from "../units/InputCard";
+import SwitchCard from "../units/SwitchCard";
 
 export default {
   title: "MQTT/MQTTProvider",
@@ -36,10 +36,12 @@ export const MQTTProviderStory: Story<void> = () => {
 
   const handleConnect = (e: MouseEvent<HTMLElement>) => {
     message.info("me conecto");
-    // const url = "ws://broker.mqttdashboard.com:8000/mqtt";
-    const url = "ws://192.168.1.12:9001";
-    const username = "DVES_USER";
-    const password = "DVES_PASS";
+    const url = "ws://broker.mqttdashboard.com:8000/mqtt";
+    const username = "";
+    const password = "";
+    // const url = "ws://192.168.1.12:9001";
+    // const username = "DVES_USER";
+    // const password = "DVES_PASS";
 
     connect(url, {
       username,
@@ -72,23 +74,59 @@ export const MQTTProviderStory: Story<void> = () => {
         </Button>
       </div>
       <div>{`Status: ${status}, Connected: ${connected}`}</div>
-      <InputCard
-        title="cosita"
-        topicpub="myhelloiot/cosita"
-        topicsub="myhelloiot/cosita"
-      />
-      <InputCard
-        title="cosita2"
-        topicpub="myhelloiot/cosita"
-        topicsub="myhelloiot/cosita"
-        format={ToHEX}
-      />
-      <InputCard
-        title="cosita2"
-        topicpub="myhelloiot/cosita"
-        topicsub="myhelloiot/cosita"
-        format={ToBase64}
-      />
+      <Row gutter={[8, 8]}>
+        <Col span={6}>
+          <InputCard
+            title="cosita"
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+          />
+        </Col>
+        <Col span={6}>
+          <InputCard
+            title="cosita2"
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+            format={ToHEX}
+          />
+        </Col>
+        <Col span={6}>
+          <InputCard
+            title="cosita2"
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+            format={ToBase64}
+          />
+        </Col>
+        <Col span={6}>
+          <InputCard
+            title="Subscribe only"
+            topicpub=""
+            topicsub="myhelloiot/cosita"
+          />
+        </Col>
+        <Col span={6}>
+          <InputCard
+            title="Publish only"
+            topicpub="myhelloiot/cosita"
+            topicsub=""
+          />
+        </Col>
+        <Col span={6}>
+          <InputCard
+            title={"\u00A0"}
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+          />
+        </Col>
+        <Col span={6}>
+          <SwitchCard
+            title={"El switch de cosita"}
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+          />
+        </Col>
+      </Row>
     </div>
   );
 };
