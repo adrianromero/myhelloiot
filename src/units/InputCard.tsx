@@ -18,7 +18,7 @@ const InputCard: React.FC<InputCardProps> = ({
   title,
   topicpub,
   topicsub,
-  format = ToString,
+  format = ToString(),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
   const [form] = Form.useForm();
@@ -66,6 +66,7 @@ const InputCard: React.FC<InputCardProps> = ({
               ]}
             >
               <Input
+                className={format.className()}
                 readOnly={topicpub === ""}
                 bordered={topicpub !== ""}
                 disabled={!connected}

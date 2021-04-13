@@ -9,7 +9,7 @@ import MQTTProvider, {
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
 
-import { ToHEX, ToBase64 } from "../mqtt/StringFormat";
+import { ToHEX, ToBase64, ToIntlNumber } from "../mqtt/StringFormat";
 import InputCard from "../units/InputCard";
 import SwitchCard from "../units/SwitchCard";
 
@@ -87,7 +87,7 @@ export const MQTTProviderStory: Story<void> = () => {
             title="cosita2"
             topicpub="myhelloiot/cosita"
             topicsub="myhelloiot/cosita"
-            format={ToHEX}
+            format={ToHEX()}
           />
         </Col>
         <Col span={6}>
@@ -95,7 +95,7 @@ export const MQTTProviderStory: Story<void> = () => {
             title="cosita2"
             topicpub="myhelloiot/cosita"
             topicsub="myhelloiot/cosita"
-            format={ToBase64}
+            format={ToBase64()}
           />
         </Col>
         <Col span={6}>
@@ -124,6 +124,22 @@ export const MQTTProviderStory: Story<void> = () => {
             title={"El switch de cosita"}
             topicpub="myhelloiot/cosita"
             topicsub="myhelloiot/cosita"
+          />
+        </Col>
+        <Col span={6}>
+          <InputCard
+            title={"El switch de number send"}
+            topicpub="myhelloiot/number"
+            topicsub=""
+            format={ToIntlNumber({ style: "unit", unit: "celsius" })}
+          />
+        </Col>
+        <Col span={6}>
+          <InputCard
+            title={"El switch de number receive"}
+            topicpub=""
+            topicsub="myhelloiot/number"
+            format={ToIntlNumber({ style: "unit", unit: "celsius" })}
           />
         </Col>
       </Row>

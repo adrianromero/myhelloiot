@@ -17,7 +17,7 @@ const SwitchCard: React.FC<SwitchCardProps> = ({
   title,
   topicpub,
   topicsub,
-  format = ToString,
+  format = ToString(),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
   const [checked, setChecked] = useState<boolean>(false);
