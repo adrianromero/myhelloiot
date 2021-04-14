@@ -4,7 +4,7 @@ import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { StringFormat, ToString } from "../mqtt/StringFormat";
 
 import "antd/dist/antd.css";
-import "./InputCard.css";
+import "../assets/main.css";
 
 type SwitchCardProps = {
   title: string;
@@ -36,12 +36,7 @@ const SwitchCard: React.FC<SwitchCardProps> = ({
   };
 
   return (
-    <Card
-      className="myh-switch-card"
-      size="small"
-      title={title}
-      style={{ height: "100%" }}
-    >
+    <Card className="myh-card myh-switch-card" size="small" title={title}>
       <Row justify="center">
         <Col>
           <Switch checked={checked} onChange={onChange} disabled={!connected} />

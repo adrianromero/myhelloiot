@@ -5,6 +5,7 @@ import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { StringFormat, ToString } from "../mqtt/StringFormat";
 
 import "antd/dist/antd.css";
+import "../assets/main.css";
 import "./InputCard.css";
 
 type InputCardProps = {
@@ -39,12 +40,7 @@ const InputCard: React.FC<InputCardProps> = ({
   };
 
   return (
-    <Card
-      className="myh-input-card"
-      size="small"
-      title={title}
-      style={{ height: "100%" }}
-    >
+    <Card className="myh-card myh-input-card" size="small" title={title}>
       <Form form={form} name="inputcard" onFinish={onFinish}>
         <Row gutter={8} wrap={false}>
           <Col flex="auto">
