@@ -12,6 +12,8 @@ import MQTTProvider, {
 import { ToHEX, ToBase64, ToIntlNumber } from "../mqtt/StringFormat";
 import InputCard from "../units/InputCard";
 import SwitchCard from "../units/SwitchCard";
+import ButtonCard from "../units/ButtonCard";
+import ViewCard from "../units/ViewCard";
 
 export default {
   title: "MQTT/MQTTProvider",
@@ -66,7 +68,7 @@ export const MQTTProviderStory: Story<void> = () => {
         <Button type="primary" onClick={handleConnect}>
           Connect
         </Button>
-        <Button type="default" onClick={handleDisconnect}>
+        <Button type="primary" onClick={handleDisconnect}>
           Disconnect
         </Button>
         <Button type="default" onClick={handlePublish}>
@@ -120,8 +122,21 @@ export const MQTTProviderStory: Story<void> = () => {
           />
         </Col>
         <Col span={6}>
+          <ViewCard
+            title={"El viewer de number receive"}
+            topicsub="myhelloiot/cosita"
+          />
+        </Col>
+        <Col span={6}>
           <SwitchCard
             title={"El switch de cosita"}
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+          />
+        </Col>
+        <Col span={6}>
+          <ButtonCard
+            title={"El boton de number receive"}
             topicpub="myhelloiot/cosita"
             topicsub="myhelloiot/cosita"
           />

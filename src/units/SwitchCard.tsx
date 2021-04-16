@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"; // FC functional control.
 import { Switch, Card, Row, Col } from "antd";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { StringFormat, ToString } from "../mqtt/StringFormat";
+import { StringFormat } from "../mqtt/FormatTypes";
+import { ToString } from "../mqtt/StringFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
@@ -41,6 +42,9 @@ const SwitchCard: React.FC<SwitchCardProps> = ({
         <Col>
           <Switch checked={checked} onChange={onChange} disabled={!connected} />
         </Col>
+      </Row>
+      <Row justify="center">
+        <Col>Pepinillos fritos</Col>
       </Row>
     </Card>
   );

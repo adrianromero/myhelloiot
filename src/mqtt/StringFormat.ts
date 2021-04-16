@@ -1,24 +1,34 @@
-export type StringFormat = {
-  toString: (b: Buffer) => string;
-  fromString: (s: string) => Buffer;
-  className: () => string;
-};
+import { StringFormat } from "./FormatTypes";
 
 export const ToString: () => StringFormat = () => ({
   toString: (b: Buffer) => b.toString(),
   fromString: (s: string) => Buffer.from(s),
+  next: (b: Buffer) => Buffer.from(""),
+  prev: (b: Buffer) => Buffer.from(""),
   className: () => "",
 });
 
 export const ToHEX: () => StringFormat = () => ({
   toString: (b: Buffer) => b.toString("hex"),
   fromString: (s: string) => Buffer.from(s, "hex"),
+  next: (b: Buffer) => Buffer.from(""),
+  prev: (b: Buffer) => Buffer.from(""),
   className: () => "",
 });
 
 export const ToBase64: () => StringFormat = () => ({
   toString: (b: Buffer) => b.toString("base64"),
   fromString: (s: string) => Buffer.from(s, "base64"),
+  next: (b: Buffer) => Buffer.from(""),
+  prev: (b: Buffer) => Buffer.from(""),
+  className: () => "",
+});
+
+export const ToSwitch: () => StringFormat = () => ({
+  toString: (b: Buffer) => (b.toString() === "1" ? "ON" : "OFF"),
+  fromString: (s: string) => Buffer.from(s === "ON" ? "1" : "0"),
+  next: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
+  prev: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
   className: () => "",
 });
 
@@ -54,7 +64,6 @@ export const ToIntlNumber: (
   const unit = new RegExp(
     getCharClass(parts.find((d) => d.type === "unit")?.value)
   );
-  console.log(getCharClass(parts.find((d) => d.type === "unit")?.value));
 
   const numeral = new RegExp(`[${numerals.join("")}]`, "g");
   const getindex = (d: string): string => inx.get(d) || "";
@@ -73,6 +82,8 @@ export const ToIntlNumber: (
 
       return Buffer.from(strans);
     },
+    next: (b: Buffer) => Buffer.from((Number(b.toString()) + 1).toString),
+    prev: (b: Buffer) => Buffer.from((Number(b.toString()) - 1).toString),
     className: () => "myh-class_alignright",
   };
 };

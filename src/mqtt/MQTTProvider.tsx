@@ -67,9 +67,13 @@ export const useMQTTSubscribe = (
 ): void => {
   const [{ status }, { subscribe }] = useMQTTContext();
   useEffect(() => {
+    console.log("subscribing " + status + " " + topic);
     if (status === "connect" && topic !== "") {
       subscribe(topic, callback, options);
     }
+    return () => {
+      console.log("unsubscribing " + status + " " + topic);
+    };
   }, [status, topic]); // eslint-disable-line react-hooks/exhaustive-deps
 };
 

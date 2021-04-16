@@ -1,3 +1,16 @@
 .myh-card {
   height: 100%;
 }
+
+.myh-card .myh-value {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.myh-card .myh-value-padding {
+  padding: 4px 11px;
+}
+
+.myh-class_alignright {
+  text-align: right;
+}

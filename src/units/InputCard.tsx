@@ -2,7 +2,8 @@ import React, { useEffect } from "react"; // FC functional control.
 import { Button, Card, Input, Form, Row, Col } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { StringFormat, ToString } from "../mqtt/StringFormat";
+import { StringFormat } from "../mqtt/FormatTypes";
+import { ToString } from "../mqtt/StringFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
@@ -62,7 +63,7 @@ const InputCard: React.FC<InputCardProps> = ({
               ]}
             >
               <Input
-                className={format.className()}
+                className={`myh-value ${format.className()}`}
                 readOnly={topicpub === ""}
                 bordered={topicpub !== ""}
                 disabled={!connected}
