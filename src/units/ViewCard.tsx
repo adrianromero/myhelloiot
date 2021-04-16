@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"; // FC functional control.
 import { Card, Row, Col } from "antd";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { IconFormat } from "../mqtt/FormatTypes";
-import { ToIconString } from "../mqtt/IconFormat";
+import { ToIconFormatString } from "../mqtt/IconFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
@@ -16,7 +16,7 @@ type ViewCardProps = {
 const ViewCard: React.FC<ViewCardProps> = ({
   title,
   topicsub,
-  format = ToIconString(),
+  format = ToIconFormatString(),
 }) => {
   const [{ connected }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));

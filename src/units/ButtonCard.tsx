@@ -1,7 +1,7 @@
 import React, { useEffect, useState, MouseEvent } from "react";
 import { Button, Card, Row, Col } from "antd";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { StringEdit } from "../mqtt/FormatTypes";
+import { IconEdit, ToLabelEdit } from "../mqtt/FormatTypes";
 import { ToSwitch } from "../mqtt/StringEdit";
 
 import "antd/dist/antd.css";
@@ -11,14 +11,14 @@ type ButtonCardProps = {
   title: string;
   topicpub: string;
   topicsub: string;
-  format?: StringEdit;
+  format?: IconEdit;
 };
 
 const ButtonCard: React.FC<ButtonCardProps> = ({
   title,
   topicpub,
   topicsub,
-  format = ToSwitch(),
+  format = ToLabelEdit(ToSwitch()),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
@@ -48,7 +48,7 @@ const ButtonCard: React.FC<ButtonCardProps> = ({
             onClick={onClick}
             disabled={!connected}
           >
-            {format.toString(buffer) || "\u00A0"}
+            {format.toIcon(buffer)}
           </Button>
         </Col>
       </Row>

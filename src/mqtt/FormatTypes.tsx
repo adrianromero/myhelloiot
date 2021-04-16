@@ -27,3 +27,27 @@ export const ToIconFormat: (format: StringFormat) => IconFormat = (
     </div>
   ),
 });
+
+export const ToLabelFormat: (format: StringFormat) => IconFormat = (
+  format: StringFormat
+) => ({
+  toIcon: (b: Buffer) => format.toString(b) || "\u00A0",
+});
+
+export const ToIconEdit: (format: StringEdit) => IconEdit = (
+  format: StringEdit
+) => ({
+  ...format,
+  toIcon: (b: Buffer) => (
+    <div className={`myh-value myh-value-padding ${format.className()}`}>
+      {format.toString(b) || "\u00A0"}
+    </div>
+  ),
+});
+
+export const ToLabelEdit: (format: StringEdit) => IconEdit = (
+  format: StringEdit
+) => ({
+  ...format,
+  toIcon: (b: Buffer) => format.toString(b) || "\u00A0",
+});
