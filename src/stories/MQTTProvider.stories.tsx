@@ -9,7 +9,7 @@ import MQTTProvider, {
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
 
-import { ToHEX, ToBase64, ToIntlNumber } from "../mqtt/StringFormat";
+import { ToHEX, ToBase64, ToIntlNumber } from "../mqtt/StringEdit";
 import InputCard from "../units/InputCard";
 import SwitchCard from "../units/SwitchCard";
 import ButtonCard from "../units/ButtonCard";

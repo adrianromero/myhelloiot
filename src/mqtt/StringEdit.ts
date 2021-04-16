@@ -1,6 +1,6 @@
-import { StringFormat } from "./FormatTypes";
+import { StringEdit } from "./FormatTypes";
 
-export const ToString: () => StringFormat = () => ({
+export const ToString: () => StringEdit = () => ({
   toString: (b: Buffer) => b.toString(),
   fromString: (s: string) => Buffer.from(s),
   next: (b: Buffer) => Buffer.from(""),
@@ -8,7 +8,7 @@ export const ToString: () => StringFormat = () => ({
   className: () => "",
 });
 
-export const ToHEX: () => StringFormat = () => ({
+export const ToHEX: () => StringEdit = () => ({
   toString: (b: Buffer) => b.toString("hex"),
   fromString: (s: string) => Buffer.from(s, "hex"),
   next: (b: Buffer) => Buffer.from(""),
@@ -16,7 +16,7 @@ export const ToHEX: () => StringFormat = () => ({
   className: () => "",
 });
 
-export const ToBase64: () => StringFormat = () => ({
+export const ToBase64: () => StringEdit = () => ({
   toString: (b: Buffer) => b.toString("base64"),
   fromString: (s: string) => Buffer.from(s, "base64"),
   next: (b: Buffer) => Buffer.from(""),
@@ -24,7 +24,7 @@ export const ToBase64: () => StringFormat = () => ({
   className: () => "",
 });
 
-export const ToSwitch: () => StringFormat = () => ({
+export const ToSwitch: () => StringEdit = () => ({
   toString: (b: Buffer) => (b.toString() === "1" ? "ON" : "OFF"),
   fromString: (s: string) => Buffer.from(s === "ON" ? "1" : "0"),
   next: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
@@ -37,7 +37,7 @@ const getCharClass: (s?: string) => string = (s) =>
 
 export const ToIntlNumber: (
   options?: Intl.NumberFormatOptions
-) => StringFormat = (options) => {
+) => StringEdit = (options) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale, options);
 

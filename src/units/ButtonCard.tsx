@@ -1,8 +1,8 @@
 import React, { useEffect, useState, MouseEvent } from "react";
 import { Button, Card, Row, Col } from "antd";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { StringFormat } from "../mqtt/FormatTypes";
-import { ToSwitch } from "../mqtt/StringFormat";
+import { StringEdit } from "../mqtt/FormatTypes";
+import { ToSwitch } from "../mqtt/StringEdit";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
@@ -11,7 +11,7 @@ type ButtonCardProps = {
   title: string;
   topicpub: string;
   topicsub: string;
-  format?: StringFormat;
+  format?: StringEdit;
 };
 
 const ButtonCard: React.FC<ButtonCardProps> = ({

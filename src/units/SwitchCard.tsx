@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"; // FC functional control.
 import { Switch, Card, Row, Col } from "antd";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { StringFormat } from "../mqtt/FormatTypes";
-import { ToString } from "../mqtt/StringFormat";
+import { StringEdit } from "../mqtt/FormatTypes";
+import { ToString } from "../mqtt/StringEdit";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
@@ -11,7 +11,7 @@ type SwitchCardProps = {
   title: string;
   topicpub: string;
   topicsub: string;
-  format?: StringFormat;
+  format?: StringEdit;
 };
 
 const SwitchCard: React.FC<SwitchCardProps> = ({
