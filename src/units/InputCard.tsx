@@ -10,7 +10,7 @@ import "../assets/main.css";
 import "./InputCard.css";
 
 type InputCardProps = {
-  title: string;
+  title?: string;
   topicpub: string;
   topicsub: string;
   format?: StringEdit;

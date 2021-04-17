@@ -18,9 +18,7 @@ export type StringEdit = StringFormat & StringParse;
 
 export type IconEdit = IconFormat & StringParse;
 
-export const ToIconFormat: (format: StringFormat) => IconFormat = (
-  format: StringFormat
-) => ({
+export const ToIconFormat: (format: StringFormat) => IconFormat = (format) => ({
   toIcon: (b: Buffer) => (
     <div className={`myh-value myh-value-padding ${format.className()}`}>
       {format.toString(b) || "\u00A0"}
@@ -29,20 +27,26 @@ export const ToIconFormat: (format: StringFormat) => IconFormat = (
 });
 
 export const ToLabelFormat: (format: StringFormat) => IconFormat = (
-  format: StringFormat
+  format
 ) => ({
   toIcon: (b: Buffer) => format.toString(b) || "\u00A0",
 });
 
-export const ToIconEdit: (format: StringEdit) => IconEdit = (
-  format: StringEdit
-) => ({
+export const ToIconEdit: (format: StringEdit) => IconEdit = (format) => ({
   ...format,
   toIcon: (b: Buffer) => (
     <div className={`myh-value myh-value-padding ${format.className()}`}>
       {format.toString(b) || "\u00A0"}
     </div>
   ),
+});
+
+export const ToComposedIconEdit: (
+  format: StringEdit,
+  toicon: IconFormat
+) => IconEdit = (format, toicon) => ({
+  ...format,
+  ...toicon,
 });
 
 export const ToLabelEdit: (format: StringEdit) => IconEdit = (

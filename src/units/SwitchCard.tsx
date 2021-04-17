@@ -8,7 +8,7 @@ import "antd/dist/antd.css";
 import "../assets/main.css";
 
 type SwitchCardProps = {
-  title: string;
+  title?: string;
   topicpub: string;
   topicsub: string;
   format?: StringEdit;

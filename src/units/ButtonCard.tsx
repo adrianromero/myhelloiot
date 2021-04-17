@@ -8,7 +8,7 @@ import "antd/dist/antd.css";
 import "../assets/main.css";
 
 type ButtonCardProps = {
-  title: string;
+  title?: string;
   topicpub: string;
   topicsub: string;
   format?: IconEdit;
@@ -44,7 +44,7 @@ const ButtonCard: React.FC<ButtonCardProps> = ({
           <Button
             className="myh-value"
             type="primary"
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "100%", height: "80px" }}
             onClick={onClick}
             disabled={!connected}
           >

@@ -8,7 +8,7 @@ import "antd/dist/antd.css";
 import "../assets/main.css";
 
 type ViewCardProps = {
-  title: string;
+  title?: string;
   topicsub: string;
   format?: IconFormat;
 };

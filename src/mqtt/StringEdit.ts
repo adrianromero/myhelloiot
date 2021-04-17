@@ -69,7 +69,10 @@ export const ToIntlNumber: (
   const getindex = (d: string): string => inx.get(d) || "";
 
   return {
-    toString: (b: Buffer) => intl.format(Number(b.toString())),
+    toString: (b: Buffer) => {
+      const s = b.toString();
+      return s ? intl.format(Number(s)) : "";
+    },
     fromString: (s: string) => {
       const strans = s
         .trim()

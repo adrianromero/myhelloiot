@@ -9,8 +9,9 @@ import MQTTProvider, {
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
 
-import { ToIconFormat } from "../mqtt/FormatTypes";
-import { ToHEX, ToBase64, ToIntlNumber } from "../mqtt/StringEdit";
+import { ToComposedIconEdit, ToIconFormat } from "../mqtt/FormatTypes";
+import { ToHEX, ToBase64, ToIntlNumber, ToSwitch } from "../mqtt/StringEdit";
+import { ToIconBulb } from "../mqtt/IconFormat";
 import InputCard from "../units/InputCard";
 import SwitchCard from "../units/SwitchCard";
 import ButtonCard from "../units/ButtonCard";
@@ -78,14 +79,14 @@ export const MQTTProviderStory: Story<void> = () => {
       </div>
       <div>{`Status: ${status}, Connected: ${connected}`}</div>
       <Row gutter={[8, 8]}>
-        <Col span={6}>
+        <Col span={4}>
           <InputCard
             title="cosita"
             topicpub="myhelloiot/cosita"
             topicsub="myhelloiot/cosita"
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <InputCard
             title="cosita2"
             topicpub="myhelloiot/cosita"
@@ -93,7 +94,7 @@ export const MQTTProviderStory: Story<void> = () => {
             format={ToHEX()}
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <InputCard
             title="cosita2"
             topicpub="myhelloiot/cosita"
@@ -101,48 +102,54 @@ export const MQTTProviderStory: Story<void> = () => {
             format={ToBase64()}
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <InputCard
             title="Subscribe only"
             topicpub=""
             topicsub="myhelloiot/cosita"
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <InputCard
             title="Publish only"
             topicpub="myhelloiot/cosita"
             topicsub=""
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <InputCard
             title={"\u00A0"}
             topicpub="myhelloiot/cosita"
             topicsub="myhelloiot/cosita"
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <ViewCard
             title={"El viewer de number receive"}
             topicsub="myhelloiot/cosita"
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <SwitchCard
             title={"El switch de cosita"}
             topicpub="myhelloiot/cosita"
             topicsub="myhelloiot/cosita"
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <ButtonCard
-            title={"El boton de number receive"}
             topicpub="myhelloiot/cosita"
             topicsub="myhelloiot/cosita"
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
+          <ButtonCard
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+            format={ToComposedIconEdit(ToSwitch(), ToIconBulb())}
+          />
+        </Col>
+        <Col span={4}>
           <InputCard
             title={"El switch de number send"}
             topicpub="myhelloiot/number"
@@ -150,7 +157,7 @@ export const MQTTProviderStory: Story<void> = () => {
             format={ToIntlNumber({ style: "unit", unit: "celsius" })}
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <ViewCard
             title={"El viewer de number receive"}
             topicsub="myhelloiot/number"
