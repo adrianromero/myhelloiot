@@ -1,6 +1,6 @@
 import React, { MouseEvent } from "react";
 
-import { Layout, Menu, Button, message } from "antd";
+import { Layout, Menu, Button, message, Space } from "antd";
 import {
   UserOutlined,
   VideoCameraOutlined,
@@ -74,7 +74,7 @@ function App() {
           </Menu>
         </Sider>
         <Content style={{ padding: "24px" }}>
-          <div>
+          <Space style={{ marginBottom: "8px" }}>
             <Button type="primary" onClick={handleConnect}>
               Connect
             </Button>
@@ -84,8 +84,8 @@ function App() {
             <Button type="default" onClick={handlePublish}>
               Publish Message
             </Button>
-          </div>
-          <div>{`Status: ${status}, Connected: ${connected}`}</div>
+            <div>{`Status: ${status}, Connected: ${connected}`}</div>
+          </Space>
           <PanelTests />
         </Content>
       </Layout>
