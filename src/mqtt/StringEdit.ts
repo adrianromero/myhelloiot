@@ -3,24 +3,32 @@ import { StringEdit } from "./FormatTypes";
 export const ToString: () => StringEdit = () => ({
   toString: (b: Buffer) => b.toString(),
   fromString: (s: string) => Buffer.from(s),
-  next: (b: Buffer) => Buffer.from(""),
-  prev: (b: Buffer) => Buffer.from(""),
+  next: (b: Buffer) => b,
+  prev: (b: Buffer) => b,
+  className: () => "",
+});
+
+export const ToJSON: () => StringEdit = () => ({
+  toString: (b: Buffer) => JSON.stringify(JSON.parse(b.toString()), null, 2),
+  fromString: (s: string) => Buffer.from(s),
+  next: (b: Buffer) => b,
+  prev: (b: Buffer) => b,
   className: () => "",
 });
 
 export const ToHEX: () => StringEdit = () => ({
   toString: (b: Buffer) => b.toString("hex"),
   fromString: (s: string) => Buffer.from(s, "hex"),
-  next: (b: Buffer) => Buffer.from(""),
-  prev: (b: Buffer) => Buffer.from(""),
+  next: (b: Buffer) => b,
+  prev: (b: Buffer) => b,
   className: () => "",
 });
 
 export const ToBase64: () => StringEdit = () => ({
   toString: (b: Buffer) => b.toString("base64"),
   fromString: (s: string) => Buffer.from(s, "base64"),
-  next: (b: Buffer) => Buffer.from(""),
-  prev: (b: Buffer) => Buffer.from(""),
+  next: (b: Buffer) => b,
+  prev: (b: Buffer) => b,
   className: () => "",
 });
 

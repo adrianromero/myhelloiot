@@ -64,6 +64,7 @@ const InputCard: React.FC<InputCardProps> = ({
             >
               <Input
                 className={`myh-value ${format.className()}`}
+                autoComplete="off"
                 readOnly={topicpub === ""}
                 bordered={topicpub !== ""}
                 disabled={!connected}

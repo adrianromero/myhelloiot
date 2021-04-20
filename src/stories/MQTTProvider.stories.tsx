@@ -47,12 +47,15 @@ export const MQTTProviderStory: Story<void> = () => {
     // const username = "DVES_USER";
     // const password = "DVES_PASS";
 
-    connect(url, {
-      username,
-      password,
-      connectTimeout: 5000,
-      clientId:
-        "myhelloiot_" + Math.random().toString(16).substr(2).padEnd(13, "0"),
+    connect({
+      url,
+      options: {
+        username,
+        password,
+        connectTimeout: 5000,
+        clientId:
+          "myhelloiot_" + Math.random().toString(16).substr(2).padEnd(13, "0"),
+      },
     });
   };
 
