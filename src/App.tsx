@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Layout, Menu, PageHeader } from "antd";
+import { Layout, Menu } from "antd";
 import {
   UserOutlined,
   VideoCameraOutlined,
