@@ -11,7 +11,7 @@ import ButtonCard from "./units/ButtonCard";
 import ViewCard from "./units/ViewCard";
 
 const PanelTests: FC<{}> = () => (
-  <Row gutter={[8, 8]}>
+  <Row gutter={[8, 8]} style={{ padding: "24px" }}>
     <Col span={4}>
       <InputCard
         title="cosita"
@@ -51,20 +51,21 @@ const PanelTests: FC<{}> = () => (
     </Col>
     <Col span={4}>
       <InputCard
-        title={"\u00A0"}
+        title="\u00A0"
         topicpub="myhelloiot/cosita"
         topicsub="myhelloiot/cosita"
       />
     </Col>
     <Col span={4}>
       <ViewCard
-        title={"El viewer de number receive"}
+        title="El viewer de number receive"
         topicsub="myhelloiot/cosita"
       />
     </Col>
     <Col span={4}>
       <SwitchCard
-        title={"El switch de cosita"}
+        title="El switch de cosita"
+        footer="Switch footer"
         topicpub="myhelloiot/cosita"
         topicsub="myhelloiot/cosita"
       />
@@ -74,6 +75,7 @@ const PanelTests: FC<{}> = () => (
     </Col>
     <Col span={4}>
       <ButtonCard
+        footer="Button footer"
         topicpub="myhelloiot/cosita"
         topicsub="myhelloiot/cosita"
         format={ToComposedIconEdit(ToSwitch(), ToIconBulb())}
