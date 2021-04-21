@@ -7,8 +7,8 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 
-import PanelTests from "./PanelTests";
-import PanelConnect from "./PanelConnect";
+import PanelTests from "./panels/PanelTests";
+import PanelConnect from "./panels/PanelConnect";
 
 import "antd/dist/antd.css";
 import "./App.css";

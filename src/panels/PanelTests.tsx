@@ -2,13 +2,13 @@ import React, { FC } from "react"; // FC functional control.
 
 import { Row, Col } from "antd";
 
-import { ToComposedIconEdit, ToIconFormat } from "./mqtt/FormatTypes";
-import { ToHEX, ToBase64, ToIntlNumber, ToSwitch } from "./mqtt/StringEdit";
-import { ToIconBulb, ToStar, ToThuderbolt } from "./mqtt/IconFormat";
-import InputCard from "./units/InputCard";
-import SwitchCard from "./units/SwitchCard";
-import ButtonCard from "./units/ButtonCard";
-import ViewCard from "./units/ViewCard";
+import { ToComposedIconEdit, ToIconFormat } from "../mqtt/FormatTypes";
+import { ToHEX, ToBase64, ToIntlNumber, ToSwitch } from "../mqtt/StringEdit";
+import { ToIconBulb, ToStar, ToThuderbolt } from "../mqtt/IconFormat";
+import InputCard from "../units/InputCard";
+import SwitchCard from "../units/SwitchCard";
+import ButtonCard from "../units/ButtonCard";
+import ViewCard from "../units/ViewCard";
 
 const PanelTests: FC<{}> = () => (
   <Row gutter={[8, 8]} style={{ padding: "24px" }}>

@@ -1,7 +1,7 @@
 import React, { useEffect, MouseEvent } from "react";
 import { Form, Input, Button, Row, Col, message } from "antd";
 
-import { useMQTTContext, useMQTTSubscribe } from "./mqtt/MQTTProvider";
+import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 
 type ConnectInfo = { url: string; username: string; password: string };
 
