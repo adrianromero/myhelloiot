@@ -9,6 +9,7 @@ import "../assets/main.css";
 
 type SwitchCardProps = {
   title?: string;
+  footer?: string;
   topicpub: string;
   topicsub: string;
   format?: StringEdit;
@@ -16,6 +17,7 @@ type SwitchCardProps = {
 
 const SwitchCard: React.FC<SwitchCardProps> = ({
   title,
+  footer,
   topicpub,
   topicsub,
   format = ToString(),
@@ -43,9 +45,11 @@ const SwitchCard: React.FC<SwitchCardProps> = ({
           <Switch checked={checked} onChange={onChange} disabled={!connected} />
         </Col>
       </Row>
-      <Row justify="center">
-        <Col>Pepinillos fritos</Col>
-      </Row>
+      {footer && (
+        <Row justify="center">
+          <Col className="myh-card-footer">{footer}</Col>
+        </Row>
+      )}
     </Card>
   );
 };

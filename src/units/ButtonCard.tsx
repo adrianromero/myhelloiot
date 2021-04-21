@@ -9,6 +9,7 @@ import "../assets/main.css";
 
 type ButtonCardProps = {
   title?: string;
+  footer?: string;
   topicpub: string;
   topicsub: string;
   format?: IconEdit;
@@ -16,6 +17,7 @@ type ButtonCardProps = {
 
 const ButtonCard: React.FC<ButtonCardProps> = ({
   title,
+  footer,
   topicpub,
   topicsub,
   format = ToLabelEdit(ToSwitch()),
@@ -52,6 +54,11 @@ const ButtonCard: React.FC<ButtonCardProps> = ({
           </Button>
         </Col>
       </Row>
+      {footer && (
+        <Row justify="center">
+          <Col className="myh-card-footer">{footer}</Col>
+        </Row>
+      )}
     </Card>
   );
 };
