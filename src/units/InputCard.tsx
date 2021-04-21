@@ -42,7 +42,14 @@ const InputCard: React.FC<InputCardProps> = ({
 
   return (
     <Card className="myh-card myh-input-card" size="small" title={title}>
-      <Form form={form} name="inputcard" onFinish={onFinish}>
+      <Form
+        form={form}
+        name={`inputcard_${Math.random()
+          .toString(16)
+          .substr(2)
+          .padEnd(13, "0")}`}
+        onFinish={onFinish}
+      >
         <Row gutter={8} wrap={false}>
           <Col flex="auto">
             <Form.Item
