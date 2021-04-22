@@ -51,7 +51,7 @@ const PanelTests: FC<{}> = () => (
     </Col>
     <Col span={4}>
       <InputCard
-        title="\u00A0"
+        title={"\u00A0"}
         topicpub="myhelloiot/cosita"
         topicsub="myhelloiot/cosita"
       />

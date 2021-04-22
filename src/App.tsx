@@ -9,6 +9,7 @@ import {
 
 import PanelTests from "./panels/PanelTests";
 import PanelConnect from "./panels/PanelConnect";
+import PanelTestSubs from "./panels/PanelTestSubs";
 
 import "antd/dist/antd.css";
 import "./App.css";
@@ -35,6 +36,7 @@ function App() {
           </Menu>
         </Sider>
         <Content>
+          <PanelTestSubs />
           <PanelConnect />
           <PanelTests />
         </Content>
