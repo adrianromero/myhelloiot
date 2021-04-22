@@ -17,10 +17,11 @@ import mqtt, {
 import match from "mqtt-match";
 
 export type MQTTStatus =
+  | ""
+  | "end"
   | "close"
   | "offline"
   | "connect"
-  | "connecting"
   | "error"
   | "reconnect"
   | "disconnect";
@@ -34,7 +35,7 @@ export type MQTTConnectInfo = {
 };
 
 type MQTTContextValue = [
-  { status: MQTTStatus; connected: boolean },
+  { status: MQTTStatus; ready: boolean; connected: boolean },
   {
     connect: ({ url, online, options }: MQTTConnectInfo) => void;
     disconnect: () => void;
@@ -59,7 +60,8 @@ export type SubscribeHandler = {
 
 const MQTTContext: Context<MQTTContextValue> = createContext<MQTTContextValue>([
   {
-    status: "close",
+    status: "",
+    ready: false,
     connected: false,
   },
   {
@@ -78,36 +80,35 @@ export const useMQTTSubscribe = (
   callback: (topic: string, message: Buffer) => void,
   options?: IClientSubscribeOptions
 ): void => {
-  const [{ status }, { subscribe, unsubscribe }] = useMQTTContext();
+  const [{ ready }, { subscribe, unsubscribe }] = useMQTTContext();
   useEffect(() => {
     const handler: SubscribeHandler = subscribe(topic, callback, options);
     return () => {
       unsubscribe(handler);
     };
-  }, [status, topic]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready, topic]); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
 export type MQTTProviderProps = { children: ReactNode };
 
 const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
   const [state, setState] = useState<{
-    client?: MqttClient;
-    online?: OnlineInfo;
     status: MQTTStatus;
-    _internal: { subscriptions: string[] };
-  }>({ status: "close", _internal: { subscriptions: [] } });
+    _internal: {
+      client?: MqttClient;
+      online?: OnlineInfo;
+      subscriptions: string[];
+    };
+  }>({ status: "", _internal: { subscriptions: [] } });
 
   const disconnect = () => {
-    if (state.client && state.online) {
-      state.client.publish(state.online.topic, "offline", {
-        qos: state.online.qos,
-        retain: state.online.retain,
+    if (state._internal.client && state._internal.online) {
+      state._internal.client.publish(state._internal.online.topic, "offline", {
+        qos: state._internal.online.qos,
+        retain: state._internal.online.retain,
       });
     }
-    state.client?.removeAllListeners();
-    state.client?.end();
-
-    setState({ status: "close", _internal: { subscriptions: [] } });
+    state._internal.client?.end();
   };
 
   const connect = ({ url, online, options }: MQTTConnectInfo) => {
@@ -126,49 +127,46 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
 
     const client: MqttClient = mqtt.connect(url, connectoptions);
     client.on("connect", () => {
-      if (online) {
-        client.publish(online.topic, "online", {
-          qos: online.qos,
-          retain: online.retain,
-        });
-      }
-      setState({
-        client,
-        online,
-        status: "connect",
-        _internal: state._internal,
+      setState((s) => {
+        if (s._internal.client && s._internal.online) {
+          s._internal.client.publish(s._internal.online.topic, "online", {
+            qos: s._internal.online.qos,
+            retain: s._internal.online.retain,
+          });
+        }
+        return {
+          status: "connect",
+          _internal: s._internal,
+        };
       });
     });
     client.on("error", (error) => {
-      setState({ client, online, status: "error", _internal: state._internal });
+      setState((s) => ({ status: "error", _internal: s._internal }));
     });
     client.on("reconnect", () => {
-      setState({
-        client,
-        online,
+      setState((s) => ({
         status: "reconnect",
-        _internal: state._internal,
-      });
+        _internal: s._internal,
+      }));
     });
     client.on("close", () => {
-      setState({ client, online, status: "close", _internal: state._internal });
+      setState((s) => ({ status: "close", _internal: s._internal }));
+    });
+    client.on("end", () => {
+      setState((s) => ({ status: "end", _internal: { subscriptions: [] } }));
     });
     client.on("offline", () => {
-      setState({
-        client,
-        online,
+      setState((s) => ({
         status: "offline",
-        _internal: state._internal,
-      });
+        _internal: s._internal,
+      }));
     });
     client.on("disconnect", () => {
-      setState({ client, status: "disconnect", _internal: state._internal });
+      setState((s) => ({ status: "disconnect", _internal: s._internal }));
     });
     setState({
-      client,
-      online,
-      status: "connecting",
-      _internal: { subscriptions: [] },
+      status: "",
+      _internal: { client, online, subscriptions: [] },
     });
   };
 
@@ -177,10 +175,10 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
     callback: (topic: string, message: Buffer) => void,
     options?: IClientSubscribeOptions
   ): SubscribeHandler => {
-    if (state.client && state.status === "connect" && topic !== "") {
+    if (state._internal.client && topic !== "") {
       if (!state._internal.subscriptions.some((s) => s === topic)) {
         console.log("subscribing " + topic);
-        state.client.subscribe(topic, options || { qos: 0 });
+        state._internal.client.subscribe(topic, options || { qos: 0 });
       }
       state._internal.subscriptions.push(topic);
       const listener = (messagetopic: string, message: Buffer) => {
@@ -189,14 +187,14 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
         }
       };
       console.log(state._internal.subscriptions);
-      state.client.on("message", listener);
+      state._internal.client.on("message", listener);
       return { topic, listener };
     }
     return null;
   };
 
   const unsubscribe = (handler: SubscribeHandler) => {
-    if (state.client && handler) {
+    if (state._internal.client && handler) {
       const inx: number = state._internal.subscriptions.findIndex(
         (s) => s === handler.topic
       );
@@ -206,10 +204,10 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
       state._internal.subscriptions.splice(inx, 1);
       if (!state._internal.subscriptions.some((s) => s === handler.topic)) {
         console.log("unsubscribing " + handler.topic);
-        state.client.unsubscribe(handler.topic);
+        state._internal.client.unsubscribe(handler.topic);
       }
       console.log(state._internal.subscriptions);
-      state.client.off("message", handler.listener);
+      state._internal.client.off("message", handler.listener);
     }
   };
 
@@ -218,17 +216,23 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
     message: Buffer | string,
     options?: IClientPublishOptions
   ) => {
-    if (state.client?.connected) {
-      state.client.publish(topic, message, options || {});
+    if (state._internal.client?.connected) {
+      state._internal.client.publish(topic, message, options || {});
     } else {
       throw new Error("Not connected");
     }
   };
 
   const value: MQTTContextValue = [
-    { status: state.status, connected: state.client?.connected || false },
+    {
+      status: state.status,
+      ready: !!state._internal.client,
+      connected: state._internal.client?.connected || false,
+    },
     { connect, disconnect, subscribe, unsubscribe, publish },
   ];
+
+  console.log(value[0]);
   return <MQTTContext.Provider value={value}>{children}</MQTTContext.Provider>;
 };
 
