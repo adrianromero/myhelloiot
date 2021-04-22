@@ -18,7 +18,7 @@ import match from "mqtt-match";
 
 export type MQTTStatus =
   | ""
-  | "end"
+  | "connecting"
   | "close"
   | "offline"
   | "connect"
@@ -43,8 +43,8 @@ type MQTTContextValue = [
       topic: string,
       callback: (topic: string, message: Buffer) => void,
       options?: IClientSubscribeOptions
-    ) => SubscribeHandler;
-    unsubscribe: (handler: SubscribeHandler) => void;
+    ) => SubscribeHandler | null;
+    unsubscribe: (handler: SubscribeHandler | null) => void;
     publish: (
       topic: string,
       message: Buffer | string,
@@ -56,7 +56,7 @@ type MQTTContextValue = [
 export type SubscribeHandler = {
   topic: string;
   listener: (messagetopic: string, message: Buffer) => void;
-} | null;
+};
 
 const MQTTContext: Context<MQTTContextValue> = createContext<MQTTContextValue>([
   {
@@ -82,7 +82,7 @@ export const useMQTTSubscribe = (
 ): void => {
   const [{ ready }, { subscribe, unsubscribe }] = useMQTTContext();
   useEffect(() => {
-    const handler: SubscribeHandler = subscribe(topic, callback, options);
+    const handler = subscribe(topic, callback, options);
     return () => {
       unsubscribe(handler);
     };
@@ -94,21 +94,25 @@ export type MQTTProviderProps = { children: ReactNode };
 const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
   const [state, setState] = useState<{
     status: MQTTStatus;
+    client?: MqttClient;
+    online?: OnlineInfo;
     _internal: {
-      client?: MqttClient;
-      online?: OnlineInfo;
-      subscriptions: string[];
+      subscriptions: SubscribeHandler[];
+      values: Map<string, Buffer>;
     };
-  }>({ status: "", _internal: { subscriptions: [] } });
+  }>({
+    status: "",
+    _internal: { subscriptions: [], values: new Map() },
+  });
 
   const disconnect = () => {
-    if (state._internal.client && state._internal.online) {
-      state._internal.client.publish(state._internal.online.topic, "offline", {
-        qos: state._internal.online.qos,
-        retain: state._internal.online.retain,
+    if (state.client && state.online) {
+      state.client.publish(state.online.topic, "offline", {
+        qos: state.online.qos,
+        retain: state.online.retain,
       });
     }
-    state._internal.client?.end();
+    state.client?.end();
   };
 
   const connect = ({ url, online, options }: MQTTConnectInfo) => {
@@ -128,86 +132,129 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
     const client: MqttClient = mqtt.connect(url, connectoptions);
     client.on("connect", () => {
       setState((s) => {
-        if (s._internal.client && s._internal.online) {
-          s._internal.client.publish(s._internal.online.topic, "online", {
-            qos: s._internal.online.qos,
-            retain: s._internal.online.retain,
+        if (s.client && s.online) {
+          s.client.publish(s.online.topic, "online", {
+            qos: s.online.qos,
+            retain: s.online.retain,
           });
         }
         return {
           status: "connect",
+          client: s.client,
+          online: s.online,
           _internal: s._internal,
         };
       });
     });
     client.on("error", (error) => {
-      setState((s) => ({ status: "error", _internal: s._internal }));
+      setState((s) => ({
+        status: "error",
+        client: s.client,
+        online: s.online,
+        _internal: s._internal,
+      }));
     });
     client.on("reconnect", () => {
       setState((s) => ({
         status: "reconnect",
+        client: s.client,
+        online: s.online,
         _internal: s._internal,
       }));
     });
     client.on("close", () => {
-      setState((s) => ({ status: "close", _internal: s._internal }));
+      setState((s) => ({
+        status: "close",
+        client: s.client,
+        online: s.online,
+        _internal: s._internal,
+      }));
     });
     client.on("end", () => {
-      setState((s) => ({ status: "end", _internal: { subscriptions: [] } }));
+      setState((s) => {
+        return {
+          status: "",
+          _internal: s._internal,
+        };
+      });
     });
     client.on("offline", () => {
       setState((s) => ({
         status: "offline",
+        client: s.client,
+        online: s.online,
         _internal: s._internal,
       }));
     });
     client.on("disconnect", () => {
-      setState((s) => ({ status: "disconnect", _internal: s._internal }));
+      setState((s) => ({
+        status: "disconnect",
+        client: s.client,
+        online: s.online,
+        _internal: s._internal,
+      }));
     });
-    setState({
-      status: "",
-      _internal: { client, online, subscriptions: [] },
+    client.on("message", (topic: string, message: Buffer) => {
+      state._internal.subscriptions.forEach((subs) => {
+        if (match(subs.topic, topic)) {
+          subs.listener(topic, message);
+        }
+      });
+      state._internal.values.set(topic, message);
+    });
+
+    setState((s) => {
+      s._internal.subscriptions.length = 0;
+      s._internal.values.clear();
+      return {
+        status: "connecting",
+        client,
+        online,
+        _internal: s._internal,
+      };
     });
   };
 
   const subscribe = (
     topic: string,
-    callback: (topic: string, message: Buffer) => void,
+    listener: (topic: string, message: Buffer) => void,
     options?: IClientSubscribeOptions
-  ): SubscribeHandler => {
-    if (state._internal.client && topic !== "") {
-      if (!state._internal.subscriptions.some((s) => s === topic)) {
-        console.log("subscribing " + topic);
-        state._internal.client.subscribe(topic, options || { qos: 0 });
-      }
-      state._internal.subscriptions.push(topic);
-      const listener = (messagetopic: string, message: Buffer) => {
-        if (match(topic, messagetopic)) {
-          callback(messagetopic, message);
+  ): SubscribeHandler | null => {
+    if (state.client && topic !== "") {
+      const handler = { topic, listener };
+      state._internal.subscriptions.push(handler);
+      if (
+        !state._internal.subscriptions.some(
+          (s) => s !== handler && s.topic === topic
+        )
+      ) {
+        state.client.subscribe(topic, options || { qos: 0 });
+      } else {
+        const value = state._internal.values.get(topic);
+        if (value) {
+          listener(topic, value);
         }
-      };
-      console.log(state._internal.subscriptions);
-      state._internal.client.on("message", listener);
-      return { topic, listener };
+      }
+      return handler;
     }
     return null;
   };
 
-  const unsubscribe = (handler: SubscribeHandler) => {
-    if (state._internal.client && handler) {
+  const unsubscribe = (handler: SubscribeHandler | null) => {
+    if (state.client && handler) {
       const inx: number = state._internal.subscriptions.findIndex(
-        (s) => s === handler.topic
+        (s) => s === handler
       );
       if (inx < 0) {
         throw new Error("Not subscribed");
       }
       state._internal.subscriptions.splice(inx, 1);
-      if (!state._internal.subscriptions.some((s) => s === handler.topic)) {
-        console.log("unsubscribing " + handler.topic);
-        state._internal.client.unsubscribe(handler.topic);
+      if (
+        !state._internal.subscriptions.some((s) => s.topic === handler.topic)
+      ) {
+        state.client.unsubscribe(handler.topic);
+        state._internal.values.delete(handler.topic);
       }
-      console.log(state._internal.subscriptions);
-      state._internal.client.off("message", handler.listener);
     }
   };
 
@@ -216,8 +263,8 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
     message: Buffer | string,
     options?: IClientPublishOptions
   ) => {
-    if (state._internal.client?.connected) {
-      state._internal.client.publish(topic, message, options || {});
+    if (state.client?.connected) {
+      state.client.publish(topic, message, options || {});
     } else {
       throw new Error("Not connected");
     }
@@ -226,13 +273,11 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
   const value: MQTTContextValue = [
     {
       status: state.status,
-      ready: !!state._internal.client,
-      connected: state._internal.client?.connected || false,
+      ready: !!state.client,
+      connected: state.client?.connected || false,
     },
     { connect, disconnect, subscribe, unsubscribe, publish },
   ];
-
-  console.log(value[0]);
   return <MQTTContext.Provider value={value}>{children}</MQTTContext.Provider>;
 };
 
