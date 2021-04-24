@@ -235,8 +235,6 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
       if (value) {
         listener(topic, value);
       }
-
-      console.log(state._internal.subscriptions);
       return handler;
     }
     return null;
@@ -255,9 +253,7 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
         !state._internal.subscriptions.some((s) => s.topic === handler.topic)
       ) {
         state.client.unsubscribe(handler.topic);
-        //state._internal.values.delete(handler.topic);
       }
-      console.log(state._internal.subscriptions);
     }
   };
 
