@@ -147,6 +147,7 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
       });
     });
     client.on("error", (error) => {
+      console.log(error);
       setState((s) => ({
         status: "Error",
         client: s.client,

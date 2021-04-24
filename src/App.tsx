@@ -1,80 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 
-import { Layout, Menu } from "antd";
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  CheckCircleTwoTone,
-  CloseCircleTwoTone,
-  PlusCircleTwoTone,
-} from "@ant-design/icons";
+import { Layout } from "antd";
+import { CheckCircleTwoTone, PlusCircleTwoTone } from "@ant-design/icons";
 
-import PanelTests from "./panels/PanelTests";
-import PanelConnect from "./panels/PanelConnect";
-import PanelTestSubs from "./panels/PanelTestSubs";
+import ContentConnect from "./connection/ContentConnect";
+import ContentDashboard from "./dashboard/ContentDashboard";
+
 import { useMQTTContext } from "./mqtt/MQTTProvider";
 
 import "antd/dist/antd.css";
 import "./App.css";
+import { ConnectInfo, connectWithInfo } from "./ConnectionInfo";
 
 function App() {
-  const { Header, Sider, Content } = Layout;
-  const [{ status }] = useMQTTContext();
-  const [panelkey, setPanelkey] = useState<React.Key>("1");
+  const [{ status }, { connect }] = useMQTTContext();
+
+  useEffect(() => {
+    const item = window.localStorage.getItem("mqttconnect");
+    if (item) {
+      const connectinfo = JSON.parse(item) as ConnectInfo;
+      if (connectinfo.automatic) {
+        connectWithInfo(connect, connectinfo);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  let toolbar;
+  if (status === "Disconnected") {
+    toolbar = null;
+  } else if (status === "Connected") {
+    toolbar = (
+      <span className="myhStatus-icon">
+        <CheckCircleTwoTone twoToneColor="#52c41a" />
+      </span>
+    );
+  } else {
+    toolbar = (
+      <>
+        <span className="myhStatus">{status}</span>
+        <span className="myhStatus-icon">
+          <PlusCircleTwoTone spin twoToneColor="blue" />
+        </span>
+      </>
+    );
+  }
 
   return (
     <Layout className="myhApp">
-      <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
+      <Layout.Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <span className="myhHeader" style={{ flexGrow: 1 }}>
             MYHELLOIOT
           </span>
-          {status !== "Connected" && status !== "Disconnected" && (
-            <>
-              <span className="myhStatus">{status}</span>
-              <span className="myhStatus-icon">
-                <PlusCircleTwoTone spin twoToneColor="blue" />
-              </span>{" "}
-            </>
-          )}
-          {status === "Connected" && (
-            <span className="myhStatus-icon">
-              <CheckCircleTwoTone twoToneColor="#52c41a" />
-            </span>
-          )}
-          {status === "Disconnected" && (
-            <span className="myhStatus-icon">
-              <CloseCircleTwoTone twoToneColor="#eb2f96" />
-            </span>
-          )}
+          {toolbar}
         </div>
-      </Header>
+      </Layout.Header>
       <Layout style={{ marginTop: 64, height: "calc(100vh - 64px)" }}>
-        <Sider trigger={null} collapsible collapsed={false}>
-          <Menu
-            theme="dark"
-            mode="inline"
-            selectedKeys={[panelkey.toString()]}
-            onSelect={({ key }) => setPanelkey(key)}
-          >
-            <Menu.Item key="1" icon={<VideoCameraOutlined />}>
-              nav 1
-            </Menu.Item>
-            <Menu.Item key="2" icon={<UploadOutlined />}>
-              nav 2
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="connect" icon={<UserOutlined />}>
-              Connect
-            </Menu.Item>
-          </Menu>
-        </Sider>
-        <Content>
-          {panelkey === "1" && <PanelTests />}
-          {panelkey === "2" && <PanelTestSubs />}
-          {panelkey === "connect" && <PanelConnect />}
-        </Content>
+        {status === "Disconnected" ? <ContentConnect /> : <ContentDashboard />}
       </Layout>
     </Layout>
   );
