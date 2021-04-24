@@ -6,29 +6,38 @@ const PanelTestSubs: FC<{}> = () => {
   const [checked, setChecked] = useState<boolean>(false);
 
   return (
-    <Row gutter={[8, 8]} style={{ padding: "24px" }}>
-      <Col>
-        <Switch checked={checked} onChange={setChecked} />
-      </Col>
-      {checked && (
+    <div style={{ padding: "24px" }}>
+      <Row gutter={[8, 8]}>
+        <Col>
+          <Switch checked={checked} onChange={setChecked} />
+        </Col>
+        {checked && (
+          <Col span={4}>
+            <InputCard
+              title="cosita"
+              topicpub="myhelloiot/cosita"
+              topicsub="myhelloiot/cosita"
+            />
+          </Col>
+        )}
+        {!checked && (
+          <Col span={4}>
+            <InputCard
+              title="number"
+              topicpub="myhelloiot/number"
+              topicsub="myhelloiot/number"
+            />
+          </Col>
+        )}
         <Col span={4}>
           <InputCard
-            title="cosita"
-            topicpub="myhelloiot/cosita"
-            topicsub="myhelloiot/cosita"
+            title="Online"
+            topicpub="myhelloiot/online"
+            topicsub="myhelloiot/online"
           />
         </Col>
-      )}
-      {!checked && (
-        <Col span={4}>
-          <InputCard
-            title="number"
-            topicpub="myhelloiot/number"
-            topicsub="myhelloiot/number"
-          />
-        </Col>
-      )}
-    </Row>
+      </Row>
+    </div>
   );
 };
 export default PanelTestSubs;

@@ -17,14 +17,14 @@ import mqtt, {
 import match from "mqtt-match";
 
 export type MQTTStatus =
-  | ""
-  | "connecting"
-  | "close"
-  | "offline"
-  | "connect"
-  | "error"
-  | "reconnect"
-  | "disconnect";
+  | "Disconnected"
+  | "Connecting"
+  | "Closed"
+  | "Offline"
+  | "Connected"
+  | "Error"
+  | "Reconnecting"
+  | "Disconnecting";
 
 export type OnlineInfo = { topic: string; qos: QoS; retain: boolean };
 
@@ -60,7 +60,7 @@ export type SubscribeHandler = {
 
 const MQTTContext: Context<MQTTContextValue> = createContext<MQTTContextValue>([
   {
-    status: "",
+    status: "Disconnected",
     ready: false,
     connected: false,
   },
@@ -101,7 +101,7 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
       values: Map<string, Buffer>;
     };
   }>({
-    status: "",
+    status: "Disconnected",
     _internal: { subscriptions: [], values: new Map() },
   });
 
@@ -139,7 +139,7 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
           });
         }
         return {
-          status: "connect",
+          status: "Connected",
           client: s.client,
           online: s.online,
           _internal: s._internal,
@@ -148,7 +148,7 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
     });
     client.on("error", (error) => {
       setState((s) => ({
-        status: "error",
+        status: "Error",
         client: s.client,
         online: s.online,
         _internal: s._internal,
@@ -156,7 +156,7 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
     });
     client.on("reconnect", () => {
       setState((s) => ({
-        status: "reconnect",
+        status: "Reconnecting",
         client: s.client,
         online: s.online,
         _internal: s._internal,
@@ -164,7 +164,7 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
     });
     client.on("close", () => {
       setState((s) => ({
-        status: "close",
+        status: "Closed",
         client: s.client,
         online: s.online,
         _internal: s._internal,
@@ -173,14 +173,14 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
     client.on("end", () => {
       setState((s) => {
         return {
-          status: "",
+          status: "Disconnected",
           _internal: s._internal,
         };
       });
     });
     client.on("offline", () => {
       setState((s) => ({
-        status: "offline",
+        status: "Offline",
         client: s.client,
         online: s.online,
         _internal: s._internal,
@@ -188,7 +188,7 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
     });
     client.on("disconnect", () => {
       setState((s) => ({
-        status: "disconnect",
+        status: "Disconnecting",
         client: s.client,
         online: s.online,
         _internal: s._internal,
@@ -207,7 +207,7 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
       s._internal.subscriptions.length = 0;
       s._internal.values.clear();
       return {
-        status: "connecting",
+        status: "Connecting",
         client,
         online,
         _internal: s._internal,
@@ -229,12 +229,14 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
         )
       ) {
         state.client.subscribe(topic, options || { qos: 0 });
-      } else {
-        const value = state._internal.values.get(topic);
-        if (value) {
-          listener(topic, value);
-        }
       }
+      // in case message is retained, system will call two times the listener
+      const value = state._internal.values.get(topic);
+      if (value) {
+        listener(topic, value);
+      }
+
+      console.log(state._internal.subscriptions);
       return handler;
     }
     return null;
@@ -253,8 +255,9 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
         !state._internal.subscriptions.some((s) => s.topic === handler.topic)
       ) {
         state.client.unsubscribe(handler.topic);
-        state._internal.values.delete(handler.topic);
+        //state._internal.values.delete(handler.topic);
       }
+      console.log(state._internal.subscriptions);
     }
   };
 

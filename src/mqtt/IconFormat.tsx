@@ -12,7 +12,7 @@ import {
   ToIconFormat,
   ToLabelFormat,
   ToIconEdit,
-} from "../mqtt/FormatTypes";
+} from "./FormatTypes";
 import { ToString } from "./StringEdit";
 
 export const ToIconBulb: () => IconFormat = () => ({
