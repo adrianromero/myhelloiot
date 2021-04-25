@@ -11,15 +11,15 @@ import "./InputCard.css";
 
 type InputCardProps = {
   title?: string;
-  topicpub: string;
-  topicsub: string;
+  topicpub?: string;
+  topicsub?: string;
   format?: StringEdit;
 };
 
 const InputCard: React.FC<InputCardProps> = ({
   title,
-  topicpub,
-  topicsub,
+  topicpub = "",
+  topicsub = "",
   format = ToString(),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();

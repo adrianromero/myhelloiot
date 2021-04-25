@@ -11,7 +11,7 @@ type ButtonCardProps = {
   title?: string;
   footer?: string;
   topicpub: string;
-  topicsub: string;
+  topicsub?: string;
   format?: IconEdit;
 };
 
@@ -19,7 +19,7 @@ const ButtonCard: React.FC<ButtonCardProps> = ({
   title,
   footer,
   topicpub,
-  topicsub,
+  topicsub = "",
   format = ToLabelEdit(ToSwitch()),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();

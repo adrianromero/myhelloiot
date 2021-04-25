@@ -28,9 +28,14 @@ const ContentDashboard: React.FC<{}> = () => {
 
   return (
     <>
-      <Layout.Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
+      <Layout.Sider
+        theme="light"
+        collapsible
+        collapsed={collapsed}
+        onCollapse={setCollapsed}
+      >
         <Menu
-          theme="dark"
+          theme="light"
           mode="inline"
           selectedKeys={[panelkey.toString()]}
           onSelect={handleSelect}

@@ -9,7 +9,9 @@ import InputCard from "../units/InputCard";
 import SwitchCard from "../units/SwitchCard";
 import ButtonCard from "../units/ButtonCard";
 import ViewCard from "../units/ViewCard";
-import { ToButtonMessage } from "../mqtt/ButtonFormat";
+import { ToButtonImageText, ToButtonText } from "../mqtt/ButtonFormat";
+import { ToButtonImage } from "../mqtt/ButtonFormat";
+import { ReactComponent as Themes } from "../assets/svg/themes.svg";
 
 const PanelTests: FC<{}> = () => (
   <div style={{ padding: "24px" }}>
@@ -38,18 +40,10 @@ const PanelTests: FC<{}> = () => (
         />
       </Col>
       <Col span={4}>
-        <InputCard
-          title="Subscribe only"
-          topicpub=""
-          topicsub="myhelloiot/cosita"
-        />
+        <InputCard title="Subscribe only" topicsub="myhelloiot/cosita" />
       </Col>
       <Col span={4}>
-        <InputCard
-          title="Publish only"
-          topicpub="myhelloiot/cosita"
-          topicsub=""
-        />
+        <InputCard title="Publish only" topicpub="myhelloiot/cosita" />
       </Col>
       <Col span={4}>
         <InputCard
@@ -99,17 +93,29 @@ const PanelTests: FC<{}> = () => (
       </Col>
       <Col span={4}>
         <ButtonCard
-          footer="Cosa cosita"
+          footer="text"
           topicpub="pepe/cosa/cosita"
-          topicsub=""
-          format={ToButtonMessage("Button", Buffer.from("mensaje"))}
+          format={ToButtonText("Button", Buffer.from("mensaje"))}
+        />
+      </Col>
+      <Col span={4}>
+        <ButtonCard
+          footer="svg"
+          topicpub="pepe/cosa/cosita"
+          format={ToButtonImage(Themes, Buffer.from("mensaje"))}
+        />
+      </Col>
+      <Col span={4}>
+        <ButtonCard
+          footer="svg + text"
+          topicpub="pepe/cosa/cosita"
+          format={ToButtonImageText(Themes, "Colors", Buffer.from("mensaje"))}
         />
       </Col>
       <Col span={4}>
         <InputCard
           title="El switch de number send"
           topicpub="myhelloiot/number"
-          topicsub=""
           format={ToIntlNumber({ style: "unit", unit: "celsius" })}
         />
       </Col>

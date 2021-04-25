@@ -66,8 +66,8 @@ const PanelConnect: React.FC<{}> = () => {
             </Col>
           </Row>
           <Row gutter={[8, 8]}>
-            <Col span="2">*URL:</Col>
-            <Col span="10">
+            <Col span={2}>*URL:</Col>
+            <Col span={10}>
               <Form.Item
                 name="url"
                 rules={[
@@ -82,41 +82,41 @@ const PanelConnect: React.FC<{}> = () => {
             </Col>
           </Row>
           <Row gutter={[8, 8]}>
-            <Col span="2">User:</Col>
-            <Col span="4">
+            <Col span={2}>User:</Col>
+            <Col span={4}>
               <Form.Item name="username">
                 <Input autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col span="2">Password:</Col>
-            <Col span="4">
+            <Col span={2}>Password:</Col>
+            <Col span={4}>
               <Form.Item name="password">
                 <Input.Password />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={[8, 8]}>
-            <Col span="2">Client ID:</Col>
-            <Col span="4">
+            <Col span={2}>Client ID:</Col>
+            <Col span={4}>
               <Form.Item name="clientId">
                 <Input autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col span="2">Keep alive:</Col>
-            <Col span="4">
+            <Col span={2}>Keep alive:</Col>
+            <Col span={4}>
               <Form.Item name="keepalive">
                 <InputNumber autoComplete="off" />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={[8, 8]}>
-            <Col span="2">Connection timeout:</Col>
-            <Col span="4">
+            <Col span={2}>Connection timeout:</Col>
+            <Col span={4}>
               <Form.Item name="connectTimeout">
                 <InputNumber autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col span="2">Reconnect period:</Col>
+            <Col span={2}>Reconnect period:</Col>
             <Col span={4}>
               <Form.Item name="reconnectPeriod">
                 <InputNumber autoComplete="off" />
@@ -124,7 +124,7 @@ const PanelConnect: React.FC<{}> = () => {
             </Col>
           </Row>
           <Row gutter={[8, 8]}>
-            <Col span="2">Online topic:</Col>
+            <Col span={2}>Online topic:</Col>
             <Col span={4}>
               <Form.Item name="onlinetopic">
                 <Input autoComplete="off" />
