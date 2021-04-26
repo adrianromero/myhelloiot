@@ -113,6 +113,13 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
       });
     }
     state.client?.end();
+    state.client?.removeAllListeners();
+    setState((s) => {
+      return {
+        status: "Disconnected",
+        _internal: s._internal,
+      };
+    });
   };
 
   const connect = ({ url, online, options }: MQTTConnectInfo) => {
@@ -170,14 +177,6 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
         online: s.online,
         _internal: s._internal,
       }));
-    });
-    client.on("end", () => {
-      setState((s) => {
-        return {
-          status: "Disconnected",
-          _internal: s._internal,
-        };
-      });
     });
     client.on("offline", () => {
       setState((s) => ({
