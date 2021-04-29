@@ -8,6 +8,7 @@ import {
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import PanelTests from "./PanelTests";
 import PanelTestSubs from "./PanelTestSubs";
+import PanelTestNumbers from "./PanelTestNumbers";
 
 const ContentDashboard: React.FC<{}> = () => {
   const [, { disconnect }] = useMQTTContext();
@@ -47,6 +48,9 @@ const ContentDashboard: React.FC<{}> = () => {
           <Menu.Item key="menu-2" icon={<UploadOutlined />}>
             nav 2
           </Menu.Item>
+          <Menu.Item key="menu-3" icon={<UploadOutlined />}>
+            Numbers
+          </Menu.Item>
           <Menu.Divider />
           <Menu.Item key="action-disconnect" icon={<LogoutOutlined />}>
             Disconnect
@@ -56,6 +60,7 @@ const ContentDashboard: React.FC<{}> = () => {
       <Layout.Content>
         {panelkey === "menu-1" && <PanelTests />}
         {panelkey === "menu-2" && <PanelTestSubs />}
+        {panelkey === "menu-3" && <PanelTestNumbers />}
       </Layout.Content>
     </>
   );

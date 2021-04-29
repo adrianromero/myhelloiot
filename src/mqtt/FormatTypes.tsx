@@ -3,55 +3,29 @@ import React from "react";
 export type IconFormat = {
   toIcon: (b: Buffer) => React.ReactNode;
 };
-export type StringFormat = {
+
+export type ValueFormat = {
   toString: (b: Buffer) => string;
   className: () => string;
 };
 
-export type StringParse = {
+export type ValueParse = {
   fromString: (s: string) => Buffer;
   next: (b: Buffer) => Buffer;
   prev: (b: Buffer) => Buffer;
 };
 
-export type StringEdit = StringFormat & StringParse;
+export type NumberValidation = {
+  min: number;
+  max: number;
+  step: number;
+};
 
-export type IconEdit = IconFormat & StringParse;
+export type ValueFormatNumber = ValueFormat & NumberValidation;
+export type IconFormatNumber = IconFormat & NumberValidation;
 
-export const ToIconFormat: (format: StringFormat) => IconFormat = (format) => ({
-  toIcon: (b: Buffer) => (
-    <div className={`myh-value myh-value-padding ${format.className()}`}>
-      {format.toString(b) || "\u00A0"}
-    </div>
-  ),
-});
+export type ValueEdit = ValueFormat & ValueParse;
+export type IconEdit = IconFormat & ValueParse;
 
-export const ToLabelFormat: (format: StringFormat) => IconFormat = (
-  format
-) => ({
-  toIcon: (b: Buffer) => format.toString(b) || "\u00A0",
-});
-
-export const ToIconEdit: (format: StringEdit) => IconEdit = (format) => ({
-  ...format,
-  toIcon: (b: Buffer) => (
-    <div className={`myh-value myh-value-padding ${format.className()}`}>
-      {format.toString(b) || "\u00A0"}
-    </div>
-  ),
-});
-
-export const ToComposedIconEdit: (
-  format: StringEdit,
-  toicon: IconFormat
-) => IconEdit = (format, toicon) => ({
-  ...format,
-  ...toicon,
-});
-
-export const ToLabelEdit: (format: StringEdit) => IconEdit = (
-  format: StringEdit
-) => ({
-  ...format,
-  toIcon: (b: Buffer) => format.toString(b) || "\u00A0",
-});
+export type ValueEditNumber = ValueEdit & NumberValidation;
+export type IconEditNumber = IconEdit & NumberValidation;

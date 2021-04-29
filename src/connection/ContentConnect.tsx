@@ -66,8 +66,16 @@ const PanelConnect: React.FC<{}> = () => {
             </Col>
           </Row>
           <Row gutter={[8, 8]}>
-            <Col span={2}>*URL:</Col>
-            <Col span={10}>
+            <Col span={4} className="ant-form-item-label">
+              <label
+                htmlFor="url"
+                className="ant-form-item-required"
+                title="URL"
+              >
+                URL
+              </label>
+            </Col>
+            <Col span={12}>
               <Form.Item
                 name="url"
                 rules={[
@@ -82,13 +90,25 @@ const PanelConnect: React.FC<{}> = () => {
             </Col>
           </Row>
           <Row gutter={[8, 8]}>
-            <Col span={2}>User:</Col>
+            <Col span={4} className="ant-form-item-label">
+              <label htmlFor="username" title="User">
+                User
+              </label>
+            </Col>
             <Col span={4}>
               <Form.Item name="username">
                 <Input autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col span={2}>Password:</Col>
+            <Col span={4} className="ant-form-item-label">
+              <label
+                htmlFor="password"
+                className="ant-form-item-required"
+                title="Password"
+              >
+                Password
+              </label>
+            </Col>
             <Col span={4}>
               <Form.Item name="password">
                 <Input.Password />
@@ -96,35 +116,103 @@ const PanelConnect: React.FC<{}> = () => {
             </Col>
           </Row>
           <Row gutter={[8, 8]}>
-            <Col span={2}>Client ID:</Col>
+            <Col span={4} className="ant-form-item-label">
+              <label
+                htmlFor="clientId"
+                className="ant-form-item-required"
+                title="Client ID"
+              >
+                Client ID
+              </label>
+            </Col>
             <Col span={4}>
-              <Form.Item name="clientId">
+              <Form.Item
+                name="clientId"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please define a Client ID.",
+                  },
+                ]}
+              >
                 <Input autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col span={2}>Keep alive:</Col>
+            <Col span={4} className="ant-form-item-label">
+              <label
+                htmlFor="keepalive"
+                className="ant-form-item-required"
+                title="Keep alive"
+              >
+                Keep alive
+              </label>
+            </Col>
             <Col span={4}>
-              <Form.Item name="keepalive">
+              <Form.Item
+                name="keepalive"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please define a Keep alive value.",
+                  },
+                ]}
+              >
                 <InputNumber autoComplete="off" />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={[8, 8]}>
-            <Col span={2}>Connection timeout:</Col>
+            <Col span={4} className="ant-form-item-label">
+              <label
+                htmlFor="connectTimeout"
+                className="ant-form-item-required"
+                title="Connection timeout"
+              >
+                Connection timeout
+              </label>
+            </Col>
             <Col span={4}>
-              <Form.Item name="connectTimeout">
+              <Form.Item
+                name="connectTimeout"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please define a Connection timeout value.",
+                  },
+                ]}
+              >
                 <InputNumber autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col span={2}>Reconnect period:</Col>
+            <Col span={4} className="ant-form-item-label">
+              <label
+                htmlFor="reconnectPeriod"
+                className="ant-form-item-required"
+                title="Reconnect period"
+              >
+                Reconnect period
+              </label>
+            </Col>
             <Col span={4}>
-              <Form.Item name="reconnectPeriod">
+              <Form.Item
+                name="reconnectPeriod"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please define a Reconnect period value.",
+                  },
+                ]}
+              >
                 <InputNumber autoComplete="off" />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={[8, 8]}>
-            <Col span={2}>Online topic:</Col>
+            <Col span={4} className="ant-form-item-label">
+              <label htmlFor="onlinetopic" title="Online topic">
+                Online topic
+              </label>
+            </Col>
             <Col span={4}>
               <Form.Item name="onlinetopic">
                 <Input autoComplete="off" />
@@ -141,7 +229,15 @@ const PanelConnect: React.FC<{}> = () => {
             </Col>
           </Row>
           <Row gutter={[8, 8]}>
-            <Col span={2}>Automatic connection:</Col>
+            <Col span={4} className="ant-form-item-label">
+              <label
+                htmlFor="automatic"
+                className="ant-form-item-required"
+                title="Automatic connection"
+              >
+                Automatic connection
+              </label>
+            </Col>
             <Col span={4}>
               <Form.Item name="automatic" valuePropName="checked">
                 <Checkbox />

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"; // FC functional control.
 import { Switch, Card, Row, Col } from "antd";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { StringEdit } from "../mqtt/FormatTypes";
-import { ToString } from "../mqtt/StringEdit";
+import { ValueEdit } from "../mqtt/FormatTypes";
+import { StrValueEdit } from "../mqtt/ValueFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
@@ -12,7 +12,7 @@ type SwitchCardProps = {
   footer?: string;
   topicpub: string;
   topicsub: string;
-  format?: StringEdit;
+  format?: ValueEdit;
 };
 
 const SwitchCard: React.FC<SwitchCardProps> = ({
@@ -20,7 +20,7 @@ const SwitchCard: React.FC<SwitchCardProps> = ({
   footer,
   topicpub,
   topicsub,
-  format = ToString(),
+  format = StrValueEdit(),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
   const [checked, setChecked] = useState<boolean>(false);

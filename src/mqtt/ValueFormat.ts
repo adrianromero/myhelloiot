@@ -1,38 +1,38 @@
-import { StringEdit } from "./FormatTypes";
+import { ValueEdit } from "./FormatTypes";
 
-export const ToString: () => StringEdit = () => ({
+export const StrValueEdit: () => ValueEdit = () => ({
   toString: (b: Buffer) => b.toString(),
+  className: () => "",
   fromString: (s: string) => Buffer.from(s),
   next: (b: Buffer) => b,
   prev: (b: Buffer) => b,
-  className: () => "",
 });
 
-export const ToJSON: () => StringEdit = () => ({
+export const JSONValueEdit: () => ValueEdit = () => ({
   toString: (b: Buffer) => JSON.stringify(JSON.parse(b.toString()), null, 2),
+  className: () => "",
   fromString: (s: string) => Buffer.from(s),
   next: (b: Buffer) => b,
   prev: (b: Buffer) => b,
-  className: () => "",
 });
 
-export const ToHEX: () => StringEdit = () => ({
+export const HEXValueEdit: () => ValueEdit = () => ({
   toString: (b: Buffer) => b.toString("hex"),
+  className: () => "",
   fromString: (s: string) => Buffer.from(s, "hex"),
   next: (b: Buffer) => b,
   prev: (b: Buffer) => b,
-  className: () => "",
 });
 
-export const ToBase64: () => StringEdit = () => ({
+export const Base64ValueEdit: () => ValueEdit = () => ({
   toString: (b: Buffer) => b.toString("base64"),
+  className: () => "",
   fromString: (s: string) => Buffer.from(s, "base64"),
   next: (b: Buffer) => b,
   prev: (b: Buffer) => b,
-  className: () => "",
 });
 
-export const ToSwitch: () => StringEdit = () => ({
+export const SwitchValueEdit: () => ValueEdit = () => ({
   toString: (b: Buffer) => (b.toString() === "1" ? "ON" : "OFF"),
   fromString: (s: string) => Buffer.from(s === "ON" ? "1" : "0"),
   next: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
@@ -43,9 +43,9 @@ export const ToSwitch: () => StringEdit = () => ({
 const getCharClass: (s?: string) => string = (s) =>
   s ? "[" + s.split("").join("][") + "]" : "";
 
-export const ToIntlNumber: (
+export const NumberValueEdit: (
   options?: Intl.NumberFormatOptions
-) => StringEdit = (options) => {
+) => ValueEdit = (options) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale, options);
 

@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from "react"; // FC functional control.
-import { Card, Row, Col } from "antd";
+import { Slider } from "antd";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { IconFormat } from "../mqtt/FormatTypes";
-import { StrIconFormat } from "../mqtt/IconFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
 
 type ViewCardProps = {
-  title?: string;
+  topicpub: string;
   topicsub: string;
-  format?: IconFormat;
 };
 
-const ViewCard: React.FC<ViewCardProps> = ({
-  title,
-  topicsub,
-  format = StrIconFormat(),
-}) => {
-  const [{ connected }] = useMQTTContext();
+const SliderCard: React.FC<ViewCardProps> = ({ topicpub, topicsub }) => {
+  const [{ connected }, { publish }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
 
   useEffect(() => {
@@ -29,12 +22,21 @@ const ViewCard: React.FC<ViewCardProps> = ({
     setBuffer(mqttmessage);
   });
 
+  const onChange = (value: number) => {
+    const b = Buffer.from(value.toString());
+    setBuffer(b);
+    publish(topicpub, b);
+  };
+
   return (
-    <Card className="myh-card myh-input-card" size="small" title={title}>
-      <Row gutter={8} wrap={false}>
-        <Col flex="auto">{format.toIcon(buffer)}</Col>
-      </Row>
-    </Card>
+    <Slider
+      value={Number(buffer.toString())}
+      min={0}
+      max={100}
+      step={1}
+      onChange={onChange}
+      disabled={!connected}
+    />
   );
 };
-export default ViewCard;
+export default SliderCard;

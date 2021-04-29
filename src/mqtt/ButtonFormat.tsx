@@ -4,11 +4,11 @@ import { CustomIconComponentProps } from "@ant-design/icons/lib/components/Icon"
 import { SVGProps } from "react";
 import { IconEdit, IconFormat } from "./FormatTypes";
 
-export const toIconText: (text: string) => IconFormat = (text) => ({
+export const LiteralIconFormat: (text: string) => IconFormat = (text) => ({
   toIcon: (b: Buffer) => text || "\u00A0",
 });
 
-export const toIconImage: (
+export const ImageIconFormat: (
   component:
     | ComponentType<CustomIconComponentProps | SVGProps<SVGSVGElement>>
     | undefined
@@ -18,7 +18,7 @@ export const toIconImage: (
   ),
 });
 
-export const toIconImageText: (
+export const TitleIconFormat: (
   component:
     | ComponentType<CustomIconComponentProps | SVGProps<SVGSVGElement>>
     | undefined,
@@ -32,7 +32,7 @@ export const toIconImageText: (
   ),
 });
 
-export const ToButtonText: (text: string, message: Buffer) => IconEdit = (
+export const LiteralIconEdit: (text: string, message: Buffer) => IconEdit = (
   text,
   message
 ) => ({
@@ -44,7 +44,7 @@ export const ToButtonText: (text: string, message: Buffer) => IconEdit = (
   prev: (b: Buffer) => message,
 });
 
-export const ToButtonImage: (
+export const ImageIconEdit: (
   component:
     | ComponentType<CustomIconComponentProps | SVGProps<SVGSVGElement>>
     | undefined,
@@ -60,7 +60,7 @@ export const ToButtonImage: (
   prev: (b: Buffer) => message,
 });
 
-export const ToButtonImageText: (
+export const TitleIconEdit: (
   component:
     | ComponentType<CustomIconComponentProps | SVGProps<SVGSVGElement>>
     | undefined,

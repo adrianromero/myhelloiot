@@ -2,8 +2,8 @@ import React, { useEffect } from "react"; // FC functional control.
 import { Button, Card, Input, Form, Row, Col } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { StringEdit } from "../mqtt/FormatTypes";
-import { ToString } from "../mqtt/StringEdit";
+import { ValueEdit } from "../mqtt/FormatTypes";
+import { StrValueEdit } from "../mqtt/ValueFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
@@ -13,14 +13,14 @@ type InputCardProps = {
   title?: string;
   topicpub?: string;
   topicsub?: string;
-  format?: StringEdit;
+  format?: ValueEdit;
 };
 
 const InputCard: React.FC<InputCardProps> = ({
   title,
   topicpub = "",
   topicsub = "",
-  format = ToString(),
+  format = StrValueEdit(),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
   const [form] = Form.useForm();

@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   BulbTwoTone,
   BulbFilled,
@@ -9,13 +10,15 @@ import {
 } from "@ant-design/icons";
 import {
   IconFormat,
-  ToIconFormat,
-  ToLabelFormat,
-  ToIconEdit,
+  IconEdit,
+  IconFormatNumber,
+  NumberValidation,
+  ValueEdit,
+  ValueFormat,
 } from "./FormatTypes";
-import { ToString } from "./StringEdit";
+import { NumberValueEdit, StrValueEdit } from "./ValueFormat";
 
-export const ToIconBulb: () => IconFormat = () => ({
+export const BulbIconFormat: () => IconFormat = () => ({
   toIcon: (b: Buffer) =>
     b.toString() === "1" ? (
       <BulbFilled style={{ fontSize: "180%", color: "yellow" }} />
@@ -24,7 +27,7 @@ export const ToIconBulb: () => IconFormat = () => ({
     ),
 });
 
-export const ToStar: () => IconFormat = () => ({
+export const StarIconFormat: () => IconFormat = () => ({
   toIcon: (b: Buffer) =>
     b.toString() === "1" ? (
       <StarFilled style={{ fontSize: "180%", color: "yellow" }} />
@@ -33,7 +36,7 @@ export const ToStar: () => IconFormat = () => ({
     ),
 });
 
-export const ToThuderbolt: () => IconFormat = () => ({
+export const ThuderboltIconFormat: () => IconFormat = () => ({
   toIcon: (b: Buffer) =>
     b.toString() === "1" ? (
       <ThunderboltFilled style={{ fontSize: "180%", color: "yellow" }} />
@@ -45,6 +48,56 @@ export const ToThuderbolt: () => IconFormat = () => ({
     ),
 });
 
-export const ToIconFormatString = () => ToIconFormat(ToString());
-export const ToLabelFormatString = () => ToLabelFormat(ToString());
-export const ToIconEditString = () => ToIconEdit(ToString());
+export const ToIconFormat: (format: ValueFormat) => IconFormat = (format) => ({
+  toIcon: (b: Buffer) => (
+    <div className={`myh-value myh-value-padding ${format.className()}`}>
+      {format.toString(b) || "\u00A0"}
+    </div>
+  ),
+});
+
+export const LabelIconFormat: (format: ValueFormat) => IconFormat = (
+  format
+) => ({
+  toIcon: (b: Buffer) => format.toString(b) || "\u00A0",
+});
+
+export const LabelIconEdit: (format: ValueEdit) => IconEdit = (
+  format: ValueEdit
+) => ({
+  ...format,
+  toIcon: (b: Buffer) => format.toString(b) || "\u00A0",
+});
+
+export const ToIconEdit: (format: ValueEdit) => IconEdit = (format) => ({
+  ...format,
+  toIcon: (b: Buffer) => (
+    <div className={`myh-value myh-value-padding ${format.className()}`}>
+      {format.toString(b) || "\u00A0"}
+    </div>
+  ),
+});
+
+export const ComposedIconEdit: (
+  format: ValueEdit,
+  toicon: IconFormat
+) => IconEdit = (format, toicon) => ({
+  ...format,
+  ...toicon,
+});
+
+export const StrIconFormat: () => IconFormat = () =>
+  ToIconFormat(StrValueEdit());
+
+export const StrIconEdit: () => IconEdit = () => ToIconEdit(StrValueEdit());
+
+export const ToIconFormatNumber: (
+  format?: IconFormat,
+  validation?: NumberValidation
+) => IconFormatNumber = (
+  format = ToIconFormat(NumberValueEdit()),
+  validation = { min: 0, max: 100, step: 1 }
+) => ({
+  ...format,
+  ...validation,
+});
