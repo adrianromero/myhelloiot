@@ -8,6 +8,7 @@ import ViewCard from "../units/ViewCard";
 import SliderCard from "../units/SliderCard";
 import ProgressCard from "../units/ProgressCard";
 import { ToIconFormat, ToIconFormatNumber } from "../mqtt/IconFormat";
+import { LinearIconFormat } from "../mqtt/GaugeFormat";
 
 const PanelTestNumbers: FC<{}> = () => (
   <div style={{ padding: "24px" }}>
@@ -60,6 +61,13 @@ const PanelTestNumbers: FC<{}> = () => (
             ),
             { min: 0, max: 60, step: 1 }
           )}
+        />
+      </Col>
+      <Col span={4}>
+        <ViewCard
+          title="Primer gauge"
+          topicsub="myhelloiot/number"
+          format={LinearIconFormat({ min: 0, max: 60, step: 1 })}
         />
       </Col>
     </Row>
