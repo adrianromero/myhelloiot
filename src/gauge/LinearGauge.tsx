@@ -1,12 +1,43 @@
 import React from "react";
 
-export type LinearGaugeProps = { value: number; min?: number; max?: number };
+export type LinearGaugeProps = {
+  value: number;
+  min?: number;
+  max?: number;
+  step?: number;
+};
 
 const LinearGauge: React.FC<LinearGaugeProps> = ({
   value,
   min = 0,
   max = 100,
+  step = 5,
 }) => {
+  const locale = navigator.language;
+  const intl = new Intl.NumberFormat(locale);
+
+  const incstep = (160 * step) / (max - min);
+  const lines = [];
+  for (let index = 20; index < 180; index += incstep) {
+    lines.push(
+      <line
+        x1={index}
+        y1={42}
+        x2={index}
+        y2={46}
+        style={{ stroke: "#606060", strokeWidth: 1 }}
+      />
+    );
+  }
+  lines.push(
+    <line
+      x1={180}
+      y1={42}
+      x2={180}
+      y2={46}
+      style={{ stroke: "#606060", strokeWidth: 1 }}
+    />
+  );
   let width = (160 * value) / (max - min);
   if (width < 0) {
     width = 0;
@@ -15,7 +46,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
     width = 160;
   }
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 200 100">
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 200 133">
       <line
         x1={20}
         y1={9}
@@ -29,7 +60,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         width={160}
         height={25}
         fill="#cccccc"
-        className="indicator"
+        className="base"
       />
       <rect
         x={20}
@@ -50,6 +81,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         y2={40}
         style={{ stroke: "#606060", strokeWidth: 1 }}
       />
+      {lines}
       <text
         x={20}
         y={60}
@@ -57,7 +89,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         textAnchor="middle"
         style={{ font: "bold 14px sans-serif" }}
       >
-        {min}
+        {intl.format(min)}
       </text>
       <text
         x={180}
@@ -66,7 +98,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         textAnchor="middle"
         style={{ font: "bold 14px sans-serif" }}
       >
-        {max}
+        {intl.format(max)}
       </text>
     </svg>
   );

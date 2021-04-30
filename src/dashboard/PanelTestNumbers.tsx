@@ -8,19 +8,19 @@ import ViewCard from "../units/ViewCard";
 import SliderCard from "../units/SliderCard";
 import ProgressCard from "../units/ProgressCard";
 import { ToIconFormat, ToIconFormatNumber } from "../mqtt/IconFormat";
-import { LinearIconFormat } from "../mqtt/GaugeFormat";
+import { DashboardIconFormat, LinearIconFormat } from "../mqtt/GaugeFormat";
 
 const PanelTestNumbers: FC<{}> = () => (
   <div style={{ padding: "24px" }}>
     <Row gutter={[8, 8]}>
-      <Col span={4}>
+      <Col span={6}>
         <InputCard
           title="El switch de number send"
           topicpub="myhelloiot/number"
           format={NumberValueEdit({ style: "unit", unit: "celsius" })}
         />
       </Col>
-      <Col span={4}>
+      <Col span={6}>
         <ViewCard
           title="El viewer de number receive"
           topicsub="myhelloiot/number"
@@ -32,7 +32,7 @@ const PanelTestNumbers: FC<{}> = () => (
           )}
         />
       </Col>
-      <Col span={4}>
+      <Col span={6}>
         <SliderCard
           title="El slider de number receive"
           topicpub="myhelloiot/number"
@@ -48,7 +48,7 @@ const PanelTestNumbers: FC<{}> = () => (
           )}
         />
       </Col>
-      <Col span={4}>
+      <Col span={6}>
         <ProgressCard
           title="El progress"
           topicsub="myhelloiot/number"
@@ -63,11 +63,28 @@ const PanelTestNumbers: FC<{}> = () => (
           )}
         />
       </Col>
-      <Col span={4}>
+      <Col span={6}>
         <ViewCard
           title="Primer gauge"
           topicsub="myhelloiot/number"
-          format={LinearIconFormat({ min: 0, max: 60, step: 1 })}
+          format={LinearIconFormat({ min: 0, max: 60, step: 5 })}
+        />
+      </Col>
+      <Col span={6}>
+        <ViewCard
+          title="Primer gauge"
+          topicsub="myhelloiot/number"
+          format={DashboardIconFormat(
+            {
+              min: 0,
+              max: 60,
+              step: 5,
+            },
+            {
+              style: "unit",
+              unit: "celsius",
+            }
+          )}
         />
       </Col>
     </Row>

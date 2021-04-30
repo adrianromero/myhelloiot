@@ -4,6 +4,10 @@ import {
   VideoCameraOutlined,
   UploadOutlined,
   LogoutOutlined,
+  DashboardFilled,
+  CrownFilled,
+  PictureFilled,
+  ApiFilled,
 } from "@ant-design/icons";
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import PanelTests from "./PanelTests";
@@ -13,7 +17,7 @@ import PanelTestNumbers from "./PanelTestNumbers";
 const ContentDashboard: React.FC<{}> = () => {
   const [, { disconnect }] = useMQTTContext();
   const [panelkey, setPanelkey] = useState<React.Key>("menu-1");
-  const [collapsed, setCollapsed] = useState<boolean>(true);
+  const [collapsed, setCollapsed] = useState<boolean>(false);
 
   const handleSelect = ({ key }: { key: string | number }) => {
     if ((key as string).startsWith("menu-")) {
@@ -42,17 +46,17 @@ const ContentDashboard: React.FC<{}> = () => {
           onSelect={handleSelect}
           onClick={handleClick}
         >
-          <Menu.Item key="menu-1" icon={<VideoCameraOutlined />}>
-            nav 1
+          <Menu.Item key="menu-1" icon={<PictureFilled />}>
+            Gallery
           </Menu.Item>
-          <Menu.Item key="menu-2" icon={<UploadOutlined />}>
-            nav 2
+          <Menu.Item key="menu-2" icon={<CrownFilled />}>
+            Second gallery
           </Menu.Item>
-          <Menu.Item key="menu-3" icon={<UploadOutlined />}>
+          <Menu.Item key="menu-3" icon={<DashboardFilled />}>
             Numbers
           </Menu.Item>
           <Menu.Divider />
-          <Menu.Item key="action-disconnect" icon={<LogoutOutlined />}>
+          <Menu.Item key="action-disconnect" icon={<ApiFilled />}>
             Disconnect
           </Menu.Item>
         </Menu>
