@@ -230,11 +230,7 @@ const PanelConnect: React.FC<{}> = () => {
           </Row>
           <Row gutter={[8, 8]}>
             <Col span={4} className="ant-form-item-label">
-              <label
-                htmlFor="automatic"
-                className="ant-form-item-required"
-                title="Automatic connection"
-              >
+              <label htmlFor="automatic" title="Automatic connection">
                 Automatic connection
               </label>
             </Col>
