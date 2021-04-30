@@ -8,7 +8,11 @@ import ViewCard from "../units/ViewCard";
 import SliderCard from "../units/SliderCard";
 import ProgressCard from "../units/ProgressCard";
 import { ToIconFormat, ToIconFormatNumber } from "../mqtt/IconFormat";
-import { DashboardIconFormat, LinearIconFormat } from "../mqtt/GaugeFormat";
+import {
+  DashboardIconFormat,
+  LinearIconFormat,
+  SimpleIconFormat,
+} from "../mqtt/GaugeFormat";
 
 const PanelTestNumbers: FC<{}> = () => (
   <div style={{ padding: "24px" }}>
@@ -72,9 +76,26 @@ const PanelTestNumbers: FC<{}> = () => (
       </Col>
       <Col span={6}>
         <ViewCard
-          title="Primer gauge"
+          title="Segundo gauge"
           topicsub="myhelloiot/number"
           format={DashboardIconFormat(
+            {
+              min: 0,
+              max: 60,
+              step: 5,
+            },
+            {
+              style: "unit",
+              unit: "celsius",
+            }
+          )}
+        />
+      </Col>
+      <Col span={6}>
+        <ViewCard
+          title="Third gauge"
+          topicsub="myhelloiot/number"
+          format={SimpleIconFormat(
             {
               min: 0,
               max: 60,

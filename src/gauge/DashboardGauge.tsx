@@ -18,18 +18,7 @@ const DashboardGauge: React.FC<LinearGaugeProps> = ({
   const intl = new Intl.NumberFormat(locale);
   const intlvalue = new Intl.NumberFormat(locale, valueformat);
 
-  let angle = (Math.PI * value) / (max - min);
-  if (angle < 0) {
-    angle = 0;
-  }
-  if (angle > Math.PI) {
-    angle = Math.PI;
-  }
-  const x1 = 40;
-  const y1 = 80;
-  const r = 60;
-  const x2 = x1 + r - Math.cos(angle) * r;
-  const y2 = y1 - Math.sin(angle) * r;
+  const arcvalue = (Math.PI * 60 * value) / (max - min);
 
   return (
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 200 133">
@@ -49,17 +38,18 @@ const DashboardGauge: React.FC<LinearGaugeProps> = ({
       />
       <path
         id="arc"
-        d={`M${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2}`}
+        d="M40 80 A 60 60 0 0 1 160 80"
         opacity="1"
         className="base"
         style={{
           fill: "#00000000",
           strokeWidth: 40,
           strokeMiterlimit: 0,
-          strokeDasharray: "none",
+          strokeDasharray: `${arcvalue} 200`,
           stroke: "#ff0000",
           strokeOpacity: 1,
-          transition: "width 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
+          transition:
+            "stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
         }}
       />
       <text

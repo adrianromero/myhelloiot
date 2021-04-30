@@ -87,7 +87,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         y={60}
         fill="#606060"
         textAnchor="middle"
-        style={{ font: "bold 14px sans-serif" }}
+        style={{ font: "14px sans-serif" }}
       >
         {intl.format(min)}
       </text>
@@ -96,7 +96,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         y={60}
         fill="#606060"
         textAnchor="middle"
-        style={{ font: "bold 14px sans-serif" }}
+        style={{ font: "14px sans-serif" }}
       >
         {intl.format(max)}
       </text>
