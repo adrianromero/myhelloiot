@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 import {
-  VideoCameraOutlined,
-  UploadOutlined,
-  LogoutOutlined,
   DashboardFilled,
   CrownFilled,
   PictureFilled,

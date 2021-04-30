@@ -71,7 +71,13 @@ const PanelTestNumbers: FC<{}> = () => (
         <ViewCard
           title="Primer gauge"
           topicsub="myhelloiot/number"
-          format={LinearIconFormat({ min: 0, max: 60, step: 5 })}
+          format={LinearIconFormat(
+            { min: 0, max: 60, step: 5 },
+            {
+              style: "unit",
+              unit: "celsius",
+            }
+          )}
         />
       </Col>
       <Col span={6}>

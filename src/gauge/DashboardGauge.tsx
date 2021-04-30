@@ -1,4 +1,5 @@
 import React from "react";
+import "./DashboardGauge.css";
 
 export type LinearGaugeProps = {
   value: number;
@@ -40,13 +41,12 @@ const DashboardGauge: React.FC<LinearGaugeProps> = ({
         id="arc"
         d="M40 80 A 60 60 0 0 1 160 80"
         opacity="1"
-        className="base"
+        className="dashboard-indicatorbar"
         style={{
           fill: "#00000000",
           strokeWidth: 40,
           strokeMiterlimit: 0,
           strokeDasharray: `${arcvalue} 200`,
-          stroke: "#ff0000",
           strokeOpacity: 1,
           transition:
             "stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",

@@ -4,15 +4,17 @@ import LinearGauge from "../gauge/LinearGauge";
 import DashboardGauge from "../gauge/DashboardGauge";
 import SimpleGauge from "../gauge/SimpleGauge";
 
-export const LinearIconFormat: (validation: NumberValidation) => IconFormat = (
-  validation
-) => ({
+export const LinearIconFormat: (
+  validation: NumberValidation,
+  valueformat?: Intl.NumberFormatOptions
+) => IconFormat = (validation, valueformat) => ({
   toIcon: (buffer) => (
     <LinearGauge
       min={validation.min}
       max={validation.max}
       step={validation.step}
       value={Number(buffer.toString())}
+      valueformat={valueformat}
     />
   ),
 });

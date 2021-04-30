@@ -1,4 +1,5 @@
 import React from "react";
+import "./SimpleGauge.css";
 
 export type SimpleGaugeProps = {
   value: number;
@@ -33,11 +34,9 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
   const intl = new Intl.NumberFormat(locale);
   const intlvalue = new Intl.NumberFormat(locale, valueformat);
 
-  const sin45 = Math.sin(Math.PI / 4);
-  const cos45 = Math.cos(Math.PI / 4);
   const r1 = 55;
-  const sinr2 = Math.sin(Math.PI / 10);
-  const cosr2 = Math.cos(Math.PI / 10);
+  const sinr2 = Math.sin(Math.PI / 12);
+  const cosr2 = Math.cos(Math.PI / 12);
   const r2 = 25;
   const centerx = 100;
   const centery = 60;
@@ -61,9 +60,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           start: (181 * Math.PI) / 180,
           end: (135 * Math.PI) / 180,
         })}
-        className="pie1"
+        className="simple-pie"
         style={{
-          fill: "#ff0000",
           filter: "brightness(0.50)",
         }}
       />
@@ -76,9 +74,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           start: (226 * Math.PI) / 180,
           end: (180 * Math.PI) / 180,
         })}
-        className="pie2"
+        className="simple-pie"
         style={{
-          fill: "#ff0000",
           filter: "brightness(0.60)",
         }}
       />
@@ -91,9 +88,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           start: (271 * Math.PI) / 180,
           end: (225 * Math.PI) / 180,
         })}
-        className="pie3"
+        className="simple-pie"
         style={{
-          fill: "#ff0000",
           filter: "brightness(0.70)",
         }}
       />
@@ -106,9 +102,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           start: (316 * Math.PI) / 180,
           end: (270 * Math.PI) / 180,
         })}
-        className="pie4"
+        className="simple-pie"
         style={{
-          fill: "#ff0000",
           filter: "brightness(0.80)",
         }}
       />
@@ -121,9 +116,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           start: (361 * Math.PI) / 180,
           end: (315 * Math.PI) / 180,
         })}
-        className="pie5"
+        className="simple-pie"
         style={{
-          fill: "#ff0000",
           filter: "brightness(0.90)",
         }}
       />
@@ -136,9 +130,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           start: (46 * Math.PI) / 180,
           end: (0 * Math.PI) / 180,
         })}
-        className="pie6"
+        className="simple-pie"
         style={{
-          fill: "#ff0000",
           filter: "brightness(1)",
         }}
       />
@@ -158,9 +151,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
         style={{
           fill: "#00000000",
           strokeWidth: 2,
-          strokeMiterlimit: 0,
-
-          strokeDasharray: "none",
+          strokeLinejoin: "miter",
           stroke: "#6c6c6c",
           strokeOpacity: 1,
         }}
@@ -191,16 +182,14 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           centery - cosr2 * r2
         } A ${r2} ${r2} 0 1 0 ${centerx + sinr2 * r2} ${
           centery - cosr2 * r2
-        } L ${centerx} ${centery - 50} Z`}
+        } L ${centerx} ${centery - 45} Z`}
         opacity="1"
         className="base"
         style={{
           fill: "#ffffff",
           strokeWidth: 2,
-          strokeMiterlimit: 0,
-          strokeDasharray: "none",
+          strokeLinejoin: "miter",
           stroke: "#6c6c6c",
-
           strokeOpacity: 1,
           transform: ` translate(100px, 60px) rotate(${
             angle - 135

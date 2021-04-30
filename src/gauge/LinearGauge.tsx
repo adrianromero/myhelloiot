@@ -1,7 +1,9 @@
 import React from "react";
+import "./LinearGauge.css";
 
 export type LinearGaugeProps = {
   value: number;
+  valueformat?: Intl.NumberFormatOptions;
   min?: number;
   max?: number;
   step?: number;
@@ -9,12 +11,14 @@ export type LinearGaugeProps = {
 
 const LinearGauge: React.FC<LinearGaugeProps> = ({
   value,
+  valueformat,
   min = 0,
   max = 100,
   step = 5,
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
+  const intlvalue = new Intl.NumberFormat(locale, valueformat);
 
   const incstep = (160 * step) / (max - min);
   const lines = [];
@@ -22,9 +26,9 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
     lines.push(
       <line
         x1={index}
-        y1={42}
+        y1={62}
         x2={index}
-        y2={46}
+        y2={66}
         style={{ stroke: "#606060", strokeWidth: 1 }}
       />
     );
@@ -32,9 +36,9 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
   lines.push(
     <line
       x1={180}
-      y1={42}
+      y1={62}
       x2={180}
-      y2={46}
+      y2={66}
       style={{ stroke: "#606060", strokeWidth: 1 }}
     />
   );
@@ -49,14 +53,14 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 200 133">
       <line
         x1={20}
-        y1={9}
+        y1={29}
         x2={180}
-        y2={9}
+        y2={29}
         style={{ stroke: "#606060", strokeWidth: 1 }}
       />
       <rect
         x={20}
-        y={12}
+        y={32}
         width={160}
         height={25}
         fill="#cccccc"
@@ -64,11 +68,10 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
       />
       <rect
         x={20}
-        y="12"
+        y={32}
         width={width}
         height={25}
-        fill="#ff0000"
-        className="indicator"
+        className="linear-indicatorbar"
         style={{
           transition: "width 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
         }}
@@ -76,15 +79,15 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
 
       <line
         x1={20}
-        y1={40}
+        y1={60}
         x2={180}
-        y2={40}
+        y2={60}
         style={{ stroke: "#606060", strokeWidth: 1 }}
       />
       {lines}
       <text
         x={20}
-        y={60}
+        y={80}
         fill="#606060"
         textAnchor="middle"
         style={{ font: "14px sans-serif" }}
@@ -93,12 +96,21 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
       </text>
       <text
         x={180}
-        y={60}
+        y={80}
         fill="#606060"
         textAnchor="middle"
         style={{ font: "14px sans-serif" }}
       >
         {intl.format(max)}
+      </text>
+      <text
+        x={180}
+        y={20}
+        fill="#000000d9"
+        textAnchor="end"
+        style={{ font: "bold 14px sans-serif" }}
+      >
+        {intlvalue.format(value)}
       </text>
     </svg>
   );
