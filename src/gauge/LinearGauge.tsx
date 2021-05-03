@@ -1,9 +1,12 @@
 import React from "react";
+import { padvalue } from "./svgdraw";
 import "./LinearGauge.css";
 
 export type LinearGaugeProps = {
-  value: number;
+  value?: number;
   valueformat?: Intl.NumberFormatOptions;
+  title?: string;
+  className?: string;
   min?: number;
   max?: number;
   step?: number;
@@ -12,6 +15,8 @@ export type LinearGaugeProps = {
 const LinearGauge: React.FC<LinearGaugeProps> = ({
   value,
   valueformat,
+  title = "",
+  className = "",
   min = 0,
   max = 100,
   step = 5,
@@ -19,6 +24,16 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
   const intlvalue = new Intl.NumberFormat(locale, valueformat);
+
+  let width: number;
+  let formatvalue: string;
+  if (typeof value === "undefined" || isNaN(value)) {
+    width = 0;
+    formatvalue = "";
+  } else {
+    width = padvalue(min, max, 160)(value);
+    formatvalue = intlvalue.format(value);
+  }
 
   const incstep = (160 * step) / (max - min);
   const lines = [];
@@ -29,49 +44,41 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         y1={62}
         x2={index}
         y2={66}
-        style={{ stroke: "#606060", strokeWidth: 1 }}
+        className="linear-indicator-mark"
       />
     );
   }
   lines.push(
-    <line
-      x1={180}
-      y1={62}
-      x2={180}
-      y2={66}
-      style={{ stroke: "#606060", strokeWidth: 1 }}
-    />
+    <line x1={180} y1={62} x2={180} y2={66} className="linear-indicator-mark" />
   );
-  let width = (160 * value) / (max - min);
-  if (width < 0) {
-    width = 0;
-  }
-  if (width > 160) {
-    width = 160;
-  }
+
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 200 133">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      version="1.1"
+      viewBox="0 0 200 130"
+      className={className}
+    >
       <line
         x1={20}
         y1={29}
         x2={180}
         y2={29}
-        style={{ stroke: "#606060", strokeWidth: 1 }}
+        className="linear-indicator-mark"
       />
       <rect
         x={20}
         y={32}
         width={160}
         height={25}
-        fill="#cccccc"
-        className="base"
+        className="linear-indicator-background"
       />
       <rect
         x={20}
         y={32}
         width={width}
         height={25}
-        className="linear-indicatorbar"
+        className="linear-indicator-bar"
         style={{
           transition: "width 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
         }}
@@ -82,35 +89,30 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         y1={60}
         x2={180}
         y2={60}
-        style={{ stroke: "#606060", strokeWidth: 1 }}
+        className="linear-indicator-mark"
       />
       {lines}
       <text
         x={20}
         y={80}
-        fill="#606060"
         textAnchor="middle"
-        style={{ font: "14px sans-serif" }}
+        className="linear-indicator-labels"
       >
         {intl.format(min)}
       </text>
       <text
         x={180}
         y={80}
-        fill="#606060"
         textAnchor="middle"
-        style={{ font: "14px sans-serif" }}
+        className="linear-indicator-labels"
       >
         {intl.format(max)}
       </text>
-      <text
-        x={180}
-        y={20}
-        fill="#000000d9"
-        textAnchor="end"
-        style={{ font: "bold 14px sans-serif" }}
-      >
-        {intlvalue.format(value)}
+      <text x={180} y={20} textAnchor="end" className="linear-indicator-value">
+        {formatvalue}
+      </text>
+      <text x={20} y={20} textAnchor="start" className="linear-indicator-title">
+        {title}
       </text>
     </svg>
   );

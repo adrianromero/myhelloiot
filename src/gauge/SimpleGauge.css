@@ -1,3 +1,32 @@
-.simple-pie {
-  fill: #00ff00;
+.simple-indicator-pie {
+  fill: #ffff00;
+}
+
+.simple-indicator-labels {
+  fill: #606060;
+  font: 14px sans-serif;
+}
+
+.simple-indicator-mark {
+  fill: #00000000;
+  stroke: #606060;
+  stroke-width: 2px;
+  stroke-linejoin: miter;
+}
+
+.simple-indicator-arrow {
+  fill: #ffffff;
+  stroke: #606060;
+  stroke-width: 2px;
+  stroke-linejoin: miter;
+}
+
+.simple-indicator-value {
+  fill: #000000d9;
+  font: bold 14px sans-serif;
+}
+
+.simple-indicator-title {
+  fill: #0000008c;
+  font: 10px sans-serif;
 }

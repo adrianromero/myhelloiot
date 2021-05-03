@@ -1,3 +1,27 @@
-.linear-indicatorbar {
+.linear-indicator-bar {
   fill: #ff0000;
+}
+
+.linear-indicator-background {
+  fill: #cccccc;
+}
+
+.linear-indicator-labels {
+  fill: #606060;
+  font: 14px sans-serif;
+}
+
+.linear-indicator-mark {
+  stroke: #606060;
+  stroke-width: 1px;
+}
+
+.linear-indicator-value {
+  fill: #000000d9;
+  font: bold 14px sans-serif;
+}
+
+.linear-indicator-title {
+  fill: #0000008c;
+  font: 12px sans-serif;
 }

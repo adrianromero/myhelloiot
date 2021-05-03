@@ -1,32 +1,21 @@
 import React from "react";
+import { piepath, padvalue } from "./svgdraw";
 import "./SimpleGauge.css";
 
 export type SimpleGaugeProps = {
-  value: number;
+  value?: number;
   valueformat?: Intl.NumberFormatOptions;
+  title?: string;
+  className?: string;
   min?: number;
   max?: number;
-  step?: number;
-};
-
-const piepath: (args: {
-  cx: number;
-  cy: number;
-  r: number;
-  start: number;
-  end: number;
-  orientation?: number;
-}) => string = ({ cx, cy, r, start, end, orientation = 0 }) => {
-  return `M${cx + Math.cos(start) * r} ${
-    cy + Math.sin(start) * r
-  } A ${r} ${r} 1 ${orientation} 0 ${cx + Math.cos(end) * r} ${
-    cy + Math.sin(end) * r
-  } L ${cx} ${cy} Z`;
 };
 
 const SimpleGauge: React.FC<SimpleGaugeProps> = ({
   value,
   valueformat,
+  title = "",
+  className = "",
   min = 0,
   max = 100,
 }) => {
@@ -41,16 +30,23 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
   const centerx = 100;
   const centery = 60;
 
-  let angle = (270 * value) / (max - min);
-  if (angle < 0) {
+  let angle: number;
+  let formatvalue: string;
+  if (typeof value === "undefined" || isNaN(value)) {
     angle = 0;
-  }
-  if (angle > 270) {
-    angle = 270;
+    formatvalue = "";
+  } else {
+    angle = padvalue(min, max, 270)(value);
+    formatvalue = intlvalue.format(value);
   }
 
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 200 133">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      version="1.1"
+      viewBox="0 0 200 130"
+      className={className}
+    >
       <path
         id="arc"
         d={piepath({
@@ -60,7 +56,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           start: (181 * Math.PI) / 180,
           end: (135 * Math.PI) / 180,
         })}
-        className="simple-pie"
+        className="simple-indicator-pie"
         style={{
           filter: "brightness(0.50)",
         }}
@@ -74,7 +70,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           start: (226 * Math.PI) / 180,
           end: (180 * Math.PI) / 180,
         })}
-        className="simple-pie"
+        className="simple-indicator-pie"
         style={{
           filter: "brightness(0.60)",
         }}
@@ -88,7 +84,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           start: (271 * Math.PI) / 180,
           end: (225 * Math.PI) / 180,
         })}
-        className="simple-pie"
+        className="simple-indicator-pie"
         style={{
           filter: "brightness(0.70)",
         }}
@@ -102,7 +98,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           start: (316 * Math.PI) / 180,
           end: (270 * Math.PI) / 180,
         })}
-        className="simple-pie"
+        className="simple-indicator-pie"
         style={{
           filter: "brightness(0.80)",
         }}
@@ -116,7 +112,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           start: (361 * Math.PI) / 180,
           end: (315 * Math.PI) / 180,
         })}
-        className="simple-pie"
+        className="simple-indicator-pie"
         style={{
           filter: "brightness(0.90)",
         }}
@@ -130,7 +126,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           start: (46 * Math.PI) / 180,
           end: (0 * Math.PI) / 180,
         })}
-        className="simple-pie"
+        className="simple-indicator-pie"
         style={{
           filter: "brightness(1)",
         }}
@@ -146,32 +142,22 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           end: (135 * Math.PI) / 180,
           orientation: 1,
         })}
-        opacity="1"
-        className="base"
-        style={{
-          fill: "#00000000",
-          strokeWidth: 2,
-          strokeLinejoin: "miter",
-          stroke: "#6c6c6c",
-          strokeOpacity: 1,
-        }}
+        className="simple-indicator-mark"
       />
 
       <text
         x={50}
         y={110}
-        fill="#606060"
         textAnchor="middle"
-        style={{ font: "14px sans-serif" }}
+        className="simple-indicator-labels"
       >
         {intl.format(min)}
       </text>
       <text
         x={150}
         y={110}
-        fill="#606060"
         textAnchor="middle"
-        style={{ font: "14px sans-serif" }}
+        className="simple-indicator-labels"
       >
         {intl.format(max)}
       </text>
@@ -184,14 +170,9 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           centery - cosr2 * r2
         } L ${centerx} ${centery - 45} Z`}
         opacity="1"
-        className="base"
+        className="simple-indicator-arrow"
         style={{
-          fill: "#ffffff",
-          strokeWidth: 2,
-          strokeLinejoin: "miter",
-          stroke: "#6c6c6c",
-          strokeOpacity: 1,
-          transform: ` translate(100px, 60px) rotate(${
+          transform: `translate(100px, 60px) rotate(${
             angle - 135
           }deg) translate(-100px, -60px)`,
           transition: "transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
@@ -200,11 +181,18 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
       <text
         x={centerx}
         y={centery + 5}
-        fill="#000000d9"
         textAnchor="middle"
-        style={{ font: "bold 14px sans-serif" }}
+        className="simple-indicator-value"
       >
-        {intlvalue.format(value)}
+        {formatvalue}
+      </text>
+      <text
+        x={100}
+        y={105}
+        textAnchor="middle"
+        className="simple-indicator-title"
+      >
+        {title}
       </text>
     </svg>
   );

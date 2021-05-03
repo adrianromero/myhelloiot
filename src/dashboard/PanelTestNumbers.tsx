@@ -12,6 +12,7 @@ import {
   DashboardIconFormat,
   LinearIconFormat,
   SimpleIconFormat,
+  CircularIconFormat,
 } from "../mqtt/GaugeFormat";
 
 const PanelTestNumbers: FC<{}> = () => (
@@ -48,7 +49,7 @@ const PanelTestNumbers: FC<{}> = () => (
                 unit: "celsius",
               })
             ),
-            { min: 0, max: 60, step: 1 }
+            { min: -10, max: 60, step: 1 }
           )}
         />
       </Col>
@@ -63,7 +64,7 @@ const PanelTestNumbers: FC<{}> = () => (
                 unit: "celsius",
               })
             ),
-            { min: 0, max: 60, step: 1 }
+            { min: -10, max: 60, step: 1 }
           )}
         />
       </Col>
@@ -72,7 +73,7 @@ const PanelTestNumbers: FC<{}> = () => (
           title="Primer gauge"
           topicsub="myhelloiot/number"
           format={LinearIconFormat(
-            { min: 0, max: 60, step: 5 },
+            { title: "First gauge", min: -10, max: 60, step: 5 },
             {
               style: "unit",
               unit: "celsius",
@@ -85,11 +86,7 @@ const PanelTestNumbers: FC<{}> = () => (
           title="Segundo gauge"
           topicsub="myhelloiot/number"
           format={DashboardIconFormat(
-            {
-              min: 0,
-              max: 60,
-              step: 5,
-            },
+            { title: "Second gauge", min: -10, max: 60 },
             {
               style: "unit",
               unit: "celsius",
@@ -102,11 +99,20 @@ const PanelTestNumbers: FC<{}> = () => (
           title="Third gauge"
           topicsub="myhelloiot/number"
           format={SimpleIconFormat(
+            { title: "Third gauge", min: -10, max: 60 },
             {
-              min: 0,
-              max: 60,
-              step: 5,
-            },
+              style: "unit",
+              unit: "celsius",
+            }
+          )}
+        />
+      </Col>
+      <Col span={6}>
+        <ViewCard
+          title="Fourth gauge"
+          topicsub="myhelloiot/number"
+          format={CircularIconFormat(
+            { title: "Fourth gauge", min: -10, max: 60, step: 5 },
             {
               style: "unit",
               unit: "celsius",

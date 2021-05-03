@@ -1,3 +1,22 @@
-.dashboard-indicatorbar {
+.dashboard-indicator-bar {
   stroke: #0000ff;
+}
+
+.dashboard-indicator-background {
+  stroke: #cccccc;
+}
+
+.dashboard-indicator-labels {
+  fill: #606060;
+  font: 14px sans-serif;
+}
+
+.dashboard-indicator-value {
+  fill: #000000d9;
+  font: bold 18px sans-serif;
+}
+
+.dashboard-indicator-title {
+  fill: #0000008c;
+  font: 12px sans-serif;
 }

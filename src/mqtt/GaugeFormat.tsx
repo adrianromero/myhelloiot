@@ -3,46 +3,68 @@ import { IconFormat, NumberValidation } from "./FormatTypes";
 import LinearGauge from "../gauge/LinearGauge";
 import DashboardGauge from "../gauge/DashboardGauge";
 import SimpleGauge from "../gauge/SimpleGauge";
+import CircularGauge from "../gauge/CircularGauge";
+
+export type GaugeProps =
+  | {
+      title?: string;
+      className?: string;
+    }
+  | NumberValidation;
+
+const readNumber: (buffer: Buffer) => number | undefined = (buffer) => {
+  const s: string = buffer.toString();
+  return s ? Number(s) : undefined;
+};
 
 export const LinearIconFormat: (
-  validation: NumberValidation,
+  gaugeprops?: GaugeProps,
   valueformat?: Intl.NumberFormatOptions
-) => IconFormat = (validation, valueformat) => ({
+) => IconFormat = (gaugeprops, valueformat) => ({
   toIcon: (buffer) => (
     <LinearGauge
-      min={validation.min}
-      max={validation.max}
-      step={validation.step}
-      value={Number(buffer.toString())}
+      value={readNumber(buffer)}
       valueformat={valueformat}
+      {...gaugeprops}
     />
   ),
 });
 
 export const DashboardIconFormat: (
-  validation: NumberValidation,
+  gaugeprops?: GaugeProps,
   valueformat?: Intl.NumberFormatOptions
-) => IconFormat = (validation, valueformat) => ({
+) => IconFormat = (gaugeprops, valueformat) => ({
   toIcon: (buffer) => (
     <DashboardGauge
-      value={Number(buffer.toString())}
+      value={readNumber(buffer)}
       valueformat={valueformat}
-      min={validation.min}
-      max={validation.max}
+      {...gaugeprops}
     />
   ),
 });
 
 export const SimpleIconFormat: (
-  validation: NumberValidation,
+  gaugeprops?: GaugeProps,
   valueformat?: Intl.NumberFormatOptions
-) => IconFormat = (validation, valueformat) => ({
+) => IconFormat = (gaugeprops, valueformat) => ({
   toIcon: (buffer) => (
     <SimpleGauge
-      value={Number(buffer.toString())}
+      value={readNumber(buffer)}
       valueformat={valueformat}
-      min={validation.min}
-      max={validation.max}
+      {...gaugeprops}
+    />
+  ),
+});
+
+export const CircularIconFormat: (
+  gaugeprops?: GaugeProps,
+  valueformat?: Intl.NumberFormatOptions
+) => IconFormat = (gaugeprops, valueformat) => ({
+  toIcon: (buffer) => (
+    <CircularGauge
+      value={readNumber(buffer)}
+      valueformat={valueformat}
+      {...gaugeprops}
     />
   ),
 });
