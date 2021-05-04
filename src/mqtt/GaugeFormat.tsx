@@ -4,11 +4,13 @@ import LinearGauge from "../gauge/LinearGauge";
 import DashboardGauge from "../gauge/DashboardGauge";
 import SimpleGauge from "../gauge/SimpleGauge";
 import CircularGauge from "../gauge/CircularGauge";
+import MetroGauge from "../gauge/MetroGauge";
 
 export type GaugeProps =
   | {
       title?: string;
       className?: string;
+      labelstep?: number;
     }
   | NumberValidation;
 
@@ -62,6 +64,19 @@ export const CircularIconFormat: (
 ) => IconFormat = (gaugeprops, valueformat) => ({
   toIcon: (buffer) => (
     <CircularGauge
+      value={readNumber(buffer)}
+      valueformat={valueformat}
+      {...gaugeprops}
+    />
+  ),
+});
+
+export const MetroIconFormat: (
+  gaugeprops?: GaugeProps,
+  valueformat?: Intl.NumberFormatOptions
+) => IconFormat = (gaugeprops, valueformat) => ({
+  toIcon: (buffer) => (
+    <MetroGauge
       value={readNumber(buffer)}
       valueformat={valueformat}
       {...gaugeprops}

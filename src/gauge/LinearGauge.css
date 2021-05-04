@@ -6,14 +6,21 @@
   fill: #cccccc;
 }
 
-.linear-indicator-labels {
-  fill: #606060;
-  font: 14px sans-serif;
-}
-
 .linear-indicator-mark {
   stroke: #606060;
+  stroke-width: 0.6px;
+  stroke-linecap: butt;
+}
+
+.linear-indicator-markstep {
+  stroke: #606060;
   stroke-width: 1px;
+  stroke-linecap: square;
+}
+
+.linear-indicator-marklabel {
+  fill: #0000008c;
+  font: 8px sans-serif;
 }
 
 .linear-indicator-value {

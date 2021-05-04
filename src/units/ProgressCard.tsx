@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react"; // FC functional control.
 import { Card, Row, Col, Progress } from "antd";
+import { padvalue } from "../gauge/svgdraw";
+
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { IconFormatNumber } from "../mqtt/FormatTypes";
 import { ToIconFormatNumber } from "../mqtt/IconFormat";
@@ -30,7 +32,7 @@ const ProgressCard: React.FC<ViewCardProps> = ({
   });
 
   const value = Number(buffer.toString());
-  const percent = (100 * value) / (format.max - format.min);
+  const percent = padvalue(format.min, format.max, 100)(value);
 
   return (
     <Card className="myh-card myh-input-card" size="small" title={title}>

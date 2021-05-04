@@ -70,7 +70,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
       />
       <text
         x={40}
-        y={95}
+        y={92}
         textAnchor="middle"
         className="dashboard-indicator-labels"
       >
@@ -78,7 +78,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
       </text>
       <text
         x={160}
-        y={95}
+        y={92}
         textAnchor="middle"
         className="dashboard-indicator-labels"
       >

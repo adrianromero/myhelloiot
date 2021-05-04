@@ -145,6 +145,12 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
             retain: s.online.retain,
           });
         }
+        s._internal.subscriptions.forEach((subs: SubscribeHandler) =>
+          Array.from(s._internal.values.entries())
+            .filter(([key]) => match(subs.topic, key))
+            .forEach(([key, value]) => subs.listener(key, value))
+        );
+
         return {
           status: "Connected",
           client: s.client,
@@ -231,10 +237,9 @@ const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
         state.client.subscribe(topic, options || { qos: 0 });
       }
       // in case message is retained, system will call two times the listener
-      const value = state._internal.values.get(topic);
-      if (value) {
-        listener(topic, value);
-      }
+      Array.from(state._internal.values.entries())
+        .filter(([key]) => match(topic, key))
+        .forEach(([key, value]) => listener(key, value));
       return handler;
     }
     return null;

@@ -10,6 +10,7 @@ export type LinearGaugeProps = {
   min?: number;
   max?: number;
   step?: number;
+  labelstep?: number;
 };
 
 const LinearGauge: React.FC<LinearGaugeProps> = ({
@@ -20,6 +21,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
   min = 0,
   max = 100,
   step = 5,
+  labelstep = 10,
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -35,22 +37,42 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
     formatvalue = intlvalue.format(value);
   }
 
-  const incstep = (160 * step) / (max - min);
   const lines = [];
-  for (let index = 20; index < 180; index += incstep) {
+  for (let index = min; index <= max; index += step) {
+    const mark = 20 + (160 * (index - min)) / (max - min);
     lines.push(
       <line
-        x1={index}
-        y1={62}
-        x2={index}
-        y2={66}
+        x1={mark}
+        y1={60}
+        x2={mark}
+        y2={63}
         className="linear-indicator-mark"
       />
     );
   }
-  lines.push(
-    <line x1={180} y1={62} x2={180} y2={66} className="linear-indicator-mark" />
-  );
+
+  for (let index = min; index <= max; index += labelstep) {
+    const mark = 20 + (160 * (index - min)) / (max - min);
+    lines.push(
+      <>
+        <line
+          x1={mark}
+          y1={60}
+          x2={mark}
+          y2={65}
+          className="linear-indicator-markstep"
+        />
+        <text
+          x={mark}
+          y={75}
+          textAnchor="middle"
+          className="linear-indicator-marklabel"
+        >
+          {intl.format(index)}
+        </text>
+      </>
+    );
+  }
 
   return (
     <svg
@@ -64,7 +86,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         y1={29}
         x2={180}
         y2={29}
-        className="linear-indicator-mark"
+        className="linear-indicator-markstep"
       />
       <rect
         x={20}
@@ -89,25 +111,9 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         y1={60}
         x2={180}
         y2={60}
-        className="linear-indicator-mark"
+        className="linear-indicator-markstep"
       />
       {lines}
-      <text
-        x={20}
-        y={80}
-        textAnchor="middle"
-        className="linear-indicator-labels"
-      >
-        {intl.format(min)}
-      </text>
-      <text
-        x={180}
-        y={80}
-        textAnchor="middle"
-        className="linear-indicator-labels"
-      >
-        {intl.format(max)}
-      </text>
       <text x={180} y={20} textAnchor="end" className="linear-indicator-value">
         {formatvalue}
       </text>

@@ -13,6 +13,7 @@ import {
   LinearIconFormat,
   SimpleIconFormat,
   CircularIconFormat,
+  MetroIconFormat,
 } from "../mqtt/GaugeFormat";
 
 const PanelTestNumbers: FC<{}> = () => (
@@ -55,7 +56,7 @@ const PanelTestNumbers: FC<{}> = () => (
       </Col>
       <Col span={6}>
         <ProgressCard
-          title="El progress"
+          title="ProgressCard unit"
           topicsub="myhelloiot/number"
           format={ToIconFormatNumber(
             ToIconFormat(
@@ -70,10 +71,16 @@ const PanelTestNumbers: FC<{}> = () => (
       </Col>
       <Col span={6}>
         <ViewCard
-          title="Primer gauge"
+          title="Linear gauge card"
           topicsub="myhelloiot/number"
           format={LinearIconFormat(
-            { title: "First gauge", min: -10, max: 60, step: 5 },
+            {
+              title: "Linear gauge",
+              min: -10,
+              max: 60,
+              step: 5,
+              labelstep: 70,
+            },
             {
               style: "unit",
               unit: "celsius",
@@ -83,10 +90,10 @@ const PanelTestNumbers: FC<{}> = () => (
       </Col>
       <Col span={6}>
         <ViewCard
-          title="Segundo gauge"
+          title="Dashboard gauge card"
           topicsub="myhelloiot/number"
           format={DashboardIconFormat(
-            { title: "Second gauge", min: -10, max: 60 },
+            { title: "Dashboard gauge", min: -10, max: 60 },
             {
               style: "unit",
               unit: "celsius",
@@ -96,10 +103,10 @@ const PanelTestNumbers: FC<{}> = () => (
       </Col>
       <Col span={6}>
         <ViewCard
-          title="Third gauge"
+          title="Simple gauge card"
           topicsub="myhelloiot/number"
           format={SimpleIconFormat(
-            { title: "Third gauge", min: -10, max: 60 },
+            { title: "Simple gauge", min: -10, max: 60 },
             {
               style: "unit",
               unit: "celsius",
@@ -109,10 +116,23 @@ const PanelTestNumbers: FC<{}> = () => (
       </Col>
       <Col span={6}>
         <ViewCard
-          title="Fourth gauge"
+          title="Circular gauge card"
           topicsub="myhelloiot/number"
           format={CircularIconFormat(
-            { title: "Fourth gauge", min: -10, max: 60, step: 5 },
+            { title: "Circular gauge", min: -10, max: 60, step: 5 },
+            {
+              style: "unit",
+              unit: "celsius",
+            }
+          )}
+        />
+      </Col>
+      <Col span={6}>
+        <ViewCard
+          title="Metro gauge card"
+          topicsub="myhelloiot/number"
+          format={MetroIconFormat(
+            { title: "Metro gauge", min: -10, max: 60, step: 1, labelstep: 5 },
             {
               style: "unit",
               unit: "celsius",
