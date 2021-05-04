@@ -21,7 +21,7 @@
 
 .metro-indicator-marklabel {
   fill: #0000008c;
-  font: 6px sans-serif;
+  font: 6px "Roboto Condensed", sans-serif;
 }
 
 .metro-indicator-background {

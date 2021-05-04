@@ -4,7 +4,7 @@
 
 .simple-indicator-labels {
   fill: #606060;
-  font: 10px sans-serif;
+  font: 10px "Roboto Condensed", sans-serif;
 }
 
 .simple-indicator-mark {
@@ -23,10 +23,10 @@
 
 .simple-indicator-value {
   fill: #000000d9;
-  font: bold 14px sans-serif;
+  font: bold 14px "Roboto Condensed", sans-serif;
 }
 
 .simple-indicator-title {
   fill: #0000008c;
-  font: 10px sans-serif;
+  font: 10px "Roboto Condensed", sans-serif;
 }
