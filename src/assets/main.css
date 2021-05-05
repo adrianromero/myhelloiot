@@ -11,14 +11,6 @@
   padding: 4px 11px;
 }
 
-.myh-card-footer {
-  position: absolute;
-  bottom: 0;
-  font-size: 90%;
-  font-weight: 600;
-  color: #717171;
-}
-
 .myh-class_alignright {
   text-align: right;
 }

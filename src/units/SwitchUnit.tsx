@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"; // FC functional control.
-import { Switch, Card, Row, Col } from "antd";
+import React, { useEffect, useState } from "react";
+import { Switch } from "antd";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { ValueEdit } from "../mqtt/FormatTypes";
 import { StrValueEdit } from "../mqtt/ValueFormat";
@@ -7,17 +7,13 @@ import { StrValueEdit } from "../mqtt/ValueFormat";
 import "antd/dist/antd.css";
 import "../assets/main.css";
 
-type SwitchCardProps = {
-  title?: string;
-  footer?: string;
+type SwitchUnitProps = {
   topicpub: string;
   topicsub: string;
   format?: ValueEdit;
 };
 
-const SwitchCard: React.FC<SwitchCardProps> = ({
-  title,
-  footer,
+const SwitchUnit: React.FC<SwitchUnitProps> = ({
   topicpub,
   topicsub,
   format = StrValueEdit(),
@@ -39,18 +35,12 @@ const SwitchCard: React.FC<SwitchCardProps> = ({
   };
 
   return (
-    <Card className="myh-card myh-switch-card" size="small" title={title}>
-      <Row justify="center">
-        <Col>
-          <Switch checked={checked} onChange={onChange} disabled={!connected} />
-        </Col>
-      </Row>
-      {footer && (
-        <Row justify="center">
-          <Col className="myh-card-footer">{footer}</Col>
-        </Row>
-      )}
-    </Card>
+    <div
+      className="myh-value myh-value-padding"
+      style={{ display: "flex", justifyContent: "center" }}
+    >
+      <Switch checked={checked} onChange={onChange} disabled={!connected} />
+    </div>
   );
 };
-export default SwitchCard;
+export default SwitchUnit;

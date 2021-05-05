@@ -5,7 +5,7 @@ import { SVGProps } from "react";
 import { IconEdit, IconFormat } from "./FormatTypes";
 
 export const LiteralIconFormat: (text: string) => IconFormat = (text) => ({
-  toIcon: (b: Buffer) => text || "\u00A0",
+  toIcon: (b: Buffer) => <>{text || "\u00A0"}</>,
 });
 
 export const ImageIconFormat: (
@@ -36,7 +36,7 @@ export const LiteralIconEdit: (text: string, message: Buffer) => IconEdit = (
   text,
   message
 ) => ({
-  toIcon: (b: Buffer) => text,
+  toIcon: (b: Buffer) => <>{text}</>,
   fromString: (s: string) => {
     throw new Error();
   },

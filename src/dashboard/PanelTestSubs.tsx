@@ -1,6 +1,7 @@
 import React, { useState, FC } from "react"; // FC functional control.
 import { Row, Col, Switch } from "antd";
-import InputCard from "../units/InputCard";
+import CardStd from "../units/CardStd";
+import InputUnit from "../units/InputUnit";
 
 const PanelTestSubs: FC<{}> = () => {
   const [checked, setChecked] = useState<boolean>(false);
@@ -13,28 +14,31 @@ const PanelTestSubs: FC<{}> = () => {
         </Col>
         {checked && (
           <Col span={4}>
-            <InputCard
-              title="cosita"
-              topicpub="myhelloiot/cosita"
-              topicsub="myhelloiot/cosita"
-            />
+            <CardStd title="cosita">
+              <InputUnit
+                topicpub="myhelloiot/cosita"
+                topicsub="myhelloiot/cosita"
+              />
+            </CardStd>
           </Col>
         )}
         {!checked && (
           <Col span={4}>
-            <InputCard
-              title="number"
-              topicpub="myhelloiot/number"
-              topicsub="myhelloiot/number"
-            />
+            <CardStd title="number">
+              <InputUnit
+                topicpub="myhelloiot/number"
+                topicsub="myhelloiot/number"
+              />
+            </CardStd>
           </Col>
         )}
         <Col span={4}>
-          <InputCard
-            title="Online"
-            topicpub="myhelloiot/online"
-            topicsub="myhelloiot/online"
-          />
+          <CardStd title="Online">
+            <InputUnit
+              topicpub="myhelloiot/online"
+              topicsub="myhelloiot/online"
+            />
+          </CardStd>
         </Col>
       </Row>
     </div>

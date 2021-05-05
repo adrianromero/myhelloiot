@@ -59,14 +59,14 @@ export const ToIconFormat: (format: ValueFormat) => IconFormat = (format) => ({
 export const LabelIconFormat: (format: ValueFormat) => IconFormat = (
   format
 ) => ({
-  toIcon: (b: Buffer) => format.toString(b) || "\u00A0",
+  toIcon: (b: Buffer) => <>{format.toString(b) || "\u00A0"}</>,
 });
 
 export const LabelIconEdit: (format: ValueEdit) => IconEdit = (
   format: ValueEdit
 ) => ({
   ...format,
-  toIcon: (b: Buffer) => format.toString(b) || "\u00A0",
+  toIcon: (b: Buffer) => <>{format.toString(b) || "\u00A0"}</>,
 });
 
 export const ToIconEdit: (format: ValueEdit) => IconEdit = (format) => ({

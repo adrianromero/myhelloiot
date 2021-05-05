@@ -1,7 +1,7 @@
 import React from "react";
 
 export type IconFormat = {
-  toIcon: (b: Buffer) => React.ReactNode;
+  toIcon: (b: Buffer) => React.ReactElement;
 };
 
 export type ValueFormat = {

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"; // FC functional control.
-import { Card, Row, Col } from "antd";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { IconFormat } from "../mqtt/FormatTypes";
 import { StrIconFormat } from "../mqtt/IconFormat";
@@ -7,14 +6,12 @@ import { StrIconFormat } from "../mqtt/IconFormat";
 import "antd/dist/antd.css";
 import "../assets/main.css";
 
-type ViewCardProps = {
-  title?: string;
+type ViewUnitProps = {
   topicsub: string;
   format?: IconFormat;
 };
 
-const ViewCard: React.FC<ViewCardProps> = ({
-  title,
+const ViewUnit: React.FC<ViewUnitProps> = ({
   topicsub,
   format = StrIconFormat(),
 }) => {
@@ -29,12 +26,6 @@ const ViewCard: React.FC<ViewCardProps> = ({
     setBuffer(mqttmessage);
   });
 
-  return (
-    <Card className="myh-card myh-input-card" size="small" title={title}>
-      <Row gutter={8} wrap={false}>
-        <Col flex="auto">{format.toIcon(buffer)}</Col>
-      </Row>
-    </Card>
-  );
+  return format.toIcon(buffer);
 };
-export default ViewCard;
+export default ViewUnit;

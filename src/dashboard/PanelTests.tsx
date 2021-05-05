@@ -7,10 +7,11 @@ import {
   StarIconFormat,
   ThuderboltIconFormat,
 } from "../mqtt/IconFormat";
-import InputCard from "../units/InputCard";
-import SwitchCard from "../units/SwitchCard";
-import ButtonCard from "../units/ButtonCard";
-import ViewCard from "../units/ViewCard";
+import CardStd from "../units/CardStd";
+import InputUnit from "../units/InputUnit";
+import SwitchUnit from "../units/SwitchUnit";
+import ButtonUnit from "../units/ButtonUnit";
+import ViewUnit from "../units/ViewUnit";
 import {
   TitleIconEdit,
   LiteralIconEdit,
@@ -28,105 +29,120 @@ const PanelTests: FC<{}> = () => (
   <div style={{ padding: "24px" }}>
     <Row gutter={[8, 8]}>
       <Col span={4}>
-        <InputCard
-          title="cosita"
-          topicpub="myhelloiot/cosita"
-          topicsub="myhelloiot/cosita"
-        />
+        <CardStd title="cosita">
+          <InputUnit
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+          />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <InputCard
-          title="cosita2"
-          topicpub="myhelloiot/cosita"
-          topicsub="myhelloiot/cosita"
-          format={HEXValueEdit()}
-        />
+        <CardStd title="cosita2">
+          <InputUnit
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+            format={HEXValueEdit()}
+          />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <InputCard
-          title="cosita2"
-          topicpub="myhelloiot/cosita"
-          topicsub="myhelloiot/cosita"
-          format={Base64ValueEdit()}
-        />
+        <CardStd title="cosita2">
+          <InputUnit
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+            format={Base64ValueEdit()}
+          />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <InputCard title="Subscribe only" topicsub="myhelloiot/cosita" />
+        <CardStd title="Subscribe only">
+          <InputUnit topicsub="myhelloiot/cosita" />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <InputCard title="Publish only" topicpub="myhelloiot/cosita" />
+        <CardStd title="Publish only">
+          <InputUnit topicpub="myhelloiot/cosita" />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <InputCard
-          title={"\u00A0"}
-          topicpub="myhelloiot/cosita"
-          topicsub="myhelloiot/cosita"
-        />
+        <CardStd title={"\u00A0"}>
+          <InputUnit
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+          />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <ViewCard
-          title="El viewer de number receive"
-          topicsub="myhelloiot/cosita"
-        />
+        <CardStd title="El viewer de number receive">
+          <ViewUnit topicsub="myhelloiot/cosita" />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <SwitchCard
-          title="El switch de cosita"
-          footer="Switch footer"
-          topicpub="myhelloiot/cosita"
-          topicsub="myhelloiot/cosita"
-        />
+        <CardStd title="El switch de cosita">
+          <SwitchUnit
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+          />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <ButtonCard
-          title="El switch de cosita"
-          topicpub="myhelloiot/cosita"
-          topicsub="myhelloiot/cosita"
-        />
+        <CardStd title="El switch de cosita">
+          <ButtonUnit
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+          />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <ButtonCard
-          title="Button title"
-          footer="Button footer"
-          topicpub="myhelloiot/cosita"
-          topicsub="myhelloiot/cosita"
-          format={ComposedIconEdit(SwitchValueEdit(), BulbIconFormat())}
-        />
+        <CardStd title="Button title">
+          <ButtonUnit
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+            format={ComposedIconEdit(SwitchValueEdit(), BulbIconFormat())}
+          />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <ButtonCard
-          topicpub="myhelloiot/cosita"
-          topicsub="myhelloiot/cosita"
-          format={ComposedIconEdit(SwitchValueEdit(), ThuderboltIconFormat())}
-        />
+        <CardStd>
+          <ButtonUnit
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+            format={ComposedIconEdit(SwitchValueEdit(), ThuderboltIconFormat())}
+          />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <ButtonCard
-          topicpub="myhelloiot/cosita"
-          topicsub="myhelloiot/cosita"
-          format={ComposedIconEdit(SwitchValueEdit(), StarIconFormat())}
-        />
+        <CardStd>
+          <ButtonUnit
+            topicpub="myhelloiot/cosita"
+            topicsub="myhelloiot/cosita"
+            format={ComposedIconEdit(SwitchValueEdit(), StarIconFormat())}
+          />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <ButtonCard
-          footer="text"
-          topicpub="pepe/cosa/cosita"
-          format={LiteralIconEdit("Button", Buffer.from("mensaje"))}
-        />
+        <CardStd>
+          <ButtonUnit
+            topicpub="pepe/cosa/cosita"
+            format={LiteralIconEdit("Button", Buffer.from("mensaje"))}
+          />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <ButtonCard
-          footer="svg"
-          topicpub="pepe/cosa/cosita"
-          format={ImageIconEdit(Themes, Buffer.from("mensaje"))}
-        />
+        <CardStd>
+          <ButtonUnit
+            topicpub="pepe/cosa/cosita"
+            format={ImageIconEdit(Themes, Buffer.from("mensaje"))}
+          />
+        </CardStd>
       </Col>
       <Col span={4}>
-        <ButtonCard
-          footer="svg + text"
-          topicpub="pepe/cosa/cosita"
-          format={TitleIconEdit(Themes, "Colors", Buffer.from("mensaje"))}
-        />
+        <CardStd>
+          <ButtonUnit
+            topicpub="pepe/cosa/cosita"
+            format={TitleIconEdit(Themes, "Colors", Buffer.from("mensaje"))}
+          />
+        </CardStd>
       </Col>
     </Row>
   </div>

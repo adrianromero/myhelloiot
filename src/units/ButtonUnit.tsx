@@ -1,5 +1,5 @@
 import React, { useEffect, useState, MouseEvent } from "react";
-import { Button, Card, Row, Col } from "antd";
+import { Button } from "antd";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { IconEdit } from "../mqtt/FormatTypes";
 import { LabelIconEdit } from "../mqtt/IconFormat";
@@ -8,17 +8,13 @@ import { SwitchValueEdit } from "../mqtt/ValueFormat";
 import "antd/dist/antd.css";
 import "../assets/main.css";
 
-type ButtonCardProps = {
-  title?: string;
-  footer?: string;
+type ButtonUnitProps = {
   topicpub: string;
   topicsub?: string;
   format?: IconEdit;
 };
 
-const ButtonCard: React.FC<ButtonCardProps> = ({
-  title,
-  footer,
+const ButtonUnit: React.FC<ButtonUnitProps> = ({
   topicpub,
   topicsub = "",
   format = LabelIconEdit(SwitchValueEdit()),
@@ -41,26 +37,15 @@ const ButtonCard: React.FC<ButtonCardProps> = ({
   };
 
   return (
-    <Card className="myh-card myh-switch-card" size="small" title={title}>
-      <Row justify="center">
-        <Col span="24">
-          <Button
-            className="myh-value"
-            type="primary"
-            style={{ width: "100%", height: "70px" }}
-            onClick={onClick}
-            disabled={!connected}
-          >
-            {format.toIcon(buffer)}
-          </Button>
-        </Col>
-      </Row>
-      {footer && (
-        <Row justify="center">
-          <Col className="myh-card-footer">{footer}</Col>
-        </Row>
-      )}
-    </Card>
+    <Button
+      className="myh-value"
+      type="primary"
+      style={{ width: "100%", height: "70px" }}
+      onClick={onClick}
+      disabled={!connected}
+    >
+      {format.toIcon(buffer)}
+    </Button>
   );
 };
-export default ButtonCard;
+export default ButtonUnit;
