@@ -9,8 +9,6 @@ export type ProgressGaugeProps = {
   className?: string;
   min?: number;
   max?: number;
-  step?: number;
-  labelstep?: number;
 };
 
 const ProgressGauge: React.FC<ProgressGaugeProps> = ({

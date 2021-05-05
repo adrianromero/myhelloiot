@@ -6,8 +6,8 @@ import { NumberValueEdit } from "../mqtt/ValueFormat";
 import CardStd from "../units/CardStd";
 import InputUnit from "../units/InputUnit";
 import ViewUnit from "../units/ViewUnit";
-import SliderCard from "../units/SliderCard";
-import { ToIconFormat, ToIconFormatNumber } from "../mqtt/IconFormat";
+import SliderUnit from "../units/SliderUnit";
+import { ToIconFormat } from "../mqtt/IconFormat";
 import {
   DashboardIconFormat,
   LinearIconFormat,
@@ -42,20 +42,22 @@ const PanelTestNumbers: FC<{}> = () => (
         </CardStd>
       </Col>
       <Col span={6}>
-        <SliderCard
-          title="El slider de number receive"
-          topicpub="myhelloiot/number"
-          topicsub="myhelloiot/number"
-          format={ToIconFormatNumber(
-            ToIconFormat(
+        <CardStd title="El slider de number receive">
+          <ViewUnit
+            topicsub="myhelloiot/number"
+            format={ToIconFormat(
               NumberValueEdit({
                 style: "unit",
                 unit: "celsius",
               })
-            ),
-            { min: -10, max: 60, step: 1 }
-          )}
-        />
+            )}
+          />
+          <SliderUnit
+            topicpub="myhelloiot/number"
+            topicsub="myhelloiot/number"
+            numberValidation={{ min: -10, max: 60, step: 1 }}
+          />
+        </CardStd>
       </Col>
       <Col span={6}>
         <CardStd title="Progress gauge card">
