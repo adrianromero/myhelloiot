@@ -1,18 +1,14 @@
 import React, { useEffect } from "react";
-
 import { Layout } from "antd";
 import { CheckCircleTwoTone, PlusCircleTwoTone } from "@ant-design/icons";
-
 import ContentConnect from "./connection/ContentConnect";
-import ContentDashboard from "./dashboard/ContentDashboard";
-
+import AppDashboard from "./AppDashboard";
+import { ConnectInfo, connectWithInfo } from "./ConnectionInfo";
 import { useMQTTContext } from "./mqtt/MQTTProvider";
-
 import "antd/dist/antd.css";
 import "./App.css";
-import { ConnectInfo, connectWithInfo } from "./ConnectionInfo";
 
-function App() {
+const App: React.FC<{}> = () => {
   const [{ status }, { connect }] = useMQTTContext();
 
   useEffect(() => {
@@ -57,10 +53,10 @@ function App() {
         </div>
       </Layout.Header>
       <Layout style={{ marginTop: 64, height: "calc(100vh - 64px)" }}>
-        {status === "Disconnected" ? <ContentConnect /> : <ContentDashboard />}
+        {status === "Disconnected" ? <ContentConnect /> : <AppDashboard />}
       </Layout>
     </Layout>
   );
-}
+};
 
 export default App;
