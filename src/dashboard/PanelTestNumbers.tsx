@@ -7,7 +7,6 @@ import CardStd from "../units/CardStd";
 import InputUnit from "../units/InputUnit";
 import ViewUnit from "../units/ViewUnit";
 import SliderCard from "../units/SliderCard";
-import ProgressCard from "../units/ProgressCard";
 import { ToIconFormat, ToIconFormatNumber } from "../mqtt/IconFormat";
 import {
   DashboardIconFormat,
@@ -15,6 +14,7 @@ import {
   SimpleIconFormat,
   CircularIconFormat,
   MetroIconFormat,
+  ProgressIconFormat,
 } from "../mqtt/GaugeFormat";
 
 const PanelTestNumbers: FC<{}> = () => (
@@ -58,19 +58,22 @@ const PanelTestNumbers: FC<{}> = () => (
         />
       </Col>
       <Col span={6}>
-        <ProgressCard
-          title="ProgressCard unit"
-          topicsub="myhelloiot/number"
-          format={ToIconFormatNumber(
-            ToIconFormat(
-              NumberValueEdit({
+        <CardStd title="Progress gauge card">
+          <ViewUnit
+            topicsub="myhelloiot/number"
+            format={ProgressIconFormat(
+              {
+                title: "Progress gauge",
+                min: -10,
+                max: 60,
+              },
+              {
                 style: "unit",
                 unit: "celsius",
-              })
-            ),
-            { min: -10, max: 60, step: 1 }
-          )}
-        />
+              }
+            )}
+          />
+        </CardStd>
       </Col>
       <Col span={6}>
         <CardStd title="Linear gauge card">
