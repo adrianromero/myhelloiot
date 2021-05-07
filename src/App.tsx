@@ -62,7 +62,7 @@ const MQTTApp: React.FC<{}> = () => {
         {status === "Disconnected" ? (
           <ContentConnect />
         ) : (
-          <AppDashboard jsx="<ContentDashboard />" />
+          <AppDashboard jsx="<DemoDashboard />" />
         )}
       </Layout>
     </Layout>

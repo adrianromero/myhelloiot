@@ -1,5 +1,5 @@
 import React from "react";
-import { padvalue } from "./svgdraw";
+import { arcpath, padvalue } from "./svgdraw";
 import "./MetroGauge.css";
 
 export type MetroGaugeProps = {
@@ -27,7 +27,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
   const intl = new Intl.NumberFormat(locale);
   const intlvalue = new Intl.NumberFormat(locale, valueformat);
 
-  const r1 = 60;
+  const r1 = 55;
   const centerx = 100;
   const centery = 60;
   const arctotal = 270;
@@ -52,8 +52,8 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
       <line
         x1={centerx + r1 * cos}
         y1={centery + r1 * sin}
-        x2={centerx + (r1 - 5) * cos}
-        y2={centery + (r1 - 5) * sin}
+        x2={centerx + (r1 - 3) * cos}
+        y2={centery + (r1 - 3) * sin}
         className="metro-indicator-mark"
       />
     );
@@ -67,8 +67,8 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
         <line
           x1={centerx + r1 * cos}
           y1={centery + r1 * sin}
-          x2={centerx + (r1 - 8) * cos}
-          y2={centery + (r1 - 8) * sin}
+          x2={centerx + (r1 - 6) * cos}
+          y2={centery + (r1 - 6) * sin}
           className="metro-indicator-markstep"
         />
         <text
@@ -91,6 +91,18 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
       className={className}
     >
       {lines}
+      <path
+        id="arc"
+        d={arcpath({
+          cx: centerx,
+          cy: centery,
+          r: r1 + 2,
+          start: (45 * Math.PI) / 180,
+          end: (135 * Math.PI) / 180,
+          orientation: 1,
+        })}
+        className="metro-indicator-mark"
+      />
       <text
         x={100}
         y={80}

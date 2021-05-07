@@ -1,12 +1,12 @@
 import React from "react";
 import JsxParser from "react-jsx-parser";
-import ContentDashboard from "./dashboard/ContentDashboard";
+import DemoDashboard from "./dashboard/DemoDashboard";
 
 const AppDashboard: React.FC<{ jsx: string }> = ({ jsx }) => (
   <JsxParser
     renderInWrapper={false}
     bindings={{}}
-    components={{ ContentDashboard }}
+    components={{ DemoDashboard }}
     jsx={jsx}
   />
 );

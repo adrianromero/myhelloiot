@@ -1,15 +1,9 @@
 https://www.joshwcomeau.com/react/announcing-use-sound-react-hook/
-
-React Babel con eval() https://codesandbox.io/s/wxl4qo2mw
-
-https://github.com/TroyAlford/react-jsx-parser#readme
-
 https://stackoverflow.com/questions/36211171/finding-center-of-a-circle-given-two-points-and-radius
-
 https://www.d3indepth.com/shapes/
 https://wattenberger.com/blog/gauge
-
 "Icon made by Freepik from www.flaticon.com"
+Upload file locally: https://codesandbox.io/s/rl7ooo544q?file=/src/index.js:151-163
 
 light.html
 <h1>Hello Vanilla!</h1>

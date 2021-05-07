@@ -1,22 +1,28 @@
 import React, { useEffect } from "react"; // FC functional control.
 import { Button, Input, Form, Row, Col } from "antd";
 import { SendOutlined } from "@ant-design/icons";
+import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
+
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { ValueEdit } from "../mqtt/FormatTypes";
-import { StrValueEdit } from "../mqtt/ValueFormat";
+import { ValueEdit } from "../format/FormatTypes";
+import { StrValueEdit } from "../format/ValueFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
 
 type InputUnitProps = {
-  topicpub?: string;
-  topicsub?: string;
+  pubtopic?: string;
+  subtopic?: string;
+  puboptions?: IClientPublishOptions;
+  suboptions?: IClientSubscribeOptions;
   format?: ValueEdit;
 };
 
 const InputUnit: React.FC<InputUnitProps> = ({
-  topicpub = "",
-  topicsub = "",
+  pubtopic = "",
+  subtopic = "",
+  puboptions,
+  suboptions,
   format = StrValueEdit(),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
@@ -27,14 +33,18 @@ const InputUnit: React.FC<InputUnitProps> = ({
     });
   }, [connected]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useMQTTSubscribe(topicsub, (topic: string, mqttmessage: Buffer) => {
-    form.setFieldsValue({
-      mqttValue: format.toString(mqttmessage),
-    });
-  });
+  useMQTTSubscribe(
+    subtopic,
+    (topic: string, mqttmessage: Buffer) => {
+      form.setFieldsValue({
+        mqttValue: format.toString(mqttmessage),
+      });
+    },
+    suboptions
+  );
 
   const onFinish = (values: any) => {
-    publish(topicpub, format.fromString(values.mqttValue));
+    publish(pubtopic, format.fromString(values.mqttValue), puboptions);
   };
 
   return (
@@ -65,13 +75,13 @@ const InputUnit: React.FC<InputUnitProps> = ({
             <Input
               className={`myh-value ${format.className()}`}
               autoComplete="off"
-              readOnly={topicpub === ""}
-              bordered={topicpub !== ""}
+              readOnly={pubtopic === ""}
+              bordered={pubtopic !== ""}
               disabled={!connected}
             />
           </Form.Item>
         </Col>
-        {topicpub !== "" && (
+        {pubtopic !== "" && (
           <Col flex="none">
             <Form.Item>
               <Button

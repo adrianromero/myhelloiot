@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react"; // FC functional control.
 import { Slider } from "antd";
+import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { NumberValidation } from "../mqtt/FormatTypes";
+import { NumberValidation } from "../format/FormatTypes";
 import "antd/dist/antd.css";
 import "../assets/main.css";
 
 type SliderUnitProps = {
-  topicpub: string;
-  topicsub: string;
+  pubtopic: string;
+  subtopic: string;
+  puboptions?: IClientPublishOptions;
+  suboptions?: IClientSubscribeOptions;
   numberValidation: NumberValidation;
 };
 
 const SliderUnit: React.FC<SliderUnitProps> = ({
-  topicpub,
-  topicsub,
+  pubtopic,
+  subtopic,
+  puboptions,
+  suboptions,
   numberValidation,
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
@@ -23,13 +28,17 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
     setBuffer(Buffer.from([]));
   }, [connected]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useMQTTSubscribe(topicsub, (topic: string, mqttmessage: Buffer) => {
-    setBuffer(mqttmessage);
-  });
+  useMQTTSubscribe(
+    subtopic,
+    (topic: string, mqttmessage: Buffer) => {
+      setBuffer(mqttmessage);
+    },
+    suboptions
+  );
 
   const onAfterChange = (value: number) => {
     const b = Buffer.from(value.toString());
-    publish(topicpub, b);
+    publish(pubtopic, b, puboptions);
   };
   const onChange = (value: number) => {
     const b = Buffer.from(value.toString());

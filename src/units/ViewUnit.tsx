@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react"; // FC functional control.
+import { IClientSubscribeOptions } from "mqtt";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { IconFormat } from "../mqtt/FormatTypes";
-import { StrIconFormat } from "../mqtt/IconFormat";
+import { IconFormat } from "../format/FormatTypes";
+import { StrIconFormat } from "../format/IconFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
 
 type ViewUnitProps = {
-  topicsub: string;
+  subtopic: string;
+  suboptions?: IClientSubscribeOptions;
   format?: IconFormat;
 };
 
 const ViewUnit: React.FC<ViewUnitProps> = ({
-  topicsub,
+  subtopic,
+  suboptions,
   format = StrIconFormat(),
 }) => {
   const [{ connected }] = useMQTTContext();
@@ -22,9 +25,13 @@ const ViewUnit: React.FC<ViewUnitProps> = ({
     setBuffer(Buffer.from([]));
   }, [connected]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useMQTTSubscribe(topicsub, (topic: string, mqttmessage: Buffer) => {
-    setBuffer(mqttmessage);
-  });
+  useMQTTSubscribe(
+    subtopic,
+    (topic: string, mqttmessage: Buffer) => {
+      setBuffer(mqttmessage);
+    },
+    suboptions
+  );
 
   return format.toIcon(buffer);
 };

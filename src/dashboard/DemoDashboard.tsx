@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
-import {
-  DashboardFilled,
-  CrownFilled,
-  PictureFilled,
-  ApiFilled,
-} from "@ant-design/icons";
+import { DashboardFilled, PictureFilled, ApiFilled } from "@ant-design/icons";
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import PanelTests from "./PanelTests";
-import PanelTestSubs from "./PanelTestSubs";
 import PanelTestNumbers from "./PanelTestNumbers";
 
-const ContentDashboard: React.FC<{}> = () => {
+const DemoDashboard: React.FC<{}> = () => {
   const [, { disconnect }] = useMQTTContext();
   const [panelkey, setPanelkey] = useState<React.Key>("menu-1");
   const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -46,11 +40,8 @@ const ContentDashboard: React.FC<{}> = () => {
           <Menu.Item key="menu-1" icon={<PictureFilled />}>
             Gallery
           </Menu.Item>
-          <Menu.Item key="menu-2" icon={<CrownFilled />}>
-            Second gallery
-          </Menu.Item>
-          <Menu.Item key="menu-3" icon={<DashboardFilled />}>
-            Numbers
+          <Menu.Item key="menu-2" icon={<DashboardFilled />}>
+            Temperature
           </Menu.Item>
           <Menu.Divider />
           <Menu.Item key="action-disconnect" icon={<ApiFilled />}>
@@ -60,11 +51,10 @@ const ContentDashboard: React.FC<{}> = () => {
       </Layout.Sider>
       <Layout.Content>
         {panelkey === "menu-1" && <PanelTests />}
-        {panelkey === "menu-2" && <PanelTestSubs />}
-        {panelkey === "menu-3" && <PanelTestNumbers />}
+        {panelkey === "menu-2" && <PanelTestNumbers />}
       </Layout.Content>
     </>
   );
 };
 
-export default ContentDashboard;
+export default DemoDashboard;

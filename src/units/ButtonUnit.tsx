@@ -1,22 +1,27 @@
 import React, { useEffect, useState, MouseEvent } from "react";
 import { Button } from "antd";
+import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { IconEdit } from "../mqtt/FormatTypes";
-import { LabelIconEdit } from "../mqtt/IconFormat";
-import { SwitchValueEdit } from "../mqtt/ValueFormat";
+import { IconEdit } from "../format/FormatTypes";
+import { LabelIconEdit } from "../format/IconFormat";
+import { SwitchValueEdit } from "../format/ValueFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
 
 type ButtonUnitProps = {
-  topicpub: string;
-  topicsub?: string;
+  pubtopic: string;
+  subtopic?: string;
+  puboptions?: IClientPublishOptions;
+  suboptions?: IClientSubscribeOptions;
   format?: IconEdit;
 };
 
 const ButtonUnit: React.FC<ButtonUnitProps> = ({
-  topicpub,
-  topicsub = "",
+  pubtopic,
+  subtopic = "",
+  puboptions,
+  suboptions,
   format = LabelIconEdit(SwitchValueEdit()),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
@@ -26,14 +31,18 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
     setBuffer(Buffer.from([]));
   }, [connected]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useMQTTSubscribe(topicsub, (topic: string, mqttmessage: Buffer) => {
-    setBuffer(mqttmessage);
-  });
+  useMQTTSubscribe(
+    subtopic,
+    (topic: string, mqttmessage: Buffer) => {
+      setBuffer(mqttmessage);
+    },
+    suboptions
+  );
 
   const onClick = (ev: MouseEvent<HTMLElement>) => {
     const next: Buffer = format.next(buffer);
     setBuffer(next);
-    publish(topicpub, next);
+    publish(pubtopic, next, puboptions);
   };
 
   return (

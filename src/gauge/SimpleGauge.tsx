@@ -48,7 +48,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
       className={className}
     >
       <path
-        id="arc"
+        id="pie1"
         d={piepath({
           cx: centerx,
           cy: centery,
@@ -62,7 +62,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
         }}
       />
       <path
-        id="arc"
+        id="pie2"
         d={piepath({
           cx: centerx,
           cy: centery,
@@ -76,7 +76,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
         }}
       />
       <path
-        id="arc"
+        id="pie3"
         d={piepath({
           cx: centerx,
           cy: centery,
@@ -90,7 +90,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
         }}
       />
       <path
-        id="arc"
+        id="pie4"
         d={piepath({
           cx: centerx,
           cy: centery,
@@ -104,7 +104,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
         }}
       />
       <path
-        id="arc"
+        id="pie5"
         d={piepath({
           cx: centerx,
           cy: centery,
@@ -118,7 +118,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
         }}
       />
       <path
-        id="arc"
+        id="pie6"
         d={piepath({
           cx: centerx,
           cy: centery,
@@ -163,7 +163,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
       </text>
 
       <path
-        id="arc"
+        id="arcindicator"
         d={`M${centerx - sinr2 * r2} ${
           centery - cosr2 * r2
         } A ${r2} ${r2} 0 1 0 ${centerx + sinr2 * r2} ${

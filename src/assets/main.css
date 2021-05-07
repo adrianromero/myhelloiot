@@ -1,3 +1,12 @@
+.myh-dashboardpanel {
+  padding: 24px;
+}
+
+.myh-dashboardpanel > .ant-row > .ant-col {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
 .myh-card {
   height: 100%;
 }

@@ -1,12 +1,6 @@
-import React, { FC } from "react"; // FC functional control.
-
+import React, { FC } from "react";
 import { Row, Col } from "antd";
-
-import {
-  BulbIconFormat,
-  StarIconFormat,
-  ThuderboltIconFormat,
-} from "../mqtt/IconFormat";
+import { BulbIconFormat, ThuderboltIconFormat } from "../format/IconFormat";
 import CardStd from "../units/CardStd";
 import InputUnit from "../units/InputUnit";
 import SwitchUnit from "../units/SwitchUnit";
@@ -16,80 +10,95 @@ import {
   TitleIconEdit,
   LiteralIconEdit,
   ImageIconEdit,
-} from "../mqtt/ButtonFormat";
-import { ComposedIconEdit } from "../mqtt/IconFormat";
+} from "../format/ButtonFormat";
+import { ComposedIconEdit } from "../format/IconFormat";
 import {
   HEXValueEdit,
   Base64ValueEdit,
   SwitchValueEdit,
-} from "../mqtt/ValueFormat";
+} from "../format/ValueFormat";
 import { ReactComponent as Themes } from "../assets/svg/themes.svg";
 
 const PanelTests: FC<{}> = () => (
-  <div style={{ padding: "24px" }}>
-    <Row gutter={[8, 8]}>
-      <Col span={4}>
-        <CardStd title="cosita">
+  <div className="myh-dashboardpanel">
+    <Row gutter={16}>
+      <Col span={6}>
+        <CardStd title="Test topic pub and sub">
           <InputUnit
-            topicpub="myhelloiot/cosita"
-            topicsub="myhelloiot/cosita"
+            pubtopic="myhelloiot/testtopic"
+            subtopic="myhelloiot/testtopic"
           />
         </CardStd>
       </Col>
-      <Col span={4}>
-        <CardStd title="cosita2">
+      <Col span={6}>
+        <CardStd title="Test topic only sub">
+          <InputUnit subtopic="myhelloiot/testtopic" />
+        </CardStd>
+      </Col>
+      <Col span={6}>
+        <CardStd title="Test topic only pub">
+          <InputUnit pubtopic="myhelloiot/testtopic" />
+        </CardStd>
+      </Col>
+      <Col span={6}>
+        <CardStd title="Test topic Hexadecimal">
           <InputUnit
-            topicpub="myhelloiot/cosita"
-            topicsub="myhelloiot/cosita"
+            pubtopic="myhelloiot/testtopic"
+            subtopic="myhelloiot/testtopic"
             format={HEXValueEdit()}
           />
         </CardStd>
       </Col>
-      <Col span={4}>
-        <CardStd title="cosita2">
+    </Row>
+    <Row gutter={16}>
+      <Col span={6}>
+        <CardStd title="Test topic Base64">
           <InputUnit
-            topicpub="myhelloiot/cosita"
-            topicsub="myhelloiot/cosita"
+            pubtopic="myhelloiot/testtopic"
+            subtopic="myhelloiot/testtopic"
             format={Base64ValueEdit()}
           />
         </CardStd>
       </Col>
-      <Col span={4}>
-        <CardStd title="Subscribe only">
-          <InputUnit topicsub="myhelloiot/cosita" />
-        </CardStd>
-      </Col>
-      <Col span={4}>
-        <CardStd title="Publish only">
-          <InputUnit topicpub="myhelloiot/cosita" />
-        </CardStd>
-      </Col>
-      <Col span={4}>
-        <CardStd title={"\u00A0"}>
-          <InputUnit
-            topicpub="myhelloiot/cosita"
-            topicsub="myhelloiot/cosita"
+      <Col span={6}>
+        <CardStd>
+          <ButtonUnit
+            pubtopic="myhelloiot/testtopic"
+            format={LiteralIconEdit("Sends 123", Buffer.from("123"))}
           />
         </CardStd>
       </Col>
-      <Col span={4}>
-        <CardStd title="El viewer de number receive">
-          <ViewUnit topicsub="myhelloiot/cosita" />
+      <Col span={6}>
+        <CardStd>
+          <ButtonUnit
+            pubtopic="myhelloiot/testtopic"
+            format={ImageIconEdit(Themes, Buffer.from("ABC"))}
+          />
         </CardStd>
       </Col>
-      <Col span={4}>
-        <CardStd title="El switch de cosita">
+      <Col span={6}>
+        <CardStd>
+          <ButtonUnit
+            pubtopic="myhelloiot/testtopic"
+            format={TitleIconEdit(Themes, "Sends XYZ", Buffer.from("XYZ"))}
+          />
+        </CardStd>
+      </Col>
+    </Row>
+    <Row gutter={16}>
+      <Col span={6}>
+        <CardStd title="Light switch">
           <div
             className="myh-value myh-value-padding"
             style={{
               display: "flex",
               justifyContent: "center",
-              backgroundColor: "darkgray",
+              backgroundColor: "#e1e1e1",
               borderRadius: "15px",
             }}
           >
             <ViewUnit
-              topicsub="myhelloiot/cosita"
+              subtopic="myhelloiot/testswitch"
               format={ComposedIconEdit(SwitchValueEdit(), BulbIconFormat())}
             />
           </div>
@@ -98,69 +107,50 @@ const PanelTests: FC<{}> = () => (
             style={{ display: "flex", justifyContent: "center" }}
           >
             <SwitchUnit
-              topicpub="myhelloiot/cosita"
-              topicsub="myhelloiot/cosita"
+              pubtopic="myhelloiot/testswitch"
+              puboptions={{ retain: true }}
+              subtopic="myhelloiot/testswitch"
             />
           </div>
         </CardStd>
       </Col>
-      <Col span={4}>
-        <CardStd title="El switch de cosita">
+      <Col span={6}>
+        <CardStd title="Switch button">
           <ButtonUnit
-            topicpub="myhelloiot/cosita"
-            topicsub="myhelloiot/cosita"
+            pubtopic="myhelloiot/testswitch"
+            puboptions={{ retain: true }}
+            subtopic="myhelloiot/testswitch"
           />
         </CardStd>
       </Col>
-      <Col span={4}>
-        <CardStd title="Button title">
+      <Col span={6}>
+        <CardStd title="Switch bolt">
           <ButtonUnit
-            topicpub="myhelloiot/cosita"
-            topicsub="myhelloiot/cosita"
-            format={ComposedIconEdit(SwitchValueEdit(), BulbIconFormat())}
-          />
-        </CardStd>
-      </Col>
-      <Col span={4}>
-        <CardStd>
-          <ButtonUnit
-            topicpub="myhelloiot/cosita"
-            topicsub="myhelloiot/cosita"
+            pubtopic="myhelloiot/testswitch"
+            puboptions={{ retain: true }}
+            subtopic="myhelloiot/testswitch"
             format={ComposedIconEdit(SwitchValueEdit(), ThuderboltIconFormat())}
           />
         </CardStd>
       </Col>
-      <Col span={4}>
-        <CardStd>
-          <ButtonUnit
-            topicpub="myhelloiot/cosita"
-            topicsub="myhelloiot/cosita"
-            format={ComposedIconEdit(SwitchValueEdit(), StarIconFormat())}
-          />
-        </CardStd>
-      </Col>
-      <Col span={4}>
-        <CardStd>
-          <ButtonUnit
-            topicpub="pepe/cosa/cosita"
-            format={LiteralIconEdit("Button", Buffer.from("mensaje"))}
-          />
-        </CardStd>
-      </Col>
-      <Col span={4}>
-        <CardStd>
-          <ButtonUnit
-            topicpub="pepe/cosa/cosita"
-            format={ImageIconEdit(Themes, Buffer.from("mensaje"))}
-          />
-        </CardStd>
-      </Col>
-      <Col span={4}>
-        <CardStd>
-          <ButtonUnit
-            topicpub="pepe/cosa/cosita"
-            format={TitleIconEdit(Themes, "Colors", Buffer.from("mensaje"))}
-          />
+      <Col span={6}>
+        <CardStd title="Switch on and off">
+          <Row gutter={8}>
+            <Col span={12}>
+              <ButtonUnit
+                pubtopic="myhelloiot/testswitch"
+                puboptions={{ retain: true }}
+                format={LiteralIconEdit("ON", Buffer.from("1"))}
+              />
+            </Col>
+            <Col span={12}>
+              <ButtonUnit
+                pubtopic="myhelloiot/testswitch"
+                puboptions={{ retain: true }}
+                format={LiteralIconEdit("OFF", Buffer.from("0"))}
+              />
+            </Col>
+          </Row>
         </CardStd>
       </Col>
     </Row>

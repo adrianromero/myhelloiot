@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Switch } from "antd";
+import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
+
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { ValueEdit } from "../mqtt/FormatTypes";
-import { StrValueEdit } from "../mqtt/ValueFormat";
+import { ValueEdit } from "../format/FormatTypes";
+import { StrValueEdit } from "../format/ValueFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
 
 type SwitchUnitProps = {
-  topicpub: string;
-  topicsub: string;
+  pubtopic: string;
+  subtopic: string;
+  puboptions?: IClientPublishOptions;
+  suboptions?: IClientSubscribeOptions;
   format?: ValueEdit;
 };
 
 const SwitchUnit: React.FC<SwitchUnitProps> = ({
-  topicpub,
-  topicsub,
+  pubtopic,
+  subtopic,
+  puboptions,
+  suboptions,
   format = StrValueEdit(),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
@@ -25,13 +31,17 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
     setChecked(false);
   }, [connected]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useMQTTSubscribe(topicsub, (topic: string, mqttmessage: Buffer) => {
-    setChecked(format.toString(mqttmessage) === "1");
-  });
+  useMQTTSubscribe(
+    subtopic,
+    (topic: string, mqttmessage: Buffer) => {
+      setChecked(format.toString(mqttmessage) === "1");
+    },
+    suboptions
+  );
 
   const onChange = (value: boolean) => {
     setChecked(value);
-    publish(topicpub, format.fromString(value ? "1" : "0"));
+    publish(pubtopic, format.fromString(value ? "1" : "0"), puboptions);
   };
 
   return <Switch checked={checked} onChange={onChange} disabled={!connected} />;

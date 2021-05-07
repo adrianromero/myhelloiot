@@ -2,12 +2,12 @@ import React, { FC } from "react"; // FC functional control.
 
 import { Row, Col } from "antd";
 
-import { NumberValueEdit } from "../mqtt/ValueFormat";
+import { NumberValueEdit } from "../format/ValueFormat";
 import CardStd from "../units/CardStd";
 import InputUnit from "../units/InputUnit";
 import ViewUnit from "../units/ViewUnit";
 import SliderUnit from "../units/SliderUnit";
-import { ToIconFormat } from "../mqtt/IconFormat";
+import { ToIconFormat } from "../format/IconFormat";
 import {
   DashboardIconFormat,
   LinearIconFormat,
@@ -15,36 +15,24 @@ import {
   CircularIconFormat,
   MetroIconFormat,
   ProgressIconFormat,
-} from "../mqtt/GaugeFormat";
+} from "../format/GaugeFormat";
 
 const PanelTestNumbers: FC<{}> = () => (
-  <div style={{ padding: "24px" }}>
-    <Row gutter={[8, 8]}>
+  <div className="myh-dashboardpanel">
+    <Row gutter={16}>
       <Col span={6}>
-        <CardStd title="El switch de number send">
+        <CardStd title="Select temperature">
           <InputUnit
-            topicpub="myhelloiot/number"
+            pubtopic="myhelloiot/temperature"
+            subtopic="myhelloiot/temperature"
             format={NumberValueEdit({ style: "unit", unit: "celsius" })}
           />
         </CardStd>
       </Col>
       <Col span={6}>
-        <CardStd title="El viewer de number receive">
+        <CardStd title="Select temperature">
           <ViewUnit
-            topicsub="myhelloiot/number"
-            format={ToIconFormat(
-              NumberValueEdit({
-                style: "unit",
-                unit: "celsius",
-              })
-            )}
-          />
-        </CardStd>
-      </Col>
-      <Col span={6}>
-        <CardStd title="El slider de number receive">
-          <ViewUnit
-            topicsub="myhelloiot/number"
+            subtopic="myhelloiot/temperature"
             format={ToIconFormat(
               NumberValueEdit({
                 style: "unit",
@@ -53,8 +41,8 @@ const PanelTestNumbers: FC<{}> = () => (
             )}
           />
           <SliderUnit
-            topicpub="myhelloiot/number"
-            topicsub="myhelloiot/number"
+            pubtopic="myhelloiot/temperature"
+            subtopic="myhelloiot/temperature"
             numberValidation={{ min: -10, max: 60, step: 1 }}
           />
         </CardStd>
@@ -62,7 +50,7 @@ const PanelTestNumbers: FC<{}> = () => (
       <Col span={6}>
         <CardStd title="Progress gauge card">
           <ViewUnit
-            topicsub="myhelloiot/number"
+            subtopic="myhelloiot/temperature"
             format={ProgressIconFormat(
               {
                 title: "Progress gauge",
@@ -80,7 +68,7 @@ const PanelTestNumbers: FC<{}> = () => (
       <Col span={6}>
         <CardStd title="Linear gauge card">
           <ViewUnit
-            topicsub="myhelloiot/number"
+            subtopic="myhelloiot/temperature"
             format={LinearIconFormat(
               {
                 title: "Linear gauge",
@@ -100,7 +88,7 @@ const PanelTestNumbers: FC<{}> = () => (
       <Col span={6}>
         <CardStd title="Dashboard gauge card">
           <ViewUnit
-            topicsub="myhelloiot/number"
+            subtopic="myhelloiot/temperature"
             format={DashboardIconFormat(
               { title: "Dashboard gauge", min: -10, max: 60 },
               {
@@ -114,7 +102,7 @@ const PanelTestNumbers: FC<{}> = () => (
       <Col span={6}>
         <CardStd title="Simple gauge card">
           <ViewUnit
-            topicsub="myhelloiot/number"
+            subtopic="myhelloiot/temperature"
             format={SimpleIconFormat(
               { title: "Simple gauge", min: -10, max: 60 },
               {
@@ -128,7 +116,7 @@ const PanelTestNumbers: FC<{}> = () => (
       <Col span={6}>
         <CardStd title="Circular gauge card">
           <ViewUnit
-            topicsub="myhelloiot/number"
+            subtopic="myhelloiot/temperature"
             format={CircularIconFormat(
               { title: "Circular gauge", min: -10, max: 60, step: 5 },
               {
@@ -142,7 +130,7 @@ const PanelTestNumbers: FC<{}> = () => (
       <Col span={6}>
         <CardStd title="Metro gauge card">
           <ViewUnit
-            topicsub="myhelloiot/number"
+            subtopic="myhelloiot/temperature"
             format={MetroIconFormat(
               {
                 title: "Metro gauge",
