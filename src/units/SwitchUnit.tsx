@@ -34,13 +34,6 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
     publish(topicpub, format.fromString(value ? "1" : "0"));
   };
 
-  return (
-    <div
-      className="myh-value myh-value-padding"
-      style={{ display: "flex", justifyContent: "center" }}
-    >
-      <Switch checked={checked} onChange={onChange} disabled={!connected} />
-    </div>
-  );
+  return <Switch checked={checked} onChange={onChange} disabled={!connected} />;
 };
 export default SwitchUnit;

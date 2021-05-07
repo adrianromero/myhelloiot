@@ -4,11 +4,17 @@ import { CheckCircleTwoTone, PlusCircleTwoTone } from "@ant-design/icons";
 import ContentConnect from "./connection/ContentConnect";
 import AppDashboard from "./AppDashboard";
 import { ConnectInfo, connectWithInfo } from "./ConnectionInfo";
-import { useMQTTContext } from "./mqtt/MQTTProvider";
+import MQTTProvider, { useMQTTContext } from "./mqtt/MQTTProvider";
 import "antd/dist/antd.css";
 import "./App.css";
 
-const App: React.FC<{}> = () => {
+const App: React.FC<{}> = () => (
+  <MQTTProvider>
+    <MQTTApp />
+  </MQTTProvider>
+);
+
+const MQTTApp: React.FC<{}> = () => {
   const [{ status }, { connect }] = useMQTTContext();
 
   useEffect(() => {
@@ -53,7 +59,11 @@ const App: React.FC<{}> = () => {
         </div>
       </Layout.Header>
       <Layout style={{ marginTop: 64, height: "calc(100vh - 64px)" }}>
-        {status === "Disconnected" ? <ContentConnect /> : <AppDashboard />}
+        {status === "Disconnected" ? (
+          <ContentConnect />
+        ) : (
+          <AppDashboard jsx="<ContentDashboard />" />
+        )}
       </Layout>
     </Layout>
   );

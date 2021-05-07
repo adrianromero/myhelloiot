@@ -79,10 +79,29 @@ const PanelTests: FC<{}> = () => (
       </Col>
       <Col span={4}>
         <CardStd title="El switch de cosita">
-          <SwitchUnit
-            topicpub="myhelloiot/cosita"
-            topicsub="myhelloiot/cosita"
-          />
+          <div
+            className="myh-value myh-value-padding"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              backgroundColor: "darkgray",
+              borderRadius: "15px",
+            }}
+          >
+            <ViewUnit
+              topicsub="myhelloiot/cosita"
+              format={ComposedIconEdit(SwitchValueEdit(), BulbIconFormat())}
+            />
+          </div>
+          <div
+            className="myh-value myh-value-padding"
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            <SwitchUnit
+              topicpub="myhelloiot/cosita"
+              topicsub="myhelloiot/cosita"
+            />
+          </div>
         </CardStd>
       </Col>
       <Col span={4}>
