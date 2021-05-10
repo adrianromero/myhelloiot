@@ -19,8 +19,8 @@ import {
 
 const PanelTestNumbers: FC<{}> = () => (
   <div className="myh-dashboardpanel">
-    <Row gutter={16}>
-      <Col span={6}>
+    <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Select temperature">
           <InputUnit
             pubtopic="myhelloiot/temperature"
@@ -29,7 +29,7 @@ const PanelTestNumbers: FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col span={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Select temperature">
           <ViewUnit
             subtopic="myhelloiot/temperature"
@@ -47,7 +47,7 @@ const PanelTestNumbers: FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col span={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Progress gauge card">
           <ViewUnit
             subtopic="myhelloiot/temperature"
@@ -65,7 +65,7 @@ const PanelTestNumbers: FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col span={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Linear gauge card">
           <ViewUnit
             subtopic="myhelloiot/temperature"
@@ -85,7 +85,7 @@ const PanelTestNumbers: FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col span={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Dashboard gauge card">
           <ViewUnit
             subtopic="myhelloiot/temperature"
@@ -99,7 +99,7 @@ const PanelTestNumbers: FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col span={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Simple gauge card">
           <ViewUnit
             subtopic="myhelloiot/temperature"
@@ -113,7 +113,7 @@ const PanelTestNumbers: FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col span={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Circular gauge card">
           <ViewUnit
             subtopic="myhelloiot/temperature"
@@ -127,7 +127,7 @@ const PanelTestNumbers: FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col span={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Metro gauge card">
           <ViewUnit
             subtopic="myhelloiot/temperature"
