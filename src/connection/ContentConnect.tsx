@@ -56,7 +56,7 @@ const PanelConnect: React.FC<{}> = () => {
           onFinish={handleConnect}
           className="myhConnectionForm"
         >
-          <Row gutter={[8, 8]}>
+          <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
             <Col>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
@@ -65,8 +65,10 @@ const PanelConnect: React.FC<{}> = () => {
               </Form.Item>
             </Col>
           </Row>
-          <Row gutter={[8, 8]}>
-            <Col span={4} className="ant-form-item-label">
+
+          <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+            <Col xs={0} sm={0} md={0} lg={4} />
+            <Col xs={24} sm={6} md={6} lg={4} className="ant-form-item-label">
               <label
                 htmlFor="url"
                 className="ant-form-item-required"
@@ -75,7 +77,7 @@ const PanelConnect: React.FC<{}> = () => {
                 URL
               </label>
             </Col>
-            <Col span={12}>
+            <Col xs={24} sm={18} md={18} lg={12}>
               <Form.Item
                 name="url"
                 rules={[
@@ -88,19 +90,20 @@ const PanelConnect: React.FC<{}> = () => {
                 <Input autoComplete="off" />
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={[8, 8]}>
-            <Col span={4} className="ant-form-item-label">
+            <Col xs={0} sm={0} md={0} lg={4} />
+
+            <Col xs={0} sm={0} md={0} lg={4} />
+            <Col xs={24} sm={6} md={6} lg={4} className="ant-form-item-label">
               <label htmlFor="username" title="User">
                 User
               </label>
             </Col>
-            <Col span={4}>
+            <Col xs={24} sm={18} md={6} lg={4}>
               <Form.Item name="username">
                 <Input autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col span={4} className="ant-form-item-label">
+            <Col xs={24} sm={6} md={6} lg={4} className="ant-form-item-label">
               <label
                 htmlFor="password"
                 className="ant-form-item-required"
@@ -109,14 +112,15 @@ const PanelConnect: React.FC<{}> = () => {
                 Password
               </label>
             </Col>
-            <Col span={4}>
+            <Col xs={24} sm={18} md={6} lg={4}>
               <Form.Item name="password">
                 <Input.Password />
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={[8, 8]}>
-            <Col span={4} className="ant-form-item-label">
+            <Col xs={0} sm={0} md={0} lg={4} />
+
+            <Col xs={0} sm={0} md={0} lg={4} />
+            <Col xs={24} sm={6} md={6} lg={4} className="ant-form-item-label">
               <label
                 htmlFor="clientId"
                 className="ant-form-item-required"
@@ -125,7 +129,7 @@ const PanelConnect: React.FC<{}> = () => {
                 Client ID
               </label>
             </Col>
-            <Col span={4}>
+            <Col xs={24} sm={18} md={6} lg={4}>
               <Form.Item
                 name="clientId"
                 rules={[
@@ -138,7 +142,7 @@ const PanelConnect: React.FC<{}> = () => {
                 <Input autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col span={4} className="ant-form-item-label">
+            <Col xs={24} sm={6} md={6} lg={4} className="ant-form-item-label">
               <label
                 htmlFor="keepalive"
                 className="ant-form-item-required"
@@ -147,7 +151,7 @@ const PanelConnect: React.FC<{}> = () => {
                 Keep alive
               </label>
             </Col>
-            <Col span={4}>
+            <Col xs={24} sm={18} md={6} lg={4}>
               <Form.Item
                 name="keepalive"
                 rules={[
@@ -160,9 +164,10 @@ const PanelConnect: React.FC<{}> = () => {
                 <InputNumber autoComplete="off" />
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={[8, 8]}>
-            <Col span={4} className="ant-form-item-label">
+            <Col xs={0} sm={0} md={0} lg={4} />
+
+            <Col xs={0} sm={0} md={0} lg={4} />
+            <Col xs={24} sm={6} md={6} lg={4} className="ant-form-item-label">
               <label
                 htmlFor="connectTimeout"
                 className="ant-form-item-required"
@@ -171,7 +176,7 @@ const PanelConnect: React.FC<{}> = () => {
                 Connection timeout
               </label>
             </Col>
-            <Col span={4}>
+            <Col xs={24} sm={18} md={6} lg={4}>
               <Form.Item
                 name="connectTimeout"
                 rules={[
@@ -184,7 +189,7 @@ const PanelConnect: React.FC<{}> = () => {
                 <InputNumber autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col span={4} className="ant-form-item-label">
+            <Col xs={24} sm={6} md={6} lg={4} className="ant-form-item-label">
               <label
                 htmlFor="reconnectPeriod"
                 className="ant-form-item-required"
@@ -193,7 +198,7 @@ const PanelConnect: React.FC<{}> = () => {
                 Reconnect period
               </label>
             </Col>
-            <Col span={4}>
+            <Col xs={24} sm={18} md={6} lg={4}>
               <Form.Item
                 name="reconnectPeriod"
                 rules={[
@@ -206,19 +211,25 @@ const PanelConnect: React.FC<{}> = () => {
                 <InputNumber autoComplete="off" />
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={[8, 8]}>
-            <Col span={4} className="ant-form-item-label">
+            <Col xs={0} sm={0} md={0} lg={4} />
+
+            <Col xs={0} sm={0} md={0} lg={4} />
+            <Col xs={24} sm={6} md={6} lg={4} className="ant-form-item-label">
               <label htmlFor="onlinetopic" title="Online topic">
                 Online topic
               </label>
             </Col>
-            <Col span={4}>
+            <Col xs={24} sm={18} md={6} lg={4}>
               <Form.Item name="onlinetopic">
                 <Input autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col
+              xs={{ offset: 0, span: 24 }}
+              sm={{ offset: 6, span: 18 }}
+              md={{ offset: 0, span: 12 }}
+              lg={{ offset: 0, span: 8 }}
+            >
               <Form.Item name="onlineqos">
                 <Radio.Group>
                   <Radio value={0}>QoS 0</Radio>
@@ -227,14 +238,15 @@ const PanelConnect: React.FC<{}> = () => {
                 </Radio.Group>
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={[8, 8]}>
-            <Col span={4} className="ant-form-item-label">
+            <Col xs={0} sm={0} md={0} lg={4} />
+
+            <Col xs={0} sm={0} md={0} lg={4} />
+            <Col xs={24} sm={6} md={6} lg={4} className="ant-form-item-label">
               <label htmlFor="automatic" title="Automatic connection">
                 Automatic connection
               </label>
             </Col>
-            <Col span={4}>
+            <Col xs={24} sm={18} md={6} lg={4}>
               <Form.Item name="automatic" valuePropName="checked">
                 <Checkbox />
               </Form.Item>
