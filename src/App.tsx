@@ -58,7 +58,7 @@ const MQTTApp: React.FC<{}> = () => {
           {toolbar}
         </div>
       </Layout.Header>
-      <Layout style={{ marginTop: 64, height: "calc(100vh - 64px)" }}>
+      <Layout style={{ marginTop: 64, minHeight: "calc(100vh - 64px)" }}>
         {status === "Disconnected" ? (
           <ContentConnect />
         ) : (
