@@ -15,49 +15,55 @@ export type GaugeProps =
     }
   | NumberValidation;
 
-const readNumber: (buffer: Buffer) => number | undefined = (buffer) => {
+function readNumber(buffer: Buffer): number | undefined {
   const s: string = buffer.toString();
   return s ? Number(s) : undefined;
-};
+}
 
-export const LinearIconFormat: (
+export function LinearIconFormat(
   gaugeprops?: GaugeProps,
   valueformat?: Intl.NumberFormatOptions
-) => IconFormat = (gaugeprops, valueformat) => ({
-  toIcon: (buffer) => (
-    <LinearGauge
-      value={readNumber(buffer)}
-      valueformat={valueformat}
-      {...gaugeprops}
-    />
-  ),
-});
+): IconFormat {
+  return {
+    toIcon: (buffer) => (
+      <LinearGauge
+        value={readNumber(buffer)}
+        valueformat={valueformat}
+        {...gaugeprops}
+      />
+    ),
+  };
+}
 
-export const ProgressIconFormat: (
+export function ProgressIconFormat(
   gaugeprops?: GaugeProps,
   valueformat?: Intl.NumberFormatOptions
-) => IconFormat = (gaugeprops, valueformat) => ({
-  toIcon: (buffer) => (
-    <ProgressGauge
-      value={readNumber(buffer)}
-      valueformat={valueformat}
-      {...gaugeprops}
-    />
-  ),
-});
+): IconFormat {
+  return {
+    toIcon: (buffer) => (
+      <ProgressGauge
+        value={readNumber(buffer)}
+        valueformat={valueformat}
+        {...gaugeprops}
+      />
+    ),
+  };
+}
 
-export const DashboardIconFormat: (
+export function DashboardIconFormat(
   gaugeprops?: GaugeProps,
   valueformat?: Intl.NumberFormatOptions
-) => IconFormat = (gaugeprops, valueformat) => ({
-  toIcon: (buffer) => (
-    <DashboardGauge
-      value={readNumber(buffer)}
-      valueformat={valueformat}
-      {...gaugeprops}
-    />
-  ),
-});
+): IconFormat {
+  return {
+    toIcon: (buffer) => (
+      <DashboardGauge
+        value={readNumber(buffer)}
+        valueformat={valueformat}
+        {...gaugeprops}
+      />
+    ),
+  };
+}
 
 export const SimpleIconFormat: (
   gaugeprops?: GaugeProps,

@@ -1,10 +1,27 @@
-.myh-dashboardpanel {
+.myhAppHeader-title {
+  color: white;
+  font-size: 150%;
+}
+
+.myhConnectionStatus-label {
+  color: darkgray;
+  margin-right: 8px;
+}
+.myhConnectionStatus-icon {
+  font-size: 140%;
+}
+
+.myhMainLayout {
+  margin-top: 64px;
+  min-height: calc(100vh - 64px);
+}
+
+.myhAppContent {
   padding: 24px;
 }
 
-.myh-dashboardpanel > .ant-row > .ant-col {
-  margin-top: 8px;
-  margin-bottom: 8px;
+.myhAppContent-panel {
+  padding: 24px;
 }
 
 .myh-card {

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { Row, Col } from "antd";
 import { BulbIconFormat, ThuderboltIconFormat } from "../format/IconFormat";
 import CardStd from "../units/CardStd";
@@ -19,9 +19,14 @@ import {
 } from "../format/ValueFormat";
 import { ReactComponent as Themes } from "../assets/svg/themes.svg";
 
-const PanelTests: FC<{}> = () => (
-  <div className="myh-dashboardpanel">
-    <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+const PanelTests: React.FC<{}> = () => (
+  <div className="myhAppContent-panel">
+    <Row
+      gutter={[
+        { xs: 8, sm: 8, md: 8, lg: 8 },
+        { xs: 8, sm: 8, md: 8, lg: 8 },
+      ]}
+    >
       <Col xs={24} sm={24} md={12} lg={6}>
         <CardStd title="Test topic pub and sub">
           <InputUnit

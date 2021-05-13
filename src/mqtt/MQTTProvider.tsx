@@ -2,7 +2,6 @@ import React, {
   createContext,
   useState,
   useEffect,
-  FC,
   ReactNode,
   Context,
   useContext,
@@ -89,9 +88,7 @@ export const useMQTTSubscribe = (
   }, [ready, topic]); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
-export type MQTTProviderProps = { children: ReactNode };
-
-const MQTTProvider: FC<MQTTProviderProps> = ({ children }) => {
+const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, setState] = useState<{
     status: MQTTStatus;
     client?: MqttClient;

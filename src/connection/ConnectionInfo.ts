@@ -1,5 +1,5 @@
 import { QoS } from "mqtt";
-import { MQTTConnectInfo, OnlineInfo } from "./mqtt/MQTTProvider";
+import { MQTTConnectInfo, OnlineInfo } from "../mqtt/MQTTProvider";
 
 export type ConnectInfo = {
   url: string;

@@ -31,8 +31,8 @@ export const arcpath: (args: {
 export const padvalue: (
   min: number,
   max: number,
-  length: number
-) => (value: number) => number = (min, max, length) => (value) => {
+  length?: number
+) => (value: number) => number = (min, max, length = 1) => (value) => {
   let lengthvalue = (length * (value - min)) / (max - min);
   if (lengthvalue < 0) {
     return 0;
