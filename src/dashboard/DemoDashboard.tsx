@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Layout, Menu } from "antd";
+import { Drawer, Button, Layout, Menu } from "antd";
 import {
   DashboardFilled,
   PictureFilled,
   ApiFilled,
   LoadingOutlined,
   CheckCircleOutlined,
+  MenuUnfoldOutlined,
 } from "@ant-design/icons";
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import AppHeader from "../AppHeader";
@@ -15,19 +16,29 @@ import PanelTestNumbers from "./PanelTestNumbers";
 const DemoDashboard: React.FC<{}> = () => {
   const [{ status }, { disconnect }] = useMQTTContext();
   const [panelkey, setPanelkey] = useState<React.Key>("menu-1");
-  // const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
 
-  const handleSelect = ({ key }: { key: string | number }) => {
+  function handleSelect({ key }: { key: string | number }) {
     if ((key as string).startsWith("menu-")) {
+      hideDrawer();
       setPanelkey(key);
     }
-  };
+  }
 
-  const handleClick = ({ key }: { key: string | number }) => {
+  function handleClick({ key }: { key: string | number }) {
     if ((key as string) === "action-disconnect") {
+      hideDrawer();
       disconnect();
     }
-  };
+  }
+
+  function showDrawer() {
+    setVisibleDrawer(true);
+  }
+
+  function hideDrawer() {
+    setVisibleDrawer(false);
+  }
 
   let toolbar;
   if (status === "Disconnected") {
@@ -51,16 +62,21 @@ const DemoDashboard: React.FC<{}> = () => {
 
   return (
     <Layout>
-      <AppHeader>{toolbar}</AppHeader>
-      <Layout className="myhMainLayout">
-        <Layout.Sider
-          theme="light"
-          breakpoint="lg"
-          collapsedWidth="0"
-          // trigger={null}
-          // collapsible
-          // collapsed={collapsed}
-          // onCollapse={setCollapsed}
+      <AppHeader>
+        <div className="myhMenuDisplayButton">
+          <Button onClick={showDrawer} ghost>
+            <MenuUnfoldOutlined />
+          </Button>
+        </div>
+        {toolbar}
+      </AppHeader>
+      <Layout.Content className="myhMainLayout">
+        <Drawer
+          className="myhDrawerMenu"
+          placement="left"
+          closable={false}
+          onClose={hideDrawer}
+          visible={visibleDrawer}
         >
           <Menu
             theme="light"
@@ -80,12 +96,11 @@ const DemoDashboard: React.FC<{}> = () => {
               Disconnect
             </Menu.Item>
           </Menu>
-        </Layout.Sider>
-        <Layout.Content>
-          {panelkey === "menu-1" && <PanelTests />}
-          {panelkey === "menu-2" && <PanelTestNumbers />}
-        </Layout.Content>
-      </Layout>
+        </Drawer>
+
+        {panelkey === "menu-1" && <PanelTests />}
+        {panelkey === "menu-2" && <PanelTestNumbers />}
+      </Layout.Content>
     </Layout>
   );
 };

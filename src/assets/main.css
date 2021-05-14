@@ -1,6 +1,29 @@
+.myhAppHeader {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+}
+
+.myhAppHeader.ant-layout-header {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.myhAppHeader-container {
+  display: flex;
+  align-items: center;
+}
+
 .myhAppHeader-title {
   color: white;
   font-size: 150%;
+  margin: 0px 8px;
+  flex-grow: 1;
+}
+
+.myhMenuDisplayButton {
+  width: 50px;
+  order: -1;
 }
 
 .myhConnectionStatus-label {
@@ -39,4 +62,8 @@
 
 .myh-class_alignright {
   text-align: right;
+}
+
+.myhDrawerMenu .ant-drawer-body {
+  padding: 0;
 }
