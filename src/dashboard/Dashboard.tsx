@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Drawer, Button, Layout, Menu } from "antd";
 import {
-  // DashboardFilled,
-  PictureFilled,
   ApiFilled,
   LoadingOutlined,
   CheckCircleOutlined,
