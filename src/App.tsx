@@ -25,10 +25,21 @@ const MQTTApp: React.FC<{}> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const jsx = `
+  <Dashboard disconnectMenu>
+    <DashboardMenu  icon="BulbFilled"name="Test Panel">
+      <PanelTests />
+    </DashboardMenu>
+    <DashboardMenu icon="DashboardFilled" name="Test Gauges">
+      <PanelTestNumbers />
+    </DashboardMenu>
+  </Dashboard>
+  `;
+
   return status === "Disconnected" ? (
     <ContentConnect />
   ) : (
-    <AppDashboard jsx="<DemoDashboard />" />
+    <AppDashboard jsx={jsx} />
   );
 };
 

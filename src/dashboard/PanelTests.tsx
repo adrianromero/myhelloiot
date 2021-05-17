@@ -28,7 +28,7 @@ const PanelTests: React.FC<{}> = () => {
           { xs: 8, sm: 8, md: 8, lg: 8 },
         ]}
       >
-        <Col xs={24} sm={24} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={6}>
           <CardStd title="Test topic pub and sub">
             <InputUnit
               pubtopic="myhelloiot/testtopic"
@@ -36,17 +36,17 @@ const PanelTests: React.FC<{}> = () => {
             />
           </CardStd>
         </Col>
-        <Col xs={24} sm={24} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={6}>
           <CardStd title="Test topic only sub">
             <InputUnit subtopic="myhelloiot/testtopic" />
           </CardStd>
         </Col>
-        <Col xs={24} sm={24} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={6}>
           <CardStd title="Test topic only pub">
             <InputUnit pubtopic="myhelloiot/testtopic" />
           </CardStd>
         </Col>
-        <Col xs={24} sm={24} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={6}>
           <CardStd title="Test topic Hexadecimal">
             <InputUnit
               pubtopic="myhelloiot/testtopic"
@@ -55,7 +55,7 @@ const PanelTests: React.FC<{}> = () => {
             />
           </CardStd>
         </Col>
-        <Col xs={24} sm={24} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={6}>
           <CardStd title="Test topic Base64">
             <InputUnit
               pubtopic="myhelloiot/testtopic"
@@ -64,7 +64,7 @@ const PanelTests: React.FC<{}> = () => {
             />
           </CardStd>
         </Col>
-        <Col xs={24} sm={24} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={6}>
           <CardStd>
             <ButtonUnit
               pubtopic="myhelloiot/testtopic"
@@ -72,7 +72,7 @@ const PanelTests: React.FC<{}> = () => {
             />
           </CardStd>
         </Col>
-        <Col xs={24} sm={24} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={6}>
           <CardStd>
             <ButtonUnit
               pubtopic="myhelloiot/testtopic"
@@ -80,7 +80,7 @@ const PanelTests: React.FC<{}> = () => {
             />
           </CardStd>
         </Col>
-        <Col xs={24} sm={24} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={6}>
           <CardStd>
             <ButtonUnit
               pubtopic="myhelloiot/testtopic"
@@ -88,7 +88,7 @@ const PanelTests: React.FC<{}> = () => {
             />
           </CardStd>
         </Col>
-        <Col xs={24} sm={24} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={6}>
           <CardStd title="Light switch">
             <div
               className="myh-value myh-value-padding"
@@ -116,7 +116,7 @@ const PanelTests: React.FC<{}> = () => {
             </div>
           </CardStd>
         </Col>
-        <Col xs={24} sm={24} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={6}>
           <CardStd title="Switch button">
             <ButtonUnit
               pubtopic="myhelloiot/testswitch"
@@ -125,7 +125,7 @@ const PanelTests: React.FC<{}> = () => {
             />
           </CardStd>
         </Col>
-        <Col xs={24} sm={24} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={6}>
           <CardStd title="Switch bolt">
             <ButtonUnit
               pubtopic="myhelloiot/testswitch"
@@ -138,7 +138,7 @@ const PanelTests: React.FC<{}> = () => {
             />
           </CardStd>
         </Col>
-        <Col xs={24} sm={24} md={12} lg={6}>
+        <Col xs={24} sm={12} md={12} lg={6}>
           <CardStd title="Switch on and off">
             <Row gutter={8}>
               <Col span={12}>

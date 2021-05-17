@@ -23,7 +23,7 @@ const PanelTestNumbers: React.FC<{}> = () => (
         { xs: 8, sm: 8, md: 8, lg: 8 },
       ]}
     >
-      <Col xs={24} sm={24} md={12} lg={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Select temperature">
           <InputUnit
             pubtopic="myhelloiot/temperature"
@@ -32,7 +32,7 @@ const PanelTestNumbers: React.FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col xs={24} sm={24} md={12} lg={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Select temperature">
           <ViewUnit
             subtopic="myhelloiot/temperature"
@@ -50,7 +50,7 @@ const PanelTestNumbers: React.FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col xs={24} sm={24} md={12} lg={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Progress gauge card">
           <ViewUnit
             subtopic="myhelloiot/temperature"
@@ -68,7 +68,7 @@ const PanelTestNumbers: React.FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col xs={24} sm={24} md={12} lg={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Linear gauge card">
           <ViewUnit
             subtopic="myhelloiot/temperature"
@@ -88,7 +88,7 @@ const PanelTestNumbers: React.FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col xs={24} sm={24} md={12} lg={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Dashboard gauge card">
           <ViewUnit
             subtopic="myhelloiot/temperature"
@@ -102,7 +102,7 @@ const PanelTestNumbers: React.FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col xs={24} sm={24} md={12} lg={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Simple gauge card">
           <ViewUnit
             subtopic="myhelloiot/temperature"
@@ -116,7 +116,7 @@ const PanelTestNumbers: React.FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col xs={24} sm={24} md={12} lg={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Circular gauge card">
           <ViewUnit
             subtopic="myhelloiot/temperature"
@@ -130,7 +130,7 @@ const PanelTestNumbers: React.FC<{}> = () => (
           />
         </CardStd>
       </Col>
-      <Col xs={24} sm={24} md={12} lg={6}>
+      <Col xs={24} sm={12} md={12} lg={6}>
         <CardStd title="Metro gauge card">
           <ViewUnit
             subtopic="myhelloiot/temperature"

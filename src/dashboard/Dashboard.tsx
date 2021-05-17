@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Drawer, Button, Layout, Menu } from "antd";
 import {
-  DashboardFilled,
+  // DashboardFilled,
   PictureFilled,
   ApiFilled,
   LoadingOutlined,
@@ -10,23 +10,31 @@ import {
 } from "@ant-design/icons";
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import AppHeader from "../AppHeader";
-import PanelTests from "./PanelTests";
-import PanelTestNumbers from "./PanelTestNumbers";
+import { DashboardMenuProps, getIcon } from "./DashboardMenu";
 
-const DemoDashboard: React.FC<{}> = () => {
+export type DashboardProps = {
+  disconnectMenu: boolean;
+  children: React.ReactElement<DashboardMenuProps, any>[];
+};
+
+const DISCONNECTKEY: React.Key = "action-disconnect";
+
+const Dashboard: React.FC<DashboardProps> = ({ disconnectMenu, children }) => {
   const [{ status }, { disconnect }] = useMQTTContext();
-  const [panelkey, setPanelkey] = useState<React.Key>("menu-1");
+  const [panelkey, setPanelkey] = useState<React.Key>("menu-0");
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
 
-  function handleSelect({ key }: { key: string | number }) {
-    if ((key as string).startsWith("menu-")) {
+  useEffect(() => window.scrollTo(0, 0), [panelkey]);
+
+  function handleSelect({ key }: { key: React.Key }) {
+    if (key !== DISCONNECTKEY) {
       hideDrawer();
       setPanelkey(key);
     }
   }
 
   function handleClick({ key }: { key: string | number }) {
-    if ((key as string) === "action-disconnect") {
+    if (key === DISCONNECTKEY) {
       hideDrawer();
       disconnect();
     }
@@ -60,6 +68,24 @@ const DemoDashboard: React.FC<{}> = () => {
     );
   }
 
+  const menus: React.ReactElement<any, any>[] = [];
+  let child: React.ReactElement<DashboardMenuProps, any> | undefined;
+  let index = 0;
+
+  React.Children.forEach(children, (c) => {
+    if (typeof c.type !== "symbol") {
+      const key: React.Key = "menu-" + index++;
+      menus.push(
+        <Menu.Item key={key} icon={getIcon(c.props.icon)}>
+          {c.props.name}
+        </Menu.Item>
+      );
+      if (key === panelkey) {
+        child = c;
+      }
+    }
+  });
+
   return (
     <Layout>
       <AppHeader>
@@ -85,24 +111,21 @@ const DemoDashboard: React.FC<{}> = () => {
             onSelect={handleSelect}
             onClick={handleClick}
           >
-            <Menu.Item key="menu-1" icon={<PictureFilled />}>
-              Gallery
-            </Menu.Item>
-            <Menu.Item key="menu-2" icon={<DashboardFilled />}>
-              Temperature
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="action-disconnect" icon={<ApiFilled />}>
-              Disconnect
-            </Menu.Item>
+            {menus}
+            {disconnectMenu && (
+              <>
+                <Menu.Divider />
+                <Menu.Item key="action-disconnect" icon={<ApiFilled />}>
+                  Disconnect
+                </Menu.Item>
+              </>
+            )}
           </Menu>
         </Drawer>
-
-        {panelkey === "menu-1" && <PanelTests />}
-        {panelkey === "menu-2" && <PanelTestNumbers />}
+        {child}
       </Layout.Content>
     </Layout>
   );
 };
 
-export default DemoDashboard;
+export default Dashboard;

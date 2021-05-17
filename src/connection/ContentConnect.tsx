@@ -39,6 +39,7 @@ const PanelConnect: React.FC<{}> = () => {
         automatic: false,
       });
     }
+    window.scrollTo(0, 0);
   });
 
   const handleConnect = (connectinfo: ConnectInfo) => {
