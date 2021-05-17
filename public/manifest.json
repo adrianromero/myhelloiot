@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "MYHELLOIOT",
+  "name": "MYHELLOIOT MQTT Dashboard",
   "icons": [
     {
       "src": "favicon.ico",
