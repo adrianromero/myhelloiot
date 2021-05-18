@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "antd";
 import { BulbIconFormat, ThuderboltIconFormat } from "../format/IconFormat";
-import CardStd from "../units/CardStd";
+import PanelGrid, { CCard } from "./PanelGrid";
 import InputUnit from "../units/InputUnit";
 import SwitchUnit from "../units/SwitchUnit";
 import ButtonUnit from "../units/ButtonUnit";
@@ -21,145 +21,111 @@ import { ReactComponent as Themes } from "../assets/svg/themes.svg";
 
 const PanelTests: React.FC<{}> = () => {
   return (
-    <div className="myhAppContent-panel">
-      <Row
-        gutter={[
-          { xs: 8, sm: 8, md: 8, lg: 8 },
-          { xs: 8, sm: 8, md: 8, lg: 8 },
-        ]}
-      >
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <CardStd title="Test topic pub and sub">
-            <InputUnit
-              pubtopic="myhelloiot/testtopic"
-              subtopic="myhelloiot/testtopic"
-            />
-          </CardStd>
-        </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <CardStd title="Test topic only sub">
-            <InputUnit subtopic="myhelloiot/testtopic" />
-          </CardStd>
-        </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <CardStd title="Test topic only pub">
-            <InputUnit pubtopic="myhelloiot/testtopic" />
-          </CardStd>
-        </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <CardStd title="Test topic Hexadecimal">
-            <InputUnit
-              pubtopic="myhelloiot/testtopic"
-              subtopic="myhelloiot/testtopic"
-              format={HEXValueEdit()}
-            />
-          </CardStd>
-        </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <CardStd title="Test topic Base64">
-            <InputUnit
-              pubtopic="myhelloiot/testtopic"
-              subtopic="myhelloiot/testtopic"
-              format={Base64ValueEdit()}
-            />
-          </CardStd>
-        </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <CardStd>
-            <ButtonUnit
-              pubtopic="myhelloiot/testtopic"
-              format={LiteralIconEdit("Sends 123", Buffer.from("123"))}
-            />
-          </CardStd>
-        </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <CardStd>
-            <ButtonUnit
-              pubtopic="myhelloiot/testtopic"
-              format={ImageIconEdit(Themes, Buffer.from("ABC"))}
-            />
-          </CardStd>
-        </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <CardStd>
-            <ButtonUnit
-              pubtopic="myhelloiot/testtopic"
-              format={TitleIconEdit(Themes, "Sends XYZ", Buffer.from("XYZ"))}
-            />
-          </CardStd>
-        </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <CardStd title="Light switch">
-            <div
-              className="myh-value myh-value-padding"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                backgroundColor: "#e1e1e1",
-                borderRadius: "15px",
-              }}
-            >
-              <ViewUnit
-                subtopic="myhelloiot/testswitch"
-                format={ComposedIconEdit(SwitchValueEdit(), BulbIconFormat())}
-              />
-            </div>
-            <div
-              className="myh-value myh-value-padding"
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              <SwitchUnit
-                pubtopic="myhelloiot/testswitch"
-                puboptions={{ retain: true }}
-                subtopic="myhelloiot/testswitch"
-              />
-            </div>
-          </CardStd>
-        </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <CardStd title="Switch button">
+    <PanelGrid>
+      <CCard title="Test topic pub and sub">
+        <InputUnit
+          pubtopic="myhelloiot/testtopic"
+          subtopic="myhelloiot/testtopic"
+        />
+      </CCard>
+      <CCard title="Test topic only sub">
+        <InputUnit subtopic="myhelloiot/testtopic" />
+      </CCard>
+      <CCard title="Test topic only pub">
+        <InputUnit pubtopic="myhelloiot/testtopic" />
+      </CCard>
+      <CCard title="Test topic Hexadecimal">
+        <InputUnit
+          pubtopic="myhelloiot/testtopic"
+          subtopic="myhelloiot/testtopic"
+          format={HEXValueEdit()}
+        />
+      </CCard>
+      <CCard title="Test topic Base64">
+        <InputUnit
+          pubtopic="myhelloiot/testtopic"
+          subtopic="myhelloiot/testtopic"
+          format={Base64ValueEdit()}
+        />
+      </CCard>
+      <CCard>
+        <ButtonUnit
+          pubtopic="myhelloiot/testtopic"
+          format={LiteralIconEdit("Sends 123", Buffer.from("123"))}
+        />
+      </CCard>
+      <CCard>
+        <ButtonUnit
+          pubtopic="myhelloiot/testtopic"
+          format={ImageIconEdit(Themes, Buffer.from("ABC"))}
+        />
+      </CCard>
+      <CCard>
+        <ButtonUnit
+          pubtopic="myhelloiot/testtopic"
+          format={TitleIconEdit(Themes, "Sends XYZ", Buffer.from("XYZ"))}
+        />
+      </CCard>
+      <CCard title="Light switch">
+        <div
+          className="myh-value myh-value-padding"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            backgroundColor: "#e1e1e1",
+            borderRadius: "15px",
+          }}
+        >
+          <ViewUnit
+            subtopic="myhelloiot/testswitch"
+            format={ComposedIconEdit(SwitchValueEdit(), BulbIconFormat())}
+          />
+        </div>
+        <div
+          className="myh-value myh-value-padding"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <SwitchUnit
+            pubtopic="myhelloiot/testswitch"
+            puboptions={{ retain: true }}
+            subtopic="myhelloiot/testswitch"
+          />
+        </div>
+      </CCard>
+      <CCard title="Switch button">
+        <ButtonUnit
+          pubtopic="myhelloiot/testswitch"
+          puboptions={{ retain: true }}
+          subtopic="myhelloiot/testswitch"
+        />
+      </CCard>
+      <CCard title="Switch bolt">
+        <ButtonUnit
+          pubtopic="myhelloiot/testswitch"
+          puboptions={{ retain: true }}
+          subtopic="myhelloiot/testswitch"
+          format={ComposedIconEdit(SwitchValueEdit(), ThuderboltIconFormat())}
+        />
+      </CCard>
+      <CCard title="Switch on and off">
+        <Row gutter={8}>
+          <Col span={12}>
             <ButtonUnit
               pubtopic="myhelloiot/testswitch"
               puboptions={{ retain: true }}
-              subtopic="myhelloiot/testswitch"
+              format={LiteralIconEdit("ON", Buffer.from("1"))}
             />
-          </CardStd>
-        </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <CardStd title="Switch bolt">
+          </Col>
+          <Col span={12}>
             <ButtonUnit
               pubtopic="myhelloiot/testswitch"
               puboptions={{ retain: true }}
-              subtopic="myhelloiot/testswitch"
-              format={ComposedIconEdit(
-                SwitchValueEdit(),
-                ThuderboltIconFormat()
-              )}
+              format={LiteralIconEdit("OFF", Buffer.from("0"))}
             />
-          </CardStd>
-        </Col>
-        <Col xs={24} sm={12} md={12} lg={6}>
-          <CardStd title="Switch on and off">
-            <Row gutter={8}>
-              <Col span={12}>
-                <ButtonUnit
-                  pubtopic="myhelloiot/testswitch"
-                  puboptions={{ retain: true }}
-                  format={LiteralIconEdit("ON", Buffer.from("1"))}
-                />
-              </Col>
-              <Col span={12}>
-                <ButtonUnit
-                  pubtopic="myhelloiot/testswitch"
-                  puboptions={{ retain: true }}
-                  format={LiteralIconEdit("OFF", Buffer.from("0"))}
-                />
-              </Col>
-            </Row>
-          </CardStd>
-        </Col>
-      </Row>
-    </div>
+          </Col>
+        </Row>
+      </CCard>
+    </PanelGrid>
   );
 };
 
