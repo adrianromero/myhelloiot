@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import AppHeader from "../AppHeader";
-import { DashboardMenuProps, getIcon } from "./DashboardMenu";
+import { DashboardMenuProps } from "./DashboardMenu";
 
 export type DashboardProps = {
   disconnectMenu: boolean;
@@ -74,7 +74,7 @@ const Dashboard: React.FC<DashboardProps> = ({ disconnectMenu, children }) => {
     if (typeof c.type !== "symbol") {
       const key: React.Key = "menu-" + index++;
       menus.push(
-        <Menu.Item key={key} icon={getIcon(c.props.icon)}>
+        <Menu.Item key={key} icon={c.props.icon}>
           {c.props.name}
         </Menu.Item>
       );

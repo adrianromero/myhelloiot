@@ -8,96 +8,95 @@ import {
   StarFilled,
   StarTwoTone,
 } from "@ant-design/icons";
+import { IconFormat, IconValueFormat, ValueFormat } from "./FormatTypes";
 import {
-  IconFormat,
-  IconEdit,
-  IconFormatNumber,
-  NumberValidation,
-  ValueEdit,
-  ValueFormat,
-} from "./FormatTypes";
-import { NumberValueEdit, StrValueEdit } from "./ValueFormat";
+  NumberValueFormat,
+  StrValueFormat,
+  SwitchValueFormat,
+} from "./ValueFormat";
 
-export const BulbIconFormat: () => IconFormat = () => ({
-  toIcon: (b: Buffer) =>
-    b.toString() === "1" ? (
-      <BulbFilled style={{ fontSize: "180%", color: "yellow" }} />
-    ) : (
-      <BulbTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
+export function BulbIconFormat(): IconFormat {
+  return {
+    toIcon: (b: Buffer) =>
+      b.toString() === "1" ? (
+        <BulbFilled style={{ fontSize: "180%", color: "yellow" }} />
+      ) : (
+        <BulbTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
+      ),
+  };
+}
+
+export function StarIconFormat(): IconFormat {
+  return {
+    toIcon: (b: Buffer) =>
+      b.toString() === "1" ? (
+        <StarFilled style={{ fontSize: "180%", color: "yellow" }} />
+      ) : (
+        <StarTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
+      ),
+  };
+}
+
+export function ThuderboltIconFormat(): IconFormat {
+  return {
+    toIcon: (b: Buffer) =>
+      b.toString() === "1" ? (
+        <ThunderboltFilled style={{ fontSize: "180%", color: "yellow" }} />
+      ) : (
+        <ThunderboltTwoTone
+          style={{ fontSize: "180%" }}
+          twoToneColor="lightgray"
+        />
+      ),
+  };
+}
+
+export function ToIconFormat(format: ValueFormat): IconFormat {
+  return {
+    toIcon: (b: Buffer) => (
+      <div className={`myh-value myh-value-padding ${format.className()}`}>
+        {format.toDisplay(b) || "\u00A0"}
+      </div>
     ),
-});
+  };
+}
 
-export const StarIconFormat: () => IconFormat = () => ({
-  toIcon: (b: Buffer) =>
-    b.toString() === "1" ? (
-      <StarFilled style={{ fontSize: "180%", color: "yellow" }} />
-    ) : (
-      <StarTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
-    ),
-});
+export function ToIconValueFormat(
+  valueformat: ValueFormat,
+  iconformat: IconFormat = ToIconFormat(valueformat)
+): IconValueFormat {
+  return {
+    ...valueformat,
+    ...iconformat,
+  };
+}
 
-export const ThuderboltIconFormat: () => IconFormat = () => ({
-  toIcon: (b: Buffer) =>
-    b.toString() === "1" ? (
-      <ThunderboltFilled style={{ fontSize: "180%", color: "yellow" }} />
-    ) : (
-      <ThunderboltTwoTone
-        style={{ fontSize: "180%" }}
-        twoToneColor="lightgray"
-      />
-    ),
-});
+export function SwitchIconValueFormat(
+  iconformat: IconFormat = StrIconFormat()
+): IconValueFormat {
+  return ToIconValueFormat(SwitchValueFormat(), iconformat);
+}
 
-export const ToIconFormat: (format: ValueFormat) => IconFormat = (format) => ({
-  toIcon: (b: Buffer) => (
-    <div className={`myh-value myh-value-padding ${format.className()}`}>
-      {format.toString(b) || "\u00A0"}
-    </div>
-  ),
-});
+export function LabelIconFormat(format: ValueFormat): IconFormat {
+  return {
+    toIcon: (b: Buffer) => format.toDisplay(b) || "\u00A0",
+  };
+}
 
-export const LabelIconFormat: (format: ValueFormat) => IconFormat = (
-  format
-) => ({
-  toIcon: (b: Buffer) => <>{format.toString(b) || "\u00A0"}</>,
-});
+export function LabelIconValueFormat(format: ValueFormat): IconValueFormat {
+  return ToIconValueFormat(format, LabelIconFormat(format));
+}
 
-export const LabelIconEdit: (format: ValueEdit) => IconEdit = (
-  format: ValueEdit
-) => ({
-  ...format,
-  toIcon: (b: Buffer) => <>{format.toString(b) || "\u00A0"}</>,
-});
+export function StrIconFormat(): IconFormat {
+  return ToIconFormat(StrValueFormat());
+}
 
-export const ToIconEdit: (format: ValueEdit) => IconEdit = (format) => ({
-  ...format,
-  toIcon: (b: Buffer) => (
-    <div className={`myh-value myh-value-padding ${format.className()}`}>
-      {format.toString(b) || "\u00A0"}
-    </div>
-  ),
-});
+export function StrIconValueFormat(): IconValueFormat {
+  return ToIconValueFormat(StrValueFormat());
+}
 
-export const ComposedIconEdit: (
-  format: ValueEdit,
-  toicon: IconFormat
-) => IconEdit = (format, toicon) => ({
-  ...format,
-  ...toicon,
-});
-
-export const StrIconFormat: () => IconFormat = () =>
-  ToIconFormat(StrValueEdit());
-
-export const StrIconEdit: () => IconEdit = () => ToIconEdit(StrValueEdit());
-
-export const ToIconFormatNumber: (
-  format?: IconFormat,
-  validation?: NumberValidation
-) => IconFormatNumber = (
-  format = ToIconFormat(NumberValueEdit()),
-  validation = { min: 0, max: 100, step: 1 }
-) => ({
-  ...format,
-  ...validation,
-});
+export function NumberIconFormat(
+  options?: Intl.NumberFormatOptions
+): IconFormat {
+  return ToIconFormat(NumberValueFormat(options));
+}

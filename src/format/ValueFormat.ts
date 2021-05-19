@@ -1,51 +1,61 @@
-import { ValueEdit } from "./FormatTypes";
+import { ValueFormat } from "./FormatTypes";
 
-export const StrValueEdit: () => ValueEdit = () => ({
-  toString: (b: Buffer) => b.toString(),
-  className: () => "",
-  fromString: (s: string) => Buffer.from(s),
-  next: (b: Buffer) => b,
-  prev: (b: Buffer) => b,
-});
+export function StrValueFormat(): ValueFormat {
+  return {
+    toDisplay: (b: Buffer) => b.toString(),
+    fromDisplay: (s: string) => Buffer.from(s),
+    className: () => "",
+    next: (b: Buffer) => b,
+    prev: (b: Buffer) => b,
+  };
+}
 
-export const JSONValueEdit: () => ValueEdit = () => ({
-  toString: (b: Buffer) => JSON.stringify(JSON.parse(b.toString()), null, 2),
-  className: () => "",
-  fromString: (s: string) => Buffer.from(s),
-  next: (b: Buffer) => b,
-  prev: (b: Buffer) => b,
-});
+export function JSONValueFormat(): ValueFormat {
+  return {
+    toDisplay: (b: Buffer) => JSON.stringify(JSON.parse(b.toString()), null, 2),
+    className: () => "",
+    fromDisplay: (s: string) => Buffer.from(s),
+    next: (b: Buffer) => b,
+    prev: (b: Buffer) => b,
+  };
+}
 
-export const HEXValueEdit: () => ValueEdit = () => ({
-  toString: (b: Buffer) => b.toString("hex"),
-  className: () => "",
-  fromString: (s: string) => Buffer.from(s, "hex"),
-  next: (b: Buffer) => b,
-  prev: (b: Buffer) => b,
-});
+export function HEXValueFormat(): ValueFormat {
+  return {
+    toDisplay: (b: Buffer) => b.toString("hex"),
+    className: () => "",
+    fromDisplay: (s: string) => Buffer.from(s, "hex"),
+    next: (b: Buffer) => b,
+    prev: (b: Buffer) => b,
+  };
+}
 
-export const Base64ValueEdit: () => ValueEdit = () => ({
-  toString: (b: Buffer) => b.toString("base64"),
-  className: () => "",
-  fromString: (s: string) => Buffer.from(s, "base64"),
-  next: (b: Buffer) => b,
-  prev: (b: Buffer) => b,
-});
+export function Base64ValueFormat(): ValueFormat {
+  return {
+    toDisplay: (b: Buffer) => b.toString("base64"),
+    className: () => "",
+    fromDisplay: (s: string) => Buffer.from(s, "base64"),
+    next: (b: Buffer) => b,
+    prev: (b: Buffer) => b,
+  };
+}
 
-export const SwitchValueEdit: () => ValueEdit = () => ({
-  toString: (b: Buffer) => (b.toString() === "1" ? "ON" : "OFF"),
-  fromString: (s: string) => Buffer.from(s === "ON" ? "1" : "0"),
-  next: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
-  prev: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
-  className: () => "",
-});
+export function SwitchValueFormat(): ValueFormat {
+  return {
+    toDisplay: (b: Buffer) => (b.toString() === "1" ? "ON" : "OFF"),
+    fromDisplay: (s: string) => Buffer.from(s === "ON" ? "1" : "0"),
+    next: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
+    prev: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
+    className: () => "",
+  };
+}
 
 const getCharClass: (s?: string) => string = (s) =>
   s ? "[" + s.split("").join("][") + "]" : "";
 
-export const NumberValueEdit: (
+export function NumberValueFormat(
   options?: Intl.NumberFormatOptions
-) => ValueEdit = (options) => {
+): ValueFormat {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale, options);
 
@@ -77,11 +87,11 @@ export const NumberValueEdit: (
   const getindex = (d: string): string => inx.get(d) || "";
 
   return {
-    toString: (b: Buffer) => {
+    toDisplay: (b: Buffer) => {
       const s = b.toString();
       return s ? intl.format(Number(s)) : "";
     },
-    fromString: (s: string) => {
+    fromDisplay: (s: string) => {
       const strans = s
         .trim()
         .replace(group, "")
@@ -93,8 +103,8 @@ export const NumberValueEdit: (
 
       return Buffer.from(strans);
     },
-    next: (b: Buffer) => Buffer.from((Number(b.toString()) + 1).toString),
-    prev: (b: Buffer) => Buffer.from((Number(b.toString()) - 1).toString),
+    next: (b: Buffer) => Buffer.from((Number(b.toString()) + 1).toString()),
+    prev: (b: Buffer) => Buffer.from((Number(b.toString()) - 1).toString()),
     className: () => "myh-class_alignright",
   };
-};
+}

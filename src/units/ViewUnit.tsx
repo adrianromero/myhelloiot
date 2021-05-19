@@ -33,6 +33,7 @@ const ViewUnit: React.FC<ViewUnitProps> = ({
     suboptions
   );
 
-  return format.toIcon(buffer);
+  return <>{format.toIcon(buffer)}</>;
 };
+
 export default ViewUnit;

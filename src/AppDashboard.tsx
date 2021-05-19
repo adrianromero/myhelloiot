@@ -1,5 +1,20 @@
 // @ts-nocheck
 import React from "react";
+import {
+  AlertFilled,
+  ApiFilled,
+  AudioFilled,
+  BankFilled,
+  BellFilled,
+  BookFilled,
+  BugFilled,
+  BuildFilled,
+  BulbFilled,
+  CameraFilled,
+  CarFilled,
+  DashboardFilled,
+  PictureFilled,
+} from "@ant-design/icons";
 import JsxParser from "react-jsx-parser";
 
 import PanelGrid, { C, CCard } from "./dashboard/PanelGrid";
@@ -9,14 +24,14 @@ import InputUnit from "./units/InputUnit";
 import ButtonUnit from "./units/ButtonUnit";
 
 import {
-  HEXValueEdit,
-  Base64ValueEdit,
-  SwitchValueEdit,
+  HEXValueFormat,
+  Base64ValueFormat,
+  SwitchValueFormat,
 } from "./format/ValueFormat";
 import {
-  TitleIconEdit,
-  LiteralIconEdit,
-  ImageIconEdit,
+  TitleIconValueFormat,
+  LiteralIconValueFormat,
+  ImageIconValueFormat,
 } from "./format/ButtonFormat";
 
 import PanelTests from "./dashboard/PanelTests";
@@ -27,14 +42,27 @@ const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
     renderInWrapper={false}
     bindings={{
       Buffer,
-      HEXValueEdit,
-      Base64ValueEdit,
-      SwitchValueEdit,
-      TitleIconEdit,
-      LiteralIconEdit,
-      ImageIconEdit,
+      HEXValueFormat,
+      Base64ValueFormat,
+      SwitchValueFormat,
+      TitleIconValueFormat,
+      LiteralIconValueFormat,
+      ImageIconValueFormat,
     }}
     components={{
+      AlertFilled,
+      ApiFilled,
+      AudioFilled,
+      BankFilled,
+      BellFilled,
+      BookFilled,
+      BugFilled,
+      BuildFilled,
+      BulbFilled,
+      CameraFilled,
+      CarFilled,
+      DashboardFilled,
+      PictureFilled,
       Dashboard,
       DashboardMenu,
       PanelGrid,
@@ -46,6 +74,10 @@ const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
       PanelTestNumbers,
     }}
     jsx={jsx}
+    renderError={() => <div className="myhJSXError">Render Error</div>}
+    renderUnrecognized={(tagname) => (
+      <div className="myhJSXUnreconized">Unrecognized tag {tagname}</div>
+    )}
   />
 ));
 

@@ -2,9 +2,9 @@ import React, { useEffect, useState, MouseEvent } from "react";
 import { Button } from "antd";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { IconEdit } from "../format/FormatTypes";
-import { LabelIconEdit } from "../format/IconFormat";
-import { SwitchValueEdit } from "../format/ValueFormat";
+import { IconValueFormat } from "../format/FormatTypes";
+import { LabelIconValueFormat } from "../format/IconFormat";
+import { SwitchValueFormat } from "../format/ValueFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
@@ -14,7 +14,7 @@ type ButtonUnitProps = {
   subtopic?: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
-  format?: IconEdit;
+  format?: IconValueFormat;
 };
 
 const ButtonUnit: React.FC<ButtonUnitProps> = ({
@@ -22,7 +22,7 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
   subtopic = "",
   puboptions,
   suboptions,
-  format = LabelIconEdit(SwitchValueEdit()),
+  format = LabelIconValueFormat(SwitchValueFormat()),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));

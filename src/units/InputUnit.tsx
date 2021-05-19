@@ -4,8 +4,8 @@ import { SendOutlined } from "@ant-design/icons";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
 
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { ValueEdit } from "../format/FormatTypes";
-import { StrValueEdit } from "../format/ValueFormat";
+import { ValueFormat } from "../format/FormatTypes";
+import { StrValueFormat } from "../format/ValueFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
@@ -15,7 +15,7 @@ type InputUnitProps = {
   subtopic?: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
-  format?: ValueEdit;
+  format?: ValueFormat;
 };
 
 const InputUnit: React.FC<InputUnitProps> = ({
@@ -23,7 +23,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
   subtopic = "",
   puboptions,
   suboptions,
-  format = StrValueEdit(),
+  format = StrValueFormat(),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
   const [form] = Form.useForm();
@@ -37,14 +37,14 @@ const InputUnit: React.FC<InputUnitProps> = ({
     subtopic,
     (topic: string, mqttmessage: Buffer) => {
       form.setFieldsValue({
-        mqttValue: format.toString(mqttmessage),
+        mqttValue: format.toDisplay(mqttmessage),
       });
     },
     suboptions
   );
 
   const onFinish = (values: any) => {
-    publish(pubtopic, format.fromString(values.mqttValue), puboptions);
+    publish(pubtopic, format.fromDisplay(values.mqttValue), puboptions);
   };
 
   return (
@@ -61,7 +61,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
               {
                 validator: (_, value) => {
                   try {
-                    format.fromString(value);
+                    format.fromDisplay(value);
                     return Promise.resolve();
                   } catch {
                     return Promise.reject(

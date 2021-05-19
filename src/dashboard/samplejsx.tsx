@@ -1,6 +1,6 @@
 export const samplejsx = `
 <Dashboard disconnectMenu>
-  <DashboardMenu  icon="BulbFilled"name="Application example">
+  <DashboardMenu  icon={<BulbFilled />} name="Application example">
     <PanelGrid>
       <CCard title="Testing topic pub and sub">
         <InputUnit
@@ -18,14 +18,14 @@ export const samplejsx = `
         <InputUnit
           pubtopic="myhelloiot/testingtopic"
           subtopic="myhelloiot/testingtopic"
-          format={HEXValueEdit()}
+          format={HEXValueFormat()}
         />
       </CCard>
       <CCard title="Testing topic Base64">
         <InputUnit
           pubtopic="myhelloiot/testingtopic"
           subtopic="myhelloiot/testingtopic"
-          format={Base64ValueEdit()}
+          format={Base64ValueFormat()}
         />
       </CCard>
       <CCard>
@@ -36,10 +36,10 @@ export const samplejsx = `
       </CCard>
     </PanelGrid>
   </DashboardMenu>
-  <DashboardMenu  icon="BulbFilled"name="Test Panel">
+  <DashboardMenu  icon={<BulbFilled />} name="Test Panel">
     <PanelTests />
   </DashboardMenu>
-  <DashboardMenu icon="DashboardFilled" name="Test Gauges">
+  <DashboardMenu icon={<DashboardFilled />} name="Test Gauges">
     <PanelTestNumbers />
   </DashboardMenu>
 </Dashboard>

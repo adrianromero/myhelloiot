@@ -1,10 +1,10 @@
 import React from "react"; // FC functional control.
-import { NumberValueEdit } from "../format/ValueFormat";
+import { NumberValueFormat } from "../format/ValueFormat";
 import PanelGrid, { CCard } from "./PanelGrid";
 import InputUnit from "../units/InputUnit";
 import ViewUnit from "../units/ViewUnit";
 import SliderUnit from "../units/SliderUnit";
-import { ToIconFormat } from "../format/IconFormat";
+import { NumberIconFormat } from "../format/IconFormat";
 import {
   DashboardIconFormat,
   LinearIconFormat,
@@ -20,19 +20,17 @@ const PanelTestNumbers: React.FC<{}> = () => (
       <InputUnit
         pubtopic="myhelloiot/temperature"
         subtopic="myhelloiot/temperature"
-        format={NumberValueEdit({ style: "unit", unit: "celsius" })}
+        format={NumberValueFormat({ style: "unit", unit: "celsius" })}
       />
     </CCard>
 
     <CCard title="Select temperature">
       <ViewUnit
         subtopic="myhelloiot/temperature"
-        format={ToIconFormat(
-          NumberValueEdit({
-            style: "unit",
-            unit: "celsius",
-          })
-        )}
+        format={NumberIconFormat({
+          style: "unit",
+          unit: "celsius",
+        })}
       />
       <SliderUnit
         pubtopic="myhelloiot/temperature"

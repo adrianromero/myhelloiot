@@ -3,8 +3,8 @@ import { Switch } from "antd";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
 
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { ValueEdit } from "../format/FormatTypes";
-import { StrValueEdit } from "../format/ValueFormat";
+import { ValueFormat } from "../format/FormatTypes";
+import { StrValueFormat } from "../format/ValueFormat";
 
 import "antd/dist/antd.css";
 import "../assets/main.css";
@@ -14,7 +14,7 @@ type SwitchUnitProps = {
   subtopic: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
-  format?: ValueEdit;
+  format?: ValueFormat;
 };
 
 const SwitchUnit: React.FC<SwitchUnitProps> = ({
@@ -22,7 +22,7 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   subtopic,
   puboptions,
   suboptions,
-  format = StrValueEdit(),
+  format = StrValueFormat(),
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
   const [checked, setChecked] = useState<boolean>(false);
@@ -34,14 +34,14 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   useMQTTSubscribe(
     subtopic,
     (topic: string, mqttmessage: Buffer) => {
-      setChecked(format.toString(mqttmessage) === "1");
+      setChecked(format.toDisplay(mqttmessage) === "1");
     },
     suboptions
   );
 
   const onChange = (value: boolean) => {
     setChecked(value);
-    publish(pubtopic, format.fromString(value ? "1" : "0"), puboptions);
+    publish(pubtopic, format.fromDisplay(value ? "1" : "0"), puboptions);
   };
 
   return <Switch checked={checked} onChange={onChange} disabled={!connected} />;

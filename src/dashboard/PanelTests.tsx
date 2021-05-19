@@ -7,16 +7,12 @@ import SwitchUnit from "../units/SwitchUnit";
 import ButtonUnit from "../units/ButtonUnit";
 import ViewUnit from "../units/ViewUnit";
 import {
-  TitleIconEdit,
-  LiteralIconEdit,
-  ImageIconEdit,
+  TitleIconValueFormat,
+  LiteralIconValueFormat,
+  ImageIconValueFormat,
 } from "../format/ButtonFormat";
-import { ComposedIconEdit } from "../format/IconFormat";
-import {
-  HEXValueEdit,
-  Base64ValueEdit,
-  SwitchValueEdit,
-} from "../format/ValueFormat";
+import { SwitchIconValueFormat } from "../format/IconFormat";
+import { HEXValueFormat, Base64ValueFormat } from "../format/ValueFormat";
 import { ReactComponent as Themes } from "../assets/svg/themes.svg";
 
 const PanelTests: React.FC<{}> = () => {
@@ -38,32 +34,32 @@ const PanelTests: React.FC<{}> = () => {
         <InputUnit
           pubtopic="myhelloiot/testtopic"
           subtopic="myhelloiot/testtopic"
-          format={HEXValueEdit()}
+          format={HEXValueFormat()}
         />
       </CCard>
       <CCard title="Test topic Base64">
         <InputUnit
           pubtopic="myhelloiot/testtopic"
           subtopic="myhelloiot/testtopic"
-          format={Base64ValueEdit()}
+          format={Base64ValueFormat()}
         />
       </CCard>
       <CCard>
         <ButtonUnit
           pubtopic="myhelloiot/testtopic"
-          format={LiteralIconEdit("Sends 123", Buffer.from("123"))}
+          format={LiteralIconValueFormat("Sends 123", Buffer.from("123"))}
         />
       </CCard>
       <CCard>
         <ButtonUnit
           pubtopic="myhelloiot/testtopic"
-          format={ImageIconEdit(Themes, Buffer.from("ABC"))}
+          format={ImageIconValueFormat(Themes, Buffer.from("ABC"))}
         />
       </CCard>
       <CCard>
         <ButtonUnit
           pubtopic="myhelloiot/testtopic"
-          format={TitleIconEdit(Themes, "Sends XYZ", Buffer.from("XYZ"))}
+          format={TitleIconValueFormat(Themes, "Sends XYZ", Buffer.from("XYZ"))}
         />
       </CCard>
       <CCard title="Light switch">
@@ -78,7 +74,7 @@ const PanelTests: React.FC<{}> = () => {
         >
           <ViewUnit
             subtopic="myhelloiot/testswitch"
-            format={ComposedIconEdit(SwitchValueEdit(), BulbIconFormat())}
+            format={BulbIconFormat()}
           />
         </div>
         <div
@@ -104,7 +100,7 @@ const PanelTests: React.FC<{}> = () => {
           pubtopic="myhelloiot/testswitch"
           puboptions={{ retain: true }}
           subtopic="myhelloiot/testswitch"
-          format={ComposedIconEdit(SwitchValueEdit(), ThuderboltIconFormat())}
+          format={SwitchIconValueFormat(ThuderboltIconFormat())}
         />
       </CCard>
       <CCard title="Switch on and off">
@@ -113,14 +109,14 @@ const PanelTests: React.FC<{}> = () => {
             <ButtonUnit
               pubtopic="myhelloiot/testswitch"
               puboptions={{ retain: true }}
-              format={LiteralIconEdit("ON", Buffer.from("1"))}
+              format={LiteralIconValueFormat("ON", Buffer.from("1"))}
             />
           </Col>
           <Col span={12}>
             <ButtonUnit
               pubtopic="myhelloiot/testswitch"
               puboptions={{ retain: true }}
-              format={LiteralIconEdit("OFF", Buffer.from("0"))}
+              format={LiteralIconValueFormat("OFF", Buffer.from("0"))}
             />
           </Col>
         </Row>
