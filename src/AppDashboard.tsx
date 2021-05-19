@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React from "react";
+import { Row, Col } from "antd";
 import {
   AlertFilled,
   ApiFilled,
@@ -15,6 +16,7 @@ import {
   DashboardFilled,
   PictureFilled,
 } from "@ant-design/icons";
+import { ReactComponent as Themes } from "./assets/svg/themes.svg";
 import JsxParser from "react-jsx-parser";
 
 import PanelGrid, { C, CCard } from "./dashboard/PanelGrid";
@@ -22,6 +24,8 @@ import Dashboard from "./dashboard/Dashboard";
 import DashboardMenu from "./dashboard/DashboardMenu";
 import InputUnit from "./units/InputUnit";
 import ButtonUnit from "./units/ButtonUnit";
+import SwitchUnit from "./units/SwitchUnit";
+import ViewUnit from "./units/ViewUnit";
 
 import {
   HEXValueFormat,
@@ -33,8 +37,12 @@ import {
   LiteralIconValueFormat,
   ImageIconValueFormat,
 } from "./format/ButtonFormat";
+import {
+  BulbIconFormat,
+  ThuderboltIconFormat,
+  SwitchIconValueFormat,
+} from "./format/IconFormat";
 
-import PanelTests from "./dashboard/PanelTests";
 import PanelTestNumbers from "./dashboard/PanelTestNumbers";
 
 const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
@@ -48,6 +56,10 @@ const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
       TitleIconValueFormat,
       LiteralIconValueFormat,
       ImageIconValueFormat,
+      BulbIconFormat,
+      ThuderboltIconFormat,
+      SwitchIconValueFormat,
+      Themes,
     }}
     components={{
       AlertFilled,
@@ -63,6 +75,8 @@ const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
       CarFilled,
       DashboardFilled,
       PictureFilled,
+      Row,
+      Col,
       Dashboard,
       DashboardMenu,
       PanelGrid,
@@ -70,7 +84,8 @@ const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
       CCard,
       InputUnit,
       ButtonUnit,
-      PanelTests,
+      SwitchUnit,
+      ViewUnit,
       PanelTestNumbers,
     }}
     jsx={jsx}
