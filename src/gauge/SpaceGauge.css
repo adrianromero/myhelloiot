@@ -1,0 +1,21 @@
+.space-indicator-bar {
+  stroke: #606060;
+  stroke-width: 12px;
+  fill: transparent;
+}
+
+.space-indicator-background {
+  stroke: #c0c0c0;
+  stroke-width: 12px;
+  fill: transparent;
+}
+
+.space-indicator-value {
+  fill: #000000d9;
+  font: bold 22px "Roboto Condensed", sans-serif;
+}
+
+.space-indicator-title {
+  fill: #0000008c;
+  font: 12px "Roboto Condensed", sans-serif;
+}

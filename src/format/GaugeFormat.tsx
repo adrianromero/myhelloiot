@@ -6,6 +6,7 @@ import DashboardGauge from "../gauge/DashboardGauge";
 import SimpleGauge from "../gauge/SimpleGauge";
 import CircularGauge from "../gauge/CircularGauge";
 import MetroGauge from "../gauge/MetroGauge";
+import SpaceGauge from "../gauge/SpaceGauge";
 
 export type GaugeProps =
   | {
@@ -103,3 +104,18 @@ export const MetroIconFormat: (
     />
   ),
 });
+
+export function SpaceIconFormat(
+  gaugeprops?: GaugeProps,
+  valueformat?: Intl.NumberFormatOptions
+): IconFormat {
+  return {
+    toIcon: (buffer) => (
+      <SpaceGauge
+        value={readNumber(buffer)}
+        valueformat={valueformat}
+        {...gaugeprops}
+      />
+    ),
+  };
+}
