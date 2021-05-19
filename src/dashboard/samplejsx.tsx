@@ -130,6 +130,22 @@ export const samplejsx = `
           numberValidation={{ min: -10, max: 60, step: 1 }}
         />
       </CCard>
+      <CCard title="Liquid gauge card">
+        <ViewUnit
+          subtopic="myhelloiot/temperature"
+          format={LiquidIconFormat(
+            {
+              title: "Liquid gauge",
+              min: -10,
+              max: 60,
+            },
+            {
+              style: "unit",
+              unit: "celsius",
+            }
+          )}
+        />
+      </CCard>      
       <CCard title="Progress gauge card">
         <ViewUnit
           subtopic="myhelloiot/temperature"

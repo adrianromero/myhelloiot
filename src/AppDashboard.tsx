@@ -53,6 +53,7 @@ import {
   MetroIconFormat,
   ProgressIconFormat,
   SpaceIconFormat,
+  LiquidIconFormat,
 } from "./format/GaugeFormat";
 
 const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
@@ -78,6 +79,7 @@ const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
       MetroIconFormat,
       ProgressIconFormat,
       SpaceIconFormat,
+      LiquidIconFormat,
       Themes,
     }}
     components={{

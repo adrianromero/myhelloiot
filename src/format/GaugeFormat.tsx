@@ -7,6 +7,7 @@ import SimpleGauge from "../gauge/SimpleGauge";
 import CircularGauge from "../gauge/CircularGauge";
 import MetroGauge from "../gauge/MetroGauge";
 import SpaceGauge from "../gauge/SpaceGauge";
+import LiquidGauge from "../gauge/LiquidGauge";
 
 export type GaugeProps =
   | {
@@ -112,6 +113,21 @@ export function SpaceIconFormat(
   return {
     toIcon: (buffer) => (
       <SpaceGauge
+        value={readNumber(buffer)}
+        valueformat={valueformat}
+        {...gaugeprops}
+      />
+    ),
+  };
+}
+
+export function LiquidIconFormat(
+  gaugeprops?: GaugeProps,
+  valueformat?: Intl.NumberFormatOptions
+): IconFormat {
+  return {
+    toIcon: (buffer) => (
+      <LiquidGauge
         value={readNumber(buffer)}
         valueformat={valueformat}
         {...gaugeprops}

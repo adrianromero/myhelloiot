@@ -1,0 +1,29 @@
+.liquid-indicator-background {
+  fill: #0099ff;
+}
+
+.liquid-indicator-border {
+  stroke: #0099ff;
+  stroke-width: 2px;
+  fill: transparent;
+}
+
+.liquid-indicator-value {
+  fill: #000000d9;
+  font: bold 22px "Roboto Condensed", sans-serif;
+}
+
+.liquid-indicator-title {
+  fill: #0000008c;
+  font: 10px "Roboto Condensed", sans-serif;
+}
+
+.liquid-indicator-value2 {
+  fill: #ffffffe9;
+  font: bold 22px "Roboto Condensed", sans-serif;
+}
+
+.liquid-indicator-title2 {
+  fill: #ffffffac;
+  font: 10px "Roboto Condensed", sans-serif;
+}
