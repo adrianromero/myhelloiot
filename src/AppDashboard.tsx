@@ -26,11 +26,13 @@ import InputUnit from "./units/InputUnit";
 import ButtonUnit from "./units/ButtonUnit";
 import SwitchUnit from "./units/SwitchUnit";
 import ViewUnit from "./units/ViewUnit";
+import SliderUnit from "./units/SliderUnit";
 
 import {
   HEXValueFormat,
   Base64ValueFormat,
   SwitchValueFormat,
+  NumberValueFormat,
 } from "./format/ValueFormat";
 import {
   TitleIconValueFormat,
@@ -41,9 +43,16 @@ import {
   BulbIconFormat,
   ThuderboltIconFormat,
   SwitchIconValueFormat,
+  NumberIconFormat,
 } from "./format/IconFormat";
-
-import PanelTestNumbers from "./dashboard/PanelTestNumbers";
+import {
+  DashboardIconFormat,
+  LinearIconFormat,
+  SimpleIconFormat,
+  CircularIconFormat,
+  MetroIconFormat,
+  ProgressIconFormat,
+} from "./format/GaugeFormat";
 
 const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
   <JsxParser
@@ -53,12 +62,20 @@ const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
       HEXValueFormat,
       Base64ValueFormat,
       SwitchValueFormat,
+      NumberValueFormat,
       TitleIconValueFormat,
       LiteralIconValueFormat,
       ImageIconValueFormat,
       BulbIconFormat,
       ThuderboltIconFormat,
       SwitchIconValueFormat,
+      NumberIconFormat,
+      DashboardIconFormat,
+      LinearIconFormat,
+      SimpleIconFormat,
+      CircularIconFormat,
+      MetroIconFormat,
+      ProgressIconFormat,
       Themes,
     }}
     components={{
@@ -86,7 +103,7 @@ const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
       ButtonUnit,
       SwitchUnit,
       ViewUnit,
-      PanelTestNumbers,
+      SliderUnit,
     }}
     jsx={jsx}
     renderError={() => <div className="myhJSXError">Render Error</div>}
