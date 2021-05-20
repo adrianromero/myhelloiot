@@ -55,9 +55,6 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
             y={yvalue}
             width={200}
             height={130}
-            style={{
-              transition: "y 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
-            }}
           />
         </clipPath>
       </defs>
@@ -66,21 +63,24 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         cy={centery}
         r={r1}
         className="liquid-indicator-border"
+        style={{ fill: "#00000000" }}
       />
 
       <text
+        id="value1"
         x={100}
         y={60}
         textAnchor="middle"
-        className="liquid-indicator-value"
+        className="liquid-indicator-value liquid-indicator-value_1"
       >
         {formatvalue}
       </text>
       <text
+        id="title1"
         x={100}
         y={80}
         textAnchor="middle"
-        className="liquid-indicator-title"
+        className="liquid-indicator-title liquid-indicator-title_1"
       >
         {title}
       </text>
@@ -98,7 +98,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         x={100}
         y={60}
         textAnchor="middle"
-        className="liquid-indicator-value2"
+        className="liquid-indicator-value liquid-indicator-value_2"
         clip-path="url(#cut-off-bottom)"
       >
         {formatvalue}
@@ -108,7 +108,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         x={100}
         y={80}
         textAnchor="middle"
-        className="liquid-indicator-title2"
+        className="liquid-indicator-title liquid-indicator-title_2"
         clip-path="url(#cut-off-bottom)"
       >
         {title}

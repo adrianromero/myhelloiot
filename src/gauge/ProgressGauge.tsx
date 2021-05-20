@@ -54,9 +54,6 @@ const ProgressGauge: React.FC<ProgressGaugeProps> = ({
         height={8}
         rx={4}
         className="progress-indicator-bar"
-        style={{
-          transition: "width 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
-        }}
       />
 
       <text

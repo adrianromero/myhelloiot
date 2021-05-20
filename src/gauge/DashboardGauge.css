@@ -1,9 +1,12 @@
 .dashboard-indicator-bar {
   stroke: #0000ff;
+  stroke-width: 40px;
+  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .dashboard-indicator-background {
   stroke: #cccccc;
+  stroke-width: 40px;
 }
 
 .dashboard-indicator-labels {

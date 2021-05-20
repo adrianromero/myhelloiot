@@ -143,6 +143,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           orientation: 1,
         })}
         className="simple-indicator-mark"
+        style={{ fill: "#00000000" }}
       />
 
       <text
@@ -175,7 +176,6 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           transform: `translate(100px, 60px) rotate(${
             angle - 135
           }deg) translate(-100px, -60px)`,
-          transition: "transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
         }}
       />
       <text

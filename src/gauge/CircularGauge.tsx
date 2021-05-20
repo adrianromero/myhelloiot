@@ -51,6 +51,7 @@ const CircularGauge: React.FC<CircularGaugeProps> = ({
         className="circular-indicator-background"
         style={{
           fill: "#00000000",
+          strokeMiterlimit: 0,
         }}
       />
       <circle
@@ -60,10 +61,9 @@ const CircularGauge: React.FC<CircularGaugeProps> = ({
         className="circular-indicator-bar"
         style={{
           fill: "#00000000",
+          strokeMiterlimit: 0,
           strokeDasharray: `${arcvalue} 400`,
           transform: `translate(100px, 60px) rotate(-90deg) translate(-100px, -60px)`,
-          transition:
-            "stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
         }}
       />
       <text

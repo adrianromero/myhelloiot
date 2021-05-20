@@ -1,6 +1,7 @@
 .circular-indicator-bar {
   stroke: #0000ee;
   stroke-width: 5px;
+  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .circular-indicator-background {

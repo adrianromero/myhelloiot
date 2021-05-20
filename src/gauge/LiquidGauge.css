@@ -2,28 +2,35 @@
   fill: #0099ff;
 }
 
+.liquid-indicator-bar {
+  transition: y 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+}
+
 .liquid-indicator-border {
   stroke: #0099ff;
   stroke-width: 2px;
-  fill: transparent;
 }
 
 .liquid-indicator-value {
-  fill: #000000d9;
   font: bold 22px "Roboto Condensed", sans-serif;
+}
+
+.liquid-indicator-value_1 {
+  fill: #000000d9;
+}
+
+.liquid-indicator-value_2 {
+  fill: #ffffffe9;
 }
 
 .liquid-indicator-title {
+  font: 10px "Roboto Condensed", sans-serif;
+}
+
+.liquid-indicator-title_1 {
   fill: #0000008c;
-  font: 10px "Roboto Condensed", sans-serif;
 }
 
-.liquid-indicator-value2 {
-  fill: #ffffffe9;
-  font: bold 22px "Roboto Condensed", sans-serif;
-}
-
-.liquid-indicator-title2 {
+.liquid-indicator-title_2 {
   fill: #ffffffac;
-  font: 10px "Roboto Condensed", sans-serif;
 }

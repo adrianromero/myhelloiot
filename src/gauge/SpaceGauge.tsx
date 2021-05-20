@@ -56,6 +56,9 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
           sweep: 1,
         })}
         className="space-indicator-background"
+        style={{
+          fill: "#00000000",
+        }}
       />
       <path
         id="path2"
@@ -71,8 +74,7 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
         className="space-indicator-bar"
         style={{
           strokeDasharray: `${arcvalue} 400`,
-          transition:
-            "stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
+          fill: "#00000000",
         }}
       />
 

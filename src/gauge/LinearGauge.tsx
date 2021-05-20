@@ -101,9 +101,6 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         width={width}
         height={25}
         className="linear-indicator-bar"
-        style={{
-          transition: "width 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
-        }}
       />
 
       <line

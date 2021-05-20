@@ -1,5 +1,6 @@
 .progress-indicator-bar {
   fill: #008f00;
+  transition: width 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .progress-indicator-background {

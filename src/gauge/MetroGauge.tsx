@@ -102,6 +102,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
           orientation: 1,
         })}
         className="metro-indicator-mark"
+        style={{ fill: "#00000000" }}
       />
       <text
         x={100}
@@ -124,7 +125,6 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
         className="metro-indicator-arrow"
         style={{
           transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
-          transition: "transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
         }}
       />
       <circle

@@ -49,7 +49,6 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
         className="dashboard-indicator-background"
         style={{
           fill: "#00000000",
-          strokeWidth: 40,
           strokeMiterlimit: 0,
           strokeDasharray: "none",
         }}
@@ -61,11 +60,8 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
         className="dashboard-indicator-bar"
         style={{
           fill: "#00000000",
-          strokeWidth: 40,
           strokeMiterlimit: 0,
           strokeDasharray: `${arcvalue} 200`,
-          transition:
-            "stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s",
         }}
       />
       <text

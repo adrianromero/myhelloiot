@@ -1,13 +1,12 @@
 .space-indicator-bar {
-  stroke: #606060;
+  stroke: #c93636;
   stroke-width: 12px;
-  fill: transparent;
+  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .space-indicator-background {
   stroke: #c0c0c0;
   stroke-width: 12px;
-  fill: transparent;
 }
 
 .space-indicator-value {

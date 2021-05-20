@@ -6,14 +6,12 @@
 }
 
 .metro-indicator-mark {
-  fill: #00000000;
   stroke: #606060;
   stroke-width: 0.8px;
   stroke-linecap: square;
 }
 
 .metro-indicator-markstep {
-  fill: #00000000;
   stroke: #606060;
   stroke-width: 1px;
   stroke-linecap: square;
@@ -33,6 +31,7 @@
   fill: #ff0000af;
   stroke: #606060;
   stroke-width: 0.5px;
+  transition: transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .metro-indicator-arrowpin {
