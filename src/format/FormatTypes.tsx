@@ -13,9 +13,9 @@ export type ValueFormat = {
 };
 
 export type NumberValidation = {
-  min: number;
-  max: number;
-  step: number;
+  min?: number;
+  max?: number;
+  step?: number;
 };
 
 export type ValueFormatNumber = ValueFormat & NumberValidation;

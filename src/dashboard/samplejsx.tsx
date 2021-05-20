@@ -145,7 +145,25 @@ export const samplejsx = `
             }
           )}
         />
-      </CCard>      
+      </CCard>    
+      <CCard title="Fuel gauge card">
+        <ViewUnit
+          subtopic="myhelloiot/temperature"
+          format={FuelIconFormat(
+            {
+              title: "Fuel gauge",
+              min: -10,
+              max: 60,
+              step: 1,
+              labelstep: 5,
+            },
+            {
+              style: "unit",
+              unit: "celsius",
+            }
+          )}
+        />
+      </CCard>        
       <CCard title="Progress gauge card">
         <ViewUnit
           subtopic="myhelloiot/temperature"
