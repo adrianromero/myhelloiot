@@ -54,6 +54,7 @@ import {
   ProgressIconFormat,
   SpaceIconFormat,
   LiquidIconFormat,
+  DialIconFormat,
 } from "./format/GaugeFormat";
 
 const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
@@ -80,6 +81,7 @@ const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
       ProgressIconFormat,
       SpaceIconFormat,
       LiquidIconFormat,
+      DialIconFormat,
       Themes,
     }}
     components={{

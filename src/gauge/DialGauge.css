@@ -1,0 +1,35 @@
+.dial-indicator-bar {
+  fill: #ff0000ff;
+  transition: width 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+}
+
+.dial-indicator-background {
+  fill: #dddddd;
+}
+
+.dial-indicator-mark {
+  stroke: #606060;
+  stroke-width: 0.4px;
+  stroke-linecap: round;
+}
+
+.dial-indicator-markstep {
+  stroke: #606060;
+  stroke-width: 0.6px;
+  stroke-linecap: round;
+}
+
+.dial-indicator-marklabel {
+  fill: #0000008c;
+  font: 10px "Roboto Condensed", sans-serif;
+}
+
+.dial-indicator-value {
+  fill: #000000d9;
+  font: bold 14px "Roboto Condensed", sans-serif;
+}
+
+.dial-indicator-title {
+  fill: #0000008c;
+  font: 10px "Roboto Condensed", sans-serif;
+}

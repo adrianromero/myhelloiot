@@ -235,23 +235,40 @@ export const samplejsx = `
         />
       </CCard>
       <CCard title="Space gauge card">
-      <ViewUnit
-        subtopic="myhelloiot/temperature"
-        format={SpaceIconFormat(
-          {
-            title: "Space gauge",
-            min: -10,
-            max: 60,
-            step: 1,
-            labelstep: 5,
-          },
-          {
-            style: "unit",
-            unit: "celsius",
-          }
-        )}
-      />
-    </CCard>
+        <ViewUnit
+          subtopic="myhelloiot/temperature"
+          format={SpaceIconFormat(
+            {
+              title: "Space gauge",
+              min: -10,
+              max: 60,
+              step: 1,
+            },
+            {
+              style: "unit",
+              unit: "celsius",
+            }
+          )}
+        />
+      </CCard>
+      <CCard title="Dial gauge card">
+        <ViewUnit
+          subtopic="myhelloiot/temperature"
+          format={DialIconFormat(
+            {
+              title: "Dial gauge",
+              min: -10,
+              max: 60,
+              step: 1,
+              labelstep: 10,
+            },
+            {
+              style: "unit",
+              unit: "celsius",
+            }
+          )}
+        />
+      </CCard>
     </PanelGrid>
   </DashboardMenu>
 </Dashboard>
