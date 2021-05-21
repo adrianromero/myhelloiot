@@ -29,7 +29,7 @@
 
 .metro-indicator-arrow {
   fill: #ff0000af;
-  stroke: #606060;
+  stroke: #606060af;
   stroke-width: 0.5px;
   transition: transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }

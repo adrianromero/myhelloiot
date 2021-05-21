@@ -154,8 +154,8 @@ export const samplejsx = `
               title: "Fuel gauge",
               min: -10,
               max: 60,
-              step: 1,
-              labelstep: 5,
+              step: 5,
+              labelstep: 10,
             },
             {
               style: "unit",

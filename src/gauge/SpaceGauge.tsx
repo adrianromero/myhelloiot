@@ -25,7 +25,7 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
 
   const r1 = 50;
   const centerx = 100;
-  const centery = 60;
+  const centery = 65;
 
   let arcvalue: number;
   let formatvalue: string;
@@ -80,13 +80,13 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
 
       <text
         x={105}
-        y={100}
+        y={105}
         textAnchor="start"
         className="space-indicator-value"
       >
         {formatvalue}
       </text>
-      <text x={105} y={75} textAnchor="start" className="space-indicator-title">
+      <text x={105} y={80} textAnchor="start" className="space-indicator-title">
         {title}
       </text>
     </svg>

@@ -29,7 +29,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
 
   const r1 = 55;
   const centerx = 100;
-  const centery = 60;
+  const centery = 65;
   const arctotal = 270;
 
   let arcvalue: number;
@@ -106,7 +106,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
       />
       <text
         x={100}
-        y={80}
+        y={85}
         textAnchor="middle"
         className="metro-indicator-value"
       >
@@ -114,7 +114,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
       </text>
       <text
         x={centerx}
-        y={50}
+        y={55}
         textAnchor="middle"
         className="metro-indicator-title"
       >

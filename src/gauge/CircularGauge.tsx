@@ -25,7 +25,7 @@ const CircularGauge: React.FC<CircularGaugeProps> = ({
 
   const r1 = 55;
   const centerx = 100;
-  const centery = 60;
+  const centery = 65;
 
   let arcvalue: number;
   let formatvalue: string;
@@ -63,12 +63,12 @@ const CircularGauge: React.FC<CircularGaugeProps> = ({
           fill: "#00000000",
           strokeMiterlimit: 0,
           strokeDasharray: `${arcvalue} 400`,
-          transform: `translate(100px, 60px) rotate(-90deg) translate(-100px, -60px)`,
+          transform: `translate(${centerx}px, ${centery}px) rotate(-90deg) translate(${-centerx}px, ${-centery}px)`,
         }}
       />
       <text
         x={100}
-        y={60}
+        y={65}
         textAnchor="middle"
         className="circular-indicator-value"
       >
@@ -76,7 +76,7 @@ const CircularGauge: React.FC<CircularGaugeProps> = ({
       </text>
       <text
         x={100}
-        y={80}
+        y={85}
         textAnchor="middle"
         className="circular-indicator-title"
       >

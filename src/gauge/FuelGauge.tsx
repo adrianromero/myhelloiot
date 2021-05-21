@@ -27,53 +27,61 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
   const intl = new Intl.NumberFormat(locale);
   const intlvalue = new Intl.NumberFormat(locale, valueformat);
 
-  const r1 = 55;
+  const r1 = 45;
+  const semibarwidth = 12;
   const centerx = 100;
-  const centery = 60;
-  const arctotal = 270;
+  const centery = 80;
+  const startangle = 200;
+  const endangle = 340;
+
+  const arctotal = endangle - startangle;
+  const arctotalrad = (Math.PI * r1 * arctotal) / 180;
 
   let arcvalue: number;
+  let arcvaluerad: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
     arcvalue = 0;
+    arcvaluerad = 0;
     formatvalue = "";
   } else {
     arcvalue = padvalue(min, max, arctotal)(value);
+    arcvaluerad = padvalue(min, max, arctotalrad)(value);
     formatvalue = intlvalue.format(value);
   }
-  arcvalue -= 135;
+  arcvalue += startangle - 270;
 
   const lines = [];
   for (let index = min; index <= max; index += step) {
-    const angle = 135 + (arctotal * (index - min)) / (max - min);
+    const angle = startangle - 360 + (arctotal * (index - min)) / (max - min);
     const cos = Math.cos((angle * Math.PI) / 180);
     const sin = Math.sin((angle * Math.PI) / 180);
     lines.push(
       <line
-        x1={centerx + r1 * cos}
-        y1={centery + r1 * sin}
-        x2={centerx + (r1 - 3) * cos}
-        y2={centery + (r1 - 3) * sin}
-        className="fuel-indicator-mark"
+        x1={centerx + (r1 + 5) * cos}
+        y1={centery + (r1 + 5) * sin}
+        x2={centerx + r1 * cos}
+        y2={centery + r1 * sin}
+        className="fuel-indicator-markstep"
       />
     );
   }
   for (let index = min; index <= max; index += labelstep) {
-    const angle = 135 + (arctotal * (index - min)) / (max - min);
+    const angle = startangle - 360 + (arctotal * (index - min)) / (max - min);
     const cos = Math.cos((angle * Math.PI) / 180);
     const sin = Math.sin((angle * Math.PI) / 180);
     lines.push(
       <>
         <line
-          x1={centerx + r1 * cos}
-          y1={centery + r1 * sin}
-          x2={centerx + (r1 - 6) * cos}
-          y2={centery + (r1 - 6) * sin}
+          x1={centerx + (r1 + 5) * cos}
+          y1={centery + (r1 + 5) * sin}
+          x2={centerx + (r1 - 5) * cos}
+          y2={centery + (r1 - 5) * sin}
           className="fuel-indicator-markstep"
         />
         <text
-          x={centerx + (r1 - 13) * cos}
-          y={centery + 2 + (r1 - 13) * sin}
+          x={centerx + (r1 - 6 - semibarwidth) * cos}
+          y={centery + 2 + (r1 - 6 - semibarwidth) * sin}
           textAnchor="middle"
           className="fuel-indicator-marklabel"
         >
@@ -90,33 +98,89 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
       viewBox="0 0 200 130"
       className={className}
     >
+      <path
+        id="arc"
+        d={arcpath({
+          cx: centerx,
+          cy: centery,
+          r: r1,
+          start: (startangle * Math.PI) / 180,
+          end: (endangle * Math.PI) / 180,
+          orientation: 0,
+          sweep: 1,
+        })}
+        className="fuel-indicator-background"
+        style={{
+          fill: "#00000000",
+          strokeMiterlimit: 0,
+        }}
+      />
+      <path
+        id="arc"
+        d={arcpath({
+          cx: centerx,
+          cy: centery,
+          r: r1,
+          start: (startangle * Math.PI) / 180,
+          end: (endangle * Math.PI) / 180,
+          orientation: 0,
+          sweep: 1,
+        })}
+        className="fuel-indicator-bar"
+        style={{
+          fill: "#00000000",
+          strokeMiterlimit: 0,
+          strokeDasharray: `${arcvaluerad} 400`,
+        }}
+      />
       {lines}
       <path
         id="arc"
         d={arcpath({
           cx: centerx,
           cy: centery,
-          r: r1 + 2,
-          start: (45 * Math.PI) / 180,
-          end: (135 * Math.PI) / 180,
-          orientation: 1,
+          r: r1 + semibarwidth,
+          start: (startangle * Math.PI) / 180,
+          end: (endangle * Math.PI) / 180,
+          orientation: 0,
+          sweep: 1,
         })}
-        className="fuel-indicator-mark"
+        className="fuel-indicator-mark fuel-indicator-mark_ext"
         style={{ fill: "#00000000" }}
       />
-      <text x={100} y={80} textAnchor="middle" className="fuel-indicator-value">
+      <path
+        id="arc"
+        d={arcpath({
+          cx: centerx,
+          cy: centery,
+          r: r1 - semibarwidth,
+          start: (startangle * Math.PI) / 180,
+          end: (endangle * Math.PI) / 180,
+          orientation: 0,
+          sweep: 1,
+        })}
+        className="fuel-indicator-mark fuel-indicator-mark_int"
+        style={{ fill: "#00000000" }}
+      />
+      <text
+        x={100}
+        y={105}
+        textAnchor="middle"
+        className="fuel-indicator-value"
+      >
         {formatvalue}
       </text>
       <text
         x={centerx}
-        y={50}
+        y={15}
         textAnchor="middle"
         className="fuel-indicator-title"
       >
         {title}
       </text>
       <path
-        d="M 3 10 L -3 10 L 0 -50 Z"
+        // d="M 1 10 L -1 10  L -1 -55 L 0 -60 L 1 -55 Z"
+        d="M 5 2 L 0 10 L -5 2 L 0 -60  Z"
         className="fuel-indicator-arrow"
         style={{
           transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
@@ -125,7 +189,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
       <circle
         cx={centerx}
         cy={centery}
-        r={1.2}
+        r={2}
         className="fuel-indicator-arrowpin"
       />
     </svg>

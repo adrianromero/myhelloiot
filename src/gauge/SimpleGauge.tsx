@@ -28,7 +28,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
   const cosr2 = Math.cos(Math.PI / 12);
   const r2 = 25;
   const centerx = 100;
-  const centery = 60;
+  const centery = 65;
 
   let angle: number;
   let formatvalue: string;
@@ -148,7 +148,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
 
       <text
         x={50}
-        y={110}
+        y={115}
         textAnchor="middle"
         className="simple-indicator-labels"
       >
@@ -156,7 +156,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
       </text>
       <text
         x={150}
-        y={110}
+        y={115}
         textAnchor="middle"
         className="simple-indicator-labels"
       >
@@ -173,9 +173,9 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
         opacity="1"
         className="simple-indicator-arrow"
         style={{
-          transform: `translate(100px, 60px) rotate(${
+          transform: `translate(${centerx}px, ${centery}px) rotate(${
             angle - 135
-          }deg) translate(-100px, -60px)`,
+          }deg) translate(${-centerx}px, ${-centery}px)`,
         }}
       />
       <text
@@ -188,7 +188,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
       </text>
       <text
         x={100}
-        y={105}
+        y={110}
         textAnchor="middle"
         className="simple-indicator-title"
       >

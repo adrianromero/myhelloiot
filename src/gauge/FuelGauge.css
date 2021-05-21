@@ -1,20 +1,33 @@
 @import url("../assets/fonts.css");
 
+.fuel-indicator-background {
+  stroke: #dddddd;
+  stroke-width: 24px;
+}
+
 .fuel-indicator-bar {
-  stroke: #0000ee;
-  stroke-width: 5px;
+  stroke: blueviolet;
+  stroke-width: 24px;
+  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .fuel-indicator-mark {
-  stroke: #606060;
   stroke-width: 0.8px;
-  stroke-linecap: square;
+  stroke-linecap: butt;
+}
+
+.fuel-indicator-mark_ext {
+  stroke: #606060;
+}
+
+.fuel-indicator-mark_int {
+  stroke: #606060;
 }
 
 .fuel-indicator-markstep {
   stroke: #606060;
   stroke-width: 1px;
-  stroke-linecap: square;
+  stroke-linecap: butt;
 }
 
 .fuel-indicator-marklabel {
@@ -22,30 +35,25 @@
   font: 6px "Roboto Condensed", sans-serif;
 }
 
-.fuel-indicator-background {
-  stroke: #cccccc;
-  stroke-width: 5px;
-}
-
 .fuel-indicator-arrow {
-  fill: #ff0000af;
+  fill: #ff0000;
   stroke: #606060;
   stroke-width: 0.5px;
   transition: transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .fuel-indicator-arrowpin {
-  fill: #d1d1d1;
-  stroke: #606060;
+  fill: #ff0000;
+  stroke: #000000;
   stroke-width: 0.5px;
 }
 
 .fuel-indicator-value {
   fill: #000000d9;
-  font: bold 10px "Roboto Condensed", sans-serif;
+  font: bold 14px "Roboto Condensed", sans-serif;
 }
 
 .fuel-indicator-title {
   fill: #0000008c;
-  font: 8px "Roboto Condensed", sans-serif;
+  font: 10px "Roboto Condensed", sans-serif;
 }

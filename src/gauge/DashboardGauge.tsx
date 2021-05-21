@@ -44,7 +44,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
     >
       <path
         id="arc"
-        d="M40 80 A 60 60 0 0 1 160 80"
+        d="M40 85 A 60 60 0 0 1 160 85"
         opacity="1"
         className="dashboard-indicator-background"
         style={{
@@ -55,18 +55,18 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
       />
       <path
         id="arc"
-        d="M40 80 A 60 60 0 0 1 160 80"
+        d="M40 85 A 60 60 0 0 1 160 85"
         opacity="1"
         className="dashboard-indicator-bar"
         style={{
           fill: "#00000000",
           strokeMiterlimit: 0,
-          strokeDasharray: `${arcvalue} 200`,
+          strokeDasharray: `${arcvalue} 400`,
         }}
       />
       <text
         x={40}
-        y={92}
+        y={97}
         textAnchor="middle"
         className="dashboard-indicator-labels"
       >
@@ -74,7 +74,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
       </text>
       <text
         x={160}
-        y={92}
+        y={97}
         textAnchor="middle"
         className="dashboard-indicator-labels"
       >
@@ -82,7 +82,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
       </text>
       <text
         x={100}
-        y={85}
+        y={90}
         textAnchor="middle"
         className="dashboard-indicator-value"
       >
@@ -90,7 +90,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
       </text>
       <text
         x={100}
-        y={105}
+        y={110}
         textAnchor="middle"
         className="dashboard-indicator-title"
       >
