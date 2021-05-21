@@ -18,12 +18,12 @@ const ViewUnit: React.FC<ViewUnitProps> = ({
   suboptions,
   format = StrIconFormat(),
 }) => {
-  const [{ connected }] = useMQTTContext();
+  const [{ ready }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
 
   useEffect(() => {
     setBuffer(Buffer.from([]));
-  }, [connected]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useMQTTSubscribe(
     subtopic,

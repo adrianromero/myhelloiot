@@ -24,12 +24,12 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
   suboptions,
   format = LabelIconValueFormat(SwitchValueFormat()),
 }) => {
-  const [{ connected }, { publish }] = useMQTTContext();
+  const [{ connected, ready }, { publish }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
 
   useEffect(() => {
     setBuffer(Buffer.from([]));
-  }, [connected]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useMQTTSubscribe(
     subtopic,

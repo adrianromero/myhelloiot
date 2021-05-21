@@ -25,13 +25,13 @@ const InputUnit: React.FC<InputUnitProps> = ({
   suboptions,
   format = StrValueFormat(),
 }) => {
-  const [{ connected }, { publish }] = useMQTTContext();
+  const [{ connected, ready }, { publish }] = useMQTTContext();
   const [form] = Form.useForm();
   useEffect(() => {
     form.setFieldsValue({
       mqttValue: "",
     });
-  }, [connected]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useMQTTSubscribe(
     subtopic,

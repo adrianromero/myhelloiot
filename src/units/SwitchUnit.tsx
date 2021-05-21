@@ -24,12 +24,12 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   suboptions,
   format = StrValueFormat(),
 }) => {
-  const [{ connected }, { publish }] = useMQTTContext();
+  const [{ connected, ready }, { publish }] = useMQTTContext();
   const [checked, setChecked] = useState<boolean>(false);
 
   useEffect(() => {
     setChecked(false);
-  }, [connected]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useMQTTSubscribe(
     subtopic,

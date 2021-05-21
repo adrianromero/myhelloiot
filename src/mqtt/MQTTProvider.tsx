@@ -112,6 +112,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     state.client?.end();
     state.client?.removeAllListeners();
     setState((s) => {
+      s._internal.values.clear();
       return {
         status: "Disconnected",
         _internal: s._internal,
@@ -142,11 +143,11 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             retain: s.online.retain,
           });
         }
-        s._internal.subscriptions.forEach((subs: SubscribeHandler) =>
-          Array.from(s._internal.values.entries())
-            .filter(([key]) => match(subs.topic, key))
-            .forEach(([key, value]) => subs.listener(key, value))
-        );
+        // s._internal.subscriptions.forEach((subs: SubscribeHandler) =>
+        //   Array.from(s._internal.values.entries())
+        //     .filter(([key]) => match(subs.topic, key))
+        //     .forEach(([key, value]) => subs.listener(key, value))
+        // );
 
         return {
           status: "Connected",
