@@ -3,7 +3,6 @@ import {
   Form,
   Input,
   InputNumber,
-  Checkbox,
   Button,
   Row,
   Col,
@@ -11,14 +10,13 @@ import {
   Layout,
 } from "antd";
 import AppHeader from "../AppHeader";
-import { useMQTTContext } from "../mqtt/MQTTProvider";
-import { connectWithInfo, ConnectInfo } from "./ConnectionInfo";
+import { ConnectInfo } from "./ConnectionInfo";
 import "./ContentConnect.css";
+import { useAppContext } from "../App";
 
 const PanelConnect: React.FC<{}> = () => {
-  const [, { connect }] = useMQTTContext();
-
   const [form] = Form.useForm<ConnectInfo>();
+  const { setConnected } = useAppContext();
 
   useEffect(() => {
     const item = window.localStorage.getItem("mqttconnect");
@@ -36,7 +34,6 @@ const PanelConnect: React.FC<{}> = () => {
         reconnectPeriod: 1000,
         onlinetopic: "",
         onlineqos: 0,
-        automatic: false,
       });
     }
     window.scrollTo(0, 0);
@@ -44,7 +41,7 @@ const PanelConnect: React.FC<{}> = () => {
 
   const handleConnect = (connectinfo: ConnectInfo) => {
     window.localStorage.setItem("mqttconnect", JSON.stringify(connectinfo));
-    connectWithInfo(connect, connectinfo);
+    setConnected("connected");
   };
 
   return (
@@ -236,22 +233,10 @@ const PanelConnect: React.FC<{}> = () => {
                 </Form.Item>
               </Col>
               <Col xs={0} sm={0} md={0} lg={4} />
-
-              <Col xs={0} sm={0} md={0} lg={4} />
-              <Col xs={24} sm={6} md={6} lg={4} className="ant-form-item-label">
-                <label htmlFor="automatic" title="Automatic connection">
-                  Automatic connection
-                </label>
-              </Col>
-              <Col xs={24} sm={18} md={6} lg={4}>
-                <Form.Item name="automatic" valuePropName="checked">
-                  <Checkbox />
-                </Form.Item>
-              </Col>
             </Row>
           </div>
         </Layout.Content>
-      </Layout>{" "}
+      </Layout>
     </Form>
   );
 };

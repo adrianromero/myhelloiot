@@ -9,6 +9,7 @@ import {
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import AppHeader from "../AppHeader";
 import { DashboardMenuProps } from "./DashboardMenu";
+import { useAppContext } from "../App";
 
 export type DashboardProps = {
   disconnectMenu: boolean;
@@ -18,7 +19,8 @@ export type DashboardProps = {
 const DISCONNECTKEY: React.Key = "action-disconnect";
 
 const Dashboard: React.FC<DashboardProps> = ({ disconnectMenu, children }) => {
-  const [{ status }, { disconnect }] = useMQTTContext();
+  const [{ status }] = useMQTTContext();
+  const { setConnected } = useAppContext();
   const [panelkey, setPanelkey] = useState<React.Key>("menu-0");
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
 
@@ -34,7 +36,7 @@ const Dashboard: React.FC<DashboardProps> = ({ disconnectMenu, children }) => {
   function handleClick({ key }: { key: string | number }) {
     if (key === DISCONNECTKEY) {
       hideDrawer();
-      disconnect();
+      setConnected(null);
     }
   }
 
@@ -47,9 +49,7 @@ const Dashboard: React.FC<DashboardProps> = ({ disconnectMenu, children }) => {
   }
 
   let toolbar;
-  if (status === "Disconnected") {
-    toolbar = null;
-  } else if (status === "Connected") {
+  if (status === "Connected") {
     toolbar = (
       <span className="myhConnectionStatus-icon">
         <CheckCircleOutlined style={{ color: "#52c41a" }} />
