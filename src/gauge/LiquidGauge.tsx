@@ -90,7 +90,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         cy={centery}
         r={r2}
         className="liquid-indicator-background"
-        clip-path="url(#cut-off-bottom)"
+        clipPath="url(#cut-off-bottom)"
       />
 
       <text
@@ -99,7 +99,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         y={65}
         textAnchor="middle"
         className="liquid-indicator-value liquid-indicator-value_2"
-        clip-path="url(#cut-off-bottom)"
+        clipPath="url(#cut-off-bottom)"
       >
         {formatvalue}
       </text>
@@ -109,7 +109,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         y={85}
         textAnchor="middle"
         className="liquid-indicator-title liquid-indicator-title_2"
-        clip-path="url(#cut-off-bottom)"
+        clipPath="url(#cut-off-bottom)"
       >
         {title}
       </text>
