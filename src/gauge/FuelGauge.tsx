@@ -58,6 +58,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
     const sin = Math.sin((angle * Math.PI) / 180);
     lines.push(
       <line
+        key={`ma-${index}`}
         x1={centerx + (r1 + 5) * cos}
         y1={centery + (r1 + 5) * sin}
         x2={centerx + r1 * cos}
@@ -71,23 +72,25 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
     const cos = Math.cos((angle * Math.PI) / 180);
     const sin = Math.sin((angle * Math.PI) / 180);
     lines.push(
-      <>
-        <line
-          x1={centerx + (r1 + 5) * cos}
-          y1={centery + (r1 + 5) * sin}
-          x2={centerx + (r1 - 5) * cos}
-          y2={centery + (r1 - 5) * sin}
-          className="fuel-indicator-markstep"
-        />
-        <text
-          x={centerx + (r1 - 6 - semibarwidth) * cos}
-          y={centery + 2 + (r1 - 6 - semibarwidth) * sin}
-          textAnchor="middle"
-          className="fuel-indicator-marklabel"
-        >
-          {intl.format(index)}
-        </text>
-      </>
+      <line
+        key={`mb-${index}`}
+        x1={centerx + (r1 + 5) * cos}
+        y1={centery + (r1 + 5) * sin}
+        x2={centerx + (r1 - 5) * cos}
+        y2={centery + (r1 - 5) * sin}
+        className="fuel-indicator-markstep"
+      />
+    );
+    lines.push(
+      <text
+        key={`t-${index}`}
+        x={centerx + (r1 - 6 - semibarwidth) * cos}
+        y={centery + 2 + (r1 - 6 - semibarwidth) * sin}
+        textAnchor="middle"
+        className="fuel-indicator-marklabel"
+      >
+        {intl.format(index)}
+      </text>
     );
   }
 

@@ -42,6 +42,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
     const mark = 20 + (160 * (index - min)) / (max - min);
     lines.push(
       <line
+        key={`la-${index}`}
         x1={mark}
         y1={60}
         x2={mark}
@@ -54,23 +55,25 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
   for (let index = min; index <= max; index += labelstep) {
     const mark = 20 + (160 * (index - min)) / (max - min);
     lines.push(
-      <>
-        <line
-          x1={mark}
-          y1={60}
-          x2={mark}
-          y2={65}
-          className="linear-indicator-markstep"
-        />
-        <text
-          x={mark}
-          y={75}
-          textAnchor="middle"
-          className="linear-indicator-marklabel"
-        >
-          {intl.format(index)}
-        </text>
-      </>
+      <line
+        key={`lb-${index}`}
+        x1={mark}
+        y1={60}
+        x2={mark}
+        y2={65}
+        className="linear-indicator-markstep"
+      />
+    );
+    lines.push(
+      <text
+        key={`t-${index}`}
+        x={mark}
+        y={75}
+        textAnchor="middle"
+        className="linear-indicator-marklabel"
+      >
+        {intl.format(index)}
+      </text>
     );
   }
 
@@ -82,6 +85,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
       className={className}
     >
       <line
+        key="markstep"
         x1={20}
         y1={29}
         x2={180}
@@ -89,6 +93,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         className="linear-indicator-markstep"
       />
       <rect
+        key="background"
         x={20}
         y={32}
         width={160}
@@ -96,6 +101,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         className="linear-indicator-background"
       />
       <rect
+        key="bar"
         x={20}
         y={32}
         width={width}
@@ -104,6 +110,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
       />
 
       <line
+        key="markstep2"
         x1={20}
         y1={60}
         x2={180}
@@ -111,10 +118,22 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         className="linear-indicator-markstep"
       />
       {lines}
-      <text x={180} y={20} textAnchor="end" className="linear-indicator-value">
+      <text
+        key="textvalue"
+        x={180}
+        y={20}
+        textAnchor="end"
+        className="linear-indicator-value"
+      >
         {formatvalue}
       </text>
-      <text x={20} y={20} textAnchor="start" className="linear-indicator-title">
+      <text
+        key="texttitle"
+        x={20}
+        y={20}
+        textAnchor="start"
+        className="linear-indicator-title"
+      >
         {title}
       </text>
     </svg>

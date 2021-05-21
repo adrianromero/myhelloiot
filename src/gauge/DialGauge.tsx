@@ -42,6 +42,7 @@ const DialGauge: React.FC<DialGaugeProps> = ({
     const mark = 20 + (160 * (index - min)) / (max - min);
     lines.push(
       <line
+        key={`la-${index}`}
         x1={mark}
         y1={36}
         x2={mark}
@@ -54,23 +55,25 @@ const DialGauge: React.FC<DialGaugeProps> = ({
   for (let index = min; index <= max; index += labelstep) {
     const mark = 20 + (160 * (index - min)) / (max - min);
     lines.push(
-      <>
-        <line
-          x1={mark}
-          y1={30}
-          x2={mark}
-          y2={60}
-          className="dial-indicator-markstep"
-        />
-        <text
-          x={mark}
-          y={70}
-          textAnchor="middle"
-          className="dial-indicator-marklabel"
-        >
-          {intl.format(index)}
-        </text>
-      </>
+      <line
+        key={`lb-${index}`}
+        x1={mark}
+        y1={30}
+        x2={mark}
+        y2={60}
+        className="dial-indicator-markstep"
+      />
+    );
+    lines.push(
+      <text
+        key={`t-${index}`}
+        x={mark}
+        y={70}
+        textAnchor="middle"
+        className="dial-indicator-marklabel"
+      >
+        {intl.format(index)}
+      </text>
     );
   }
 

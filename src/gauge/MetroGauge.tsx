@@ -50,6 +50,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
     const sin = Math.sin((angle * Math.PI) / 180);
     lines.push(
       <line
+        key={`la-${index}`}
         x1={centerx + r1 * cos}
         y1={centery + r1 * sin}
         x2={centerx + (r1 - 3) * cos}
@@ -63,23 +64,25 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
     const cos = Math.cos((angle * Math.PI) / 180);
     const sin = Math.sin((angle * Math.PI) / 180);
     lines.push(
-      <>
-        <line
-          x1={centerx + r1 * cos}
-          y1={centery + r1 * sin}
-          x2={centerx + (r1 - 6) * cos}
-          y2={centery + (r1 - 6) * sin}
-          className="metro-indicator-markstep"
-        />
-        <text
-          x={centerx + (r1 - 13) * cos}
-          y={centery + 2 + (r1 - 13) * sin}
-          textAnchor="middle"
-          className="metro-indicator-marklabel"
-        >
-          {intl.format(index)}
-        </text>
-      </>
+      <line
+        key={`lb-${index}`}
+        x1={centerx + r1 * cos}
+        y1={centery + r1 * sin}
+        x2={centerx + (r1 - 6) * cos}
+        y2={centery + (r1 - 6) * sin}
+        className="metro-indicator-markstep"
+      />
+    );
+    lines.push(
+      <text
+        key={`t-${index}`}
+        x={centerx + (r1 - 13) * cos}
+        y={centery + 2 + (r1 - 13) * sin}
+        textAnchor="middle"
+        className="metro-indicator-marklabel"
+      >
+        {intl.format(index)}
+      </text>
     );
   }
 
