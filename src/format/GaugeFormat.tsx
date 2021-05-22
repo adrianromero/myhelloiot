@@ -10,6 +10,7 @@ import SpaceGauge from "../gauge/SpaceGauge";
 import LiquidGauge from "../gauge/LiquidGauge";
 import DialGauge from "../gauge/DialGauge";
 import FuelGauge from "../gauge/FuelGauge";
+import ControlGauge from "../gauge/ControlGauge";
 
 export type GaugeProps = {
   title?: string;
@@ -47,6 +48,7 @@ function readNumber(buffer: Buffer): number | undefined {
 }
 
 export const FuelIconFormat = CreateGaugesIconFormat(FuelGauge);
+export const ControlIconFormat = CreateGaugesIconFormat(ControlGauge);
 export const LinearIconFormat = CreateGaugesIconFormat(LinearGauge);
 export const ProgressIconFormat = CreateGaugesIconFormat(ProgressGauge);
 export const DashboardIconFormat = CreateGaugesIconFormat(DashboardGauge);

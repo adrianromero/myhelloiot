@@ -56,7 +56,10 @@ import {
   LiquidIconFormat,
   DialIconFormat,
   FuelIconFormat,
+  ControlIconFormat,
 } from "./format/GaugeFormat";
+
+import "./assets/main.css";
 
 const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
   <JsxParser
@@ -84,6 +87,7 @@ const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
       LiquidIconFormat,
       DialIconFormat,
       FuelIconFormat,
+      ControlIconFormat,
       Themes,
     }}
     components={{
@@ -116,7 +120,7 @@ const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
     jsx={jsx}
     renderError={() => <div className="myhJSXError">Render Error</div>}
     renderUnrecognized={(tagname) => (
-      <div className="myhJSXUnreconized">Unrecognized tag {tagname}</div>
+      <div className="myhJSXUnrecognized">Unrecognized tag {tagname}</div>
     )}
   />
 ));

@@ -110,13 +110,6 @@ export const samplejsx = `
   <DashboardMenu icon={<DashboardFilled />} name="Gauges Example">
     <PanelGrid>
       <CCard title="Select temperature">
-        <InputUnit
-          pubtopic="myhelloiot/temperature"
-          subtopic="myhelloiot/temperature"
-          format={NumberValueFormat({ style: "unit", unit: "celsius" })}
-        />
-      </CCard>
-      <CCard title="Select temperature">
         <ViewUnit
           subtopic="myhelloiot/temperature"
           format={NumberIconFormat({
@@ -146,6 +139,24 @@ export const samplejsx = `
           )}
         />
       </CCard>    
+      <CCard title="Control gauge card">
+        <ViewUnit
+          subtopic="myhelloiot/temperature"
+          format={ControlIconFormat(
+            {
+              title: "Control gauge",
+              min: -10,
+              max: 60,
+              step: 5,
+              labelstep: 10,
+            },
+            {
+              style: "unit",
+              unit: "celsius",
+            }
+          )}
+        />
+      </CCard>  
       <CCard title="Fuel gauge card">
         <ViewUnit
           subtopic="myhelloiot/temperature"

@@ -1,16 +1,5 @@
 @import url("../assets/fonts.css");
 
-.fuel-indicator-background {
-  stroke: #dddddd;
-  stroke-width: 24px;
-}
-
-.fuel-indicator-bar {
-  stroke: blueviolet;
-  stroke-width: 24px;
-  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
-}
-
 .fuel-indicator-mark {
   stroke-width: 0.8px;
   stroke-linecap: butt;
@@ -36,15 +25,15 @@
 }
 
 .fuel-indicator-arrow {
-  fill: #ff0000;
-  stroke: #606060;
+  fill: #ff0000af;
+  stroke: #606060af;
   stroke-width: 0.5px;
   transition: transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .fuel-indicator-arrowpin {
-  fill: #ff0000;
-  stroke: #000000;
+  fill: #d1d1d1;
+  stroke: #606060;
   stroke-width: 0.5px;
 }
 

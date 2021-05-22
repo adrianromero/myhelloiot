@@ -1,0 +1,27 @@
+@import url("../assets/fonts.css");
+
+.control-indicator-background {
+  stroke: #dddddd;
+  stroke-width: 28px;
+}
+
+.control-indicator-bar {
+  stroke: blueviolet;
+  stroke-width: 28px;
+  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+}
+
+.control-indicator-arrow {
+  fill: #606060;
+  transition: transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+}
+
+.control-indicator-value {
+  fill: #000000d9;
+  font: bold 14px "Roboto Condensed", sans-serif;
+}
+
+.control-indicator-title {
+  fill: #0000008c;
+  font: 10px "Roboto Condensed", sans-serif;
+}
