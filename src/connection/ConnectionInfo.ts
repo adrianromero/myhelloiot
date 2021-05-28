@@ -8,4 +8,6 @@ export type ConnectInfo = {
   reconnectPeriod: number;
   onlinetopic: string;
   onlineqos: number;
+  dashboard: string;
+  dashboardcss: string;
 };

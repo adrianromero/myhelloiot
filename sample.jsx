@@ -1,6 +1,5 @@
-export const samplejsx = `
 <Dashboard disconnectMenu>
-  <DashboardMenu  icon={<BulbFilled />} name="Application example">
+  <DashboardMenu icon={<BulbFilled />} name="Application example">
     <PanelGrid>
       <CCard title="Testing topic pub and sub">
         <InputUnit
@@ -71,7 +70,7 @@ export const samplejsx = `
             subtopic="myhelloiot/testswitch"
           />
         </div>
-      </CCard>    
+      </CCard>
       <CCard title="Switch button">
         <ButtonUnit
           pubtopic="myhelloiot/testswitch"
@@ -104,7 +103,7 @@ export const samplejsx = `
             />
           </Col>
         </Row>
-      </CCard>  
+      </CCard>
     </PanelGrid>
   </DashboardMenu>
   <DashboardMenu icon={<DashboardFilled />} name="Gauges Example">
@@ -138,7 +137,7 @@ export const samplejsx = `
             }
           )}
         />
-      </CCard>    
+      </CCard>
       <CCard title="Control gauge card">
         <ViewUnit
           subtopic="myhelloiot/temperature"
@@ -156,7 +155,7 @@ export const samplejsx = `
             }
           )}
         />
-      </CCard>  
+      </CCard>
       <CCard title="Fuel gauge card">
         <ViewUnit
           subtopic="myhelloiot/temperature"
@@ -174,7 +173,7 @@ export const samplejsx = `
             }
           )}
         />
-      </CCard>        
+      </CCard>
       <CCard title="Progress gauge card">
         <ViewUnit
           subtopic="myhelloiot/temperature"
@@ -300,5 +299,4 @@ export const samplejsx = `
       </CCard>
     </PanelGrid>
   </DashboardMenu>
-</Dashboard>
-`;
+</Dashboard>;

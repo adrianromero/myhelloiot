@@ -1,0 +1,7 @@
+.ant-form-item textarea.ant-input.myhUploadRaw-data {
+  position: relative;
+  height: calc(100vh - 235px);
+  font-family: monospace;
+  font-size: 12px;
+  resize: none;
+}

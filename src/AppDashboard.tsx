@@ -58,7 +58,7 @@ import {
   FuelIconFormat,
   ControlIconFormat,
 } from "./format/GaugeFormat";
-
+import AppError from "./AppError";
 import "./assets/main.css";
 
 const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
@@ -118,9 +118,14 @@ const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
       SliderUnit,
     }}
     jsx={jsx}
-    renderError={() => <div className="myhJSXError">Render Error</div>}
+    renderError={({ error }) => (
+      <AppError title="Failed to compile JSX code." error={error} jsx={jsx} />
+    )}
     renderUnrecognized={(tagname) => (
-      <div className="myhJSXUnrecognized">Unrecognized tag {tagname}</div>
+      <AppError
+        title="Failed to execute JSX code."
+        error={`Unrecongnized tag: ${tagname}`}
+      />
     )}
   />
 ));

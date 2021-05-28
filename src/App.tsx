@@ -11,8 +11,8 @@ import ContentConnect from "./connection/ContentConnect";
 import AppDashboard from "./AppDashboard";
 import { ConnectInfo } from "./connection/ConnectionInfo";
 import MQTTProvider, { OnlineInfo, useMQTTContext } from "./mqtt/MQTTProvider";
-import { samplejsx } from "./dashboard/samplejsx";
 import "antd/dist/antd.css";
+import AppError from "./AppError";
 
 function useLocalStorage(
   key: string
@@ -98,10 +98,26 @@ const MQTTApp: React.FC<{}> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected]);
 
+  let app;
+  if (connected) {
+    const item = window.localStorage.getItem("mqttconnect");
+    if (item) {
+      const connectinfo = JSON.parse(item) as ConnectInfo;
+      const jsx = connectinfo.dashboard;
+      if (jsx) {
+        app = <AppDashboard jsx={jsx} />;
+      } else {
+        app = <AppError title="Failed to load JSX code." error="File empty." />;
+      }
+    } else {
+      app = <AppError title="Failed to load JSX code" error="torage empty." />;
+    }
+  } else {
+    app = <ContentConnect />;
+  }
+
   return (
-    <AppContext.Provider value={{ setConnected }}>
-      {connected ? <AppDashboard jsx={samplejsx} /> : <ContentConnect />}
-    </AppContext.Provider>
+    <AppContext.Provider value={{ setConnected }}>{app}</AppContext.Provider>
   );
 };
 
