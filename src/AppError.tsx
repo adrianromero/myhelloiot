@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Layout } from "antd";
 import AppHeader from "./AppHeader";
 import { useAppContext } from "./App";
+import "./assets/main.css";
 
 const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
   title,
@@ -21,7 +22,7 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
         <div className="myhAppContent-panel">
           <div className="myhJSXErrorTitle">{title}</div>
           <div className="myhJSXErrorMessage">{error}</div>
-          <div className="myhJSXErrorJSX">{jsx}</div>
+          {jsx && <div className="myhJSXErrorJSX">{jsx}</div>}
         </div>
       </Layout.Content>
     </Layout>

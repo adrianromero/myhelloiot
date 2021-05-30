@@ -67,3 +67,27 @@
 .myhDrawerMenu .ant-drawer-body {
   padding: 0;
 }
+
+.myhJSXErrorTitle {
+  font-size: 18px;
+  color: red;
+  margin-bottom: 10px;
+}
+
+.myhJSXErrorMessage {
+  font-family: monospace;
+  font-size: 12px;
+  color: #505050;
+  margin-bottom: 10px;
+}
+
+.myhJSXErrorJSX {
+  font-family: monospace;
+  font-size: 10px;
+  padding: 5px;
+  background-color: #feffd6;
+  white-space: pre-wrap;
+  height: 400px;
+  overflow: auto;
+  color: #505050;
+}
