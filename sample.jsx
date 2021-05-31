@@ -1,3 +1,6 @@
+{
+  /* eslint-disable react/jsx-no-undef, no-undef */
+}
 <Dashboard disconnectMenu>
   <DashboardMenu icon={<BulbFilled />} name="Application example">
     <PanelGrid>
