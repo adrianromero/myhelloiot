@@ -15,6 +15,7 @@ type SwitchUnitProps = {
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
   format?: ValueFormat;
+  className?: string;
 };
 
 const SwitchUnit: React.FC<SwitchUnitProps> = ({
@@ -23,6 +24,7 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   puboptions,
   suboptions,
   format = StrValueFormat(),
+  className,
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
   const [checked, setChecked] = useState<boolean>(false);
@@ -44,6 +46,13 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
     publish(pubtopic, format.fromDisplay(value ? "1" : "0"), puboptions);
   };
 
-  return <Switch checked={checked} onChange={onChange} disabled={!connected} />;
+  return (
+    <Switch
+      checked={checked}
+      onChange={onChange}
+      disabled={!connected}
+      className={className}
+    />
+  );
 };
 export default SwitchUnit;

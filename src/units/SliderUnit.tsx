@@ -12,6 +12,7 @@ type SliderUnitProps = {
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
   numberValidation: NumberValidation;
+  className?: string;
 };
 
 const SliderUnit: React.FC<SliderUnitProps> = ({
@@ -20,6 +21,7 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
   puboptions,
   suboptions,
   numberValidation,
+  className,
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
@@ -54,6 +56,7 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
       onChange={onChange}
       onAfterChange={onAfterChange}
       disabled={!connected}
+      className={className}
     />
   );
 };

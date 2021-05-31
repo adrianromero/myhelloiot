@@ -11,12 +11,14 @@ type ViewUnitProps = {
   subtopic: string;
   suboptions?: IClientSubscribeOptions;
   format?: IconFormat;
+  className?: string;
 };
 
 const ViewUnit: React.FC<ViewUnitProps> = ({
   subtopic,
   suboptions,
   format = StrIconFormat(),
+  className,
 }) => {
   const [{ ready }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
@@ -33,7 +35,7 @@ const ViewUnit: React.FC<ViewUnitProps> = ({
     suboptions
   );
 
-  return <>{format.toIcon(buffer)}</>;
+  return <span className={className}>{format.toIcon(buffer)}</span>;
 };
 
 export default ViewUnit;

@@ -13,10 +13,16 @@ export type FileInfo = {
 export type UploadRawProps = {
   accept: string;
   value?: FileInfo;
+  className?: string;
   onChange?: (v?: FileInfo) => void;
 };
 
-const UploadRaw: React.FC<UploadRawProps> = ({ accept, value, onChange }) => {
+const UploadRaw: React.FC<UploadRawProps> = ({
+  accept,
+  value,
+  onChange,
+  className,
+}) => {
   const handleUpload = (file: RcFile): boolean => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -48,7 +54,7 @@ const UploadRaw: React.FC<UploadRawProps> = ({ accept, value, onChange }) => {
       throw new Error("Cannot download empty value.");
     }
 
-    const dataurl = `data:${value.type || "text/plain"};base64,${window.btoa(
+    const dataurl = `data:${value.type || "text/plain"};base64,${btoa(
       value.data
     )}`;
     const a = document.createElement("a");
@@ -60,7 +66,7 @@ const UploadRaw: React.FC<UploadRawProps> = ({ accept, value, onChange }) => {
   };
 
   return (
-    <Row gutter={[8, 8]}>
+    <Row gutter={[8, 8]} className={className}>
       <Col span={24}>
         <Space>
           <span>Name:</span>

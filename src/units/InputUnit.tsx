@@ -16,6 +16,7 @@ type InputUnitProps = {
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
   format?: ValueFormat;
+  className?: string;
 };
 
 const InputUnit: React.FC<InputUnitProps> = ({
@@ -24,6 +25,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
   puboptions,
   suboptions,
   format = StrValueFormat(),
+  className,
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
   const [form] = Form.useForm();
@@ -52,6 +54,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
       form={form}
       name={`inputcard_${Math.random().toString(16).substr(2).padEnd(13, "0")}`}
       onFinish={onFinish}
+      className={className}
     >
       <Row gutter={8} wrap={false}>
         <Col flex="auto">

@@ -15,6 +15,7 @@ type ButtonUnitProps = {
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
   format?: IconValueFormat;
+  className?: string;
 };
 
 const ButtonUnit: React.FC<ButtonUnitProps> = ({
@@ -23,6 +24,7 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
   puboptions,
   suboptions,
   format = LabelIconValueFormat(SwitchValueFormat()),
+  className,
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
@@ -47,7 +49,7 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
 
   return (
     <Button
-      className="myh-value"
+      className={`myh-value ${className || ""}`}
       type="primary"
       style={{ width: "100%", height: "70px" }}
       onClick={onClick}

@@ -18,14 +18,14 @@ function useLocalStorage(
   key: string
 ): [string | null, (s: string | null) => void] {
   const [value, setStateValue] = useState<string | null>(() =>
-    window.localStorage.getItem(key)
+    localStorage.getItem(key)
   );
   const setValue = useCallback(
     (s: string | null) => {
       if (s) {
-        window.localStorage.setItem(key, s);
+        localStorage.setItem(key, s);
       } else {
-        window.localStorage.removeItem(key);
+        localStorage.removeItem(key);
       }
       setStateValue(s);
     },
@@ -54,7 +54,7 @@ const MQTTApp: React.FC<{}> = () => {
 
   useEffect(() => {
     if (connected === "connected") {
-      const item = window.localStorage.getItem("mqttconnect");
+      const item = localStorage.getItem("mqttconnect");
       if (item) {
         const connectinfo = JSON.parse(item) as ConnectInfo;
         // const url = "ws://broker.mqttdashboard.com:8000/mqtt";
@@ -100,12 +100,13 @@ const MQTTApp: React.FC<{}> = () => {
 
   let app;
   if (connected) {
-    const item = window.localStorage.getItem("mqttconnect");
+    const item = localStorage.getItem("mqttconnect");
     if (item) {
       const connectinfo = JSON.parse(item) as ConnectInfo;
       const jsx = connectinfo.dashboard.data;
+      const css = connectinfo.dashboardcss.data;
       if (jsx) {
-        app = <AppDashboard jsx={jsx} />;
+        app = <AppDashboard jsx={jsx} css={css} />;
       } else {
         app = <AppError title="Failed to load JSX code." error="File empty." />;
       }

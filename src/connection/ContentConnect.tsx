@@ -22,7 +22,7 @@ const PanelConnect: React.FC<{}> = () => {
   const { TabPane } = Tabs;
 
   useEffect(() => {
-    const item = window.localStorage.getItem("mqttconnect");
+    const item = localStorage.getItem("mqttconnect");
     if (item) {
       form.setFieldsValue(JSON.parse(item));
     } else {
@@ -45,7 +45,7 @@ const PanelConnect: React.FC<{}> = () => {
   });
 
   const handleConnect = (connectinfo: ConnectInfo) => {
-    window.localStorage.setItem("mqttconnect", JSON.stringify(connectinfo));
+    localStorage.setItem("mqttconnect", JSON.stringify(connectinfo));
     setConnected("connected");
   };
 
@@ -305,7 +305,10 @@ const PanelConnect: React.FC<{}> = () => {
                         },
                       ]}
                     >
-                      <UploadRaw accept=".jsx" />
+                      <UploadRaw
+                        accept=".jsx"
+                        className="myhConnectionForm-dashboard"
+                      />
                     </Form.Item>
                   </Col>
                   <Col xs={0} sm={0} md={0} lg={4} />
@@ -316,7 +319,10 @@ const PanelConnect: React.FC<{}> = () => {
                   <Col xs={0} sm={0} md={0} lg={4} />
                   <Col xs={24} sm={24} md={24} lg={16}>
                     <Form.Item name="dashboardcss">
-                      <UploadRaw accept=".css" />
+                      <UploadRaw
+                        accept=".css"
+                        className="myhConnectionForm-dashboardcss"
+                      />
                     </Form.Item>
                   </Col>
                   <Col xs={0} sm={0} md={0} lg={4} />

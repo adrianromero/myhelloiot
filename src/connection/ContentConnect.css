@@ -1,0 +1,11 @@
+.myhConnectionForm-dashboardcss textarea.ant-input.myhUploadRaw-data {
+  position: relative;
+  height: calc(100vh - 240px);
+  resize: none;
+}
+
+.myhConnectionForm-dashboard textarea.ant-input.myhUploadRaw-data {
+  position: relative;
+  height: calc(100vh - 240px);
+  resize: none;
+}

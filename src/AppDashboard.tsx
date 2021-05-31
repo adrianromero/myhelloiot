@@ -61,73 +61,88 @@ import {
 import AppError from "./AppError";
 import "./assets/main.css";
 
-const AppDashboard: React.FC<{ jsx: string }> = React.memo(({ jsx }) => (
-  <JsxParser
-    renderInWrapper={false}
-    bindings={{
-      Buffer,
-      HEXValueFormat,
-      Base64ValueFormat,
-      SwitchValueFormat,
-      NumberValueFormat,
-      TitleIconValueFormat,
-      LiteralIconValueFormat,
-      ImageIconValueFormat,
-      BulbIconFormat,
-      ThuderboltIconFormat,
-      SwitchIconValueFormat,
-      NumberIconFormat,
-      DashboardIconFormat,
-      LinearIconFormat,
-      SimpleIconFormat,
-      CircularIconFormat,
-      MetroIconFormat,
-      ProgressIconFormat,
-      SpaceIconFormat,
-      LiquidIconFormat,
-      DialIconFormat,
-      FuelIconFormat,
-      ControlIconFormat,
-      Themes,
-    }}
-    components={{
-      AlertFilled,
-      ApiFilled,
-      AudioFilled,
-      BankFilled,
-      BellFilled,
-      BookFilled,
-      BugFilled,
-      BuildFilled,
-      BulbFilled,
-      CameraFilled,
-      CarFilled,
-      DashboardFilled,
-      PictureFilled,
-      Row,
-      Col,
-      Dashboard,
-      DashboardMenu,
-      PanelGrid,
-      C,
-      CCard,
-      InputUnit,
-      ButtonUnit,
-      SwitchUnit,
-      ViewUnit,
-      SliderUnit,
-    }}
-    jsx={jsx}
-    renderError={({ error }) => (
-      <AppError title="Failed to compile JSX code." error={error} jsx={jsx} />
-    )}
-    renderUnrecognized={(tagname) => (
-      <AppError
-        title="Failed to execute JSX code."
-        error={`Unrecongnized tag: ${tagname}`}
+const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
+  ({ jsx, css }) => (
+    <>
+      {css && (
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href={`data:text/css;base64,${btoa(css)}`}
+        ></link>
+      )}
+      <JsxParser
+        renderInWrapper={false}
+        bindings={{
+          Buffer,
+          HEXValueFormat,
+          Base64ValueFormat,
+          SwitchValueFormat,
+          NumberValueFormat,
+          TitleIconValueFormat,
+          LiteralIconValueFormat,
+          ImageIconValueFormat,
+          BulbIconFormat,
+          ThuderboltIconFormat,
+          SwitchIconValueFormat,
+          NumberIconFormat,
+          DashboardIconFormat,
+          LinearIconFormat,
+          SimpleIconFormat,
+          CircularIconFormat,
+          MetroIconFormat,
+          ProgressIconFormat,
+          SpaceIconFormat,
+          LiquidIconFormat,
+          DialIconFormat,
+          FuelIconFormat,
+          ControlIconFormat,
+          Themes,
+        }}
+        components={{
+          AlertFilled,
+          ApiFilled,
+          AudioFilled,
+          BankFilled,
+          BellFilled,
+          BookFilled,
+          BugFilled,
+          BuildFilled,
+          BulbFilled,
+          CameraFilled,
+          CarFilled,
+          DashboardFilled,
+          PictureFilled,
+          Row,
+          Col,
+          Dashboard,
+          DashboardMenu,
+          PanelGrid,
+          C,
+          CCard,
+          InputUnit,
+          ButtonUnit,
+          SwitchUnit,
+          ViewUnit,
+          SliderUnit,
+        }}
+        jsx={jsx}
+        renderError={({ error }) => (
+          <AppError
+            title="Failed to compile JSX code."
+            error={error}
+            jsx={jsx}
+          />
+        )}
+        renderUnrecognized={(tagname) => (
+          <AppError
+            title="Failed to execute JSX code."
+            error={`Unrecongnized tag: ${tagname}`}
+          />
+        )}
       />
-    )}
-  />
-));
+    </>
+  )
+);
 
 export default AppDashboard;

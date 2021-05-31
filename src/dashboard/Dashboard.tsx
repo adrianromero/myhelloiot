@@ -13,12 +13,17 @@ import { useAppContext } from "../App";
 
 export type DashboardProps = {
   disconnectMenu: boolean;
+  className?: string;
   children: React.ReactElement<DashboardMenuProps, any>[];
 };
 
 const DISCONNECTKEY: React.Key = "action-disconnect";
 
-const Dashboard: React.FC<DashboardProps> = ({ disconnectMenu, children }) => {
+const Dashboard: React.FC<DashboardProps> = ({
+  disconnectMenu,
+  className,
+  children,
+}) => {
   const [{ hostname, status }] = useMQTTContext();
   const { setConnected } = useAppContext();
   const [panelkey, setPanelkey] = useState<React.Key>("menu-0");
@@ -88,7 +93,7 @@ const Dashboard: React.FC<DashboardProps> = ({ disconnectMenu, children }) => {
   });
 
   return (
-    <Layout>
+    <Layout className={className}>
       <AppHeader>
         <div className="myhMenuDisplayButton">
           <Button onClick={showDrawer} ghost>

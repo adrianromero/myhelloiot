@@ -1,7 +1,7 @@
 {
   /* eslint-disable react/jsx-no-undef, no-undef */
 }
-<Dashboard disconnectMenu>
+<Dashboard disconnectMenu className="myhDashboard">
   <DashboardMenu icon={<BulbFilled />} name="Application example">
     <PanelGrid>
       <CCard title="Testing topic pub and sub">
@@ -302,4 +302,4 @@
       </CCard>
     </PanelGrid>
   </DashboardMenu>
-</Dashboard>;
+</Dashboard>
