@@ -37,8 +37,8 @@ const PanelConnect: React.FC<{}> = () => {
         reconnectPeriod: 1000,
         onlinetopic: "",
         onlineqos: 0,
-        dashboard: "",
-        dashboardcss: "",
+        dashboard: { name: "dashboard.jsx", type: "text/jsx", data: "" },
+        dashboardcss: { name: "dashboard.css", type: "text/css", data: "" },
       });
     }
     window.scrollTo(0, 0);
@@ -66,7 +66,7 @@ const PanelConnect: React.FC<{}> = () => {
         <Layout.Content className="myhMainLayout">
           <div className="myhAppContent-panel">
             <Tabs defaultActiveKey="1">
-              <TabPane tab="MQTT Brokker connection" key="1" forceRender>
+              <TabPane tab="MQTT connection" key="1" forceRender>
                 <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
                   <Col xs={0} sm={0} md={0} lg={4} />
                   <Col
@@ -294,8 +294,14 @@ const PanelConnect: React.FC<{}> = () => {
                       name="dashboard"
                       rules={[
                         {
-                          required: true,
-                          message: "Please upload a dashboard definition file.",
+                          validator: (_, value) =>
+                            value?.data?.trim()
+                              ? Promise.resolve()
+                              : Promise.reject(
+                                  new Error(
+                                    "Please upload a dashboard definition file."
+                                  )
+                                ),
                         },
                       ]}
                     >

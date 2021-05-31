@@ -19,7 +19,7 @@ export type DashboardProps = {
 const DISCONNECTKEY: React.Key = "action-disconnect";
 
 const Dashboard: React.FC<DashboardProps> = ({ disconnectMenu, children }) => {
-  const [{ status }] = useMQTTContext();
+  const [{ hostname, status }] = useMQTTContext();
   const { setConnected } = useAppContext();
   const [panelkey, setPanelkey] = useState<React.Key>("menu-0");
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
@@ -51,9 +51,12 @@ const Dashboard: React.FC<DashboardProps> = ({ disconnectMenu, children }) => {
   let toolbar;
   if (status === "Connected") {
     toolbar = (
-      <span className="myhConnectionStatus-icon">
-        <CheckCircleOutlined style={{ color: "#52c41a" }} />
-      </span>
+      <>
+        <span className="myhConnectionStatus-label">{hostname}</span>
+        <span className="myhConnectionStatus-icon">
+          <CheckCircleOutlined style={{ color: "#52c41a" }} />
+        </span>
+      </>
     );
   } else {
     toolbar = (

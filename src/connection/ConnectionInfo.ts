@@ -1,3 +1,5 @@
+import { FileInfo } from "./UploadRaw";
+
 export type ConnectInfo = {
   url: string;
   username: string;
@@ -8,6 +10,6 @@ export type ConnectInfo = {
   reconnectPeriod: number;
   onlinetopic: string;
   onlineqos: number;
-  dashboard: string;
-  dashboardcss: string;
+  dashboard: FileInfo;
+  dashboardcss: FileInfo;
 };

@@ -103,7 +103,7 @@ const MQTTApp: React.FC<{}> = () => {
     const item = window.localStorage.getItem("mqttconnect");
     if (item) {
       const connectinfo = JSON.parse(item) as ConnectInfo;
-      const jsx = connectinfo.dashboard;
+      const jsx = connectinfo.dashboard.data;
       if (jsx) {
         app = <AppDashboard jsx={jsx} />;
       } else {
