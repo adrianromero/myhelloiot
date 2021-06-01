@@ -2,7 +2,7 @@
   "name": "myhelloiot",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://adrianromero.github.io/myhelloiot",
+  "homepage": "https://adrianromero.github.io/myhelloiot/",
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@testing-library/jest-dom": "^5.11.4",
