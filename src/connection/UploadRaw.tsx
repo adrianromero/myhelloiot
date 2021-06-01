@@ -66,53 +66,54 @@ const UploadRaw: React.FC<UploadRawProps> = ({
   };
 
   return (
-    <Row gutter={[8, 8]} className={className}>
-      <Col span={24}>
-        <Space>
-          <span>Name:</span>
-          <Input
-            className="myhUploadRaw-name"
+    <>
+      <Row gutter={[8, 8]} className={className}>
+        <Col xs={24} sm={24} md={24} lg={24}>
+          <Space align="baseline">
+            <span>Name:</span>
+            <Input
+              className="myhUploadRaw-name"
+              onChange={(e) =>
+                onChange?.({
+                  name: e.target.value,
+                  type: value?.type || "",
+                  data: value?.data || "",
+                })
+              }
+              value={value?.name || ""}
+            />
+            <Upload
+              accept={accept}
+              multiple={false}
+              fileList={[]}
+              beforeUpload={handleUpload}
+              maxCount={1}
+            >
+              <Button icon={<UploadOutlined />} />
+            </Upload>
+
+            <Button
+              icon={<DownloadOutlined />}
+              onClick={download}
+              disabled={!value?.name}
+            />
+          </Space>
+        </Col>
+        <Col span={24}>
+          <Input.TextArea
+            className="myhUploadRaw-data"
             onChange={(e) =>
               onChange?.({
-                name: e.target.value,
+                name: value?.name || "",
                 type: value?.type || "",
-                data: value?.data || "",
+                data: e.target.value,
               })
             }
-            value={value?.name || ""}
+            value={value?.data || ""}
           />
-          <Upload
-            accept={accept}
-            multiple={false}
-            fileList={[]}
-            beforeUpload={handleUpload}
-            maxCount={1}
-          >
-            <Button icon={<UploadOutlined />}>Upload</Button>
-          </Upload>
-          <Button
-            icon={<DownloadOutlined />}
-            onClick={download}
-            disabled={!value?.name}
-          >
-            Download
-          </Button>
-        </Space>
-      </Col>
-      <Col span={24}>
-        <Input.TextArea
-          className="myhUploadRaw-data"
-          onChange={(e) =>
-            onChange?.({
-              name: value?.name || "",
-              type: value?.type || "",
-              data: e.target.value,
-            })
-          }
-          value={value?.data || ""}
-        />
-      </Col>
-    </Row>
+        </Col>
+      </Row>
+    </>
   );
 };
 
