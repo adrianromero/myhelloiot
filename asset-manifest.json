@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/myhelloiot/static/css/main.4e56a97b.chunk.css",
+    "main.js": "/myhelloiot/static/js/main.4f5996a8.chunk.js",
+    "main.js.map": "/myhelloiot/static/js/main.4f5996a8.chunk.js.map",
+    "runtime-main.js": "/myhelloiot/static/js/runtime-main.5eb30a9d.js",
+    "runtime-main.js.map": "/myhelloiot/static/js/runtime-main.5eb30a9d.js.map",
+    "static/css/2.558413a2.chunk.css": "/myhelloiot/static/css/2.558413a2.chunk.css",
+    "static/js/2.2b3b7061.chunk.js": "/myhelloiot/static/js/2.2b3b7061.chunk.js",
+    "static/js/2.2b3b7061.chunk.js.map": "/myhelloiot/static/js/2.2b3b7061.chunk.js.map",
+    "static/js/3.22307cfa.chunk.js": "/myhelloiot/static/js/3.22307cfa.chunk.js",
+    "static/js/3.22307cfa.chunk.js.map": "/myhelloiot/static/js/3.22307cfa.chunk.js.map",
+    "index.html": "/myhelloiot/index.html",
+    "service-worker.js": "/myhelloiot/service-worker.js",
+    "service-worker.js.map": "/myhelloiot/service-worker.js.map",
+    "static/css/2.558413a2.chunk.css.map": "/myhelloiot/static/css/2.558413a2.chunk.css.map",
+    "static/css/main.4e56a97b.chunk.css.map": "/myhelloiot/static/css/main.4e56a97b.chunk.css.map",
+    "static/js/2.2b3b7061.chunk.js.LICENSE.txt": "/myhelloiot/static/js/2.2b3b7061.chunk.js.LICENSE.txt",
+    "static/media/ControlGauge.css": "/myhelloiot/static/media/roboto-condensed-v19-latin-regular.fd55075a.woff2",
+    "static/media/themes.svg": "/myhelloiot/static/media/themes.8b0983ed.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5eb30a9d.js",
+    "static/css/2.558413a2.chunk.css",
+    "static/js/2.2b3b7061.chunk.js",
+    "static/css/main.4e56a97b.chunk.css",
+    "static/js/main.4f5996a8.chunk.js"
+  ]
+}
