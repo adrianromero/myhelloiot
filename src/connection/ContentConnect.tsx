@@ -1,3 +1,20 @@
+/*
+MYHELLOIOT
+Copyright (C) 2021 Adrián Romero
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 import React, { useEffect } from "react";
 import {
   Form,
@@ -28,7 +45,7 @@ const PanelConnect: React.FC<{}> = () => {
       form.setFieldsValue(JSON.parse(item));
     } else {
       form.setFieldsValue({
-        url: "ws://localhost:9001",
+        url: "wss://mymqttbroker",
         username: "",
         password: "",
         clientId:
@@ -296,46 +313,50 @@ const PanelConnect: React.FC<{}> = () => {
                 </Row>
               </TabPane>
               <TabPane tab="Dashboard" key="2" forceRender>
-                <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col xs={24} sm={24} md={24} lg={16}>
-                    <Form.Item
-                      name="dashboard"
-                      rules={[
-                        {
-                          validator: (_, value) =>
-                            value?.data?.trim()
-                              ? Promise.resolve()
-                              : Promise.reject(
-                                  new Error(
-                                    "Please upload a dashboard definition file."
-                                  )
-                                ),
-                        },
-                      ]}
-                    >
-                      <UploadRaw
-                        accept=".jsx"
-                        className="myhConnectionForm-dashboard"
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                </Row>
-              </TabPane>
-              <TabPane tab="Stylesheet" key="3" forceRender>
-                <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col xs={24} sm={24} md={24} lg={16}>
-                    <Form.Item name="dashboardcss">
-                      <UploadRaw
-                        accept=".css"
-                        className="myhConnectionForm-dashboardcss"
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                </Row>
+                <Tabs defaultActiveKey="1" type="card">
+                  <TabPane tab="JSX" key="2" forceRender>
+                    <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+                      <Col xs={0} sm={0} md={0} lg={4} />
+                      <Col xs={24} sm={24} md={24} lg={16}>
+                        <Form.Item
+                          name="dashboard"
+                          rules={[
+                            {
+                              validator: (_, value) =>
+                                value?.data?.trim()
+                                  ? Promise.resolve()
+                                  : Promise.reject(
+                                      new Error(
+                                        "Please upload a dashboard definition file."
+                                      )
+                                    ),
+                            },
+                          ]}
+                        >
+                          <UploadRaw
+                            accept=".jsx"
+                            className="myhConnectionForm-dashboard"
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={0} sm={0} md={0} lg={4} />
+                    </Row>
+                  </TabPane>
+                  <TabPane tab="CSS" key="3" forceRender>
+                    <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+                      <Col xs={0} sm={0} md={0} lg={4} />
+                      <Col xs={24} sm={24} md={24} lg={16}>
+                        <Form.Item name="dashboardcss">
+                          <UploadRaw
+                            accept=".css"
+                            className="myhConnectionForm-dashboardcss"
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={0} sm={0} md={0} lg={4} />
+                    </Row>
+                  </TabPane>
+                </Tabs>
               </TabPane>
             </Tabs>
           </div>
