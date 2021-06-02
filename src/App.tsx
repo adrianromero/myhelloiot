@@ -13,6 +13,7 @@ import { ConnectInfo } from "./connection/ConnectionInfo";
 import MQTTProvider, { OnlineInfo, useMQTTContext } from "./mqtt/MQTTProvider";
 import "antd/dist/antd.css";
 import AppError from "./AppError";
+import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 
 function useLocalStorage(
   key: string
@@ -49,7 +50,7 @@ const App: React.FC<{}> = () => (
 );
 
 const MQTTApp: React.FC<{}> = () => {
-  const [, { connect, disconnect }] = useMQTTContext();
+  const [{ error }, { connect, disconnect }] = useMQTTContext();
   const [connected, setConnected] = useLocalStorage("mqttconnectstatus");
 
   useEffect(() => {
@@ -99,7 +100,14 @@ const MQTTApp: React.FC<{}> = () => {
   }, [connected]);
 
   let app;
-  if (connected) {
+  if (error) {
+    app = (
+      <AppError
+        title="Failed to connect to MQTT broker."
+        error={error.message}
+      />
+    );
+  } else if (connected) {
     const item = localStorage.getItem("mqttconnect");
     if (item) {
       const connectinfo = JSON.parse(item) as ConnectInfo;

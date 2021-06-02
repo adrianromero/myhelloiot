@@ -3,6 +3,7 @@ import { Button, Layout } from "antd";
 import AppHeader from "./AppHeader";
 import { useAppContext } from "./App";
 import "./assets/main.css";
+import { LeftOutlined } from "@ant-design/icons";
 
 const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
   title,
@@ -14,8 +15,12 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
     <Layout>
       <AppHeader>
         <div className="myhMenuDisplayButton"></div>
-        <Button type="primary" onClick={() => setConnected(null)}>
-          Disconnect
+        <Button
+          type="primary"
+          icon={<LeftOutlined />}
+          onClick={() => setConnected(null)}
+        >
+          Back
         </Button>
       </AppHeader>
       <Layout.Content className="myhMainLayout">
