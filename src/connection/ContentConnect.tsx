@@ -9,6 +9,7 @@ import {
   Radio,
   Layout,
   Tabs,
+  Modal,
 } from "antd";
 import AppHeader from "../AppHeader";
 import { ConnectInfo } from "./ConnectionInfo";
@@ -44,9 +45,16 @@ const PanelConnect: React.FC<{}> = () => {
     window.scrollTo(0, 0);
   });
 
-  const handleConnect = (connectinfo: ConnectInfo) => {
+  const handleConnect = (connectinfo: ConnectInfo): void => {
     localStorage.setItem("mqttconnect", JSON.stringify(connectinfo));
     setConnected("connected");
+  };
+
+  const handleFail = (): void => {
+    Modal.error({
+      title: "Connection error",
+      content: "Please fix the values with validation messages",
+    });
   };
 
   return (
@@ -54,6 +62,7 @@ const PanelConnect: React.FC<{}> = () => {
       form={form}
       name="connection"
       onFinish={handleConnect}
+      onFinishFailed={handleFail}
       className="myhConnectionForm"
     >
       <Layout>
