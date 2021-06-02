@@ -91,6 +91,7 @@ export const useMQTTSubscribe = (
 const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, setState] = useState<{
     status: MQTTStatus;
+    error?: Error;
     client?: MqttClient;
     online?: OnlineInfo;
     _internal: {
@@ -134,83 +135,94 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       };
     }
 
-    const client: MqttClient = mqtt.connect(url, connectoptions);
-    client.on("connect", () => {
-      setState((s) => {
-        if (s.client && s.online) {
-          s.client.publish(s.online.topic, "online", {
-            qos: s.online.qos,
-            retain: s.online.retain,
-          });
-        }
+    try {
+      const client: MqttClient = mqtt.connect(url, connectoptions);
+      client.on("connect", () => {
+        setState((s) => {
+          if (s.client && s.online) {
+            s.client.publish(s.online.topic, "online", {
+              qos: s.online.qos,
+              retain: s.online.retain,
+            });
+          }
 
-        return {
-          status: "Connected",
+          return {
+            status: "Connected",
+            client: s.client,
+            online: s.online,
+            _internal: s._internal,
+          };
+        });
+      });
+      client.on("error", (error: Error) => {
+        setState((s) => ({
+          status: "Error",
+          error,
           client: s.client,
           online: s.online,
           _internal: s._internal,
+        }));
+      });
+      client.on("reconnect", () => {
+        setState((s) => ({
+          status: "Reconnecting",
+          client: s.client,
+          online: s.online,
+          _internal: s._internal,
+        }));
+      });
+      client.on("close", () => {
+        setState((s) => ({
+          status: "Closed",
+          client: s.client,
+          online: s.online,
+          _internal: s._internal,
+        }));
+      });
+      client.on("offline", () => {
+        setState((s) => ({
+          status: "Offline",
+          client: s.client,
+          online: s.online,
+          _internal: s._internal,
+        }));
+      });
+      client.on("disconnect", () => {
+        setState((s) => ({
+          status: "Disconnecting",
+          client: s.client,
+          online: s.online,
+          _internal: s._internal,
+        }));
+      });
+      client.on("message", (topic: string, message: Buffer) => {
+        state._internal.subscriptions.forEach((subs) => {
+          if (match(subs.topic, topic)) {
+            subs.listener(topic, message);
+          }
+        });
+        state._internal.values.set(topic, message);
+      });
+
+      setState((s) => {
+        s._internal.subscriptions.length = 0;
+        s._internal.values.clear();
+        return {
+          status: "Connecting",
+          client,
+          online,
+          _internal: s._internal,
         };
       });
-    });
-    client.on("error", (error) => {
+    } catch (error) {
       setState((s) => ({
         status: "Error",
+        error,
         client: s.client,
         online: s.online,
         _internal: s._internal,
       }));
-    });
-    client.on("reconnect", () => {
-      setState((s) => ({
-        status: "Reconnecting",
-        client: s.client,
-        online: s.online,
-        _internal: s._internal,
-      }));
-    });
-    client.on("close", () => {
-      setState((s) => ({
-        status: "Closed",
-        client: s.client,
-        online: s.online,
-        _internal: s._internal,
-      }));
-    });
-    client.on("offline", () => {
-      setState((s) => ({
-        status: "Offline",
-        client: s.client,
-        online: s.online,
-        _internal: s._internal,
-      }));
-    });
-    client.on("disconnect", () => {
-      setState((s) => ({
-        status: "Disconnecting",
-        client: s.client,
-        online: s.online,
-        _internal: s._internal,
-      }));
-    });
-    client.on("message", (topic: string, message: Buffer) => {
-      state._internal.subscriptions.forEach((subs) => {
-        if (match(subs.topic, topic)) {
-          subs.listener(topic, message);
-        }
-      });
-      state._internal.values.set(topic, message);
-    });
-
-    setState((s) => {
-      s._internal.subscriptions.length = 0;
-      s._internal.values.clear();
-      return {
-        status: "Connecting",
-        client,
-        online,
-        _internal: s._internal,
-      };
-    });
+    }
   };
 
   const subscribe = (
