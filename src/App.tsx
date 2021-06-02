@@ -13,7 +13,6 @@ import { ConnectInfo } from "./connection/ConnectionInfo";
 import MQTTProvider, { OnlineInfo, useMQTTContext } from "./mqtt/MQTTProvider";
 import "antd/dist/antd.css";
 import AppError from "./AppError";
-import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 
 function useLocalStorage(
   key: string
