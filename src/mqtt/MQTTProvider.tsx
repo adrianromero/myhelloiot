@@ -34,7 +34,13 @@ export type MQTTConnectInfo = {
 };
 
 type MQTTContextValue = [
-  { hostname?: string; status: MQTTStatus; ready: boolean; connected: boolean },
+  {
+    hostname?: string;
+    status: MQTTStatus;
+    error?: Error;
+    ready: boolean;
+    connected: boolean;
+  },
   {
     connect: ({ url, online, options }: MQTTConnectInfo) => void;
     disconnect: () => void;
@@ -281,6 +287,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const value: MQTTContextValue = [
     {
       status: state.status,
+      error: state.error,
       ready: !!state.client,
       connected: state.client?.connected || false,
       hostname: state.client?.options?.hostname,
