@@ -15,120 +15,83 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  createContext,
-  Context,
-  useContext,
-} from "react";
+import React, { useEffect } from "react";
 import { QoS } from "mqtt";
+import { useSelector } from "react-redux";
 import ContentConnect from "./connection/ContentConnect";
 import AppDashboard from "./AppDashboard";
 import { ConnectInfo } from "./connection/ConnectionInfo";
 import MQTTProvider, { OnlineInfo, useMQTTContext } from "./mqtt/MQTTProvider";
+import AppStoreProvider, { AppStoreValue } from "./AppStoreProvider";
 import AppError from "./AppError";
 import "antd/dist/antd.css";
 import "./assets/main.css";
 
-function useLocalStorage(
-  key: string
-): [string | null, (s: string | null) => void] {
-  const [value, setStateValue] = useState<string | null>(() =>
-    localStorage.getItem(key)
-  );
-  const setValue = useCallback(
-    (s: string | null) => {
-      if (s) {
-        localStorage.setItem(key, s);
-      } else {
-        localStorage.removeItem(key);
-      }
-      setStateValue(s);
-    },
-    [key, setStateValue]
-  );
-  return [value, setValue];
-}
-
-export type AppContextValue = [
-  { connected: string | null },
-  { setConnected: (value: string | null) => void }
-];
-export const useAppContext = () => useContext(AppContext);
-
-const AppContext: Context<AppContextValue> = createContext<AppContextValue>([
-  { connected: null },
-  {
-    setConnected: (s) => {},
-  },
-]);
-
 const App: React.FC<{}> = () => (
   <MQTTProvider>
-    <MQTTApp />
+    <AppStoreProvider>
+      <MQTTApp />
+    </AppStoreProvider>
   </MQTTProvider>
 );
 
 const MQTTApp: React.FC<{}> = () => {
   const [, { connect, disconnect }] = useMQTTContext();
-  const [connected, setConnected] = useLocalStorage("mqttconnectstatus");
+  const connected = useSelector<AppStoreValue, string>((s) => s.connected);
+  const connectInfo = useSelector<AppStoreValue, ConnectInfo>(
+    (s) => s.connectInfo
+  );
 
   useEffect(() => {
     if (connected === "connected") {
-      const item = localStorage.getItem("mqttconnect");
-      if (item) {
-        const connectinfo = JSON.parse(item) as ConnectInfo;
-        const {
-          url,
+      const {
+        url,
+        username,
+        password,
+        clientId,
+        keepalive,
+        connectTimeout,
+        reconnectPeriod,
+        onlinetopic,
+        onlineqos,
+      } = connectInfo;
+      const online: OnlineInfo | undefined = onlinetopic
+        ? {
+            topic: onlinetopic,
+            qos: onlineqos as QoS,
+            retain: true,
+          }
+        : undefined;
+      connect({
+        url,
+        online,
+        options: {
           username,
           password,
           clientId,
           keepalive,
           connectTimeout,
           reconnectPeriod,
-          onlinetopic,
-          onlineqos,
-        } = connectinfo;
-        const online: OnlineInfo | undefined = onlinetopic
-          ? {
-              topic: onlinetopic,
-              qos: onlineqos as QoS,
-              retain: true,
-            }
-          : undefined;
-
-        connect({
-          url,
-          online,
-          options: {
-            username,
-            password,
-            clientId,
-            keepalive,
-            connectTimeout,
-            reconnectPeriod,
-          },
-        });
-      }
+        },
+      });
     } else {
       disconnect();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected]);
 
-  return (
-    <AppContext.Provider value={[{ connected }, { setConnected }]}>
-      <ConnectedApp />
-    </AppContext.Provider>
-  );
+  return <ConnectedApp />;
 };
 
 const ConnectedApp: React.FC<{}> = () => {
   const [{ error }] = useMQTTContext();
-  const [{ connected }] = useAppContext();
-
+  const connected = useSelector<AppStoreValue, string>((s) => s.connected);
+  const jsx = useSelector<AppStoreValue, string>(
+    (s) => s.connectInfo.dashboard.data
+  );
+  const css = useSelector<AppStoreValue, string>(
+    (s) => s.connectInfo.dashboardcss.data
+  );
   if (!connected) {
     // Connection Component
     return <ContentConnect />;
@@ -144,17 +107,8 @@ const ConnectedApp: React.FC<{}> = () => {
     );
   }
 
-  const item = localStorage.getItem("mqttconnect");
-  if (!item) {
-    return <AppError title="Failed to load JSX code" error="Storage empty." />;
-  }
-
-  const connectinfo = JSON.parse(item) as ConnectInfo;
-  const jsx = connectinfo.dashboard.data;
-  const css = connectinfo.dashboardcss.data;
-
   if (!jsx) {
-    return <AppError title="Failed to load JSX code." error="File empty." />;
+    return <AppError title="Failed to load JSX code" error="Storage empty." />;
   }
 
   // Application connected!!!

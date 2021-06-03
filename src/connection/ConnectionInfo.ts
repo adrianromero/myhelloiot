@@ -30,3 +30,27 @@ export type ConnectInfo = {
   dashboard: FileInfo;
   dashboardcss: FileInfo;
 };
+
+const storedClientId = localStorage.getItem("myhelloiot_defaultClientId");
+let clientId;
+if (storedClientId) {
+  clientId = storedClientId;
+} else {
+  clientId =
+    "myhelloiot_" + Math.random().toString(16).substr(2).padEnd(13, "0");
+  localStorage.setItem("myhelloiot_defaultClientId", clientId);
+}
+
+export const defaultConnectInfo = {
+  url: "wss://mymqttbroker",
+  username: "",
+  password: "",
+  clientId,
+  keepalive: 60,
+  connectTimeout: 30000,
+  reconnectPeriod: 1000,
+  onlinetopic: "",
+  onlineqos: 0,
+  dashboard: { name: "dashboard.jsx", type: "text/jsx", data: "" },
+  dashboardcss: { name: "dashboard.css", type: "text/css", data: "" },
+};

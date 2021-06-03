@@ -28,43 +28,31 @@ import {
   Tabs,
   Modal,
 } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import AppHeader from "../AppHeader";
 import { ConnectInfo } from "./ConnectionInfo";
+import { AppStoreValue, AppStoreDispatch } from "../AppStoreProvider";
 import "./ContentConnect.css";
-import { useAppContext } from "../App";
 import UploadRaw from "./UploadRaw";
 
 const PanelConnect: React.FC<{}> = () => {
   const [form] = Form.useForm<ConnectInfo>();
-  const [, { setConnected }] = useAppContext();
+  const dispatch = useDispatch<AppStoreDispatch>();
+  const connectInfo = useSelector<AppStoreValue, ConnectInfo>(
+    (s) => s.connectInfo
+  );
   const { TabPane } = Tabs;
 
   useEffect(() => {
-    const item = localStorage.getItem("mqttconnect");
-    if (item) {
-      form.setFieldsValue(JSON.parse(item));
-    } else {
-      form.setFieldsValue({
-        url: "wss://mymqttbroker",
-        username: "",
-        password: "",
-        clientId:
-          "myhelloiot_" + Math.random().toString(16).substr(2).padEnd(13, "0"),
-        keepalive: 60,
-        connectTimeout: 30000,
-        reconnectPeriod: 1000,
-        onlinetopic: "",
-        onlineqos: 0,
-        dashboard: { name: "dashboard.jsx", type: "text/jsx", data: "" },
-        dashboardcss: { name: "dashboard.css", type: "text/css", data: "" },
-      });
-    }
+    form.setFieldsValue(connectInfo);
     window.scrollTo(0, 0);
   });
 
-  const handleConnect = (connectinfo: ConnectInfo): void => {
-    localStorage.setItem("mqttconnect", JSON.stringify(connectinfo));
-    setConnected("connected");
+  const handleConnect = (newConnectInfo: ConnectInfo): void => {
+    dispatch({
+      type: "set",
+      newState: { connected: "connected", connectInfo: newConnectInfo },
+    });
   };
 
   const handleFail = (): void => {

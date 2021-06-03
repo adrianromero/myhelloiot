@@ -17,8 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { Button, Layout } from "antd";
+import { useDispatch } from "react-redux";
+import { AppStoreDispatch } from "./AppStoreProvider";
 import AppHeader from "./AppHeader";
-import { useAppContext } from "./App";
 import { LeftOutlined } from "@ant-design/icons";
 
 const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
@@ -26,7 +27,7 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
   error,
   jsx,
 }) => {
-  const [, { setConnected }] = useAppContext();
+  const dispatch = useDispatch<AppStoreDispatch>();
   return (
     <Layout>
       <AppHeader>
@@ -34,7 +35,7 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
         <Button
           type="primary"
           icon={<LeftOutlined />}
-          onClick={() => setConnected(null)}
+          onClick={() => dispatch({ type: "set", newState: { connected: "" } })}
         >
           Back
         </Button>

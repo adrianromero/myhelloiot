@@ -23,10 +23,11 @@ import {
   CheckCircleOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import AppHeader from "../AppHeader";
+import { AppStoreDispatch } from "../AppStoreProvider";
 import { DashboardMenuProps } from "./DashboardMenu";
-import { useAppContext } from "../App";
 
 export type DashboardProps = {
   disconnectMenu: boolean;
@@ -42,7 +43,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   children,
 }) => {
   const [{ hostname, status }] = useMQTTContext();
-  const [, { setConnected }] = useAppContext();
+  const dispatch = useDispatch<AppStoreDispatch>();
   const [panelkey, setPanelkey] = useState<React.Key>("menu-0");
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
 
@@ -58,7 +59,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   function handleClick({ key }: { key: string | number }) {
     if (key === DISCONNECTKEY) {
       hideDrawer();
-      setConnected(null);
+      dispatch({ type: "set", newState: { connected: "" } });
     }
   }
 

@@ -33,6 +33,8 @@ type InputUnitProps = {
   className?: string;
 };
 
+type MQTTValue = { mqttValue: string };
+
 const InputUnit: React.FC<InputUnitProps> = ({
   pubtopic = "",
   subtopic = "",
@@ -42,7 +44,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
   className,
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<MQTTValue>();
   useEffect(() => {
     form.setFieldsValue({
       mqttValue: "",
@@ -59,7 +61,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
     suboptions
   );
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: MQTTValue) => {
     publish(pubtopic, format.fromDisplay(values.mqttValue), puboptions);
   };
 
