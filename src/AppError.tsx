@@ -26,7 +26,7 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
   error,
   jsx,
 }) => {
-  const { setConnected } = useAppContext();
+  const [, { setConnected }] = useAppContext();
   return (
     <Layout>
       <AppHeader>

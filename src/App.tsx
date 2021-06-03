@@ -52,13 +52,18 @@ function useLocalStorage(
   return [value, setValue];
 }
 
-type AppContextValue = { setConnected: (value: string | null) => void };
-
-const AppContext: Context<AppContextValue> = createContext<AppContextValue>({
-  setConnected: (s) => {},
-});
-
+export type AppContextValue = [
+  { connected: string | null },
+  { setConnected: (value: string | null) => void }
+];
 export const useAppContext = () => useContext(AppContext);
+
+const AppContext: Context<AppContextValue> = createContext<AppContextValue>([
+  { connected: null },
+  {
+    setConnected: (s) => {},
+  },
+]);
 
 const App: React.FC<{}> = () => (
   <MQTTProvider>
@@ -67,7 +72,7 @@ const App: React.FC<{}> = () => (
 );
 
 const MQTTApp: React.FC<{}> = () => {
-  const [{ error }, { connect, disconnect }] = useMQTTContext();
+  const [, { connect, disconnect }] = useMQTTContext();
   const [connected, setConnected] = useLocalStorage("mqttconnectstatus");
 
   useEffect(() => {
@@ -113,35 +118,47 @@ const MQTTApp: React.FC<{}> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected]);
 
-  let app;
+  return (
+    <AppContext.Provider value={[{ connected }, { setConnected }]}>
+      <ConnectedApp />
+    </AppContext.Provider>
+  );
+};
+
+const ConnectedApp: React.FC<{}> = () => {
+  const [{ error }] = useMQTTContext();
+  const [{ connected }] = useAppContext();
+
+  if (!connected) {
+    // Connection Component
+    return <ContentConnect />;
+  }
+
+  // Connectiiiing
   if (error) {
-    app = (
+    return (
       <AppError
         title="Failed to connect to MQTT broker."
         error={error.message}
       />
     );
-  } else if (connected) {
-    const item = localStorage.getItem("mqttconnect");
-    if (item) {
-      const connectinfo = JSON.parse(item) as ConnectInfo;
-      const jsx = connectinfo.dashboard.data;
-      const css = connectinfo.dashboardcss.data;
-      if (jsx) {
-        app = <AppDashboard jsx={jsx} css={css} />;
-      } else {
-        app = <AppError title="Failed to load JSX code." error="File empty." />;
-      }
-    } else {
-      app = <AppError title="Failed to load JSX code" error="torage empty." />;
-    }
-  } else {
-    app = <ContentConnect />;
   }
 
-  return (
-    <AppContext.Provider value={{ setConnected }}>{app}</AppContext.Provider>
-  );
+  const item = localStorage.getItem("mqttconnect");
+  if (!item) {
+    return <AppError title="Failed to load JSX code" error="Storage empty." />;
+  }
+
+  const connectinfo = JSON.parse(item) as ConnectInfo;
+  const jsx = connectinfo.dashboard.data;
+  const css = connectinfo.dashboardcss.data;
+
+  if (!jsx) {
+    return <AppError title="Failed to load JSX code." error="File empty." />;
+  }
+
+  // Application connected!!!
+  return <AppDashboard jsx={jsx} css={css} />;
 };
 
 export default App;

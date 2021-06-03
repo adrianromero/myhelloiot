@@ -36,7 +36,7 @@ import UploadRaw from "./UploadRaw";
 
 const PanelConnect: React.FC<{}> = () => {
   const [form] = Form.useForm<ConnectInfo>();
-  const { setConnected } = useAppContext();
+  const [, { setConnected }] = useAppContext();
   const { TabPane } = Tabs;
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const PanelConnect: React.FC<{}> = () => {
 
   const handleFail = (): void => {
     Modal.error({
-      title: "Connection error",
+      title: "Connection values error",
       content: "Please fix the values with validation messages",
     });
   };

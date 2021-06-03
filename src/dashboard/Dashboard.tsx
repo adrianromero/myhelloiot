@@ -42,7 +42,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   children,
 }) => {
   const [{ hostname, status }] = useMQTTContext();
-  const { setConnected } = useAppContext();
+  const [, { setConnected }] = useAppContext();
   const [panelkey, setPanelkey] = useState<React.Key>("menu-0");
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
 
