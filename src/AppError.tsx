@@ -16,11 +16,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { Button, Layout } from "antd";
+import { Layout } from "antd";
 import { useDispatch } from "react-redux";
 import { AppStoreDispatch } from "./AppStoreProvider";
 import AppHeader from "./AppHeader";
-import { LeftOutlined } from "@ant-design/icons";
+import ModalError from "./ModalError";
+import { CloseCircleOutlined } from "@ant-design/icons";
 
 const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
   title,
@@ -28,26 +29,32 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
   jsx,
 }) => {
   const dispatch = useDispatch<AppStoreDispatch>();
+
   return (
-    <Layout>
-      <AppHeader>
-        <div className="myhMenuDisplayButton"></div>
-        <Button
-          type="primary"
-          icon={<LeftOutlined />}
-          onClick={() => dispatch({ type: "set", newState: { connected: "" } })}
-        >
-          Back
-        </Button>
-      </AppHeader>
-      <Layout.Content className="myhMainLayout">
-        <div className="myhAppContent-panel">
-          <div className="myhJSXErrorTitle">{title}</div>
-          <div className="myhJSXErrorMessage">{error}</div>
-          {jsx && <div className="myhJSXErrorJSX">{jsx}</div>}
-        </div>
-      </Layout.Content>
-    </Layout>
+    <>
+      <ModalError
+        title={title}
+        error={error}
+        onOk={() => dispatch({ type: "set", newState: { connected: "" } })}
+        visible
+      />
+      <Layout>
+        <AppHeader>
+          <div className="myhMenuDisplayButton"></div>
+          <>
+            <span className="myhConnectionStatus-label">Error</span>
+            <span className="myhConnectionStatus-icon">
+              <CloseCircleOutlined style={{ color: "#FF0000" }} />
+            </span>
+          </>
+        </AppHeader>
+        <Layout.Content className="myhMainLayout">
+          <div className="myhAppContent-panel">
+            {jsx && <div className="myhJSXErrorJSX">{jsx}</div>}
+          </div>
+        </Layout.Content>
+      </Layout>
+    </>
   );
 };
 export default AppError;

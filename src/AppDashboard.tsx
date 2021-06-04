@@ -146,15 +146,15 @@ const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
         jsx={jsx}
         renderError={({ error }) => (
           <AppError
-            title="Failed to compile JSX code."
+            title="Failed to compile JSX code"
             error={error}
             jsx={jsx}
           />
         )}
         renderUnrecognized={(tagname) => (
           <AppError
-            title="Failed to execute JSX code."
-            error={`Unrecongnized tag: ${tagname}`}
+            title="Failed to execute JSX code"
+            error={`Unrecognized tag: ${tagname}`}
           />
         )}
       />

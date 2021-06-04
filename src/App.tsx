@@ -101,14 +101,14 @@ const ConnectedApp: React.FC<{}> = () => {
   if (error) {
     return (
       <AppError
-        title="Failed to connect to MQTT broker."
+        title="Failed to connect to MQTT broker"
         error={error.message}
       />
     );
   }
 
   if (!jsx) {
-    return <AppError title="Failed to load JSX code" error="Storage empty." />;
+    return <AppError title="Failed to load JSX code" error="Storage empty" />;
   }
 
   // Application connected!!!
