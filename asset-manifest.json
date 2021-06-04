@@ -1,29 +1,22 @@
 {
   "files": {
-    "main.css": "/myhelloiot/static/css/main.8d5a6218.chunk.css",
-    "main.js": "/myhelloiot/static/js/main.f19c20ef.chunk.js",
-    "main.js.map": "/myhelloiot/static/js/main.f19c20ef.chunk.js.map",
-    "runtime-main.js": "/myhelloiot/static/js/runtime-main.69fabcda.js",
-    "runtime-main.js.map": "/myhelloiot/static/js/runtime-main.69fabcda.js.map",
-    "static/css/2.3c3a73a9.chunk.css": "/myhelloiot/static/css/2.3c3a73a9.chunk.css",
-    "static/js/2.18016047.chunk.js": "/myhelloiot/static/js/2.18016047.chunk.js",
-    "static/js/2.18016047.chunk.js.map": "/myhelloiot/static/js/2.18016047.chunk.js.map",
-    "static/js/3.9f716686.chunk.js": "/myhelloiot/static/js/3.9f716686.chunk.js",
-    "static/js/3.9f716686.chunk.js.map": "/myhelloiot/static/js/3.9f716686.chunk.js.map",
+    "main.css": "/myhelloiot/static/css/main.f8bb8243.chunk.css",
+    "main.js": "/myhelloiot/static/js/main.de349f78.chunk.js",
+    "runtime-main.js": "/myhelloiot/static/js/runtime-main.479b3e31.js",
+    "static/css/2.59af6703.chunk.css": "/myhelloiot/static/css/2.59af6703.chunk.css",
+    "static/js/2.ea0e8027.chunk.js": "/myhelloiot/static/js/2.ea0e8027.chunk.js",
+    "static/js/3.1d7c6252.chunk.js": "/myhelloiot/static/js/3.1d7c6252.chunk.js",
     "index.html": "/myhelloiot/index.html",
     "service-worker.js": "/myhelloiot/service-worker.js",
-    "service-worker.js.map": "/myhelloiot/service-worker.js.map",
-    "static/css/2.3c3a73a9.chunk.css.map": "/myhelloiot/static/css/2.3c3a73a9.chunk.css.map",
-    "static/css/main.8d5a6218.chunk.css.map": "/myhelloiot/static/css/main.8d5a6218.chunk.css.map",
-    "static/js/2.18016047.chunk.js.LICENSE.txt": "/myhelloiot/static/js/2.18016047.chunk.js.LICENSE.txt",
+    "static/js/2.ea0e8027.chunk.js.LICENSE.txt": "/myhelloiot/static/js/2.ea0e8027.chunk.js.LICENSE.txt",
     "static/media/ControlGauge.css": "/myhelloiot/static/media/roboto-condensed-v19-latin-regular.fd55075a.woff2",
     "static/media/themes.svg": "/myhelloiot/static/media/themes.8b0983ed.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.69fabcda.js",
-    "static/css/2.3c3a73a9.chunk.css",
-    "static/js/2.18016047.chunk.js",
-    "static/css/main.8d5a6218.chunk.css",
-    "static/js/main.f19c20ef.chunk.js"
+    "static/js/runtime-main.479b3e31.js",
+    "static/css/2.59af6703.chunk.css",
+    "static/js/2.ea0e8027.chunk.js",
+    "static/css/main.f8bb8243.chunk.css",
+    "static/js/main.de349f78.chunk.js"
   ]
 }
