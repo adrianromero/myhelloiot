@@ -1,7 +1,7 @@
 {
   /* eslint-disable react/jsx-no-undef, no-undef */
 }
-<Dashboard disconnectMenu className="myhDashboard">
+<Dashboard className="myhDashboard">
   <DashboardMenu icon={<BulbFilled />} name="Application example">
     <PanelGrid>
       <CCard title="Testing topic pub and sub">

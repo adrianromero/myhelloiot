@@ -30,7 +30,7 @@ import { AppStoreDispatch } from "../AppStoreProvider";
 import { DashboardMenuProps } from "./DashboardMenu";
 
 export type DashboardProps = {
-  disconnectMenu: boolean;
+  disconnectVisible: boolean;
   className?: string;
   children: React.ReactElement<DashboardMenuProps, any>[];
 };
@@ -38,7 +38,7 @@ export type DashboardProps = {
 const DISCONNECTKEY: React.Key = "action-disconnect";
 
 const Dashboard: React.FC<DashboardProps> = ({
-  disconnectMenu,
+  disconnectVisible,
   className,
   children,
 }) => {
@@ -136,7 +136,7 @@ const Dashboard: React.FC<DashboardProps> = ({
             onClick={handleClick}
           >
             {menus}
-            {disconnectMenu && (
+            {!disconnectVisible && (
               <>
                 <Menu.Divider />
                 <Menu.Item key="action-disconnect" icon={<ApiFilled />}>
