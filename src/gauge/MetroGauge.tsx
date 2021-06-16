@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { arcpath, padvalue } from "./svgdraw";
+import { arcpath, padvalue, radians } from "./svgdraw";
 import "./MetroGauge.css";
 
 export type MetroGaugeProps = {
@@ -62,9 +62,9 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
 
   const lines = [];
   for (let index = min; index <= max; index += step) {
-    const angle = 135 + (arctotal * (index - min)) / (max - min);
-    const cos = Math.cos((angle * Math.PI) / 180);
-    const sin = Math.sin((angle * Math.PI) / 180);
+    const angle = radians(135 + (arctotal * (index - min)) / (max - min));
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
     lines.push(
       <line
         key={`la-${index}`}
@@ -77,9 +77,9 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
     );
   }
   for (let index = min; index <= max; index += labelstep) {
-    const angle = 135 + (arctotal * (index - min)) / (max - min);
-    const cos = Math.cos((angle * Math.PI) / 180);
-    const sin = Math.sin((angle * Math.PI) / 180);
+    const angle = radians(135 + (arctotal * (index - min)) / (max - min));
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
     lines.push(
       <line
         key={`lb-${index}`}
@@ -117,8 +117,8 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1 + 2,
-          start: (45 * Math.PI) / 180,
-          end: (135 * Math.PI) / 180,
+          start: radians(45),
+          end: radians(135),
           orientation: 1,
         })}
         className="metro-indicator-mark"

@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { padvalue, arcpath } from "./svgdraw";
+import { padvalue, arcpath, radians } from "./svgdraw";
 import "./SpaceGauge.css";
 
 export type SpaceGaugeProps = {
@@ -50,7 +50,7 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
     arcvalue = 0;
     formatvalue = "";
   } else {
-    arcvalue = padvalue(min, max, (Math.PI * r1 * 2 * 3) / 4)(value);
+    arcvalue = padvalue(min, max, r1 * radians(270))(value);
     formatvalue = intlvalue.format(value);
   }
 
@@ -67,8 +67,8 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: (90 * Math.PI) / 180,
-          end: (0 * Math.PI) / 180,
+          start: radians(90),
+          end: radians(0),
           orientation: 1,
           sweep: 1,
         })}
@@ -83,8 +83,8 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: (90 * Math.PI) / 180,
-          end: (0 * Math.PI) / 180,
+          start: radians(90),
+          end: radians(0),
           orientation: 1,
           sweep: 1,
         })}

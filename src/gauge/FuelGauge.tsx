@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { arcpath, padvalue } from "./svgdraw";
+import { arcpath, padvalue, radians } from "./svgdraw";
 import "./FuelGauge.css";
 
 export type FuelGaugeProps = {
@@ -68,9 +68,11 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
 
   const lines = [];
   for (let index = min; index <= max; index += step) {
-    const angle = startangle - 360 + (arctotal * (index - min)) / (max - min);
-    const cos = Math.cos((angle * Math.PI) / 180);
-    const sin = Math.sin((angle * Math.PI) / 180);
+    const angle = radians(
+      startangle - 360 + (arctotal * (index - min)) / (max - min)
+    );
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
     lines.push(
       <line
         key={`ma-${index}`}
@@ -83,9 +85,11 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
     );
   }
   for (let index = min; index <= max; index += labelstep) {
-    const angle = startangle - 360 + (arctotal * (index - min)) / (max - min);
-    const cos = Math.cos((angle * Math.PI) / 180);
-    const sin = Math.sin((angle * Math.PI) / 180);
+    const angle = radians(
+      startangle - 360 + (arctotal * (index - min)) / (max - min)
+    );
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
     lines.push(
       <line
         key={`mb-${index}`}
@@ -123,8 +127,8 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: (startangle * Math.PI) / 180,
-          end: (endangle * Math.PI) / 180,
+          start: radians(startangle),
+          end: radians(endangle),
           orientation: 0,
           sweep: 1,
         })}
@@ -137,8 +141,8 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r2,
-          start: (startangle * Math.PI) / 180,
-          end: (endangle * Math.PI) / 180,
+          start: radians(startangle),
+          end: radians(endangle),
           orientation: 0,
           sweep: 1,
         })}

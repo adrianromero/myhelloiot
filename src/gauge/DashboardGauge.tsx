@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { padvalue } from "./svgdraw";
+import { padvalue, radians } from "./svgdraw";
 import "./DashboardGauge.css";
 
 export type DashboardGaugeProps = {
@@ -48,7 +48,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
     arcvalue = 0;
     formatvalue = "";
   } else {
-    arcvalue = padvalue(min, max, Math.PI * r)(value);
+    arcvalue = padvalue(min, max, r * radians(90))(value);
     formatvalue = intlvalue.format(value);
   }
 

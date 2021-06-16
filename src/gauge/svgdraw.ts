@@ -62,3 +62,7 @@ export const padvalue: (
     }
     return lengthvalue;
   };
+
+export function radians(angle: number): number {
+  return (angle * Math.PI) / 180;
+}

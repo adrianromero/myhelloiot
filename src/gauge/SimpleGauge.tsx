@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { piepath, padvalue } from "./svgdraw";
+import { piepath, padvalue, radians } from "./svgdraw";
 import "./SimpleGauge.css";
 
 export type SimpleGaugeProps = {
@@ -41,8 +41,9 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
   const intlvalue = new Intl.NumberFormat(locale, valueformat);
 
   const r1 = 55;
-  const sinr2 = Math.sin(Math.PI / 12);
-  const cosr2 = Math.cos(Math.PI / 12);
+  const angler2 = radians(15);
+  const sinr2 = Math.sin(angler2);
+  const cosr2 = Math.cos(angler2);
   const r2 = 25;
   const centerx = 100;
   const centery = 65;
@@ -70,8 +71,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: (181 * Math.PI) / 180,
-          end: (135 * Math.PI) / 180,
+          start: radians(181),
+          end: radians(135),
         })}
         className="simple-indicator-pie"
         style={{
@@ -84,8 +85,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: (226 * Math.PI) / 180,
-          end: (180 * Math.PI) / 180,
+          start: radians(226),
+          end: radians(180),
         })}
         className="simple-indicator-pie"
         style={{
@@ -98,8 +99,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: (271 * Math.PI) / 180,
-          end: (225 * Math.PI) / 180,
+          start: radians(271),
+          end: radians(225),
         })}
         className="simple-indicator-pie"
         style={{
@@ -112,8 +113,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: (316 * Math.PI) / 180,
-          end: (270 * Math.PI) / 180,
+          start: radians(316),
+          end: radians(270),
         })}
         className="simple-indicator-pie"
         style={{
@@ -126,8 +127,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: (361 * Math.PI) / 180,
-          end: (315 * Math.PI) / 180,
+          start: radians(361),
+          end: radians(315),
         })}
         className="simple-indicator-pie"
         style={{
@@ -140,8 +141,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: (46 * Math.PI) / 180,
-          end: (0 * Math.PI) / 180,
+          start: radians(46),
+          end: radians(0),
         })}
         className="simple-indicator-pie"
         style={{
@@ -155,8 +156,8 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: (45 * Math.PI) / 180,
-          end: (135 * Math.PI) / 180,
+          start: radians(45),
+          end: radians(135),
           orientation: 1,
         })}
         className="simple-indicator-mark"

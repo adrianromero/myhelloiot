@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { arcpath, padvalue } from "./svgdraw";
+import { arcpath, padvalue, radians } from "./svgdraw";
 import "./ControlGauge.css";
 
 export type ControlGaugeProps = {
@@ -50,7 +50,7 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
   const centery = 80;
 
   const arctotal = endangle - startangle;
-  const arctotalrad = (Math.PI * r1 * arctotal) / 180;
+  const arctotalrad = r1 * radians(arctotal);
 
   let arcvalue: number;
   let arcvaluerad: number;
@@ -79,8 +79,8 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: (startangle * Math.PI) / 180,
-          end: (endangle * Math.PI) / 180,
+          start: radians(startangle),
+          end: radians(endangle),
           orientation: 0,
           sweep: 1,
         })}
@@ -96,8 +96,8 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: (startangle * Math.PI) / 180,
-          end: (endangle * Math.PI) / 180,
+          start: radians(startangle),
+          end: radians(endangle),
           orientation: 0,
           sweep: 1,
         })}
