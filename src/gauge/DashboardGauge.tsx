@@ -48,7 +48,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
     arcvalue = 0;
     formatvalue = "";
   } else {
-    arcvalue = padvalue(min, max, r * radians(90))(value);
+    arcvalue = padvalue(min, max, r * radians(180))(value);
     formatvalue = intlvalue.format(value);
   }
 
