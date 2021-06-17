@@ -26,6 +26,10 @@ import {
   Radio,
   Layout,
   Tabs,
+  Typography,
+  Card,
+  Tag,
+  Image,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { ConnectInfo } from "./ConnectionInfo";
@@ -33,7 +37,12 @@ import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
 import { AppStoreValue, AppStoreDispatch } from "../AppStoreProvider";
 import UploadRaw from "./UploadRaw";
+import { ReactComponent as GitHubRibbon } from "../assets/svg/github.svg";
+import myhelloiot from "../assets/myhelloiot.png";
 import "./ContentConnect.css";
+import { BranchesOutlined } from "@ant-design/icons";
+
+const { Title, Paragraph, Text, Link } = Typography;
 
 type ModalErrorInfo = {
   title: string;
@@ -314,7 +323,12 @@ const PanelConnect: React.FC<{}> = () => {
                   </Row>
                 </TabPane>
                 <TabPane tab="Dashboard" key="2" forceRender>
-                  <Tabs defaultActiveKey="1" type="card">
+                  <Tabs
+                    defaultActiveKey="1"
+                    type="card"
+                    tabPosition="left"
+                    size="small"
+                  >
                     <TabPane tab="JSX" key="2" forceRender>
                       <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
                         <Col xs={0} sm={0} md={0} lg={4} />
@@ -357,7 +371,117 @@ const PanelConnect: React.FC<{}> = () => {
                         <Col xs={0} sm={0} md={0} lg={4} />
                       </Row>
                     </TabPane>
+                    <TabPane tab="Options" key="4" forceRender>
+                      Options
+                    </TabPane>
                   </Tabs>
+                </TabPane>
+                <TabPane tab="About" key="3">
+                  <Card>
+                    <Link
+                      href="https://github.com/adrianromero"
+                      target="_blank"
+                      style={{
+                        position: "absolute",
+                        right: 0,
+                        top: 0,
+                      }}
+                    >
+                      <GitHubRibbon
+                        style={{
+                          transformOrigin: "top right",
+                          transform: "scale(0.8)",
+                        }}
+                      />
+                    </Link>
+
+                    <Typography>
+                      <Title level={2}>
+                        MYHELLOIOT{" "}
+                        <Tag icon={<BranchesOutlined />} color="geekblue">
+                          1.0.0
+                        </Tag>
+                      </Title>
+                      <Paragraph>
+                        MYHELLOIOT is a{" "}
+                        <Link
+                          href="https://en.wikipedia.org/wiki/MQTT"
+                          target="_blank"
+                        >
+                          MQTT
+                        </Link>{" "}
+                        dashboard application. You can use MYHELLOIOT as a MQTT
+                        client application to publish and subscribe to topics or
+                        you can use MYHELLOIOT as a client platform to create
+                        your own dashboard. MYHELLOIOT is a PWA application and
+                        it can run on your favorite browser or installed on
+                        Windows, MacOS, Linux or Android.
+                      </Paragraph>
+                      <Paragraph>
+                        <Image src={myhelloiot} width={480} />
+                      </Paragraph>
+                      <Paragraph>
+                        After massive project practice and summaries, Ant
+                        Design, a design language for background applications,
+                        is refined by Ant UED Team, which aims to
+                        <Text strong>
+                          uniform the user interface specs for internal
+                          background projects, lower the unnecessary cost of
+                          design differences and implementation and liberate the
+                          resources of design and front-end development
+                        </Text>
+                        .
+                      </Paragraph>
+                      <Title level={2}>Guidelines and Resources</Title>
+                      <Paragraph>
+                        We supply a series of design principles, practical
+                        patterns and high quality design resources (
+                        <Text code>Sketch</Text> and <Text code>Axure</Text>),
+                        to help people create their product prototypes
+                        beautifully and efficiently.
+                      </Paragraph>
+
+                      <Paragraph>
+                        <ul>
+                          <li>
+                            <Button
+                              onClick={() =>
+                                form.setFieldsValue({
+                                  url: "wss://broker.emqx.io:8084/mqtt",
+                                })
+                              }
+                            >
+                              Sets the EMQ.IO test broker
+                            </Button>
+                          </li>
+                          <li>
+                            <Button
+                              onClick={() =>
+                                form.setFieldsValue({
+                                  url: "wss://test.mosquitto.org:8081",
+                                })
+                              }
+                            >
+                              Sets Mosquito test broker
+                            </Button>
+                          </li>
+                          <li>
+                            <Button onClick={() => form.submit()}>
+                              Conneeeects
+                            </Button>
+                          </li>
+                          <li>
+                            <Link
+                              href="https://github.com/adrianromero/myhelloiot"
+                              target="_blank"
+                            >
+                              MyHelloIoT on Github
+                            </Link>
+                          </li>
+                        </ul>
+                      </Paragraph>
+                    </Typography>
+                  </Card>
                 </TabPane>
               </Tabs>
             </div>
