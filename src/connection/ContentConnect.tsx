@@ -410,37 +410,23 @@ const PanelConnect: React.FC<{}> = () => {
                         >
                           MQTT
                         </Link>{" "}
-                        dashboard application. You can use MYHELLOIOT as a MQTT
-                        client application to publish and subscribe to topics or
-                        you can use MYHELLOIOT as a client platform to create
-                        your own dashboard. MYHELLOIOT is a PWA application and
-                        it can run on your favorite browser or installed on
-                        Windows, MacOS, Linux or Android.
+                        dashboard application inspired in my other MQTT project{" "}
+                        <Link
+                          href="https://github.com/adrianromero/helloiot"
+                          target="_blank"
+                        >
+                          HelloIoT
+                        </Link>
+                        . You can use MYHELLOIOT as a MQTT client application to
+                        publish and subscribe to topics or you can use
+                        MYHELLOIOT as a client platform to create your own
+                        dashboard. MYHELLOIOT is a PWA application and it can
+                        run on your favorite browser or installed on Windows,
+                        MacOS, Linux or Android.
                       </Paragraph>
                       <Paragraph>
                         <Image src={myhelloiot} width={480} />
                       </Paragraph>
-                      <Paragraph>
-                        After massive project practice and summaries, Ant
-                        Design, a design language for background applications,
-                        is refined by Ant UED Team, which aims to
-                        <Text strong>
-                          uniform the user interface specs for internal
-                          background projects, lower the unnecessary cost of
-                          design differences and implementation and liberate the
-                          resources of design and front-end development
-                        </Text>
-                        .
-                      </Paragraph>
-                      <Title level={2}>Guidelines and Resources</Title>
-                      <Paragraph>
-                        We supply a series of design principles, practical
-                        patterns and high quality design resources (
-                        <Text code>Sketch</Text> and <Text code>Axure</Text>),
-                        to help people create their product prototypes
-                        beautifully and efficiently.
-                      </Paragraph>
-
                       <Paragraph>
                         <ul>
                           <li>
