@@ -30,6 +30,7 @@ import {
   Card,
   Tag,
   Image,
+  message,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { ConnectInfo } from "./ConnectionInfo";
@@ -39,10 +40,11 @@ import { AppStoreValue, AppStoreDispatch } from "../AppStoreProvider";
 import UploadRaw from "./UploadRaw";
 import { ReactComponent as GitHubRibbon } from "../assets/svg/github.svg";
 import myhelloiot from "../assets/myhelloiot.png";
+import sampledata from "./sampledata";
 import "./ContentConnect.css";
-import { BranchesOutlined } from "@ant-design/icons";
+import { BranchesOutlined, EditOutlined } from "@ant-design/icons";
 
-const { Title, Paragraph, Text, Link } = Typography;
+const { Title, Paragraph, Link, Text } = Typography;
 
 type ModalErrorInfo = {
   title: string;
@@ -371,13 +373,10 @@ const PanelConnect: React.FC<{}> = () => {
                         <Col xs={0} sm={0} md={0} lg={4} />
                       </Row>
                     </TabPane>
-                    <TabPane tab="Options" key="4" forceRender>
-                      Options
-                    </TabPane>
                   </Tabs>
                 </TabPane>
                 <TabPane tab="About" key="3">
-                  <Card>
+                  <Card className="myhConnectionForm-aboutcard">
                     <Link
                       href="https://github.com/adrianromero"
                       target="_blank"
@@ -420,52 +419,86 @@ const PanelConnect: React.FC<{}> = () => {
                         . You can use MYHELLOIOT as a MQTT client application to
                         publish and subscribe to topics or you can use
                         MYHELLOIOT as a client platform to create your own
-                        dashboard. MYHELLOIOT is a PWA application and it can
-                        run on your favorite browser or installed on Windows,
-                        MacOS, Linux or Android.
+                        dashboard. MYHELLOIOT is a{" "}
+                        <Link
+                          href="https://en.wikipedia.org/wiki/Progressive_web_application"
+                          target="_blank"
+                        >
+                          PWA
+                        </Link>{" "}
+                        application and it can run on your favorite browser or
+                        installed on Windows, MacOS, Linux or, and even in
+                        mobile devices iOS or Android.
                       </Paragraph>
                       <Paragraph>
                         <Image src={myhelloiot} width={480} />
                       </Paragraph>
+                      <Title level={2}>Getting started</Title>
                       <Paragraph>
-                        <ul>
-                          <li>
-                            <Button
-                              onClick={() =>
-                                form.setFieldsValue({
-                                  url: "wss://broker.emqx.io:8084/mqtt",
-                                })
-                              }
-                            >
-                              Sets the EMQ.IO test broker
-                            </Button>
-                          </li>
-                          <li>
-                            <Button
-                              onClick={() =>
-                                form.setFieldsValue({
-                                  url: "wss://test.mosquitto.org:8081",
-                                })
-                              }
-                            >
-                              Sets Mosquito test broker
-                            </Button>
-                          </li>
-                          <li>
-                            <Button onClick={() => form.submit()}>
-                              Conneeeects
-                            </Button>
-                          </li>
-                          <li>
-                            <Link
-                              href="https://github.com/adrianromero/myhelloiot"
-                              target="_blank"
-                            >
-                              MyHelloIoT on Github
-                            </Link>
-                          </li>
-                        </ul>
+                        Select the MQTT connection options. You can use any MQTT
+                        broker with WebSockets/SSL support. For example select
+                        the EMQX test broker{" "}
+                        <Button
+                          type="primary"
+                          size="small"
+                          icon={<EditOutlined />}
+                          onClick={() => {
+                            message.info("url: wss://broker.emqx.io:8084/mqtt");
+                            form.setFieldsValue({
+                              url: "wss://broker.emqx.io:8084/mqtt",
+                            });
+                          }}
+                        >
+                          Sets EMQX.IO test broker url
+                        </Button>{" "}
+                        or the Mosquitto test broker{" "}
+                        <Button
+                          type="primary"
+                          size="small"
+                          icon={<EditOutlined />}
+                          onClick={() => {
+                            message.info("url: wss://test.mosquitto.org:8081");
+                            form.setFieldsValue({
+                              url: "wss://test.mosquitto.org:8081",
+                            });
+                          }}
+                        >
+                          Sets Mosquito test broker url
+                        </Button>
+                        .
                       </Paragraph>
+                      <Paragraph>
+                        Create a dashboard. You can start with this complete
+                        sample{" "}
+                        <Button
+                          type="primary"
+                          size="small"
+                          icon={<EditOutlined />}
+                          onClick={() => {
+                            message.info("dashboard: sample.jsx");
+                            form.setFieldsValue({
+                              dashboard: {
+                                name: "sample.jsx",
+                                type: "text/jsx",
+                                data: sampledata,
+                              },
+                            });
+                          }}
+                        >
+                          Sets sample.jsx dashboard
+                        </Button>
+                        .
+                      </Paragraph>
+                      <Paragraph>
+                        And now you are ready to press the{" "}
+                        <Text code>Connect</Text> button.
+                      </Paragraph>
+                      <Title level={2}>License</Title>
+                      <Paragraph>
+                        MYHELLOIOT is licensed under the GNU General Public
+                        License, Version 3, 29 June 2007.
+                      </Paragraph>
+                      <Paragraph>Copyright (C) 2021 Adrián Romero.</Paragraph>
                     </Typography>
                   </Card>
                 </TabPane>

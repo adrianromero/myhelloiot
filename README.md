@@ -36,5 +36,6 @@ In the [MQTT Community Wiki](https://github.com/mqtt/mqtt.github.io/wiki/tools),
 
 # License
 
-MYHELLOIOT is licensed under the GNU General Public License, Version 3, 29 June 2007
-Copyright (C) 2021 Adrián Romero
+MYHELLOIOT is licensed under the GNU General Public License, Version 3, 29 June 2007.
+
+Copyright (C) 2021 Adrián Romero.
