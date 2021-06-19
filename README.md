@@ -9,7 +9,7 @@ You can use MYHELLOIOT as a MQTT client application to publish and subscribe to 
 
 ## Execute and install MYHELLOIOT
 
-To execute MYHELLOIOT just open your browser and go to [MYHELLOIOT](https://adrianromer.github.io/myhelloiot/). And if you want to install it, in the browser menu select _Install application_.
+To execute MYHELLOIOT just open your browser and go to [MYHELLOIOT](https://adrianromero.github.io/myhelloiot/). And if you want to install it, in the browser menu select _Install application_.
 
 ## Install a MQTT Broker
 

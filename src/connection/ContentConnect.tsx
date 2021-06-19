@@ -378,7 +378,7 @@ const PanelConnect: React.FC<{}> = () => {
                 <TabPane tab="About" key="3">
                   <Card className="myhConnectionForm-aboutcard">
                     <Link
-                      href="https://github.com/adrianromero"
+                      href="https://github.com/adrianromero/myhelloiot"
                       target="_blank"
                       style={{
                         position: "absolute",
