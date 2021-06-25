@@ -52,13 +52,13 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
   let arcvalue: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    arcvalue = 0;
+    arcvalue = NaN;
     formatvalue = "";
   } else {
     arcvalue = padvalue(min, max, arctotal)(value);
+    arcvalue -= 135;
     formatvalue = intlvalue.format(value);
   }
-  arcvalue -= 135;
 
   const lines = [];
   for (let index = min; index <= max; index += step) {
@@ -140,13 +140,15 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
       >
         {title}
       </text>
-      <path
-        d="M 3 10 L -3 10 L 0 -50 Z"
-        className="metro-indicator-arrow"
-        style={{
-          transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
-        }}
-      />
+      {!isNaN(arcvalue) && (
+        <path
+          d="M 3 10 L -3 10 L 0 -50 Z"
+          className="metro-indicator-arrow"
+          style={{
+            transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
+          }}
+        />
+      )}
       <circle
         cx={centerx}
         cy={centery}

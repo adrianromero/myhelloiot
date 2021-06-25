@@ -42,7 +42,7 @@ const ProgressGauge: React.FC<ProgressGaugeProps> = ({
   let width: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    width = 0;
+    width = NaN;
     formatvalue = "";
   } else {
     width = padvalue(min, max, 160)(value);
@@ -64,14 +64,16 @@ const ProgressGauge: React.FC<ProgressGaugeProps> = ({
         rx={4}
         className="progress-indicator-background"
       />
-      <rect
-        x={20}
-        y={16}
-        width={width}
-        height={8}
-        rx={4}
-        className="progress-indicator-bar"
-      />
+      {!isNaN(width) && (
+        <rect
+          x={20}
+          y={16}
+          width={width}
+          height={8}
+          rx={4}
+          className="progress-indicator-bar"
+        />
+      )}
 
       <text
         x={180}

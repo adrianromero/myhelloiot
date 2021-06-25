@@ -47,7 +47,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
   let width: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    width = 0;
+    width = NaN;
     formatvalue = "";
   } else {
     width = padvalue(min, max, 160)(value);
@@ -117,14 +117,16 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         height={25}
         className="linear-indicator-background"
       />
-      <rect
-        key="bar"
-        x={20}
-        y={32}
-        width={width}
-        height={25}
-        className="linear-indicator-bar"
-      />
+      {!isNaN(width) && (
+        <rect
+          key="bar"
+          x={20}
+          y={32}
+          width={width}
+          height={25}
+          className="linear-indicator-bar"
+        />
+      )}
 
       <line
         key="markstep2"

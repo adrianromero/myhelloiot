@@ -56,15 +56,15 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
   let arcvaluerad: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    arcvalue = 0;
-    arcvaluerad = 0;
+    arcvalue = NaN;
+    arcvaluerad = NaN;
     formatvalue = "";
   } else {
     arcvalue = padvalue(min, max, arctotal)(value);
+    arcvalue += startangle - 270;
     arcvaluerad = padvalue(min, max, arctotalrad)(value);
     formatvalue = intlvalue.format(value);
   }
-  arcvalue += startangle - 270;
 
   return (
     <svg
@@ -90,24 +90,26 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
           strokeMiterlimit: 0,
         }}
       />
-      <path
-        id="arc2"
-        d={arcpath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(startangle),
-          end: radians(endangle),
-          orientation: 0,
-          sweep: 1,
-        })}
-        className="control-indicator-bar"
-        style={{
-          fill: "#00000000",
-          strokeMiterlimit: 0,
-          strokeDasharray: `${arcvaluerad} 400`,
-        }}
-      />
+      {!isNaN(arcvaluerad) && (
+        <path
+          id="arc2"
+          d={arcpath({
+            cx: centerx,
+            cy: centery,
+            r: r1,
+            start: radians(startangle),
+            end: radians(endangle),
+            orientation: 0,
+            sweep: 1,
+          })}
+          className="control-indicator-bar"
+          style={{
+            fill: "#00000000",
+            strokeMiterlimit: 0,
+            strokeDasharray: `${arcvaluerad} 400`,
+          }}
+        />
+      )}
       <text
         x={100}
         y={105}
@@ -124,14 +126,16 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
       >
         {title}
       </text>
-      <path
-        // d="M 1 10 L -1 10  L -1 -55 L 0 -60 L 1 -55 Z"
-        d="M 5 5 L 0 10 L -5 5 L 0 -65  Z"
-        className="control-indicator-arrow"
-        style={{
-          transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
-        }}
-      />
+      {!isNaN(arcvalue) && (
+        <path
+          // d="M 1 10 L -1 10  L -1 -55 L 0 -60 L 1 -55 Z"
+          d="M 5 5 L 0 10 L -5 5 L 0 -65  Z"
+          className="control-indicator-arrow"
+          style={{
+            transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
+          }}
+        />
+      )}
     </svg>
   );
 };

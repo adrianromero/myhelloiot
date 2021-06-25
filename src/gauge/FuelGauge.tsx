@@ -58,13 +58,13 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
   let arcvalue: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    arcvalue = 0;
+    arcvalue = NaN;
     formatvalue = "";
   } else {
     arcvalue = padvalue(min, max, arctotal)(value);
+    arcvalue += startangle - 270;
     formatvalue = intlvalue.format(value);
   }
-  arcvalue += startangle - 270;
 
   const lines = [];
   for (let index = min; index <= max; index += step) {
@@ -165,13 +165,15 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
       >
         {title}
       </text>
-      <path
-        d="M 1.5 0  L -1.5 0 L -1 -42 L 0 -45 L 1 -42  Z"
-        className="fuel-indicator-arrow"
-        style={{
-          transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
-        }}
-      />
+      {!isNaN(arcvalue) && (
+        <path
+          d="M 1.5 0  L -1.5 0 L -1 -42 L 0 -45 L 1 -42  Z"
+          className="fuel-indicator-arrow"
+          style={{
+            transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
+          }}
+        />
+      )}
       <circle
         cx={centerx}
         cy={centery}

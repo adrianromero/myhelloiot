@@ -47,7 +47,7 @@ const DialGauge: React.FC<DialGaugeProps> = ({
   let width: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    width = 0;
+    width = NaN;
     formatvalue = "";
   } else {
     width = padvalue(min, max, 160)(value);
@@ -109,13 +109,15 @@ const DialGauge: React.FC<DialGaugeProps> = ({
         className="dial-indicator-background"
       />
       {lines}
-      <rect
-        x={20}
-        y={42}
-        width={width}
-        height={6}
-        className="dial-indicator-bar"
-      />
+      {!isNaN(width) && (
+        <rect
+          x={20}
+          y={42}
+          width={width}
+          height={6}
+          className="dial-indicator-bar"
+        />
+      )}
       <text x={180} y={20} textAnchor="end" className="dial-indicator-value">
         {formatvalue}
       </text>

@@ -47,7 +47,7 @@ const CircularGauge: React.FC<CircularGaugeProps> = ({
   let arcvalue: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    arcvalue = 0;
+    arcvalue = NaN;
     formatvalue = "";
   } else {
     arcvalue = padvalue(min, max, r1 * radians(360))(value);
@@ -71,18 +71,20 @@ const CircularGauge: React.FC<CircularGaugeProps> = ({
           strokeMiterlimit: 0,
         }}
       />
-      <circle
-        cx={centerx}
-        cy={centery}
-        r={r1}
-        className="circular-indicator-bar"
-        style={{
-          fill: "#00000000",
-          strokeMiterlimit: 0,
-          strokeDasharray: `${arcvalue} 400`,
-          transform: `translate(${centerx}px, ${centery}px) rotate(-90deg) translate(${-centerx}px, ${-centery}px)`,
-        }}
-      />
+      {!isNaN(arcvalue) && (
+        <circle
+          cx={centerx}
+          cy={centery}
+          r={r1}
+          className="circular-indicator-bar"
+          style={{
+            fill: "#00000000",
+            strokeMiterlimit: 0,
+            strokeDasharray: `${arcvalue} 400`,
+            transform: `translate(${centerx}px, ${centery}px) rotate(-90deg) translate(${-centerx}px, ${-centery}px)`,
+          }}
+        />
+      )}
       <text
         x={100}
         y={65}

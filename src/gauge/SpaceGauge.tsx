@@ -47,7 +47,7 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
   let arcvalue: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    arcvalue = 0;
+    arcvalue = NaN;
     formatvalue = "";
   } else {
     arcvalue = padvalue(min, max, r1 * radians(270))(value);
@@ -77,23 +77,25 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
           fill: "#00000000",
         }}
       />
-      <path
-        id="path2"
-        d={arcpath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(90),
-          end: radians(0),
-          orientation: 1,
-          sweep: 1,
-        })}
-        className="space-indicator-bar"
-        style={{
-          strokeDasharray: `${arcvalue} 400`,
-          fill: "#00000000",
-        }}
-      />
+      {!isNaN(arcvalue) && (
+        <path
+          id="path2"
+          d={arcpath({
+            cx: centerx,
+            cy: centery,
+            r: r1,
+            start: radians(90),
+            end: radians(0),
+            orientation: 1,
+            sweep: 1,
+          })}
+          className="space-indicator-bar"
+          style={{
+            strokeDasharray: `${arcvalue} 400`,
+            fill: "#00000000",
+          }}
+        />
+      )}
 
       <text
         x={105}

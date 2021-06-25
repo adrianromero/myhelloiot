@@ -51,7 +51,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
   let angle: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    angle = 0;
+    angle = NaN;
     formatvalue = "";
   } else {
     angle = padvalue(min, max, 270)(value);
@@ -181,21 +181,32 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
         {intl.format(max)}
       </text>
 
-      <path
-        id="arcindicator"
-        d={`M${centerx - sinr2 * r2} ${
-          centery - cosr2 * r2
-        } A ${r2} ${r2} 0 1 0 ${centerx + sinr2 * r2} ${
-          centery - cosr2 * r2
-        } L ${centerx} ${centery - 45} Z`}
-        opacity="1"
-        className="simple-indicator-arrow"
-        style={{
-          transform: `translate(${centerx}px, ${centery}px) rotate(${
-            angle - 135
-          }deg) translate(${-centerx}px, ${-centery}px)`,
-        }}
-      />
+      {isNaN(angle) ? (
+        <circle
+          id="arcindicatorempty"
+          cx={centerx}
+          cy={centery}
+          r={r2}
+          className="simple-indicator-arrow"
+        />
+      ) : (
+        <path
+          id="arcindicator"
+          d={`M${centerx - sinr2 * r2} ${
+            centery - cosr2 * r2
+          } A ${r2} ${r2} 0 1 0 ${centerx + sinr2 * r2} ${
+            centery - cosr2 * r2
+          } L ${centerx} ${centery - 45} Z`}
+          opacity="1"
+          className="simple-indicator-arrow"
+          style={{
+            transform: `translate(${centerx}px, ${centery}px) rotate(${
+              angle - 135
+            }deg) translate(${-centerx}px, ${-centery}px)`,
+          }}
+        />
+      )}
+
       <text
         x={centerx}
         y={centery + 5}

@@ -45,7 +45,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
   let arcvalue: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    arcvalue = 0;
+    arcvalue = NaN;
     formatvalue = "";
   } else {
     arcvalue = padvalue(min, max, r * radians(180))(value);
@@ -70,17 +70,19 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
           strokeDasharray: "none",
         }}
       />
-      <path
-        id="arc"
-        d="M40 85 A 60 60 0 0 1 160 85"
-        opacity="1"
-        className="dashboard-indicator-bar"
-        style={{
-          fill: "#00000000",
-          strokeMiterlimit: 0,
-          strokeDasharray: `${arcvalue} 400`,
-        }}
-      />
+      {!isNaN(arcvalue) && (
+        <path
+          id="arc"
+          d="M40 85 A 60 60 0 0 1 160 85"
+          opacity="1"
+          className="dashboard-indicator-bar"
+          style={{
+            fill: "#00000000",
+            strokeMiterlimit: 0,
+            strokeDasharray: `${arcvalue} 400`,
+          }}
+        />
+      )}
       <text
         x={40}
         y={97}

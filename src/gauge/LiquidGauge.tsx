@@ -48,14 +48,13 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
   let yvalue: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    yvalue = 0;
+    yvalue = NaN;
     formatvalue = "";
   } else {
     yvalue = padvalue(min, max, r2 * 2)(value);
+    yvalue = centery + r2 - yvalue;
     formatvalue = intlvalue.format(value);
   }
-
-  yvalue = centery + r2 - yvalue;
 
   return (
     <svg
@@ -66,13 +65,15 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
     >
       <defs>
         <clipPath id="cut-off-bottom">
-          <rect
-            className="liquid-indicator-bar"
-            x={0}
-            y={yvalue}
-            width={200}
-            height={130}
-          />
+          {!isNaN(yvalue) && (
+            <rect
+              className="liquid-indicator-bar"
+              x={0}
+              y={yvalue}
+              width={200}
+              height={130}
+            />
+          )}
         </clipPath>
       </defs>
       <circle
