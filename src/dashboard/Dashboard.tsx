@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect, useState } from "react";
-import { Drawer, Button, Layout, Menu } from "antd";
+import { Drawer, Button, Layout, Menu, Space, Popover, Divider } from "antd";
 import {
   ApiFilled,
   LoadingOutlined,
@@ -27,7 +27,8 @@ import { useDispatch } from "react-redux";
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import AppHeader from "../AppHeader";
 import { AppStoreDispatch } from "../AppStoreProvider";
-import { DashboardMenuProps } from "./DashboardMenu";
+import DashboardMenu, { DashboardMenuProps } from "./DashboardMenu";
+import ConnectionInfo from "./ConnectionInfo";
 
 export type DashboardProps = {
   disconnectVisible: boolean;
@@ -35,14 +36,12 @@ export type DashboardProps = {
   children: React.ReactElement<DashboardMenuProps, any>[];
 };
 
-const DISCONNECTKEY: React.Key = "action-disconnect";
-
 const Dashboard: React.FC<DashboardProps> = ({
   disconnectVisible,
   className,
   children,
 }) => {
-  const [{ hostname, status }] = useMQTTContext();
+  const [{ options, status }] = useMQTTContext();
   const dispatch = useDispatch<AppStoreDispatch>();
   const [panelkey, setPanelkey] = useState<React.Key>("menu-0");
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
@@ -50,17 +49,8 @@ const Dashboard: React.FC<DashboardProps> = ({
   useEffect(() => window.scrollTo(0, 0), [panelkey]);
 
   function handleSelect({ key }: { key: React.Key }) {
-    if (key !== DISCONNECTKEY) {
-      hideDrawer();
-      setPanelkey(key);
-    }
-  }
-
-  function handleClick({ key }: { key: string | number }) {
-    if (key === DISCONNECTKEY) {
-      hideDrawer();
-      dispatch({ type: "set", newState: { connected: "" } });
-    }
+    hideDrawer();
+    setPanelkey(key);
   }
 
   function showDrawer() {
@@ -74,21 +64,21 @@ const Dashboard: React.FC<DashboardProps> = ({
   let toolbar;
   if (status === "Connected") {
     toolbar = (
-      <>
-        <span className="myhConnectionStatus-label">{hostname}</span>
+      <Space>
+        <span className="myhConnectionStatus-label">{options.hostname}</span>
         <span className="myhConnectionStatus-icon">
           <CheckCircleOutlined style={{ color: "#52c41a" }} />
         </span>
-      </>
+      </Space>
     );
   } else {
     toolbar = (
-      <>
+      <Space>
         <span className="myhConnectionStatus-label">{status}</span>
         <span className="myhConnectionStatus-icon">
           <LoadingOutlined style={{ color: "white" }} />
         </span>
-      </>
+      </Space>
     );
   }
 
@@ -97,7 +87,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   let index = 0;
 
   React.Children.forEach(children, (c) => {
-    if (typeof c.type !== "symbol") {
+    if (React.isValidElement(c) && c.type === DashboardMenu) {
       const key: React.Key = "menu-" + index++;
       menus.push(
         <Menu.Item key={key} icon={c.props.icon}>
@@ -110,6 +100,25 @@ const Dashboard: React.FC<DashboardProps> = ({
     }
   });
 
+  const popover = (
+    <>
+      <ConnectionInfo options={options} />
+      {!disconnectVisible && (
+        <>
+          <Divider />
+          <Button
+            type="primary"
+            icon={<ApiFilled />}
+            onClick={() => {
+              dispatch({ type: "set", newState: { connected: "" } });
+            }}
+          >
+            Disconnect
+          </Button>
+        </>
+      )}
+    </>
+  );
   return (
     <Layout className={className}>
       <AppHeader>
@@ -118,7 +127,9 @@ const Dashboard: React.FC<DashboardProps> = ({
             <MenuUnfoldOutlined />
           </Button>
         </div>
-        {toolbar}
+        <Popover placement="bottomRight" content={popover} trigger="click">
+          <Button type="text">{toolbar}</Button>
+        </Popover>
       </AppHeader>
       <Layout.Content className="myhMainLayout">
         <Drawer
@@ -133,17 +144,8 @@ const Dashboard: React.FC<DashboardProps> = ({
             mode="inline"
             selectedKeys={[panelkey.toString()]}
             onSelect={handleSelect}
-            onClick={handleClick}
           >
             {menus}
-            {!disconnectVisible && (
-              <>
-                <Menu.Divider />
-                <Menu.Item key="action-disconnect" icon={<ApiFilled />}>
-                  Disconnect
-                </Menu.Item>
-              </>
-            )}
           </Menu>
         </Drawer>
         {child}

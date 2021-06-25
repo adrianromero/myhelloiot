@@ -50,13 +50,23 @@ export type MQTTConnectInfo = {
   options?: IClientOptions;
 };
 
-type MQTTContextValue = [
+export type MQTTConnectionOptions = {
+  protocol?: string;
+  hostname?: string;
+  port?: number;
+  path?: string;
+  protocolId?: string;
+  protocolVersion?: number;
+  clientId?: string;
+};
+
+export type MQTTContextValue = [
   {
-    hostname?: string;
     status: MQTTStatus;
     error?: Error;
     ready: boolean;
     connected: boolean;
+    options: MQTTConnectionOptions;
   },
   {
     connect: ({ url, online, options }: MQTTConnectInfo) => void;
@@ -85,6 +95,7 @@ const MQTTContext: Context<MQTTContextValue> = createContext<MQTTContextValue>([
     status: "Disconnected",
     ready: false,
     connected: false,
+    options: {},
   },
   {
     connect: () => {},
@@ -301,13 +312,22 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
   };
 
+  const clientoptions = state.client?.options;
   const value: MQTTContextValue = [
     {
       status: state.status,
       error: state.error,
       ready: !!state.client,
       connected: state.client?.connected || false,
-      hostname: state.client?.options?.hostname,
+      options: {
+        protocol: clientoptions?.protocol,
+        hostname: clientoptions?.hostname,
+        port: clientoptions?.port,
+        path: clientoptions?.path,
+        protocolId: clientoptions?.protocolId,
+        protocolVersion: clientoptions?.protocolVersion,
+        clientId: clientoptions?.clientId,
+      },
     },
     { connect, disconnect, subscribe, unsubscribe, publish },
   ];
