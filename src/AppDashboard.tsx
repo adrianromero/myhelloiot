@@ -39,6 +39,7 @@ import JsxParser from "react-jsx-parser";
 
 import PanelGrid, { C, CCard } from "./dashboard/PanelGrid";
 import Dashboard from "./dashboard/Dashboard";
+import DashboardTitle from "./dashboard/DashboardTitle";
 import DashboardMenu from "./dashboard/DashboardMenu";
 import InputUnit from "./units/InputUnit";
 import ButtonUnit from "./units/ButtonUnit";
@@ -133,6 +134,7 @@ const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
           Row,
           Col,
           Dashboard,
+          DashboardTitle,
           DashboardMenu,
           PanelGrid,
           C,

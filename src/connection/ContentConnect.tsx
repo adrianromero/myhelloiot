@@ -26,11 +26,6 @@ import {
   Radio,
   Layout,
   Tabs,
-  Typography,
-  Card,
-  Tag,
-  Image,
-  message,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { ConnectInfo } from "./ConnectionInfo";
@@ -38,13 +33,9 @@ import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
 import { AppStoreValue, AppStoreDispatch } from "../AppStoreProvider";
 import UploadRaw from "./UploadRaw";
-import { ReactComponent as GitHubRibbon } from "../assets/svg/github.svg";
-import myhelloiot from "../assets/myhelloiot.png";
-import sampledata from "./sampledata";
+import ContentConnectAbout from "./ContentConnectAbout";
 import "./ContentConnect.css";
-import { BranchesOutlined, EditOutlined } from "@ant-design/icons";
-
-const { Title, Paragraph, Link, Text } = Typography;
+import { ApiFilled } from "@ant-design/icons";
 
 type ModalErrorInfo = {
   title: string;
@@ -96,7 +87,7 @@ const PanelConnect: React.FC<{}> = () => {
         <Layout>
           <AppHeader>
             <div className="myhMenuDisplayButton"></div>
-            <Button type="primary" htmlType="submit">
+            <Button icon={<ApiFilled />} type="primary" htmlType="submit">
               Connect
             </Button>
           </AppHeader>
@@ -376,131 +367,7 @@ const PanelConnect: React.FC<{}> = () => {
                   </Tabs>
                 </TabPane>
                 <TabPane tab="About" key="3">
-                  <Card className="myhConnectionForm-aboutcard">
-                    <Link
-                      href="https://github.com/adrianromero/myhelloiot"
-                      target="_blank"
-                      style={{
-                        position: "absolute",
-                        right: 0,
-                        top: 0,
-                      }}
-                    >
-                      <GitHubRibbon
-                        style={{
-                          transformOrigin: "top right",
-                          transform: "scale(0.8)",
-                        }}
-                      />
-                    </Link>
-
-                    <Typography>
-                      <Title level={2}>
-                        MYHELLOIOT{" "}
-                        <Tag icon={<BranchesOutlined />} color="geekblue">
-                          1.0.0
-                        </Tag>
-                      </Title>
-                      <Paragraph>
-                        MYHELLOIOT is a{" "}
-                        <Link
-                          href="https://en.wikipedia.org/wiki/MQTT"
-                          target="_blank"
-                        >
-                          MQTT
-                        </Link>{" "}
-                        dashboard application inspired in my other MQTT project{" "}
-                        <Link
-                          href="https://github.com/adrianromero/helloiot"
-                          target="_blank"
-                        >
-                          HelloIoT
-                        </Link>
-                        . You can use MYHELLOIOT as a MQTT client application to
-                        publish and subscribe to topics or you can use
-                        MYHELLOIOT as a client platform to create your own
-                        dashboard. MYHELLOIOT is a{" "}
-                        <Link
-                          href="https://en.wikipedia.org/wiki/Progressive_web_application"
-                          target="_blank"
-                        >
-                          PWA
-                        </Link>{" "}
-                        application and it can run on your favorite browser or
-                        installed on Windows, MacOS, Linux or, and even in
-                        mobile devices iOS or Android.
-                      </Paragraph>
-                      <Paragraph>
-                        <Image src={myhelloiot} width={480} />
-                      </Paragraph>
-                      <Title level={2}>Getting started</Title>
-                      <Paragraph>
-                        Select the MQTT connection options. You can use any MQTT
-                        broker with WebSockets/SSL support. For example select
-                        the EMQX test broker{" "}
-                        <Button
-                          type="primary"
-                          size="small"
-                          icon={<EditOutlined />}
-                          onClick={() => {
-                            message.info("url: wss://broker.emqx.io:8084/mqtt");
-                            form.setFieldsValue({
-                              url: "wss://broker.emqx.io:8084/mqtt",
-                            });
-                          }}
-                        >
-                          Sets EMQX.IO test broker url
-                        </Button>{" "}
-                        or the Mosquitto test broker{" "}
-                        <Button
-                          type="primary"
-                          size="small"
-                          icon={<EditOutlined />}
-                          onClick={() => {
-                            message.info("url: wss://test.mosquitto.org:8081");
-                            form.setFieldsValue({
-                              url: "wss://test.mosquitto.org:8081",
-                            });
-                          }}
-                        >
-                          Sets Mosquito test broker url
-                        </Button>
-                        .
-                      </Paragraph>
-                      <Paragraph>
-                        Create a dashboard. You can start with this complete
-                        sample{" "}
-                        <Button
-                          type="primary"
-                          size="small"
-                          icon={<EditOutlined />}
-                          onClick={() => {
-                            message.info("dashboard: sample.jsx");
-                            form.setFieldsValue({
-                              dashboard: {
-                                name: "sample.jsx",
-                                type: "text/jsx",
-                                data: sampledata,
-                              },
-                            });
-                          }}
-                        >
-                          Sets sample.jsx dashboard
-                        </Button>
-                        .
-                      </Paragraph>
-                      <Paragraph>
-                        And now you are ready to press the{" "}
-                        <Text code>Connect</Text> button.
-                      </Paragraph>
-                      <Title level={2}>License</Title>
-                      <Paragraph>
-                        MYHELLOIOT is licensed under the GNU General Public
-                        License, Version 3, 29 June 2007.
-                      </Paragraph>
-                      <Paragraph>Copyright (C) 2021 Adrián Romero.</Paragraph>
-                    </Typography>
-                  </Card>
+                  <ContentConnectAbout form={form} />
                 </TabPane>
               </Tabs>
             </div>

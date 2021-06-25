@@ -16,33 +16,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect, useState } from "react";
-import { Drawer, Button, Layout, Menu, Space, Popover, Divider } from "antd";
-import {
-  ApiFilled,
-  LoadingOutlined,
-  CheckCircleOutlined,
-  MenuUnfoldOutlined,
-} from "@ant-design/icons";
-import { useDispatch } from "react-redux";
-import { useMQTTContext } from "../mqtt/MQTTProvider";
+import { Drawer, Button, Layout, Menu } from "antd";
+import { MenuUnfoldOutlined } from "@ant-design/icons";
 import AppHeader from "../AppHeader";
-import { AppStoreDispatch } from "../AppStoreProvider";
 import DashboardMenu, { DashboardMenuProps } from "./DashboardMenu";
 import ConnectionInfo from "./ConnectionInfo";
 
 export type DashboardProps = {
-  disconnectVisible: boolean;
+  title?: string;
+  disconnectDisabled?: boolean;
   className?: string;
   children: React.ReactElement<DashboardMenuProps, any>[];
 };
 
 const Dashboard: React.FC<DashboardProps> = ({
-  disconnectVisible,
+  title,
+  disconnectDisabled,
   className,
   children,
 }) => {
-  const [{ options, status }] = useMQTTContext();
-  const dispatch = useDispatch<AppStoreDispatch>();
   const [panelkey, setPanelkey] = useState<React.Key>("menu-0");
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
 
@@ -59,27 +51,6 @@ const Dashboard: React.FC<DashboardProps> = ({
 
   function hideDrawer() {
     setVisibleDrawer(false);
-  }
-
-  let toolbar;
-  if (status === "Connected") {
-    toolbar = (
-      <Space>
-        <span className="myhConnectionStatus-label">{options.hostname}</span>
-        <span className="myhConnectionStatus-icon">
-          <CheckCircleOutlined style={{ color: "#52c41a" }} />
-        </span>
-      </Space>
-    );
-  } else {
-    toolbar = (
-      <Space>
-        <span className="myhConnectionStatus-label">{status}</span>
-        <span className="myhConnectionStatus-icon">
-          <LoadingOutlined style={{ color: "white" }} />
-        </span>
-      </Space>
-    );
   }
 
   const menus: React.ReactElement<any, any>[] = [];
@@ -100,36 +71,15 @@ const Dashboard: React.FC<DashboardProps> = ({
     }
   });
 
-  const popover = (
-    <>
-      <ConnectionInfo options={options} />
-      {!disconnectVisible && (
-        <>
-          <Divider />
-          <Button
-            type="primary"
-            icon={<ApiFilled />}
-            onClick={() => {
-              dispatch({ type: "set", newState: { connected: "" } });
-            }}
-          >
-            Disconnect
-          </Button>
-        </>
-      )}
-    </>
-  );
   return (
     <Layout className={className}>
-      <AppHeader>
+      <AppHeader title={title}>
         <div className="myhMenuDisplayButton">
           <Button onClick={showDrawer} ghost>
             <MenuUnfoldOutlined />
           </Button>
         </div>
-        <Popover placement="bottomRight" content={popover} trigger="click">
-          <Button type="text">{toolbar}</Button>
-        </Popover>
+        <ConnectionInfo disconnectDisabled={disconnectDisabled} />
       </AppHeader>
       <Layout.Content className="myhMainLayout">
         <Drawer

@@ -18,11 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React from "react";
 import { Layout } from "antd";
 
-const AppHeader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const AppHeader: React.FC<{ title?: string; children: React.ReactNode }> = ({
+  title = "MYHELLOIOT",
+  children,
+}) => {
   return (
     <Layout.Header className="myhAppHeader">
       <div className="myhAppHeader-container">
-        <span className="myhAppHeader-title">MYHELLOIOT</span>
+        <span className="myhAppHeader-title">{title}</span>
         {children}
       </div>
     </Layout.Header>
