@@ -16,15 +16,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { BranchesOutlined, EditOutlined } from "@ant-design/icons";
+import { ApiFilled, BranchesOutlined, EditOutlined } from "@ant-design/icons";
 import { Card, Typography, Tag, Button, Image, message } from "antd";
 import { FormInstance } from "antd/lib/form";
 import myhelloiot from "../assets/myhelloiot.png";
 import sampledata from "./sampledata";
+import pubsubsampledata from "./pubsubsampledata";
+import lightssampledata from "./lightssampledata";
+import gaugessampledata from "./gaugessampledata";
 import { ReactComponent as GitHubRibbon } from "../assets/svg/github.svg";
 import { ConnectInfo } from "./ConnectionInfo";
 
-const { Title, Paragraph, Link, Text } = Typography;
+const { Title, Paragraph, Link } = Typography;
 
 const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
   form,
@@ -85,13 +88,15 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
           You can use any MQTT broker with WebSockets/SSL support. For example
           select the EMQX test broker{" "}
           <Button
-            type="primary"
+            type="link"
             size="small"
             icon={<EditOutlined />}
             onClick={() => {
               message.info("url: wss://broker.emqx.io:8084/mqtt");
               form.setFieldsValue({
                 url: "wss://broker.emqx.io:8084/mqtt",
+                username: "",
+                password: "",
               });
             }}
           >
@@ -99,13 +104,15 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
           </Button>{" "}
           or the Mosquitto test broker{" "}
           <Button
-            type="primary"
+            type="link"
             size="small"
             icon={<EditOutlined />}
             onClick={() => {
               message.info("url: wss://test.mosquitto.org:8081");
               form.setFieldsValue({
                 url: "wss://test.mosquitto.org:8081",
+                username: "",
+                password: "",
               });
             }}
           >
@@ -115,30 +122,109 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
         </Paragraph>
         <Title level={4}>Create a dashboard</Title>
         <Paragraph>
-          You can start with this complete sample{" "}
-          <Button
-            type="primary"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => {
-              message.info("dashboard: sample.jsx");
-              form.setFieldsValue({
-                dashboard: {
-                  name: "sample.jsx",
-                  type: "text/jsx",
-                  data: sampledata,
-                },
-              });
-            }}
-          >
-            Sets sample.jsx dashboard
-          </Button>
-          .
+          Dashboards are defined using JSX syntax. The same syntax React uses.
+          You can start playing with the following examples that will help you
+          to understand how it works and how to create your own dashboards
+          starting from the most simple example to subscribe and publish
+          messages to a MQTT topic, and ending with a complex dashboard that
+          includes different formats, icons, buttons, sliders, gauges...
+        </Paragraph>
+        <Paragraph>
+          <ul>
+            <li>
+              Publish and subscribe simple example{" "}
+              <Button
+                type="link"
+                size="small"
+                icon={<EditOutlined />}
+                onClick={() => {
+                  message.info("dashboard: pubsub.jsx");
+                  form.setFieldsValue({
+                    dashboard: {
+                      name: "pubsub.jsx",
+                      type: "text/jsx",
+                      data: pubsubsampledata,
+                    },
+                  });
+                }}
+              >
+                Sets pubsub.jsx dashboard
+              </Button>
+            </li>
+            <li>
+              Lights switches{" "}
+              <Button
+                type="link"
+                size="small"
+                icon={<EditOutlined />}
+                onClick={() => {
+                  message.info("dashboard: lights.jsx");
+                  form.setFieldsValue({
+                    dashboard: {
+                      name: "lights.jsx",
+                      type: "text/jsx",
+                      data: lightssampledata,
+                    },
+                  });
+                }}
+              >
+                Sets lights.jsx dashboard
+              </Button>
+            </li>
+            <li>
+              Gauges{" "}
+              <Button
+                type="link"
+                size="small"
+                icon={<EditOutlined />}
+                onClick={() => {
+                  message.info("dashboard: gauges.jsx");
+                  form.setFieldsValue({
+                    dashboard: {
+                      name: "gauges.jsx",
+                      type: "text/jsx",
+                      data: gaugessampledata,
+                    },
+                  });
+                }}
+              >
+                Sets gauges.jsx dashboard
+              </Button>
+            </li>
+            <li>
+              Formats, icons, buttons, sliders, gauges...{" "}
+              <Button
+                type="link"
+                size="small"
+                icon={<EditOutlined />}
+                onClick={() => {
+                  message.info("dashboard: complete.jsx");
+                  form.setFieldsValue({
+                    dashboard: {
+                      name: "complete.jsx",
+                      type: "text/jsx",
+                      data: sampledata,
+                    },
+                  });
+                }}
+              >
+                Sets complete.jsx dashboard
+              </Button>
+            </li>
+          </ul>
         </Paragraph>
         <Title level={4}>Connect</Title>
         <Paragraph>
-          And now you are ready to press the <Text code>Connect</Text> button
-          and play with your MQTT dashboard.
+          And now you are ready to press the{" "}
+          <Button
+            size="small"
+            icon={<ApiFilled />}
+            type="primary"
+            htmlType="submit"
+          >
+            Connect
+          </Button>{" "}
+          button and play with your MQTT dashboard.
         </Paragraph>
         <Title level={2}>License</Title>
         <Paragraph>

@@ -57,6 +57,7 @@ export type MQTTConnectionOptions = {
   path?: string;
   protocolId?: string;
   protocolVersion?: number;
+  username?: string;
   clientId?: string;
 };
 
@@ -326,6 +327,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         path: clientoptions?.path,
         protocolId: clientoptions?.protocolId,
         protocolVersion: clientoptions?.protocolVersion,
+        username: clientoptions?.username,
         clientId: clientoptions?.clientId,
       },
     },

@@ -45,6 +45,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
     path,
     protocolId,
     protocolVersion,
+    username,
     clientId,
   } = options;
 
@@ -70,55 +71,75 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
   }
   const popover = (
     <>
-      <div style={{ width: 300 }}>
+      <div style={{ width: 320 }}>
         <Row wrap={false}>
           <Col flex="120px">
-            <Text type="secondary">Protocol:</Text>
+            <Text>Protocol:</Text>
           </Col>
           <Col flex="auto">
-            <Text>{protocol}</Text>
+            <Text type="secondary" strong>
+              {protocol}
+            </Text>
           </Col>
         </Row>
         <Row wrap={false}>
           <Col flex="120px">
-            <Text type="secondary">Host name:</Text>
+            <Text>Host name:</Text>
           </Col>
           <Col flex="auto">
-            <Text>{hostname}</Text>
+            <Text type="secondary" strong>
+              {hostname}
+            </Text>
           </Col>
         </Row>
         <Row wrap={false}>
           <Col flex="120px">
-            <Text type="secondary">Port:</Text>
+            <Text>Port:</Text>
           </Col>
           <Col flex="auto">
-            <Text>{port}</Text>
+            <Text type="secondary" strong>
+              {port}
+            </Text>
           </Col>
         </Row>
         <Row wrap={false}>
           <Col flex="120px">
-            <Text type="secondary">Path:</Text>
+            <Text>Path:</Text>
           </Col>
           <Col flex="auto">
-            <Text>{path}</Text>
+            <Text type="secondary" strong>
+              {path}
+            </Text>
           </Col>
         </Row>
         <Row wrap={false}>
           <Col flex="120px">
-            <Text type="secondary">Protocol:</Text>
+            <Text>MQTT protocol:</Text>
           </Col>
           <Col flex="auto">
-            <Text>
+            <Text type="secondary" strong>
               {protocolId} {protocolVersion}
             </Text>
           </Col>
         </Row>
         <Row wrap={false}>
           <Col flex="120px">
-            <Text type="secondary">Client Id:</Text>
+            <Text>User name:</Text>
           </Col>
           <Col flex="auto">
-            <Text>{clientId}</Text>
+            <Text type="secondary" strong>
+              {username}
+            </Text>
+          </Col>
+        </Row>
+        <Row wrap={false}>
+          <Col flex="120px">
+            <Text>Client Id:</Text>
+          </Col>
+          <Col flex="auto">
+            <Text type="secondary" strong>
+              {clientId}
+            </Text>
           </Col>
         </Row>
       </div>

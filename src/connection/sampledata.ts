@@ -15,12 +15,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const sampledata = `
-{
-  /* eslint-disable react/jsx-no-undef, no-undef */
-}
+const sampledata = `{/* Full unit samples, input, buttons, gauges, ... */}
 <Dashboard className="myhDashboard">
-  <DashboardMenu icon={<BulbFilled />} name="Application example">
+  <DashboardMenu icon={<BuildFilled />} name="Messaging example">
     <PanelGrid>
       <CCard title="Testing topic pub and sub">
         <InputUnit
@@ -66,6 +63,10 @@ const sampledata = `
           format={TitleIconValueFormat(Themes, "Sends XYZ", Buffer.from("XYZ"))}
         />
       </CCard>
+    </PanelGrid>
+  </DashboardMenu>
+  <DashboardMenu icon={<BulbFilled />} name="Lights Example">
+    <PanelGrid>
       <CCard title="Light switch">
         <div
           className="myh-value myh-value-padding"

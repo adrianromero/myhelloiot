@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { DownloadOutlined, UploadOutlined } from "@ant-design/icons";
-import { Upload, Button, Input, Col, Row, Space } from "antd";
+import { Upload, Button, Input, Col, Row } from "antd";
 import { RcFile } from "antd/lib/upload/interface";
 import "./UploadRaw.css";
 
@@ -86,35 +86,42 @@ const UploadRaw: React.FC<UploadRawProps> = ({
     <>
       <Row gutter={[8, 8]} className={className}>
         <Col xs={24} sm={24} md={24} lg={24}>
-          <Space align="baseline">
-            <span>Name:</span>
-            <Input
-              className="myhUploadRaw-name"
-              onChange={(e) =>
-                onChange?.({
-                  name: e.target.value,
-                  type: value?.type || "",
-                  data: value?.data || "",
-                })
-              }
-              value={value?.name || ""}
-            />
-            <Upload
-              accept={accept}
-              multiple={false}
-              fileList={[]}
-              beforeUpload={handleUpload}
-              maxCount={1}
-            >
-              <Button icon={<UploadOutlined />} />
-            </Upload>
-
-            <Button
-              icon={<DownloadOutlined />}
-              onClick={download}
-              disabled={!value?.name}
-            />
-          </Space>
+          <Row gutter={[8, 8]} wrap={false} align="middle">
+            <Col flex="0 1 auto">
+              <span>Name:</span>
+            </Col>
+            <Col flex="1 1 auto">
+              <Input
+                className="myhUploadRaw-name"
+                onChange={(e) =>
+                  onChange?.({
+                    name: e.target.value,
+                    type: value?.type || "",
+                    data: value?.data || "",
+                  })
+                }
+                value={value?.name || ""}
+              />
+            </Col>
+            <Col flex="0 1 auto">
+              <Upload
+                accept={accept}
+                multiple={false}
+                fileList={[]}
+                beforeUpload={handleUpload}
+                maxCount={1}
+              >
+                <Button icon={<UploadOutlined />} />
+              </Upload>
+            </Col>
+            <Col flex="0 1 auto">
+              <Button
+                icon={<DownloadOutlined />}
+                onClick={download}
+                disabled={!value?.name}
+              />
+            </Col>
+          </Row>
         </Col>
         <Col span={24}>
           <Input.TextArea
