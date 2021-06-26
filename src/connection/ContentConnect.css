@@ -26,9 +26,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   height: calc(100vh - 240px);
   resize: none;
 }
-
-.myhConnectionForm-aboutcard {
-  position: relative;
-  height: calc(100vh - 180px);
-  overflow: auto;
-}

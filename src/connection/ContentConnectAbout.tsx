@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { ApiFilled, BranchesOutlined, EditOutlined } from "@ant-design/icons";
-import { Card, Typography, Tag, Button, Image, message } from "antd";
+import { Typography, Tag, Button, Image, message } from "antd";
 import { FormInstance } from "antd/lib/form";
 import myhelloiot from "../assets/myhelloiot.png";
 import sampledata from "./sampledata";
@@ -33,14 +33,14 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
   form,
 }) => {
   return (
-    <Card className="myhConnectionForm-aboutcard">
+    <>
       <Link
         href="https://github.com/adrianromero/myhelloiot"
         target="_blank"
         style={{
           position: "absolute",
           right: 0,
-          top: 0,
+          top: 64,
         }}
       >
         <GitHubRibbon
@@ -233,7 +233,7 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
         </Paragraph>
         <Paragraph>Copyright (C) 2021 Adrián Romero.</Paragraph>
       </Typography>
-    </Card>
+    </>
   );
 };
 
