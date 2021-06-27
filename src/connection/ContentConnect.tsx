@@ -86,7 +86,6 @@ const PanelConnect: React.FC<{}> = () => {
       >
         <Layout>
           <AppHeader>
-            <div className="myhMenuDisplayButton"></div>
             <Button icon={<ApiFilled />} type="primary" htmlType="submit">
               Connect
             </Button>

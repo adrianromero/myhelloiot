@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Layout } from "antd";
 import AppHeader from "../AppHeader";
 import ConnectionInfo from "./ConnectionInfo";
@@ -34,12 +34,11 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
   className,
   children,
 }) => {
-  // useEffect(() => window.scrollTo(0, 0));
+  useEffect(() => window.scrollTo(0, 0));
 
   return (
     <Layout className={className}>
       <AppHeader title={title}>
-        <div className="myhMenuDisplayButton"></div>
         <ConnectionInfo disconnectDisabled={disconnectDisabled} />
       </AppHeader>
       <Layout.Content className="myhMainLayout">
