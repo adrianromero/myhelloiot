@@ -71,7 +71,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
   }
   const popover = (
     <>
-      <div style={{ width: 320 }}>
+      <div style={{ width: 280 }}>
         <Row wrap={false}>
           <Col flex="120px">
             <Text>Protocol:</Text>

@@ -40,13 +40,13 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
         style={{
           position: "absolute",
           right: 0,
-          top: 64,
+          top: 144,
         }}
       >
         <GitHubRibbon
           style={{
             transformOrigin: "top right",
-            transform: "scale(0.8)",
+            transform: "scale(0.6)",
           }}
         />
       </Link>
