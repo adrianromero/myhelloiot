@@ -81,7 +81,7 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
           r: r1,
           start: radians(startangle),
           end: radians(endangle),
-          orientation: 0,
+          orientation: arctotal > 180 ? 1 : 0,
           sweep: 1,
         })}
         className="control-indicator-background"
@@ -99,7 +99,7 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
             r: r1,
             start: radians(startangle),
             end: radians(endangle),
-            orientation: 0,
+            orientation: arctotal > 180 ? 1 : 0,
             sweep: 1,
           })}
           className="control-indicator-bar"

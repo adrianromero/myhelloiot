@@ -28,6 +28,8 @@ export type MetroGaugeProps = {
   max?: number;
   step?: number;
   labelstep?: number;
+  startangle?: number;
+  endangle?: number;
 };
 
 const MetroGauge: React.FC<MetroGaugeProps> = ({
@@ -39,6 +41,8 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
   max = 100,
   step = 2,
   labelstep = 5,
+  startangle = 135,
+  endangle = 405,
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -47,7 +51,8 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
   const r1 = 55;
   const centerx = 100;
   const centery = 65;
-  const arctotal = 270;
+
+  const arctotal = endangle - startangle;
 
   let arcvalue: number;
   let formatvalue: string;
@@ -56,13 +61,15 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
     formatvalue = "";
   } else {
     arcvalue = padvalue(min, max, arctotal)(value);
-    arcvalue -= 135;
+    arcvalue += startangle - 270;
     formatvalue = intlvalue.format(value);
   }
 
   const lines = [];
   for (let index = min; index <= max; index += step) {
-    const angle = radians(135 + (arctotal * (index - min)) / (max - min));
+    const angle = radians(
+      startangle - 360 + (arctotal * (index - min)) / (max - min)
+    );
     const cos = Math.cos(angle);
     const sin = Math.sin(angle);
     lines.push(
@@ -77,7 +84,9 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
     );
   }
   for (let index = min; index <= max; index += labelstep) {
-    const angle = radians(135 + (arctotal * (index - min)) / (max - min));
+    const angle = radians(
+      startangle - 360 + (arctotal * (index - min)) / (max - min)
+    );
     const cos = Math.cos(angle);
     const sin = Math.sin(angle);
     lines.push(
@@ -117,9 +126,10 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1 + 2,
-          start: radians(45),
-          end: radians(135),
-          orientation: 1,
+          start: radians(startangle),
+          end: radians(endangle),
+          orientation: arctotal > 180 ? 1 : 0,
+          sweep: 1,
         })}
         className="metro-indicator-mark"
         style={{ fill: "#00000000" }}

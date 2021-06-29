@@ -49,7 +49,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
   const intlvalue = new Intl.NumberFormat(locale, valueformat);
 
   const r1 = 55;
-  const r2 = 50;
+  const r2 = 45;
   const centerx = 100;
   const centery = 80;
 
@@ -76,10 +76,10 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
     lines.push(
       <line
         key={`ma-${index}`}
-        x1={centerx + r1 * cos}
-        y1={centery + r1 * sin}
-        x2={centerx + (r1 - 5) * cos}
-        y2={centery + (r1 - 5) * sin}
+        x1={centerx + (r1 - 5) * cos}
+        y1={centery + (r1 - 5) * sin}
+        x2={centerx + (r1 - 10) * cos}
+        y2={centery + (r1 - 10) * sin}
         className="fuel-indicator-markstep"
       />
     );
@@ -93,10 +93,10 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
     lines.push(
       <line
         key={`mb-${index}`}
-        x1={centerx + r1 * cos}
-        y1={centery + r1 * sin}
-        x2={centerx + (r1 - 8) * cos}
-        y2={centery + (r1 - 8) * sin}
+        x1={centerx + (r1 - 2) * cos}
+        y1={centery + (r1 - 2) * sin}
+        x2={centerx + (r1 - 10) * cos}
+        y2={centery + (r1 - 10) * sin}
         className="fuel-indicator-markstep"
       />
     );
@@ -129,7 +129,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
           r: r1,
           start: radians(startangle),
           end: radians(endangle),
-          orientation: 0,
+          orientation: arctotal > 180 ? 1 : 0,
           sweep: 1,
         })}
         className="fuel-indicator-mark fuel-indicator-mark_ext"
@@ -143,7 +143,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
           r: r2,
           start: radians(startangle),
           end: radians(endangle),
-          orientation: 0,
+          orientation: arctotal > 180 ? 1 : 0,
           sweep: 1,
         })}
         className="fuel-indicator-mark fuel-indicator-mark_int"
@@ -167,7 +167,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
       </text>
       {!isNaN(arcvalue) && (
         <path
-          d="M 1.5 0  L -1.5 0 L -1 -42 L 0 -45 L 1 -42  Z"
+          d="M 2 0  L -2 0 L -1.5 -49 L 0 -50 L 1.5 -49 Z"
           className="fuel-indicator-arrow"
           style={{
             transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
@@ -177,7 +177,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
       <circle
         cx={centerx}
         cy={centery}
-        r={4}
+        r={6}
         className="fuel-indicator-arrowpin"
       />
     </svg>
