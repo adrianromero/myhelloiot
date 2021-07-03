@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { arcpath, padvalue, radians } from "./svgdraw";
+import Arcs, { Arc } from "./Arcs";
 import "./FuelGauge.css";
 
 export type FuelGaugeProps = {
@@ -30,6 +31,7 @@ export type FuelGaugeProps = {
   step?: number;
   startangle?: number;
   endangle?: number;
+  arcs?: Arc[];
 };
 
 const FuelGauge: React.FC<FuelGaugeProps> = ({
@@ -43,6 +45,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
   labelstep = 5,
   startangle = 200,
   endangle = 340,
+  arcs = [],
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -120,6 +123,15 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
       viewBox="0 0 200 130"
       className={className}
     >
+      <Arcs
+        arcs={arcs}
+        min={min}
+        max={max}
+        centerx={centerx}
+        centery={centery}
+        startangle={startangle}
+        endangle={endangle}
+      />
       {lines}
       <path
         id="arc"
@@ -167,7 +179,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
       </text>
       {!isNaN(arcvalue) && (
         <path
-          d="M 2 0  L -2 0 L -1.5 -49 L 0 -50 L 1.5 -49 Z"
+          d="M 2 10  L -2 10 L -1.5 -49 L 0 -50 L 1.5 -49 Z"
           className="fuel-indicator-arrow"
           style={{
             transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,

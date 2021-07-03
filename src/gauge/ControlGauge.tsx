@@ -17,19 +17,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { arcpath, padvalue, radians } from "./svgdraw";
+import Arcs, { Arc } from "./Arcs";
 import "./ControlGauge.css";
+
+// const arcstest: Arc[] = [
+//   {
+//     start: 0,
+//     end: 10,
+//     r: 62,
+//     style: {
+//       strokeWidth: 2,
+//       strokeLinecap: "butt",
+//       stroke: "yellow",
+//       fill: "#00000000",
+//     },
+//   },
+//   {
+//     start: -10,
+//     end: 0,
+//     r: 62,
+//     style: {
+//       strokeWidth: 2,
+//       strokeLinecap: "butt",
+//       stroke: "#FF4444",
+//       fill: "#00000000",
+//     },
+//   },
+// ];
 
 export type ControlGaugeProps = {
   value?: number;
   valueformat?: Intl.NumberFormatOptions;
   title?: string;
   className?: string;
-  labelstep?: number;
   min?: number;
   max?: number;
-  step?: number;
   startangle?: number;
   endangle?: number;
+  arcs?: Arc[];
 };
 
 const ControlGauge: React.FC<ControlGaugeProps> = ({
@@ -41,6 +66,7 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
   max = 100,
   startangle = 180,
   endangle = 360,
+  arcs = [],
 }) => {
   const locale = navigator.language;
   const intlvalue = new Intl.NumberFormat(locale, valueformat);
@@ -88,7 +114,17 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
         style={{
           fill: "#00000000",
           strokeMiterlimit: 0,
+          strokeDasharray: "none",
         }}
+      />
+      <Arcs
+        arcs={arcs}
+        min={min}
+        max={max}
+        centerx={centerx}
+        centery={centery}
+        startangle={startangle}
+        endangle={endangle}
       />
       {!isNaN(arcvaluerad) && (
         <path

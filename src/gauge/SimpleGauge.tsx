@@ -17,7 +17,77 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { piepath, padvalue, radians } from "./svgdraw";
+import Arcs, { Arc } from "./Arcs";
 import "./SimpleGauge.css";
+
+const arcsStandard = (min: number, max: number) => [
+  {
+    start: min,
+    end: min + (max - min) / 6,
+    r: 40,
+    style: {
+      strokeWidth: 30,
+      strokeLineCap: "butt",
+      stroke: "green",
+      filter: "brightness(0.8)",
+    },
+  },
+  {
+    start: min + (max - min) / 6,
+    end: min + (2 * (max - min)) / 6,
+    r: 40,
+    style: {
+      strokeWidth: 30,
+      strokeLineCap: "butt",
+      stroke: "green",
+      filter: "brightness(1)",
+    },
+  },
+  {
+    start: min + (2 * (max - min)) / 6,
+    end: min + (3 * (max - min)) / 6,
+    r: 40,
+    style: {
+      strokeWidth: 30,
+      strokeLineCap: "butt",
+      stroke: "green",
+      filter: "brightness(1.2)",
+    },
+  },
+  {
+    start: min + (3 * (max - min)) / 6,
+    end: min + (4 * (max - min)) / 6,
+    r: 40,
+    style: {
+      strokeWidth: 30,
+      strokeLineCap: "butt",
+      stroke: "green",
+      filter: "brightness(1.4)",
+    },
+  },
+  {
+    start: min + (4 * (max - min)) / 6,
+    end: min + (5 * (max - min)) / 6,
+    r: 40,
+    style: {
+      strokeWidth: 30,
+      strokeLineCap: "butt",
+      stroke: "green",
+      filter: "brightness(1.6)",
+    },
+  },
+  {
+    start: min + (5 * (max - min)) / 6,
+    end: max,
+    r: 40,
+    style: {
+      strokeWidth: 30,
+      strokeLineCap: "butt",
+      stroke: "green",
+      filter: "brightness(1.8)",
+    },
+  },
+];
 
 export type SimpleGaugeProps = {
   value?: number;
@@ -26,6 +96,9 @@ export type SimpleGaugeProps = {
   className?: string;
   min?: number;
   max?: number;
+  startangle?: number;
+  endangle?: number;
+  arcs?: Arc[];
 };
 
 const SimpleGauge: React.FC<SimpleGaugeProps> = ({
@@ -35,6 +108,9 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
   className = "",
   min = 0,
   max = 100,
+  startangle = 135,
+  endangle = 405,
+  arcs,
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -48,13 +124,16 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
   const centerx = 100;
   const centery = 65;
 
-  let angle: number;
+  const arctotal = endangle - startangle;
+
+  let arcvalue: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    angle = NaN;
+    arcvalue = NaN;
     formatvalue = "";
   } else {
-    angle = padvalue(min, max, 270)(value);
+    arcvalue = padvalue(min, max, arctotal)(value);
+    arcvalue += startangle - 270;
     formatvalue = intlvalue.format(value);
   }
 
@@ -65,123 +144,48 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
       viewBox="0 0 200 130"
       className={className}
     >
-      <path
-        id="pie1"
-        d={piepath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(181),
-          end: radians(135),
-        })}
-        className="simple-indicator-pie"
-        style={{
-          filter: "brightness(0.50)",
-        }}
+      <Arcs
+        arcs={arcs ?? arcsStandard(min, max)}
+        min={min}
+        max={max}
+        centerx={centerx}
+        centery={centery}
+        startangle={startangle}
+        endangle={endangle}
       />
-      <path
-        id="pie2"
-        d={piepath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(226),
-          end: radians(180),
-        })}
-        className="simple-indicator-pie"
-        style={{
-          filter: "brightness(0.60)",
-        }}
-      />
-      <path
-        id="pie3"
-        d={piepath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(271),
-          end: radians(225),
-        })}
-        className="simple-indicator-pie"
-        style={{
-          filter: "brightness(0.70)",
-        }}
-      />
-      <path
-        id="pie4"
-        d={piepath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(316),
-          end: radians(270),
-        })}
-        className="simple-indicator-pie"
-        style={{
-          filter: "brightness(0.80)",
-        }}
-      />
-      <path
-        id="pie5"
-        d={piepath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(361),
-          end: radians(315),
-        })}
-        className="simple-indicator-pie"
-        style={{
-          filter: "brightness(0.90)",
-        }}
-      />
-      <path
-        id="pie6"
-        d={piepath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(46),
-          end: radians(0),
-        })}
-        className="simple-indicator-pie"
-        style={{
-          filter: "brightness(1)",
-        }}
-      />
-
       <path
         id="arc"
         d={piepath({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: radians(45),
-          end: radians(135),
-          orientation: 1,
+          start: radians(startangle),
+          end: radians(endangle),
+          orientation: arctotal > 180 ? 1 : 0,
+          sweep: 1,
         })}
         className="simple-indicator-mark"
         style={{ fill: "#00000000" }}
       />
 
       <text
-        x={50}
-        y={115}
+        x={centerx + (r1 + 16) * Math.cos(radians(startangle))}
+        y={centery + (r1 + 16) * Math.sin(radians(startangle))}
         textAnchor="middle"
         className="simple-indicator-labels"
       >
         {intl.format(min)}
       </text>
       <text
-        x={150}
-        y={115}
+        x={centerx + (r1 + 16) * Math.cos(radians(endangle))}
+        y={centery + (r1 + 16) * Math.sin(radians(endangle))}
         textAnchor="middle"
         className="simple-indicator-labels"
       >
         {intl.format(max)}
       </text>
 
-      {isNaN(angle) ? (
+      {isNaN(arcvalue) ? (
         <circle
           id="arcindicatorempty"
           cx={centerx}
@@ -200,9 +204,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           opacity="1"
           className="simple-indicator-arrow"
           style={{
-            transform: `translate(${centerx}px, ${centery}px) rotate(${
-              angle - 135
-            }deg) translate(${-centerx}px, ${-centery}px)`,
+            transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg) translate(${-centerx}px, ${-centery}px)`,
           }}
         />
       )}

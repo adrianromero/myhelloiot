@@ -16,8 +16,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { padvalue, radians } from "./svgdraw";
+import { arcpath, padvalue, radians } from "./svgdraw";
+import Arcs, { Arc } from "./Arcs";
 import "./DashboardGauge.css";
+
+// const arcstest: Arc[] = [
+//   {
+//     start: 0,
+//     end: 10,
+//     r: 82,
+//     style: {
+//       strokeWidth: 2,
+//       strokeLinecap: "butt",
+//       stroke: "blue",
+//       fill: "#00000000",
+//     },
+//   },
+//   {
+//     start: -10,
+//     end: 0,
+//     r: 82,
+//     style: {
+//       strokeWidth: 2,
+//       strokeLinecap: "butt",
+//       stroke: "#FF4444",
+//       fill: "#00000000",
+//     },
+//   },
+// ];
 
 export type DashboardGaugeProps = {
   value?: number;
@@ -26,6 +52,9 @@ export type DashboardGaugeProps = {
   className?: string;
   min?: number;
   max?: number;
+  startangle?: number;
+  endangle?: number;
+  arcs?: Arc[];
 };
 
 const DashboardGauge: React.FC<DashboardGaugeProps> = ({
@@ -35,20 +64,28 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
   className = "",
   min = 0,
   max = 100,
+  startangle = 180,
+  endangle = 360,
+  arcs = [],
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
   const intlvalue = new Intl.NumberFormat(locale, valueformat);
 
-  const r = 60;
+  const r1 = 60;
+  const centerx = 100;
+  const centery = 85;
 
-  let arcvalue: number;
+  const arctotal = endangle - startangle;
+  const arctotalrad = r1 * radians(arctotal);
+
+  let arcvaluerad: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    arcvalue = NaN;
+    arcvaluerad = NaN;
     formatvalue = "";
   } else {
-    arcvalue = padvalue(min, max, r * radians(180))(value);
+    arcvaluerad = padvalue(min, max, arctotalrad)(value);
     formatvalue = intlvalue.format(value);
   }
 
@@ -61,8 +98,15 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
     >
       <path
         id="arc"
-        d="M40 85 A 60 60 0 0 1 160 85"
-        opacity="1"
+        d={arcpath({
+          cx: centerx,
+          cy: centery,
+          r: r1,
+          start: radians(startangle),
+          end: radians(endangle),
+          orientation: arctotal > 180 ? 1 : 0,
+          sweep: 1,
+        })}
         className="dashboard-indicator-background"
         style={{
           fill: "#00000000",
@@ -70,30 +114,46 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
           strokeDasharray: "none",
         }}
       />
-      {!isNaN(arcvalue) && (
+      <Arcs
+        arcs={arcs}
+        min={min}
+        max={max}
+        centerx={centerx}
+        centery={centery}
+        startangle={startangle}
+        endangle={endangle}
+      />
+      {!isNaN(arcvaluerad) && (
         <path
-          id="arc"
-          d="M40 85 A 60 60 0 0 1 160 85"
-          opacity="1"
+          id="arc2"
+          d={arcpath({
+            cx: centerx,
+            cy: centery,
+            r: r1,
+            start: radians(startangle),
+            end: radians(endangle),
+            orientation: arctotal > 180 ? 1 : 0,
+            sweep: 1,
+          })}
           className="dashboard-indicator-bar"
           style={{
             fill: "#00000000",
             strokeMiterlimit: 0,
-            strokeDasharray: `${arcvalue} 400`,
+            strokeDasharray: `${arcvaluerad} 400`,
           }}
         />
       )}
       <text
-        x={40}
-        y={97}
+        x={centerx - 2 + r1 * Math.cos(radians(startangle))}
+        y={centery + 12 + r1 * Math.sin(radians(startangle))}
         textAnchor="middle"
         className="dashboard-indicator-labels"
       >
         {intl.format(min)}
       </text>
       <text
-        x={160}
-        y={97}
+        x={centerx + 2 + r1 * Math.cos(radians(endangle))}
+        y={centery + 12 + r1 * Math.sin(radians(endangle))}
         textAnchor="middle"
         className="dashboard-indicator-labels"
       >

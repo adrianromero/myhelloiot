@@ -17,10 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @import url("../assets/fonts.css");
 
-.simple-indicator-pie {
-  fill: #ffff00;
-}
-
 .simple-indicator-labels {
   fill: #606060;
   font: 10px "Roboto Condensed", sans-serif;

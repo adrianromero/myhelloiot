@@ -17,7 +17,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { arcpath, padvalue, radians } from "./svgdraw";
+import Arcs, { Arc } from "./Arcs";
 import "./MetroGauge.css";
+
+// const arcstest: Arc[] = [
+//   {
+//     start: 0,
+//     end: 10,
+//     r: 50,
+//     style: {
+//       strokeWidth: 10,
+//       strokeLinecap: "butt",
+//       stroke: "yellow",
+//       fill: "#00000000",
+//     },
+//   },
+//   {
+//     start: -10,
+//     end: 0,
+//     r: 50,
+//     style: {
+//       strokeWidth: 10,
+//       strokeLinecap: "butt",
+//       stroke: "#FF4444",
+//       fill: "#00000000",
+//     },
+//   },
+// ];
 
 export type MetroGaugeProps = {
   value?: number;
@@ -30,6 +56,7 @@ export type MetroGaugeProps = {
   labelstep?: number;
   startangle?: number;
   endangle?: number;
+  arcs?: Arc[];
 };
 
 const MetroGauge: React.FC<MetroGaugeProps> = ({
@@ -43,6 +70,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
   labelstep = 5,
   startangle = 135,
   endangle = 405,
+  arcs = [],
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -119,6 +147,15 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
       viewBox="0 0 200 130"
       className={className}
     >
+      <Arcs
+        arcs={arcs}
+        min={min}
+        max={max}
+        centerx={centerx}
+        centery={centery}
+        startangle={startangle}
+        endangle={endangle}
+      />
       {lines}
       <path
         id="arc"

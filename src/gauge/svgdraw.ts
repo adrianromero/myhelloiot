@@ -22,10 +22,11 @@ export const piepath: (args: {
   start: number;
   end: number;
   orientation?: number;
-}) => string = ({ cx, cy, r, start, end, orientation = 0 }) => {
+  sweep?: number;
+}) => string = ({ cx, cy, r, start, end, orientation = 0, sweep = 0 }) => {
   return `M${cx + Math.cos(start) * r} ${
     cy + Math.sin(start) * r
-  } A ${r} ${r} 1 ${orientation} 0 ${cx + Math.cos(end) * r} ${
+  } A ${r} ${r} 1 ${orientation} ${sweep} ${cx + Math.cos(end) * r} ${
     cy + Math.sin(end) * r
   } L ${cx} ${cy} Z`;
 };
