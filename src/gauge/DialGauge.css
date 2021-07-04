@@ -18,12 +18,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @import url("../assets/fonts.css");
 
 .dial-indicator-bar {
-  fill: #ff0000ff;
-  transition: width 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+  stroke: #ff0000;
+  stroke-width: 6px;
+  stroke-linecap: butt;
+  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .dial-indicator-background {
-  fill: #dddddd;
+  stroke: #dddddd;
+  stroke-width: 6px;
+  stroke-linecap: butt;
 }
 
 .dial-indicator-mark {

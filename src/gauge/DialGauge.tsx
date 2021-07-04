@@ -17,7 +17,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { padvalue } from "./svgdraw";
+import Sections, { Section } from "./Sections";
 import "./DialGauge.css";
+
+// const sectionstest: Section[] = [
+//   {
+//     start: -10,
+//     end: 40,
+//     len: 45,
+//     style: {
+//       strokeWidth: 10,
+//       strokeLinecap: "butt",
+//       stroke: "blue",
+//       fill: "#00000000",
+//     },
+//   },
+//   {
+//     start: 40,
+//     end: 60,
+//     len: 45,
+//     style: {
+//       strokeWidth: 10,
+//       strokeLinecap: "butt",
+//       stroke: "lightgreen",
+//       fill: "#00000000",
+//     },
+//   },
+// ];
 
 export type DialGaugeProps = {
   value?: number;
@@ -28,6 +54,7 @@ export type DialGaugeProps = {
   max?: number;
   step?: number;
   labelstep?: number;
+  sections?: Section[];
 };
 
 const DialGauge: React.FC<DialGaugeProps> = ({
@@ -39,6 +66,7 @@ const DialGauge: React.FC<DialGaugeProps> = ({
   max = 100,
   step = 5,
   labelstep = 10,
+  sections = [],
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -101,21 +129,27 @@ const DialGauge: React.FC<DialGaugeProps> = ({
       viewBox="0 0 200 90"
       className={className}
     >
-      <rect
-        x={20}
-        y={42}
-        width={160}
-        height={6}
+      <line
+        x1={20}
+        y1={45}
+        x2={180}
+        y2={45}
         className="dial-indicator-background"
       />
+      <Sections sections={sections} min={min} max={max} start={20} len={160} />
       {lines}
       {!isNaN(width) && (
-        <rect
-          x={20}
-          y={42}
-          width={width}
-          height={6}
+        <line
+          x1={20}
+          y1={45}
+          x2={180}
+          y2={45}
           className="dial-indicator-bar"
+          style={{
+            fill: "#00000000",
+            strokeMiterlimit: 0,
+            strokeDasharray: `${width} 400`,
+          }}
         />
       )}
       <text x={180} y={20} textAnchor="end" className="dial-indicator-value">

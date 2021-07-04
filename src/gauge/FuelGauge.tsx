@@ -20,6 +20,18 @@ import { arcpath, padvalue, radians } from "./svgdraw";
 import Arcs, { Arc } from "./Arcs";
 import "./FuelGauge.css";
 
+// arcs:  [{
+//   start: -10,
+//   end: 10,
+//   r: 45,
+//   style: {
+//     strokeWidth: 20,
+//     strokeLinecap: "butt",
+//     stroke: "red",
+//     fill: "#00000000",
+//   },
+// }]
+
 export type FuelGaugeProps = {
   value?: number;
   valueformat?: Intl.NumberFormatOptions;

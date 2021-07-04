@@ -17,7 +17,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { padvalue } from "./svgdraw";
+import Sections, { Section } from "./Sections";
 import "./ProgressGauge.css";
+
+// const sectionstest: Section[] = [
+//   {
+//     start: -10,
+//     end: 40,
+//     len: 26,
+//     style: {
+//       strokeWidth: 2,
+//       strokeLinecap: "butt",
+//       stroke: "blue",
+//       fill: "#00000000",
+//     },
+//   },
+//   {
+//     start: 40,
+//     end: 60,
+//     len: 26,
+//     style: {
+//       strokeWidth: 2,
+//       strokeLinecap: "butt",
+//       stroke: "lightgreen",
+//       fill: "#00000000",
+//     },
+//   },
+// ];
 
 export type ProgressGaugeProps = {
   value?: number;
@@ -26,6 +52,7 @@ export type ProgressGaugeProps = {
   className?: string;
   min?: number;
   max?: number;
+  sections?: Section[];
 };
 
 const ProgressGauge: React.FC<ProgressGaugeProps> = ({
@@ -35,6 +62,7 @@ const ProgressGauge: React.FC<ProgressGaugeProps> = ({
   className = "",
   min = 0,
   max = 100,
+  sections = [],
 }) => {
   const locale = navigator.language;
   const intlvalue = new Intl.NumberFormat(locale, valueformat);
@@ -56,22 +84,26 @@ const ProgressGauge: React.FC<ProgressGaugeProps> = ({
       viewBox="0 0 200 30"
       className={className}
     >
-      <rect
-        x={20}
-        y={16}
-        width={160}
-        height={8}
-        rx={4}
+      <line
+        x1={20}
+        y1={20}
+        x2={180}
+        y2={20}
         className="progress-indicator-background"
       />
+      <Sections sections={sections} min={min} max={max} start={20} len={160} />
       {!isNaN(width) && (
-        <rect
-          x={20}
-          y={16}
-          width={width}
-          height={8}
-          rx={4}
+        <line
+          x1={20}
+          y1={20}
+          x2={180}
+          y2={20}
           className="progress-indicator-bar"
+          style={{
+            fill: "#00000000",
+            strokeMiterlimit: 0,
+            strokeDasharray: `${width} 400`,
+          }}
         />
       )}
 

@@ -17,7 +17,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { padvalue } from "./svgdraw";
+import Sections, { Section } from "./Sections";
 import "./LinearGauge.css";
+
+// const sectionstest: Section[] = [
+//   {
+//     start: -10,
+//     end: 40,
+//     len: 45,
+//     style: {
+//       strokeWidth: 30,
+//       strokeLinecap: "butt",
+//       stroke: "blue",
+//       fill: "#00000000",
+//     },
+//   },
+//   {
+//     start: 40,
+//     end: 60,
+//     len: 45,
+//     style: {
+//       strokeWidth: 30,
+//       strokeLinecap: "butt",
+//       stroke: "lightgreen",
+//       fill: "#00000000",
+//     },
+//   },
+// ];
 
 export type LinearGaugeProps = {
   value?: number;
@@ -28,6 +54,7 @@ export type LinearGaugeProps = {
   max?: number;
   step?: number;
   labelstep?: number;
+  sections?: Section[];
 };
 
 const LinearGauge: React.FC<LinearGaugeProps> = ({
@@ -39,6 +66,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
   max = 100,
   step = 5,
   labelstep = 10,
+  sections = [],
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -102,29 +130,35 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
       className={className}
     >
       <line
-        key="markstep"
-        x1={20}
-        y1={29}
-        x2={180}
-        y2={29}
-        className="linear-indicator-markstep"
-      />
-      <rect
         key="background"
-        x={20}
-        y={32}
-        width={160}
-        height={25}
+        x1={20}
+        y1={45}
+        x2={180}
+        y2={45}
         className="linear-indicator-background"
       />
+      <Sections sections={sections} min={min} max={max} start={20} len={160} />
+      <line
+        key="markstep"
+        x1={20}
+        y1={30}
+        x2={180}
+        y2={30}
+        className="linear-indicator-markstep"
+      />
       {!isNaN(width) && (
-        <rect
+        <line
           key="bar"
-          x={20}
-          y={32}
-          width={width}
-          height={25}
+          x1={20}
+          y1={45}
+          x2={180}
+          y2={45}
           className="linear-indicator-bar"
+          style={{
+            fill: "#00000000",
+            strokeMiterlimit: 0,
+            strokeDasharray: `${width} 400`,
+          }}
         />
       )}
 

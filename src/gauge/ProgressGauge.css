@@ -18,12 +18,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @import url("../assets/fonts.css");
 
 .progress-indicator-bar {
-  fill: #008f00;
-  transition: width 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+  stroke: #008f00;
+  stroke-width: 8px;
+  stroke-linecap: butt;
+  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .progress-indicator-background {
-  fill: #cccccc;
+  stroke: #cccccc;
+  stroke-width: 8px;
+  stroke-linecap: butt;
 }
 
 .progress-indicator-value {
