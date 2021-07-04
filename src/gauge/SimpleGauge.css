@@ -22,10 +22,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   font: 10px "Roboto Condensed", sans-serif;
 }
 
+.simple-indicator-background {
+  fill: #cccccc;
+}
+
 .simple-indicator-mark {
   stroke: #606060;
   stroke-width: 2px;
   stroke-linejoin: miter;
+  fill: #00000000;
 }
 
 .simple-indicator-arrow {
@@ -44,4 +49,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .simple-indicator-title {
   fill: #0000008c;
   font: 10px "Roboto Condensed", sans-serif;
+}
+
+.simple-indicator-section {
+  stroke-width: 30px;
+  stroke-linecap: butt;
+  stroke: rgb(25, 25, 173);
 }

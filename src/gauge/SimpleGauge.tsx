@@ -20,74 +20,20 @@ import { piepath, padvalue, radians } from "./svgdraw";
 import Arcs, { Arc } from "./Arcs";
 import "./SimpleGauge.css";
 
-const arcsStandard = (min: number, max: number) => [
-  {
-    start: min,
-    end: min + (max - min) / 6,
+export const arcsSimpleGauge = (
+  min: number,
+  max: number,
+  arcs: number = 6
+): Arc[] =>
+  Array.from(Array(arcs).keys()).map((i) => ({
+    start: min + (i * (max - min)) / arcs,
+    end: min + ((i + 1) * (max - min)) / arcs,
     r: 40,
+    className: "simple-indicator-section",
     style: {
-      strokeWidth: 30,
-      strokeLineCap: "butt",
-      stroke: "green",
-      filter: "brightness(0.8)",
+      filter: `brightness(${1 + 1.2 * i})`,
     },
-  },
-  {
-    start: min + (max - min) / 6,
-    end: min + (2 * (max - min)) / 6,
-    r: 40,
-    style: {
-      strokeWidth: 30,
-      strokeLineCap: "butt",
-      stroke: "green",
-      filter: "brightness(1)",
-    },
-  },
-  {
-    start: min + (2 * (max - min)) / 6,
-    end: min + (3 * (max - min)) / 6,
-    r: 40,
-    style: {
-      strokeWidth: 30,
-      strokeLineCap: "butt",
-      stroke: "green",
-      filter: "brightness(1.2)",
-    },
-  },
-  {
-    start: min + (3 * (max - min)) / 6,
-    end: min + (4 * (max - min)) / 6,
-    r: 40,
-    style: {
-      strokeWidth: 30,
-      strokeLineCap: "butt",
-      stroke: "green",
-      filter: "brightness(1.4)",
-    },
-  },
-  {
-    start: min + (4 * (max - min)) / 6,
-    end: min + (5 * (max - min)) / 6,
-    r: 40,
-    style: {
-      strokeWidth: 30,
-      strokeLineCap: "butt",
-      stroke: "green",
-      filter: "brightness(1.6)",
-    },
-  },
-  {
-    start: min + (5 * (max - min)) / 6,
-    end: max,
-    r: 40,
-    style: {
-      strokeWidth: 30,
-      strokeLineCap: "butt",
-      stroke: "green",
-      filter: "brightness(1.8)",
-    },
-  },
-];
+  }));
 
 export type SimpleGaugeProps = {
   value?: number;
@@ -144,8 +90,21 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
       viewBox="0 0 200 130"
       className={className}
     >
+      <path
+        id="arc"
+        d={piepath({
+          cx: centerx,
+          cy: centery,
+          r: r1,
+          start: radians(startangle),
+          end: radians(endangle),
+          orientation: arctotal > 180 ? 1 : 0,
+          sweep: 1,
+        })}
+        className="simple-indicator-background"
+      />
       <Arcs
-        arcs={arcs ?? arcsStandard(min, max)}
+        arcs={arcs ?? arcsSimpleGauge(min, max, 8)}
         min={min}
         max={max}
         centerx={centerx}
@@ -165,7 +124,6 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           sweep: 1,
         })}
         className="simple-indicator-mark"
-        style={{ fill: "#00000000" }}
       />
 
       <text

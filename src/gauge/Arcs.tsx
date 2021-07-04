@@ -22,6 +22,7 @@ export type Arc = {
   start: number;
   end: number;
   r: number;
+  className?: string;
   style?: React.CSSProperties;
 };
 
@@ -61,6 +62,7 @@ const Arcs: React.FC<ArcsProps> = ({
             orientation: arcend - arcstart > 180 ? 1 : 0,
             sweep: 1,
           })}
+          className={arc.className}
           style={arc.style}
         />
       );
