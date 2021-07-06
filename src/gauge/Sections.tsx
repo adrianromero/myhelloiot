@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React from "react";
 
 export type Section = {
+  key?: string;
   start: number;
   end: number;
   len: number;
@@ -44,6 +45,7 @@ const Sections: React.FC<SectionsProps> = ({
     {sections.map((section) => {
       return (
         <line
+          key={section.key}
           x1={start + (len * (section.start - min)) / (max - min)}
           x2={start + (len * (section.end - min)) / (max - min)}
           y1={section.len}

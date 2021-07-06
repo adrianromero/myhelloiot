@@ -19,6 +19,7 @@ import React from "react";
 import { arcpath, padvalue, radians } from "./svgdraw";
 
 export type Arc = {
+  key?: string;
   start: number;
   end: number;
   r: number;
@@ -53,6 +54,7 @@ const Arcs: React.FC<ArcsProps> = ({
       return (
         <path
           id="arc"
+          key={arc.key}
           d={arcpath({
             cx: centerx,
             cy: centery,
