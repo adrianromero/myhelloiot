@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { IconFormat, NumberValidation } from "./FormatTypes";
+import { IconFormat } from "./FormatTypes";
 import LinearGauge from "../gauge/LinearGauge";
 import ProgressGauge from "../gauge/ProgressGauge";
 import DashboardGauge from "../gauge/DashboardGauge";
@@ -29,37 +29,17 @@ import DialGauge from "../gauge/DialGauge";
 import FuelGauge from "../gauge/FuelGauge";
 import ControlGauge from "../gauge/ControlGauge";
 
-type GaugeProps = {
-  title?: string;
-  className?: string;
-  labelstep?: number;
-} & NumberValidation;
-
-// type FGaugesIconFormat = (
-//   gaugeprops: GaugeProps,
-//   valueformat?: Intl.NumberFormatOptions
-// ) => IconFormat;
-
-type GaugeComponentProps = {
-  value?: number;
-  valueformat?: Intl.NumberFormatOptions;
-} & GaugeProps;
-
-type FGaugesIconFormat2<GaugeProps2> = (
-  gaugeprops: GaugeProps2,
+export type GaugeIconFormat<GaugeProps> = (
+  gaugeprops: GaugeProps,
   valueformat?: Intl.NumberFormatOptions
 ) => IconFormat;
 
-type FactoryGaugesIconFormat2<GaugeProps2> = (
-  Component: React.FC<GaugeProps2>
-) => FGaugesIconFormat2<GaugeProps2>;
-
 const CreateGaugesIconFormat =
-  <GaugeProps2 extends unknown>(
-    Component: React.FC<GaugeProps2>
-  ): FGaugesIconFormat2<GaugeProps2> =>
+  <GaugeProps extends unknown>(
+    Component: React.FC<GaugeProps>
+  ): GaugeIconFormat<GaugeProps> =>
   (
-    gaugeprops: GaugeProps2,
+    gaugeprops: GaugeProps,
     valueformat?: Intl.NumberFormatOptions
   ): IconFormat => ({
     toIcon: (buffer) => (
