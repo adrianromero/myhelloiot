@@ -32,88 +32,68 @@ import {
   SwitchValueFormat,
 } from "./ValueFormat";
 
-export function BulbIconFormat(): IconFormat {
-  return {
-    toIcon: (b: Buffer) =>
-      b.toString() === "1" ? (
-        <BulbFilled style={{ fontSize: "180%", color: "yellow" }} />
-      ) : (
-        <BulbTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
-      ),
-  };
-}
-
-export function StarIconFormat(): IconFormat {
-  return {
-    toIcon: (b: Buffer) =>
-      b.toString() === "1" ? (
-        <StarFilled style={{ fontSize: "180%", color: "yellow" }} />
-      ) : (
-        <StarTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
-      ),
-  };
-}
-
-export function ThuderboltIconFormat(): IconFormat {
-  return {
-    toIcon: (b: Buffer) =>
-      b.toString() === "1" ? (
-        <ThunderboltFilled style={{ fontSize: "180%", color: "yellow" }} />
-      ) : (
-        <ThunderboltTwoTone
-          style={{ fontSize: "180%" }}
-          twoToneColor="lightgray"
-        />
-      ),
-  };
-}
-
-export function ToIconFormat(format: ValueFormat): IconFormat {
-  return {
-    toIcon: (b: Buffer) => (
-      <div className={`myh-value myh-value-padding ${format.className()}`}>
-        {format.toDisplay(b) || "\u00A0"}
-      </div>
+export const BulbIconFormat = (): IconFormat => ({
+  toIcon: (b: Buffer) =>
+    b.toString() === "1" ? (
+      <BulbFilled style={{ fontSize: "180%", color: "yellow" }} />
+    ) : (
+      <BulbTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
     ),
-  };
-}
+});
 
-export function ToIconValueFormat(
+export const StarIconFormat = (): IconFormat => ({
+  toIcon: (b: Buffer) =>
+    b.toString() === "1" ? (
+      <StarFilled style={{ fontSize: "180%", color: "yellow" }} />
+    ) : (
+      <StarTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
+    ),
+});
+
+export const ThuderboltIconFormat = (): IconFormat => ({
+  toIcon: (b: Buffer) =>
+    b.toString() === "1" ? (
+      <ThunderboltFilled style={{ fontSize: "180%", color: "yellow" }} />
+    ) : (
+      <ThunderboltTwoTone
+        style={{ fontSize: "180%" }}
+        twoToneColor="lightgray"
+      />
+    ),
+});
+
+export const ToIconFormat = (format: ValueFormat): IconFormat => ({
+  toIcon: (b: Buffer) => (
+    <div className={`myh-value myh-value-padding ${format.className()}`}>
+      {format.toDisplay(b) || "\u00A0"}
+    </div>
+  ),
+});
+
+export const ToIconValueFormat = (
   valueformat: ValueFormat,
   iconformat: IconFormat = ToIconFormat(valueformat)
-): IconValueFormat {
-  return {
-    ...valueformat,
-    ...iconformat,
-  };
-}
+): IconValueFormat => ({
+  ...valueformat,
+  ...iconformat,
+});
 
-export function SwitchIconValueFormat(
+export const SwitchIconValueFormat = (
   iconformat: IconFormat = StrIconFormat()
-): IconValueFormat {
-  return ToIconValueFormat(SwitchValueFormat(), iconformat);
-}
+): IconValueFormat => ToIconValueFormat(SwitchValueFormat(), iconformat);
 
-export function LabelIconFormat(format: ValueFormat): IconFormat {
-  return {
-    toIcon: (b: Buffer) => format.toDisplay(b) || "\u00A0",
-  };
-}
+export const LabelIconFormat = (format: ValueFormat): IconFormat => ({
+  toIcon: (b: Buffer) => format.toDisplay(b) || "\u00A0",
+});
 
-export function LabelIconValueFormat(format: ValueFormat): IconValueFormat {
-  return ToIconValueFormat(format, LabelIconFormat(format));
-}
+export const LabelIconValueFormat = (format: ValueFormat): IconValueFormat =>
+  ToIconValueFormat(format, LabelIconFormat(format));
 
-export function StrIconFormat(): IconFormat {
-  return ToIconFormat(StrValueFormat());
-}
+export const StrIconFormat = (): IconFormat => ToIconFormat(StrValueFormat());
 
-export function StrIconValueFormat(): IconValueFormat {
-  return ToIconValueFormat(StrValueFormat());
-}
+export const StrIconValueFormat = (): IconValueFormat =>
+  ToIconValueFormat(StrValueFormat());
 
-export function NumberIconFormat(
+export const NumberIconFormat = (
   options?: Intl.NumberFormatOptions
-): IconFormat {
-  return ToIconFormat(NumberValueFormat(options));
-}
+): IconFormat => ToIconFormat(NumberValueFormat(options));

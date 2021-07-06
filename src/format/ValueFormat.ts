@@ -17,62 +17,52 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { ValueFormat } from "./FormatTypes";
 
-export function StrValueFormat(): ValueFormat {
-  return {
-    toDisplay: (b: Buffer) => b.toString(),
-    fromDisplay: (s: string) => Buffer.from(s),
-    className: () => "",
-    next: (b: Buffer) => b,
-    prev: (b: Buffer) => b,
-  };
-}
+export const StrValueFormat = (): ValueFormat => ({
+  toDisplay: (b: Buffer) => b.toString(),
+  fromDisplay: (s: string) => Buffer.from(s),
+  className: () => "",
+  next: (b: Buffer) => b,
+  prev: (b: Buffer) => b,
+});
 
-export function JSONValueFormat(): ValueFormat {
-  return {
-    toDisplay: (b: Buffer) => JSON.stringify(JSON.parse(b.toString()), null, 2),
-    className: () => "",
-    fromDisplay: (s: string) => Buffer.from(s),
-    next: (b: Buffer) => b,
-    prev: (b: Buffer) => b,
-  };
-}
+export const JSONValueFormat = (): ValueFormat => ({
+  toDisplay: (b: Buffer) => JSON.stringify(JSON.parse(b.toString()), null, 2),
+  className: () => "",
+  fromDisplay: (s: string) => Buffer.from(s),
+  next: (b: Buffer) => b,
+  prev: (b: Buffer) => b,
+});
 
-export function HEXValueFormat(): ValueFormat {
-  return {
-    toDisplay: (b: Buffer) => b.toString("hex"),
-    className: () => "",
-    fromDisplay: (s: string) => Buffer.from(s, "hex"),
-    next: (b: Buffer) => b,
-    prev: (b: Buffer) => b,
-  };
-}
+export const HEXValueFormat = (): ValueFormat => ({
+  toDisplay: (b: Buffer) => b.toString("hex"),
+  className: () => "",
+  fromDisplay: (s: string) => Buffer.from(s, "hex"),
+  next: (b: Buffer) => b,
+  prev: (b: Buffer) => b,
+});
 
-export function Base64ValueFormat(): ValueFormat {
-  return {
-    toDisplay: (b: Buffer) => b.toString("base64"),
-    className: () => "",
-    fromDisplay: (s: string) => Buffer.from(s, "base64"),
-    next: (b: Buffer) => b,
-    prev: (b: Buffer) => b,
-  };
-}
+export const Base64ValueFormat = (): ValueFormat => ({
+  toDisplay: (b: Buffer) => b.toString("base64"),
+  className: () => "",
+  fromDisplay: (s: string) => Buffer.from(s, "base64"),
+  next: (b: Buffer) => b,
+  prev: (b: Buffer) => b,
+});
 
-export function SwitchValueFormat(): ValueFormat {
-  return {
-    toDisplay: (b: Buffer) => (b.toString() === "1" ? "ON" : "OFF"),
-    fromDisplay: (s: string) => Buffer.from(s === "ON" ? "1" : "0"),
-    next: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
-    prev: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
-    className: () => "",
-  };
-}
+export const SwitchValueFormat = (): ValueFormat => ({
+  toDisplay: (b: Buffer) => (b.toString() === "1" ? "ON" : "OFF"),
+  fromDisplay: (s: string) => Buffer.from(s === "ON" ? "1" : "0"),
+  next: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
+  prev: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
+  className: () => "",
+});
 
 const getCharClass: (s?: string) => string = (s) =>
   s ? "[" + s.split("").join("][") + "]" : "";
 
-export function NumberValueFormat(
+export const NumberValueFormat = (
   options?: Intl.NumberFormatOptions
-): ValueFormat {
+): ValueFormat => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale, options);
 
@@ -124,4 +114,4 @@ export function NumberValueFormat(
     prev: (b: Buffer) => Buffer.from((Number(b.toString()) - 1).toString()),
     className: () => "myh-class_alignright",
   };
-}
+};

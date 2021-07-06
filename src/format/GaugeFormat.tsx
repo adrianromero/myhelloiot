@@ -29,26 +29,39 @@ import DialGauge from "../gauge/DialGauge";
 import FuelGauge from "../gauge/FuelGauge";
 import ControlGauge from "../gauge/ControlGauge";
 
-export type GaugeProps = {
+type GaugeProps = {
   title?: string;
   className?: string;
   labelstep?: number;
 } & NumberValidation;
 
-type FGaugesIconFormat = (
-  gaugeprops: GaugeProps,
-  valueformat?: Intl.NumberFormatOptions
-) => IconFormat;
+// type FGaugesIconFormat = (
+//   gaugeprops: GaugeProps,
+//   valueformat?: Intl.NumberFormatOptions
+// ) => IconFormat;
 
-export type GaugeComponentProps = {
+type GaugeComponentProps = {
   value?: number;
   valueformat?: Intl.NumberFormatOptions;
 } & GaugeProps;
 
-function CreateGaugesIconFormat(
-  Component: React.FC<GaugeComponentProps>
-): FGaugesIconFormat {
-  return (gaugeprops: GaugeProps, valueformat?: Intl.NumberFormatOptions) => ({
+type FGaugesIconFormat2<GaugeProps2> = (
+  gaugeprops: GaugeProps2,
+  valueformat?: Intl.NumberFormatOptions
+) => IconFormat;
+
+type FactoryGaugesIconFormat2<GaugeProps2> = (
+  Component: React.FC<GaugeProps2>
+) => FGaugesIconFormat2<GaugeProps2>;
+
+const CreateGaugesIconFormat =
+  <GaugeProps2 extends unknown>(
+    Component: React.FC<GaugeProps2>
+  ): FGaugesIconFormat2<GaugeProps2> =>
+  (
+    gaugeprops: GaugeProps2,
+    valueformat?: Intl.NumberFormatOptions
+  ): IconFormat => ({
     toIcon: (buffer) => (
       <Component
         value={readNumber(buffer)}
@@ -57,7 +70,6 @@ function CreateGaugesIconFormat(
       />
     ),
   });
-}
 
 function readNumber(buffer: Buffer): number | undefined {
   const s: string = buffer.toString();
