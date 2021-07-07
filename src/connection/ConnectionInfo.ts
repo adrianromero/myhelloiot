@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { FileInfo } from "./UploadRaw";
+import minisampledata from "./minisampledata";
 
 export type ConnectInfo = {
   url: string;
@@ -51,6 +52,6 @@ export const defaultConnectInfo = {
   reconnectPeriod: 1000,
   onlinetopic: "",
   onlineqos: 0,
-  dashboard: { name: "dashboard.jsx", type: "text/jsx", data: "" },
+  dashboard: { name: "mini.jsx", type: "text/jsx", data: minisampledata },
   dashboardcss: { name: "dashboard.css", type: "text/css", data: "" },
 };
