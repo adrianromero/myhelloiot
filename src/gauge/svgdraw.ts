@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-export const piepath: (args: {
+export type ArcArgs = {
   cx: number;
   cy: number;
   r: number;
@@ -23,7 +23,17 @@ export const piepath: (args: {
   end: number;
   orientation?: number;
   sweep?: number;
-}) => string = ({ cx, cy, r, start, end, orientation = 0, sweep = 0 }) => {
+};
+
+export const piepath = ({
+  cx,
+  cy,
+  r,
+  start,
+  end,
+  orientation = 0,
+  sweep = 0,
+}: ArcArgs): string => {
   return `M${cx + Math.cos(start) * r} ${
     cy + Math.sin(start) * r
   } A ${r} ${r} 1 ${orientation} ${sweep} ${cx + Math.cos(end) * r} ${
@@ -31,15 +41,15 @@ export const piepath: (args: {
   } L ${cx} ${cy} Z`;
 };
 
-export const arcpath: (args: {
-  cx: number;
-  cy: number;
-  r: number;
-  start: number;
-  end: number;
-  orientation?: number;
-  sweep?: number;
-}) => string = ({ cx, cy, r, start, end, orientation = 0, sweep = 0 }) => {
+export const arcpath = ({
+  cx,
+  cy,
+  r,
+  start,
+  end,
+  orientation = 0,
+  sweep = 0,
+}: ArcArgs): string => {
   return `M${cx + Math.cos(start) * r} ${
     cy + Math.sin(start) * r
   } A ${r} ${r} 1 ${orientation} ${sweep} ${cx + Math.cos(end) * r} ${
@@ -47,13 +57,9 @@ export const arcpath: (args: {
   }`;
 };
 
-export const padvalue: (
-  min: number,
-  max: number,
-  length?: number
-) => (value: number) => number =
-  (min, max, length = 1) =>
-  (value) => {
+export const padvalue =
+  (min: number, max: number, length: number) =>
+  (value: number): number => {
     let lengthvalue = (length * (value - min)) / (max - min);
     if (lengthvalue < 0) {
       return 0;
@@ -64,6 +70,16 @@ export const padvalue: (
     return lengthvalue;
   };
 
-export function radians(angle: number): number {
-  return (angle * Math.PI) / 180;
-}
+export const padsegment =
+  (min: number, max: number) =>
+  (value: number): number => {
+    if (value < min) {
+      return min;
+    }
+    if (value > max) {
+      return max;
+    }
+    return value;
+  };
+
+export const radians = (angle: number): number => (angle * Math.PI) / 180;
