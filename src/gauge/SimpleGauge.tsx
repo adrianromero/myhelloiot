@@ -26,6 +26,7 @@ export const arcsSimpleGauge = (
   arcs: number = 6
 ): Arc[] =>
   Array.from(Array(arcs).keys()).map((i) => ({
+    key: String(i),
     start: min + (i * (max - min)) / arcs,
     end: min + ((i + 1) * (max - min)) / arcs,
     r: 40,
