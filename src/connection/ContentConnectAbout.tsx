@@ -21,6 +21,7 @@ import { Typography, Tag, Button, Image, message } from "antd";
 import { FormInstance } from "antd/lib/form";
 import myhelloiot from "../assets/myhelloiot.png";
 import sampledata from "./sampledata";
+import minisampledata from "./minisampledata";
 import pubsubsampledata from "./pubsubsampledata";
 import lightssampledata from "./lightssampledata";
 import gaugessampledata from "./gaugessampledata";
@@ -55,7 +56,7 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
         <Title level={2}>
           MYHELLOIOT{" "}
           <Tag icon={<BranchesOutlined />} color="geekblue">
-            1.0.0
+            1.0.0-2
           </Tag>
         </Title>
         <Paragraph>
@@ -86,7 +87,7 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
         <Title level={4}>MQTT connection options</Title>
         <Paragraph>
           You can use any MQTT broker with WebSockets/SSL support. For example
-          select the EMQX test broker{" "}
+          select the EMQX test broker
           <Button
             type="link"
             size="small"
@@ -101,8 +102,8 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
             }}
           >
             Sets EMQX.IO test broker url
-          </Button>{" "}
-          or the Mosquitto test broker{" "}
+          </Button>
+          or the Mosquitto test broker
           <Button
             type="link"
             size="small"
@@ -132,7 +133,28 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
         <Paragraph>
           <ul>
             <li>
-              Publish and subscribe simple example{" "}
+              Units examples
+              <Button
+                type="link"
+                size="small"
+                icon={<EditOutlined />}
+                onClick={() => {
+                  message.info("dashboard: mini.jsx");
+                  form.setFieldsValue({
+                    dashboard: {
+                      name: "mini.jsx",
+                      type: "text/jsx",
+                      data: minisampledata,
+                    },
+                  });
+                }}
+              >
+                Sets mini.jsx dashboard
+              </Button>
+              .
+            </li>
+            <li>
+              Publish and subscribe simple example
               <Button
                 type="link"
                 size="small"
@@ -150,9 +172,10 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
               >
                 Sets pubsub.jsx dashboard
               </Button>
+              .
             </li>
             <li>
-              Lights switches{" "}
+              Lights switches
               <Button
                 type="link"
                 size="small"
@@ -170,9 +193,10 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
               >
                 Sets lights.jsx dashboard
               </Button>
+              .
             </li>
             <li>
-              Gauges{" "}
+              Gauges
               <Button
                 type="link"
                 size="small"
@@ -190,6 +214,7 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
               >
                 Sets gauges.jsx dashboard
               </Button>
+              .
             </li>
             <li>
               Formats, icons, buttons, sliders, gauges...{" "}
@@ -210,6 +235,7 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
               >
                 Sets complete.jsx dashboard
               </Button>
+              .
             </li>
           </ul>
         </Paragraph>
