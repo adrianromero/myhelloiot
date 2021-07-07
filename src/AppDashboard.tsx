@@ -57,12 +57,14 @@ import {
   TitleIconValueFormat,
   LiteralIconValueFormat,
   ImageIconValueFormat,
+  LabelIconValueFormat,
 } from "./format/ButtonFormat";
 import {
   BulbIconFormat,
   ThuderboltIconFormat,
   SwitchIconValueFormat,
   NumberIconFormat,
+  ToIconValueFormat,
 } from "./format/IconFormat";
 import {
   DashboardIconFormat,
@@ -100,10 +102,12 @@ const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
           TitleIconValueFormat,
           LiteralIconValueFormat,
           ImageIconValueFormat,
+          LabelIconValueFormat,
           BulbIconFormat,
           ThuderboltIconFormat,
           SwitchIconValueFormat,
           NumberIconFormat,
+          ToIconValueFormat,
           DashboardIconFormat,
           LinearIconFormat,
           SimpleIconFormat,
