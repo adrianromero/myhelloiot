@@ -15,7 +15,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { ValueFormat } from "./FormatTypes";
+import { ValueFormat, NumberValidation } from "./FormatTypes";
+import { padsegment } from "../gauge/svgdraw";
 
 export const StrValueFormat = (): ValueFormat => ({
   toDisplay: (b: Buffer) => b.toString(),
@@ -60,8 +61,11 @@ export const SwitchValueFormat = (): ValueFormat => ({
 const getCharClass: (s?: string) => string = (s) =>
   s ? "[" + s.split("").join("][") + "]" : "";
 
+export type NumberValueFormatOptions = Intl.NumberFormatOptions &
+  NumberValidation;
+
 export const NumberValueFormat = (
-  options?: Intl.NumberFormatOptions
+  options?: NumberValueFormatOptions
 ): ValueFormat => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale, options);
@@ -92,6 +96,11 @@ export const NumberValueFormat = (
 
   const numeral = new RegExp(`[${numerals.join("")}]`, "g");
   const getindex = (d: string): string => inx.get(d) || "";
+  const inc = options?.step ?? 1;
+  const pad = padsegment(
+    options?.min ?? Number.MIN_SAFE_INTEGER,
+    options?.max ?? Number.MAX_SAFE_INTEGER
+  );
 
   return {
     toDisplay: (b: Buffer) => {
@@ -110,8 +119,10 @@ export const NumberValueFormat = (
 
       return Buffer.from(strans);
     },
-    next: (b: Buffer) => Buffer.from((Number(b.toString()) + 1).toString()),
-    prev: (b: Buffer) => Buffer.from((Number(b.toString()) - 1).toString()),
+    next: (b: Buffer) =>
+      Buffer.from(pad(Number(b.toString()) + inc).toString()),
+    prev: (b: Buffer) =>
+      Buffer.from(pad(Number(b.toString()) - inc).toString()),
     className: () => "myh-class_alignright",
   };
 };
