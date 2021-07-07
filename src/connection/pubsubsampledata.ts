@@ -15,13 +15,26 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const pubsubsampledata = `{/* Publication and subscription unit sample. */}
+const pubsubsampledata = `{/* Publication and subscription example. */}
 <DashboardTitle className="myhDashboard">
+  <CCard title="Testing topic subscription">
+    <InputUnit subtopic="myhelloiot/testingtopic" />
+  </CCard>
   <CCard title="Testing topic publication">
     <InputUnit pubtopic="myhelloiot/testingtopic" />
   </CCard>
-  <CCard title="Testing topic subscription">
-    <InputUnit subtopic="myhelloiot/testingtopic" />
+  <CCard title="Testing topic pub/sub">
+    <InputUnit
+      pubtopic="myhelloiot/testingtopic"
+      subtopic="myhelloiot/testingtopic"
+    />
+  </CCard>
+  <CCard title="Testing topic Hexadecimal">
+    <InputUnit
+      pubtopic="myhelloiot/testingtopic"
+      subtopic="myhelloiot/testingtopic"
+      format={HEXValueFormat()}
+    />
   </CCard>
 </DashboardTitle>
 `;

@@ -20,8 +20,7 @@ import { ApiFilled, BranchesOutlined, EditOutlined } from "@ant-design/icons";
 import { Typography, Tag, Button, Image, message } from "antd";
 import { FormInstance } from "antd/lib/form";
 import myhelloiot from "../assets/myhelloiot.png";
-import sampledata from "./sampledata";
-import minisampledata from "./minisampledata";
+import basicsampledata from "./basicsampledata";
 import pubsubsampledata from "./pubsubsampledata";
 import lightssampledata from "./lightssampledata";
 import gaugessampledata from "./gaugessampledata";
@@ -133,28 +132,28 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
         <Paragraph>
           <ul>
             <li>
-              Units examples
+              Basic units examples
               <Button
                 type="link"
                 size="small"
                 icon={<EditOutlined />}
                 onClick={() => {
-                  message.info("dashboard: mini.jsx");
+                  message.info("dashboard: basic.jsx");
                   form.setFieldsValue({
                     dashboard: {
-                      name: "mini.jsx",
+                      name: "basic.jsx",
                       type: "text/jsx",
-                      data: minisampledata,
+                      data: basicsampledata,
                     },
                   });
                 }}
               >
-                Sets mini.jsx dashboard
+                Sets basic.jsx dashboard
               </Button>
               .
             </li>
             <li>
-              Publish and subscribe simple example
+              Publication and subscription example
               <Button
                 type="link"
                 size="small"
@@ -175,7 +174,7 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
               .
             </li>
             <li>
-              Lights switches
+              Light switches example
               <Button
                 type="link"
                 size="small"
@@ -196,7 +195,7 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
               .
             </li>
             <li>
-              Gauges
+              Gauges example
               <Button
                 type="link"
                 size="small"
@@ -213,27 +212,6 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
                 }}
               >
                 Sets gauges.jsx dashboard
-              </Button>
-              .
-            </li>
-            <li>
-              Formats, icons, buttons, sliders, gauges...{" "}
-              <Button
-                type="link"
-                size="small"
-                icon={<EditOutlined />}
-                onClick={() => {
-                  message.info("dashboard: complete.jsx");
-                  form.setFieldsValue({
-                    dashboard: {
-                      name: "complete.jsx",
-                      type: "text/jsx",
-                      data: sampledata,
-                    },
-                  });
-                }}
-              >
-                Sets complete.jsx dashboard
               </Button>
               .
             </li>

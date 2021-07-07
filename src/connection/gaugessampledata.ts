@@ -27,7 +27,6 @@ const sampledata = `{/* Gauges example. */}
     />
     <SliderUnit
       pubtopic="myhelloiot/temperature"
-      puboptions={{ retain: true }}
       subtopic="myhelloiot/temperature"
       numberValidation={{ min: -10, max: 60, step: 1 }}
     />
@@ -48,11 +47,105 @@ const sampledata = `{/* Gauges example. */}
       )}
     />
   </CCard>
+  <CCard title="Control gauge card">
+    <ViewUnit
+      subtopic="myhelloiot/temperature"
+      format={ControlIconFormat(
+        {
+          title: "Control gauge",
+          min: -10,
+          max: 60,
+          step: 5,
+          labelstep: 10,
+        },
+        {
+          style: "unit",
+          unit: "celsius",
+        }
+      )}
+    />
+  </CCard>
+  <CCard title="Fuel gauge card">
+    <ViewUnit
+      subtopic="myhelloiot/temperature"
+      format={FuelIconFormat(
+        {
+          title: "Fuel gauge",
+          min: -10,
+          max: 60,
+          step: 5,
+          labelstep: 10,
+        },
+        {
+          style: "unit",
+          unit: "celsius",
+        }
+      )}
+    />
+  </CCard>
+  <CCard title="Progress gauge card">
+    <ViewUnit
+      subtopic="myhelloiot/temperature"
+      format={ProgressIconFormat(
+        {
+          title: "Progress gauge",
+          min: -10,
+          max: 60,
+        },
+        {
+          style: "unit",
+          unit: "celsius",
+        }
+      )}
+    />
+  </CCard>
+  <CCard title="Linear gauge card">
+    <ViewUnit
+      subtopic="myhelloiot/temperature"
+      format={LinearIconFormat(
+        {
+          title: "Linear gauge",
+          min: -10,
+          max: 60,
+          step: 5,
+          labelstep: 70,
+        },
+        {
+          style: "unit",
+          unit: "celsius",
+        }
+      )}
+    />
+  </CCard>
   <CCard title="Dashboard gauge card">
     <ViewUnit
       subtopic="myhelloiot/temperature"
       format={DashboardIconFormat(
         { title: "Dashboard gauge", min: -10, max: 60 },
+        {
+          style: "unit",
+          unit: "celsius",
+        }
+      )}
+    />
+  </CCard>
+  <CCard title="Simple gauge card">
+    <ViewUnit
+      subtopic="myhelloiot/temperature"
+      format={SimpleIconFormat(
+        { title: "Simple gauge", min: -10, max: 60 },
+        {
+          style: "unit",
+          unit: "celsius",
+        }
+      )}
+    />
+  </CCard>
+  <CCard title="Circular gauge card">
+    <ViewUnit
+      subtopic="myhelloiot/temperature"
+      format={CircularIconFormat(
+        { title: "Circular gauge", min: -10, max: 60, step: 5 },
         {
           style: "unit",
           unit: "celsius",
@@ -70,6 +163,41 @@ const sampledata = `{/* Gauges example. */}
           max: 60,
           step: 1,
           labelstep: 5,
+        },
+        {
+          style: "unit",
+          unit: "celsius",
+        }
+      )}
+    />
+  </CCard>
+  <CCard title="Space gauge card">
+    <ViewUnit
+      subtopic="myhelloiot/temperature"
+      format={SpaceIconFormat(
+        {
+          title: "Space gauge",
+          min: -10,
+          max: 60,
+          step: 1,
+        },
+        {
+          style: "unit",
+          unit: "celsius",
+        }
+      )}
+    />
+  </CCard>
+  <CCard title="Dial gauge card">
+    <ViewUnit
+      subtopic="myhelloiot/temperature"
+      format={DialIconFormat(
+        {
+          title: "Dial gauge",
+          min: -10,
+          max: 60,
+          step: 1,
+          labelstep: 10,
         },
         {
           style: "unit",

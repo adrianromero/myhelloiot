@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const pubsubsampledata = `{/* Units example. */}
+const pubsubsampledata = `{/* Basic units example. */}
 <DashboardTitle className="myhDashboard">
   <CCard title="Temperature pub/sub">
     <InputUnit 

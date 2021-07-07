@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const lightssampledata = `{/* Light switches sample. */}
+const lightssampledata = `{/* Light switches example. */}
 <DashboardTitle className="myhDashboard">
   <CCard title="Light switches">
     <Row>
