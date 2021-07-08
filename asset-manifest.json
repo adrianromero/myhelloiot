@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/myhelloiot/static/css/main.431cefa0.chunk.css",
-    "main.js": "/myhelloiot/static/js/main.815d33fb.chunk.js",
-    "runtime-main.js": "/myhelloiot/static/js/runtime-main.1da781e2.js",
+    "main.css": "/myhelloiot/static/css/main.5d951f27.chunk.css",
+    "main.js": "/myhelloiot/static/js/main.2a946157.chunk.js",
+    "runtime-main.js": "/myhelloiot/static/js/runtime-main.eb9f5dd9.js",
     "static/css/2.59af6703.chunk.css": "/myhelloiot/static/css/2.59af6703.chunk.css",
-    "static/js/2.349b852c.chunk.js": "/myhelloiot/static/js/2.349b852c.chunk.js",
-    "static/js/3.1e539236.chunk.js": "/myhelloiot/static/js/3.1e539236.chunk.js",
+    "static/js/2.2c205420.chunk.js": "/myhelloiot/static/js/2.2c205420.chunk.js",
+    "static/js/3.484601ae.chunk.js": "/myhelloiot/static/js/3.484601ae.chunk.js",
     "index.html": "/myhelloiot/index.html",
     "service-worker.js": "/myhelloiot/service-worker.js",
-    "static/js/2.349b852c.chunk.js.LICENSE.txt": "/myhelloiot/static/js/2.349b852c.chunk.js.LICENSE.txt",
+    "static/js/2.2c205420.chunk.js.LICENSE.txt": "/myhelloiot/static/js/2.2c205420.chunk.js.LICENSE.txt",
     "static/media/github.88218d22.svg": "/myhelloiot/static/media/github.88218d22.svg",
     "static/media/myhelloiot.1389b49d.png": "/myhelloiot/static/media/myhelloiot.1389b49d.png",
     "static/media/ControlGauge.css": "/myhelloiot/static/media/roboto-condensed-v19-latin-regular.fd55075a.woff2",
     "static/media/themes.svg": "/myhelloiot/static/media/themes.8b0983ed.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.1da781e2.js",
+    "static/js/runtime-main.eb9f5dd9.js",
     "static/css/2.59af6703.chunk.css",
-    "static/js/2.349b852c.chunk.js",
-    "static/css/main.431cefa0.chunk.css",
-    "static/js/main.815d33fb.chunk.js"
+    "static/js/2.2c205420.chunk.js",
+    "static/css/main.5d951f27.chunk.css",
+    "static/js/main.2a946157.chunk.js"
   ]
 }
