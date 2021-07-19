@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/myhelloiot/static/css/main.5d951f27.chunk.css",
-    "main.js": "/myhelloiot/static/js/main.2a946157.chunk.js",
+    "main.css": "/myhelloiot/static/css/main.60252aa6.chunk.css",
+    "main.js": "/myhelloiot/static/js/main.f310ff25.chunk.js",
     "runtime-main.js": "/myhelloiot/static/js/runtime-main.eb9f5dd9.js",
     "static/css/2.59af6703.chunk.css": "/myhelloiot/static/css/2.59af6703.chunk.css",
     "static/js/2.2c205420.chunk.js": "/myhelloiot/static/js/2.2c205420.chunk.js",
@@ -18,7 +18,7 @@
     "static/js/runtime-main.eb9f5dd9.js",
     "static/css/2.59af6703.chunk.css",
     "static/js/2.2c205420.chunk.js",
-    "static/css/main.5d951f27.chunk.css",
-    "static/js/main.2a946157.chunk.js"
+    "static/css/main.60252aa6.chunk.css",
+    "static/js/main.f310ff25.chunk.js"
   ]
 }
