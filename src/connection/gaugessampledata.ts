@@ -39,10 +39,10 @@ const sampledata = `{/* Gauges example. */}
           title: "Liquid gauge",
           min: -10,
           max: 60,
-        },
-        {
-          style: "unit",
-          unit: "celsius",
+          valueformat: {
+            style: "unit",
+            unit: "celsius",
+          },
         }
       )}
     />
@@ -57,10 +57,10 @@ const sampledata = `{/* Gauges example. */}
           max: 60,
           step: 5,
           labelstep: 10,
-        },
-        {
-          style: "unit",
-          unit: "celsius",
+          valueformat: {
+            style: "unit",
+            unit: "celsius",
+          },
         }
       )}
     />
@@ -75,10 +75,10 @@ const sampledata = `{/* Gauges example. */}
           max: 60,
           step: 5,
           labelstep: 10,
-        },
-        {
-          style: "unit",
-          unit: "celsius",
+          valueformat: {
+            style: "unit",
+            unit: "celsius",
+          },
         }
       )}
     />
@@ -91,10 +91,10 @@ const sampledata = `{/* Gauges example. */}
           title: "Progress gauge",
           min: -10,
           max: 60,
-        },
-        {
-          style: "unit",
-          unit: "celsius",
+          valueformat: {
+            style: "unit",
+            unit: "celsius",
+          },
         }
       )}
     />
@@ -109,10 +109,10 @@ const sampledata = `{/* Gauges example. */}
           max: 60,
           step: 5,
           labelstep: 70,
-        },
-        {
-          style: "unit",
-          unit: "celsius",
+          valueformat: {
+            style: "unit",
+            unit: "celsius",
+          },
         }
       )}
     />
@@ -121,10 +121,14 @@ const sampledata = `{/* Gauges example. */}
     <ViewUnit
       subtopic="myhelloiot/temperature"
       format={DashboardIconFormat(
-        { title: "Dashboard gauge", min: -10, max: 60 },
         {
-          style: "unit",
-          unit: "celsius",
+          title: "Dashboard gauge", 
+          min: -10, 
+          max: 60,
+          valueformat: {
+            style: "unit",
+            unit: "celsius",
+          },
         }
       )}
     />
@@ -133,10 +137,14 @@ const sampledata = `{/* Gauges example. */}
     <ViewUnit
       subtopic="myhelloiot/temperature"
       format={SimpleIconFormat(
-        { title: "Simple gauge", min: -10, max: 60 },
         {
-          style: "unit",
-          unit: "celsius",
+          title: "Simple gauge", 
+          min: -10, 
+          max: 60,
+          valueformat: {
+            style: "unit",
+            unit: "celsius",
+          },
         }
       )}
     />
@@ -145,10 +153,15 @@ const sampledata = `{/* Gauges example. */}
     <ViewUnit
       subtopic="myhelloiot/temperature"
       format={CircularIconFormat(
-        { title: "Circular gauge", min: -10, max: 60, step: 5 },
         {
-          style: "unit",
-          unit: "celsius",
+          title: "Circular gauge", 
+          min: -10, 
+          max: 60, 
+          step: 5,
+          valueformat: {
+            style: "unit",
+            unit: "celsius",
+          }, 
         }
       )}
     />
@@ -163,10 +176,10 @@ const sampledata = `{/* Gauges example. */}
           max: 60,
           step: 1,
           labelstep: 5,
-        },
-        {
-          style: "unit",
-          unit: "celsius",
+          valueformat: {
+            style: "unit",
+            unit: "celsius",
+          },
         }
       )}
     />
@@ -180,10 +193,10 @@ const sampledata = `{/* Gauges example. */}
           min: -10,
           max: 60,
           step: 1,
-        },
-        {
-          style: "unit",
-          unit: "celsius",
+          valueformat: {
+            style: "unit",
+            unit: "celsius",
+          },
         }
       )}
     />
@@ -198,10 +211,10 @@ const sampledata = `{/* Gauges example. */}
           max: 60,
           step: 1,
           labelstep: 10,
-        },
-        {
-          style: "unit",
-          unit: "celsius",
+          valueformat: {
+            style: "unit",
+            unit: "celsius",
+          },
         }
       )}
     />

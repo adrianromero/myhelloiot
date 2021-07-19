@@ -38,16 +38,9 @@ const CreateGaugesIconFormat =
   <GaugeProps extends unknown>(
     Component: React.FC<GaugeProps>
   ): GaugeIconFormat<GaugeProps> =>
-  (
-    gaugeprops: GaugeProps,
-    valueformat?: Intl.NumberFormatOptions
-  ): IconFormat => ({
+  (gaugeprops: GaugeProps): IconFormat => ({
     toIcon: (buffer) => (
-      <Component
-        value={readNumber(buffer)}
-        valueformat={valueformat}
-        {...gaugeprops}
-      />
+      <Component value={readNumber(buffer)} {...gaugeprops} />
     ),
   });
 
