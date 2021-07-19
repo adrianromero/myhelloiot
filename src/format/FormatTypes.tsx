@@ -35,8 +35,4 @@ export type NumberValidation = {
   step?: number;
 };
 
-export type ValueFormatNumber = ValueFormat & NumberValidation;
-export type IconFormatNumber = IconFormat & NumberValidation;
-
 export type IconValueFormat = IconFormat & ValueFormat;
-export type IconValueFormatNumber = IconFormat & ValueFormat & NumberValidation;
