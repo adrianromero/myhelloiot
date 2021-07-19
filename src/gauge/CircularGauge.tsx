@@ -26,7 +26,6 @@ export type CircularGaugeProps = {
   className?: string;
   min?: number;
   max?: number;
-  step?: number;
 };
 
 const CircularGauge: React.FC<CircularGaugeProps> = ({
