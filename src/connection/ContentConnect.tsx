@@ -318,7 +318,7 @@ const PanelConnect: React.FC<{}> = () => {
                   <Tabs
                     defaultActiveKey="1"
                     type="card"
-                    tabPosition="left"
+                    tabPosition="bottom"
                     size="small"
                   >
                     <TabPane tab="JSX" key="2" forceRender>
