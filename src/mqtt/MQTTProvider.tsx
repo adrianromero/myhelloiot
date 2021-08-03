@@ -275,7 +275,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       ) {
         state.client.subscribe(topic, options || { qos: 0 });
       }
-      // in case message is retained, system will call two times the listener
+      // in case message is retain, system will call two times the listener
       Array.from(state._internal.values.entries())
         .filter(([key]) => match(topic, key))
         .forEach(([key, value]) => listener(key, value));
