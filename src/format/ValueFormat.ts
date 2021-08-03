@@ -29,7 +29,7 @@ export const StrValueFormat = (): ValueFormat => ({
 export const JSONValueFormat = (): ValueFormat => ({
   toDisplay: (b: Buffer) => JSON.stringify(JSON.parse(b.toString()), null, 2),
   className: () => "",
-  fromDisplay: (s: string) => Buffer.from(s),
+  fromDisplay: (s: string) => Buffer.from(JSON.stringify(JSON.parse(s))),
   next: (b: Buffer) => b,
   prev: (b: Buffer) => b,
 });
