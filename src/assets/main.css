@@ -132,3 +132,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   margin-top: -18px;
   border-width: 5px;
 }
+
+.myhPublishingButton {
+  font-size: 200%;
+  font-weight: 800;
+  width: 100%;
+  height: 70px;
+}

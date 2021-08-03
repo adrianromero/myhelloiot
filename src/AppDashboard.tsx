@@ -43,6 +43,7 @@ import Dashboard from "./dashboard/Dashboard";
 import DashboardTitle from "./dashboard/DashboardTitle";
 import DashboardMenu from "./dashboard/DashboardMenu";
 import InputUnit from "./units/InputUnit";
+import Publishing from "./units/Publishing";
 import ButtonUnit from "./units/ButtonUnit";
 import SwitchUnit from "./units/SwitchUnit";
 import ViewUnit from "./units/ViewUnit";
@@ -150,6 +151,7 @@ const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
             C,
             CCard,
             InputUnit,
+            Publishing,
             ButtonUnit,
             SwitchUnit,
             ViewUnit,

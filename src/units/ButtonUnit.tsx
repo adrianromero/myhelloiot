@@ -63,9 +63,8 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
 
   return (
     <Button
-      className={`myh-value ${className || ""}`}
+      className={`myhPublishingButton ${className || ""}`}
       type="primary"
-      style={{ width: "100%", height: "70px" }}
       onClick={onClick}
       disabled={!connected}
     >
