@@ -19,16 +19,16 @@ import React from "react";
 
 import { PictureFilled } from "@ant-design/icons";
 
-export type DashboardMenuProps = {
+export type DashboardContentProps = {
   icon: React.ReactNode;
   name: string;
   children: React.ReactNode;
 };
 
-const DashboardMenu: React.FC<DashboardMenuProps> = ({
+const DashboardContent: React.FC<DashboardContentProps> = ({
   icon = <PictureFilled />,
   name,
   children,
 }) => <>{children}</>;
 
-export default DashboardMenu;
+export default DashboardContent;

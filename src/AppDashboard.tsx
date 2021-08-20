@@ -48,7 +48,7 @@ import {
 } from "./dashboard/PanelGrid";
 import Dashboard from "./dashboard/Dashboard";
 import DashboardGrid from "./dashboard/DashboardGrid";
-import DashboardMenu from "./dashboard/DashboardMenu";
+import DashboardContent from "./dashboard/DashboardContent";
 import InputUnit from "./units/InputUnit";
 import Publisher from "./units/Publisher";
 import ButtonMessage from "./units/ButtonMessage";
@@ -155,7 +155,7 @@ const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
             Col,
             Dashboard,
             DashboardGrid,
-            DashboardMenu,
+            DashboardContent,
             PanelGrid,
             PanelContent,
             C,

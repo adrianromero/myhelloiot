@@ -19,14 +19,14 @@ import React, { useEffect, useState } from "react";
 import { Drawer, Button, Layout, Menu } from "antd";
 import { MenuUnfoldOutlined } from "@ant-design/icons";
 import AppHeader from "../AppHeader";
-import DashboardMenu, { DashboardMenuProps } from "./DashboardMenu";
+import DashboardContent, { DashboardContentProps } from "./DashboardContent";
 import ConnectionInfo from "./ConnectionInfo";
 
 export type DashboardProps = {
   title?: string;
   disconnectDisabled?: boolean;
   className?: string;
-  children: React.ReactElement<DashboardMenuProps, any>[];
+  children: React.ReactElement<DashboardContentProps, any>[];
 };
 
 const Dashboard: React.FC<DashboardProps> = ({
@@ -54,11 +54,11 @@ const Dashboard: React.FC<DashboardProps> = ({
   }
 
   const menus: React.ReactElement<any, any>[] = [];
-  let child: React.ReactElement<DashboardMenuProps, any> | undefined;
+  let child: React.ReactElement<DashboardContentProps, any> | undefined;
   let index = 0;
 
   React.Children.forEach(children, (c) => {
-    if (React.isValidElement(c) && c.type === DashboardMenu) {
+    if (React.isValidElement(c) && c.type === DashboardContent) {
       const key: React.Key = "menu-" + index++;
       menus.push(
         <Menu.Item key={key} icon={c.props.icon}>
