@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 const pubsubsampledata = `{/* Publication and subscription example. */}
-<DashboardTitle className="myhDashboard">
+<DashboardGrid className="myhDashboard">
   <CCard title="Testing topic subscription">
     <InputUnit subtopic="myhelloiot/testingtopic" />
   </CCard>
@@ -36,7 +36,7 @@ const pubsubsampledata = `{/* Publication and subscription example. */}
       format={HEXValueFormat()}
     />
   </CCard>
-</DashboardTitle>
+</DashboardGrid>
 `;
 
 export default pubsubsampledata;

@@ -15,67 +15,23 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { MouseEvent } from "react";
-import { Button, Col } from "antd";
-import { QoS } from "mqtt";
-
-import { useMQTTContext } from "../mqtt/MQTTProvider";
-import { ValueFormat } from "../format/FormatTypes";
-import { StrValueFormat } from "../format/ValueFormat";
-
-type TopicInfo = {
-  label?: string;
-  icon?: React.ReactNode;
-  style?: React.CSSProperties;
-  topic: string;
-  value: string;
-  retain?: boolean;
-  qos?: QoS;
-  format?: ValueFormat;
-};
+import React from "react";
+import { Col } from "antd";
+import ButtonMessage, { ButtonMessageProps } from "./ButtonMessage";
 
 type PublishingProps = {
-  topicsinfo: TopicInfo[];
-  prefixtopic?: string;
+  messages: ButtonMessageProps[];
   className?: string;
 };
 
-const Publishing: React.FC<PublishingProps> = ({
-  prefixtopic = "",
-  topicsinfo,
-  className,
-}) => {
-  const [{ connected }, { publish }] = useMQTTContext();
-
+const Publishing: React.FC<PublishingProps> = ({ messages, className }) => {
   return (
     <>
-      {topicsinfo.map((topicinfo) => {
-        const onClick = (ev: MouseEvent<HTMLElement>) => {
-          const format = topicinfo.format ?? StrValueFormat();
-          publish(
-            prefixtopic + topicinfo.topic,
-            format.fromDisplay(topicinfo.value ?? ""),
-            {
-              qos: topicinfo.qos ?? 0,
-              retain: topicinfo.retain ?? false,
-            }
-          );
-        };
-        return (
-          <Col className={className} xs={24} sm={12} md={6} lg={4}>
-            <Button
-              className="myhPublishingButton"
-              type="primary"
-              onClick={onClick}
-              disabled={!connected}
-              icon={topicinfo.icon}
-              style={topicinfo.style}
-            >
-              {topicinfo.label ?? topicinfo.topic}
-            </Button>
-          </Col>
-        );
-      })}
+      {messages.map((props) => (
+        <Col className={className} xs={24} sm={12} md={6} lg={4}>
+          <ButtonMessage {...props} />
+        </Col>
+      ))}
     </>
   );
 };

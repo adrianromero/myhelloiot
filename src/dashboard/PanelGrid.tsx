@@ -29,6 +29,17 @@ export const C: React.FC<CProps> = ({ className, children }) => (
   </Col>
 );
 
+export type LProps = {
+  className?: string;
+  children: React.ReactNode;
+};
+
+export const L: React.FC<LProps> = ({ className, children }) => (
+  <Col className={className} xs={24} sm={24} md={24} lg={24}>
+    {children}
+  </Col>
+);
+
 export type CCardProps = {
   title?: string;
   className?: string;
@@ -43,12 +54,26 @@ export const CCard: React.FC<CCardProps> = ({ title, className, children }) => (
   </C>
 );
 
+export type LSectionProps = {
+  className?: string;
+  children: React.ReactNode;
+};
+
+export const LSection: React.FC<LSectionProps> = ({ className, children }) => (
+  <L>
+    <div className={`myh-section ${className || ""}`}>{children}</div>
+  </L>
+);
+
 export type PanelGridProps = {
   className?: string;
   children: React.ReactNode;
 };
 
-const PanelGrid: React.FC<PanelGridProps> = ({ className, children }) => (
+export const PanelGrid: React.FC<PanelGridProps> = ({
+  className,
+  children,
+}) => (
   <div className={`myhAppContent-panel ${className || ""}`}>
     <Row
       gutter={[
@@ -61,4 +86,9 @@ const PanelGrid: React.FC<PanelGridProps> = ({ className, children }) => (
   </div>
 );
 
-export default PanelGrid;
+export const PanelContent: React.FC<PanelGridProps> = ({
+  className,
+  children,
+}) => (
+  <div className={`myhAppContent-panel ${className || ""}`}>{children}</div>
+);

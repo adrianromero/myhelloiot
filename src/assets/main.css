@@ -56,16 +56,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   min-height: calc(100vh - 64px);
 }
 
-.myhAppContent {
-  padding: 24px;
-}
-
 .myhAppContent-panel {
-  padding: 24px;
+  margin: 24px;
 }
 
 .myh-card {
   height: 100%;
+}
+
+.myh-section {
+  font-weight: 500;
+  border-bottom: 1px solid #808080;
 }
 
 .myh-card .myh-value {

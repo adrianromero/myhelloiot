@@ -24,6 +24,7 @@ import basicsampledata from "./basicsampledata";
 import pubsubsampledata from "./pubsubsampledata";
 import lightssampledata from "./lightssampledata";
 import gaugessampledata from "./gaugessampledata";
+import mosquittosampledata from "./mosquittosampledata";
 import { ReactComponent as GitHubRibbon } from "../assets/svg/github.svg";
 import { ConnectInfo } from "./ConnectionInfo";
 
@@ -212,6 +213,27 @@ const ContentConnectAbout: React.FC<{ form: FormInstance<ConnectInfo> }> = ({
                 }}
               >
                 Sets gauges.jsx dashboard
+              </Button>
+              .
+            </li>
+            <li>
+              Mosquitto SYS topics example
+              <Button
+                type="link"
+                size="small"
+                icon={<EditOutlined />}
+                onClick={() => {
+                  message.info("dashboard: mosquitto.jsx");
+                  form.setFieldsValue({
+                    dashboard: {
+                      name: "mosquitto.jsx",
+                      type: "text/jsx",
+                      data: mosquittosampledata,
+                    },
+                  });
+                }}
+              >
+                Sets mosquitto.jsx dashboard
               </Button>
               .
             </li>

@@ -38,11 +38,20 @@ import { ErrorBoundary } from "react-error-boundary";
 import { ReactComponent as Themes } from "./assets/svg/themes.svg";
 import JsxParser from "react-jsx-parser";
 
-import PanelGrid, { C, CCard } from "./dashboard/PanelGrid";
+import {
+  PanelGrid,
+  PanelContent,
+  C,
+  CCard,
+  L,
+  LSection,
+} from "./dashboard/PanelGrid";
 import Dashboard from "./dashboard/Dashboard";
-import DashboardTitle from "./dashboard/DashboardTitle";
+import DashboardGrid from "./dashboard/DashboardGrid";
 import DashboardMenu from "./dashboard/DashboardMenu";
 import InputUnit from "./units/InputUnit";
+import Publisher from "./units/Publisher";
+import ButtonMessage from "./units/ButtonMessage";
 import Publishing from "./units/Publishing";
 import ButtonUnit from "./units/ButtonUnit";
 import SwitchUnit from "./units/SwitchUnit";
@@ -145,12 +154,17 @@ const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
             Row,
             Col,
             Dashboard,
-            DashboardTitle,
+            DashboardGrid,
             DashboardMenu,
             PanelGrid,
+            PanelContent,
             C,
             CCard,
+            L,
+            LSection,
             InputUnit,
+            Publisher,
+            ButtonMessage,
             Publishing,
             ButtonUnit,
             SwitchUnit,

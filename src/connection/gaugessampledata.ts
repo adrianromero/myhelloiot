@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 const sampledata = `{/* Gauges example. */}
-<DashboardTitle className="myhDashboard">
+<DashboardGrid className="myhDashboard">
   <CCard title="Select temperature">
     <ViewUnit
       subtopic="myhelloiot/temperature"
@@ -219,7 +219,7 @@ const sampledata = `{/* Gauges example. */}
       )}
     />
   </CCard>
-</DashboardTitle>
+</DashboardGrid>
 `;
 
 export default sampledata;

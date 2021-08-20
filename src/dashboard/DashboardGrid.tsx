@@ -19,16 +19,16 @@ import React, { useEffect } from "react";
 import { Layout } from "antd";
 import AppHeader from "../AppHeader";
 import ConnectionInfo from "./ConnectionInfo";
-import PanelGrid from "./PanelGrid";
+import { PanelGrid } from "./PanelGrid";
 
-export type DashboardTitleProps = {
+export type DashboardGridProps = {
   title?: string;
   disconnectDisabled?: boolean;
   className?: string;
   children: React.ReactNode;
 };
 
-const DashboardTitle: React.FC<DashboardTitleProps> = ({
+const DashboardGrid: React.FC<DashboardGridProps> = ({
   title,
   disconnectDisabled,
   className,
@@ -48,4 +48,4 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
   );
 };
 
-export default DashboardTitle;
+export default DashboardGrid;

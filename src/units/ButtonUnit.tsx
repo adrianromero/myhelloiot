@@ -23,7 +23,7 @@ import { IconValueFormat } from "../format/FormatTypes";
 import { LabelIconValueFormat } from "../format/IconFormat";
 import { SwitchValueFormat } from "../format/ValueFormat";
 
-type ButtonUnitProps = {
+export type ButtonUnitProps = {
   pubtopic: string;
   subtopic?: string;
   puboptions?: IClientPublishOptions;

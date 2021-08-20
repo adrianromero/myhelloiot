@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 const lightssampledata = `{/* Light switches example. */}
-<DashboardTitle className="myhDashboard">
+<DashboardGrid className="myhDashboard">
   <CCard title="Light switches">
     <Row>
       <Col flex="0 1 auto">
@@ -91,7 +91,7 @@ const lightssampledata = `{/* Light switches example. */}
       format={SwitchIconValueFormat(ThuderboltIconFormat())}
     />
   </CCard>
-</DashboardTitle>
+</DashboardGrid>
 `;
 
 export default lightssampledata;
