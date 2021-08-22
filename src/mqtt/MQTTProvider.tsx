@@ -138,6 +138,13 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     _internal: { subscriptions: [], values: new Map() },
   });
 
+  const pubsubTopic = (topic: string): string => {
+    const clientoptions = state.client?.options;
+    return topic
+      .replace("$[clientId]", clientoptions?.clientId ?? "$[clientId]")
+      .replace("$[username]", clientoptions?.username ?? "$[username]");
+  };
+
   const disconnect = () => {
     if (state.client && state.online) {
       state.client.publish(state.online.topic, "offline", {
@@ -261,10 +268,11 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const subscribe = (
-    topic: string,
+    subtopic: string,
     listener: (topic: string, message: Buffer) => void,
     options?: IClientSubscribeOptions
   ): SubscribeHandler | null => {
+    const topic = pubsubTopic(subtopic);
     if (state.client && topic !== "") {
       const handler = { topic, listener };
       state._internal.subscriptions.push(handler);
@@ -302,12 +310,15 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const publish = (
-    topic: string,
+    pubtopic: string,
     message: Buffer | string,
     options?: IClientPublishOptions
   ) => {
+    const topic = pubsubTopic(pubtopic);
     if (state.client?.connected) {
-      state.client.publish(topic, message, options || {});
+      if (topic !== "") {
+        state.client.publish(topic, message, options || {});
+      }
     } else {
       throw new Error("Not connected");
     }
