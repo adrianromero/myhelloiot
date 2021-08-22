@@ -20,14 +20,14 @@ import React from "react";
 import { PictureFilled } from "@ant-design/icons";
 
 export type DashboardContentProps = {
+  name?: string;
   icon: React.ReactNode;
-  name: string;
   children: React.ReactNode;
 };
 
 const DashboardContent: React.FC<DashboardContentProps> = ({
-  icon = <PictureFilled />,
   name,
+  icon = <PictureFilled />,
   children,
 }) => <>{children}</>;
 

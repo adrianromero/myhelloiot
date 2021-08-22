@@ -19,11 +19,13 @@ import React, { useEffect, useState } from "react";
 import { Drawer, Button, Layout, Menu } from "antd";
 import { MenuUnfoldOutlined } from "@ant-design/icons";
 import AppHeader from "../AppHeader";
+import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import DashboardContent, { DashboardContentProps } from "./DashboardContent";
 import ConnectionInfo from "./ConnectionInfo";
 
 export type DashboardProps = {
   title?: string;
+  topic?: string;
   disconnectDisabled?: boolean;
   className?: string;
   children: React.ReactElement<DashboardContentProps, any>[];
@@ -31,18 +33,29 @@ export type DashboardProps = {
 
 const Dashboard: React.FC<DashboardProps> = ({
   title,
+  topic = "",
   disconnectDisabled,
   className,
   children,
 }) => {
-  const [panelkey, setPanelkey] = useState<React.Key>("menu-0");
+  const [panelkey, setPanelkey] = useState<string>("menu-0");
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
-
+  const [, { publish }] = useMQTTContext();
+  useMQTTSubscribe(topic, (topic: string, mqttmessage: Buffer) => {
+    const key = mqttmessage.toString();
+    if (key !== panelkey) {
+      hideDrawer();
+      setPanelkey(key);
+    }
+  });
   useEffect(() => window.scrollTo(0, 0), [panelkey]);
 
-  function handleSelect({ key }: { key: React.Key }) {
+  function handleSelect({ key }: { key: string }) {
     hideDrawer();
     setPanelkey(key);
+    publish(topic, Buffer.from(key), {
+      retain: true,
+    });
   }
 
   function showDrawer() {
@@ -59,13 +72,15 @@ const Dashboard: React.FC<DashboardProps> = ({
 
   React.Children.forEach(children, (c) => {
     if (React.isValidElement(c) && c.type === DashboardContent) {
-      const key: React.Key = "menu-" + index++;
-      menus.push(
-        <Menu.Item key={key} icon={c.props.icon}>
-          {c.props.name}
-        </Menu.Item>
-      );
-      if (key === panelkey) {
+      const key: string = c.key ? c.key.toString() : "menu-" + index++;
+      if (c.props.name) {
+        menus.push(
+          <Menu.Item key={key} icon={c.props.icon}>
+            {c.props.name}
+          </Menu.Item>
+        );
+      }
+      if (key === panelkey || !child) {
         child = c;
       }
     }
@@ -74,30 +89,34 @@ const Dashboard: React.FC<DashboardProps> = ({
   return (
     <Layout className={className}>
       <AppHeader title={title}>
-        <div className="myhMenuDisplayButton">
-          <Button onClick={showDrawer} ghost>
-            <MenuUnfoldOutlined />
-          </Button>
-        </div>
+        {menus.length > 0 && (
+          <div className="myhMenuDisplayButton">
+            <Button onClick={showDrawer} ghost>
+              <MenuUnfoldOutlined />
+            </Button>
+          </div>
+        )}
         <ConnectionInfo disconnectDisabled={disconnectDisabled} />
       </AppHeader>
       <Layout.Content className="myhMainLayout">
-        <Drawer
-          className="myhDrawerMenu"
-          placement="left"
-          closable={false}
-          onClose={hideDrawer}
-          visible={visibleDrawer}
-        >
-          <Menu
-            theme="light"
-            mode="inline"
-            selectedKeys={[panelkey.toString()]}
-            onSelect={handleSelect}
+        {menus.length > 0 && (
+          <Drawer
+            className="myhDrawerMenu"
+            placement="left"
+            closable={false}
+            onClose={hideDrawer}
+            visible={visibleDrawer}
           >
-            {menus}
-          </Menu>
-        </Drawer>
+            <Menu
+              theme="light"
+              mode="inline"
+              selectedKeys={[panelkey.toString()]}
+              onSelect={handleSelect}
+            >
+              {menus}
+            </Menu>
+          </Drawer>
+        )}
         {child}
       </Layout.Content>
     </Layout>
