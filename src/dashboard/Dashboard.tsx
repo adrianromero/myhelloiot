@@ -34,7 +34,7 @@ export type DashboardProps = {
 const Dashboard: React.FC<DashboardProps> = ({
   title,
   topic = "",
-  disconnectDisabled,
+  disconnectDisabled = false,
   className,
   children,
 }) => {
@@ -68,6 +68,8 @@ const Dashboard: React.FC<DashboardProps> = ({
 
   const menus: React.ReactElement<any, any>[] = [];
   let child: React.ReactElement<DashboardContentProps, any> | undefined;
+  let menDisabled: boolean = false;
+  let disDisabled: boolean = false;
   let index = 0;
 
   React.Children.forEach(children, (c) => {
@@ -82,6 +84,8 @@ const Dashboard: React.FC<DashboardProps> = ({
       }
       if (key === panelkey || !child) {
         child = c;
+        menDisabled = child.props.menuDisabled ?? false;
+        disDisabled = child.props.disconnectDisabled ?? false;
       }
     }
   });
@@ -91,12 +95,14 @@ const Dashboard: React.FC<DashboardProps> = ({
       <AppHeader title={title}>
         {menus.length > 0 && (
           <div className="myhMenuDisplayButton">
-            <Button onClick={showDrawer} ghost>
+            <Button onClick={showDrawer} ghost hidden={menDisabled}>
               <MenuUnfoldOutlined />
             </Button>
           </div>
         )}
-        <ConnectionInfo disconnectDisabled={disconnectDisabled} />
+        <ConnectionInfo
+          disconnectDisabled={disconnectDisabled || disDisabled}
+        />
       </AppHeader>
       <Layout.Content className="myhMainLayout">
         {menus.length > 0 && (

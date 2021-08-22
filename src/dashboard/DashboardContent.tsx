@@ -20,6 +20,8 @@ import React from "react";
 export type DashboardContentProps = {
   name?: string;
   icon: React.ReactNode;
+  menuDisabled?: boolean;
+  disconnectDisabled?: boolean;
   children: React.ReactNode;
 };
 
