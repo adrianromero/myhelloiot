@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect, useState } from "react";
 import { Drawer, Button, Layout, Menu } from "antd";
-import { MenuUnfoldOutlined } from "@ant-design/icons";
+import { MenuUnfoldOutlined, PictureFilled } from "@ant-design/icons";
 import AppHeader from "../AppHeader";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import DashboardContent, { DashboardContentProps } from "./DashboardContent";
@@ -75,7 +75,7 @@ const Dashboard: React.FC<DashboardProps> = ({
       const key: string = c.key ? c.key.toString() : "menu-" + index++;
       if (c.props.name) {
         menus.push(
-          <Menu.Item key={key} icon={c.props.icon}>
+          <Menu.Item key={key} icon={c.props.icon ?? <PictureFilled />}>
             {c.props.name}
           </Menu.Item>
         );

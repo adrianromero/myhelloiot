@@ -17,18 +17,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 
-import { PictureFilled } from "@ant-design/icons";
-
 export type DashboardContentProps = {
   name?: string;
   icon: React.ReactNode;
   children: React.ReactNode;
 };
 
-const DashboardContent: React.FC<DashboardContentProps> = ({
-  name,
-  icon = <PictureFilled />,
-  children,
-}) => <>{children}</>;
+const DashboardContent: React.FC<DashboardContentProps> = ({ children }) => (
+  <>{children}</>
+);
 
 export default DashboardContent;
