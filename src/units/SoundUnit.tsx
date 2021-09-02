@@ -15,45 +15,29 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IClientSubscribeOptions } from "mqtt";
-import {
-  MQTTMessage,
-  useMQTTContext,
-  useMQTTSubscribe,
-} from "../mqtt/MQTTProvider";
-import { IconFormat } from "../format/FormatTypes";
-import { StrIconFormat } from "../format/IconFormat";
+import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
+import useAudio from "./useAudio";
+const bell = require("../assets/media/486952_6657415-lq.mp3").default;
 
-type ViewUnitProps = {
+type SoundUnitProps = {
   subtopic: string;
   suboptions?: IClientSubscribeOptions;
-  format?: IconFormat;
-  className?: string;
 };
 
-const ViewUnit: React.FC<ViewUnitProps> = ({
-  subtopic,
-  suboptions,
-  format = StrIconFormat(),
-  className,
-}) => {
-  const [{ ready }] = useMQTTContext();
-  const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
-
-  useEffect(() => {
-    setBuffer(Buffer.from([]));
-  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+const SoundUnit: React.FC<SoundUnitProps> = ({ subtopic, suboptions }) => {
+  const [, { play }] = useAudio(bell);
 
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
-      setBuffer(message);
+      play();
     },
     suboptions
   );
 
-  return <span className={className}>{format.toIcon(buffer)}</span>;
+  return <></>;
 };
 
-export default ViewUnit;
+export default SoundUnit;

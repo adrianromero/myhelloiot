@@ -20,7 +20,11 @@ import { Button, Input, Form, Row, Col } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
 
-import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
+import {
+  MQTTMessage,
+  useMQTTContext,
+  useMQTTSubscribe,
+} from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";
 import { StrValueFormat } from "../format/ValueFormat";
 
@@ -53,9 +57,9 @@ const InputUnit: React.FC<InputUnitProps> = ({
 
   useMQTTSubscribe(
     subtopic,
-    (topic: string, mqttmessage: Buffer) => {
+    ({ message }: MQTTMessage) => {
       form.setFieldsValue({
-        mqttValue: format.toDisplay(mqttmessage),
+        mqttValue: format.toDisplay(message),
       });
     },
     suboptions

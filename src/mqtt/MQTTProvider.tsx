@@ -29,6 +29,7 @@ import mqtt, {
   IClientSubscribeOptions,
   IClientPublishOptions,
   QoS,
+  IPublishPacket,
 } from "mqtt";
 import match from "mqtt-match";
 
@@ -74,7 +75,7 @@ export type MQTTContextValue = [
     disconnect: () => void;
     subscribe: (
       topic: string,
-      callback: (topic: string, message: Buffer) => void,
+      callback: (mqttmessage: MQTTMessage) => void,
       options?: IClientSubscribeOptions
     ) => SubscribeHandler | null;
     unsubscribe: (handler: SubscribeHandler | null) => void;
@@ -86,9 +87,18 @@ export type MQTTContextValue = [
   }
 ];
 
+export type MQTTMessage = {
+  topic: string;
+  message: Buffer;
+  time: number;
+  qos?: QoS;
+  retain?: boolean;
+  dup?: boolean;
+};
+
 export type SubscribeHandler = {
   topic: string;
-  listener: (messagetopic: string, message: Buffer) => void;
+  listener: (mqttmessage: MQTTMessage) => void;
 };
 
 const MQTTContext: Context<MQTTContextValue> = createContext<MQTTContextValue>([
@@ -111,7 +121,7 @@ export const useMQTTContext = () => useContext(MQTTContext);
 
 export const useMQTTSubscribe = (
   topic: string,
-  callback: (topic: string, message: Buffer) => void,
+  callback: (mqttmessage: MQTTMessage) => void,
   options?: IClientSubscribeOptions
 ): void => {
   const [{ ready }, { subscribe, unsubscribe }] = useMQTTContext();
@@ -237,14 +247,25 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           _internal: s._internal,
         }));
       });
-      client.on("message", (topic: string, message: Buffer) => {
-        state._internal.subscriptions.forEach((subs) => {
-          if (match(subs.topic, topic)) {
-            subs.listener(topic, message);
-          }
-        });
-        state._internal.values.set(topic, message);
-      });
+      client.on(
+        "message",
+        (topic: string, message: Buffer, packet: IPublishPacket) => {
+          console.log(packet);
+          state._internal.subscriptions.forEach((subs) => {
+            if (match(subs.topic, topic)) {
+              subs.listener({
+                topic,
+                message,
+                time: new Date().getTime(),
+                qos: packet.qos,
+                retain: packet.retain,
+                dup: packet.dup,
+              });
+            }
+          });
+          state._internal.values.set(topic, message);
+        }
+      );
 
       setState((s) => {
         s._internal.subscriptions.length = 0;
@@ -269,7 +290,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const subscribe = (
     subtopic: string,
-    listener: (topic: string, message: Buffer) => void,
+    listener: (mqttmessage: MQTTMessage) => void,
     options?: IClientSubscribeOptions
   ): SubscribeHandler | null => {
     const topic = pubsubTopic(subtopic);
@@ -284,9 +305,10 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         state.client.subscribe(topic, options || { qos: 0 });
       }
       // in case message is retain, system will call two times the listener
+      const time = new Date().getTime();
       Array.from(state._internal.values.entries())
         .filter(([key]) => match(topic, key))
-        .forEach(([key, value]) => listener(key, value));
+        .forEach(([key, message]) => listener({ topic: key, time, message }));
       return handler;
     }
     return null;

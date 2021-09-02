@@ -34,6 +34,10 @@ yarn start
 
 In the [MQTT Community Wiki](https://github.com/mqtt/mqtt.github.io/wiki/tools), you can find a list of client applications and tools.
 
+# Acknowledges
+
+Creative Commons 0 Licensed sound effects obtained from https://freesound.org/
+
 # License
 
 MYHELLOIOT is licensed under the GNU General Public License, Version 3, 29 June 2007.

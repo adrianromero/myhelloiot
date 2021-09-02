@@ -19,7 +19,11 @@ import React, { useEffect, useState } from "react";
 import { Switch } from "antd";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
 
-import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
+import {
+  MQTTMessage,
+  useMQTTContext,
+  useMQTTSubscribe,
+} from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";
 import { StrValueFormat } from "../format/ValueFormat";
 
@@ -49,8 +53,8 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
 
   useMQTTSubscribe(
     subtopic,
-    (topic: string, mqttmessage: Buffer) => {
-      setChecked(format.toDisplay(mqttmessage) === "1");
+    ({ message }: MQTTMessage) => {
+      setChecked(format.toDisplay(message) === "1");
     },
     suboptions
   );

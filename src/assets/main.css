@@ -140,3 +140,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   width: 100%;
   height: 70px;
 }
+
+.myhLog-tags {
+  text-align: right;
+}
+
+.myhLog-tags .ant-tag {
+  margin-bottom: 4px;
+}
+
+.myhLog-header {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.myhLog-title {
+  flex-grow: 1;
+}
+
+.myhLog-toolbar .ant-btn {
+  margin-right: 8px;
+  margin-bottom: 12px;
+}
+
+.myhLog-message {
+  margin: 0 0.2em;
+  padding: 0.2em 0.4em 0.1em;
+  font-size: 85%;
+  font-family: monospace;
+}

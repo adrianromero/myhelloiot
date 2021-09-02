@@ -18,7 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useEffect, useState, MouseEvent } from "react";
 import { Button } from "antd";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
-import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
+import {
+  MQTTMessage,
+  useMQTTContext,
+  useMQTTSubscribe,
+} from "../mqtt/MQTTProvider";
 import { IconValueFormat } from "../format/FormatTypes";
 import { LabelIconValueFormat } from "../format/IconFormat";
 import { SwitchValueFormat } from "../format/ValueFormat";
@@ -49,8 +53,8 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
 
   useMQTTSubscribe(
     subtopic,
-    (topic: string, mqttmessage: Buffer) => {
-      setBuffer(mqttmessage);
+    ({ message }: MQTTMessage) => {
+      setBuffer(message);
     },
     suboptions
   );

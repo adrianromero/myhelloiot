@@ -19,7 +19,11 @@ import React, { useEffect, useState } from "react";
 import { Drawer, Button, Layout, Menu } from "antd";
 import { MenuUnfoldOutlined, PictureFilled } from "@ant-design/icons";
 import AppHeader from "../AppHeader";
-import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
+import {
+  MQTTMessage,
+  useMQTTContext,
+  useMQTTSubscribe,
+} from "../mqtt/MQTTProvider";
 import DashboardContent, { DashboardContentProps } from "./DashboardContent";
 import ConnectionInfo from "./ConnectionInfo";
 
@@ -41,8 +45,8 @@ const Dashboard: React.FC<DashboardProps> = ({
   const [panelkey, setPanelkey] = useState<string>("menu-0");
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
   const [, { publish }] = useMQTTContext();
-  useMQTTSubscribe(topic, (topic: string, mqttmessage: Buffer) => {
-    const key = mqttmessage.toString();
+  useMQTTSubscribe(topic, (mqttmessage: MQTTMessage) => {
+    const key = mqttmessage.message.toString();
     if (key !== panelkey) {
       hideDrawer();
       setPanelkey(key);

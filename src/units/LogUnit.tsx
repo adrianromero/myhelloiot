@@ -17,43 +17,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect, useState } from "react";
 import { IClientSubscribeOptions } from "mqtt";
-import {
-  MQTTMessage,
-  useMQTTContext,
-  useMQTTSubscribe,
-} from "../mqtt/MQTTProvider";
-import { IconFormat } from "../format/FormatTypes";
-import { StrIconFormat } from "../format/IconFormat";
+import { MQTTMessage, useMQTTContext } from "../mqtt/MQTTProvider";
+import { ValueFormat } from "../format/FormatTypes";
+import { StrValueFormat } from "../format/ValueFormat";
+import LogView from "./LogView";
 
-type ViewUnitProps = {
+export type LogUnitProps = {
   subtopic: string;
   suboptions?: IClientSubscribeOptions;
-  format?: IconFormat;
+  format?: ValueFormat;
   className?: string;
 };
 
-const ViewUnit: React.FC<ViewUnitProps> = ({
+const LogUnit: React.FC<LogUnitProps> = ({
   subtopic,
   suboptions,
-  format = StrIconFormat(),
+  format = StrValueFormat(),
   className,
 }) => {
   const [{ ready }] = useMQTTContext();
-  const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
+  const [messages, setMessages] = useState<MQTTMessage[]>([]);
 
   useEffect(() => {
-    setBuffer(Buffer.from([]));
+    setMessages([]);
   }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useMQTTSubscribe(
-    subtopic,
-    ({ message }: MQTTMessage) => {
-      setBuffer(message);
-    },
-    suboptions
+  return (
+    <div className={`myhLogUnit ${className}`}>
+      <LogView
+        subtopic={subtopic}
+        suboptions={suboptions}
+        messages={messages}
+        onMessage={(mqttmessage: MQTTMessage) => {
+          setMessages((msgs) => [mqttmessage, ...msgs]);
+        }}
+        format={format}
+        className={`${!ready ? "myhDisabled" : ""}`}
+      />
+    </div>
   );
-
-  return <span className={className}>{format.toIcon(buffer)}</span>;
 };
 
-export default ViewUnit;
+export default LogUnit;

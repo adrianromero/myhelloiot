@@ -18,7 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useEffect, useState } from "react";
 import { Slider } from "antd";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
-import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTProvider";
+import {
+  MQTTMessage,
+  useMQTTContext,
+  useMQTTSubscribe,
+} from "../mqtt/MQTTProvider";
 import { NumberValidation } from "../format/FormatTypes";
 
 type SliderUnitProps = {
@@ -47,8 +51,8 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
 
   useMQTTSubscribe(
     subtopic,
-    (topic: string, mqttmessage: Buffer) => {
-      setBuffer(mqttmessage);
+    ({ message }: MQTTMessage) => {
+      setBuffer(message);
     },
     suboptions
   );

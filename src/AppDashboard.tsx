@@ -50,6 +50,8 @@ import Dashboard from "./dashboard/Dashboard";
 import DashboardGrid from "./dashboard/DashboardGrid";
 import DashboardContent from "./dashboard/DashboardContent";
 import InputUnit from "./units/InputUnit";
+import LogUnit from "./units/LogUnit";
+import LogTool from "./units/LogTool";
 import Publisher from "./units/Publisher";
 import ButtonMessage from "./units/ButtonMessage";
 import Publishing from "./units/Publishing";
@@ -57,6 +59,7 @@ import ButtonUnit from "./units/ButtonUnit";
 import SwitchUnit from "./units/SwitchUnit";
 import ViewUnit from "./units/ViewUnit";
 import SliderUnit from "./units/SliderUnit";
+import SoundUnit from "./units/SoundUnit";
 
 import {
   HEXValueFormat,
@@ -170,6 +173,9 @@ const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
             SwitchUnit,
             ViewUnit,
             SliderUnit,
+            SoundUnit,
+            LogUnit,
+            LogTool,
           }}
           jsx={jsx}
           renderError={({ error }) => (
