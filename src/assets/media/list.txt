@@ -7,8 +7,6 @@ Game Sound Effects » GotItem
   162467_311243-lq.mp3
 BeerBottleWhoo
   249703_3930831-lq.mp3
-Cinemalayer_rainandthunder.WAV
-  321052_5442189-lq.mp3
 Greek » Sample 128 Bpm
   322378_4397472-lq.mp3
 Bell dings » Thin bell ding 2
