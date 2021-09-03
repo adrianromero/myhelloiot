@@ -39,7 +39,7 @@ import {
 } from "../format/ValueFormat";
 
 type PublisherProps = {
-  prefixtopic: string;
+  prefixtopic?: string;
   className?: string;
 };
 
@@ -87,7 +87,10 @@ const FMTValueFormat: Map<FMT, { format: ValueFormat; message: string }> =
     ],
   ]);
 
-const Publisher: React.FC<PublisherProps> = ({ prefixtopic, className }) => {
+const Publisher: React.FC<PublisherProps> = ({
+  prefixtopic = "",
+  className,
+}) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
   const [form] = Form.useForm<PublisherValues>();
   useEffect(() => {
