@@ -65,7 +65,7 @@ export type MQTTConnectionOptions = {
 export type MQTTContextValue = [
   {
     status: MQTTStatus;
-    error?: Error;
+    error?: any;
     ready: boolean;
     connected: boolean;
     options: MQTTConnectionOptions;
@@ -136,16 +136,13 @@ export const useMQTTSubscribe = (
 const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, setState] = useState<{
     status: MQTTStatus;
-    error?: Error;
+    error?: any;
     client?: MqttClient;
     online?: OnlineInfo;
-    _internal: {
-      subscriptions: SubscribeHandler[];
-      values: Map<string, Buffer>;
-    };
+    _subscriptions: SubscribeHandler[];
   }>({
     status: "Disconnected",
-    _internal: { subscriptions: [], values: new Map() },
+    _subscriptions: [],
   });
 
   const pubsubTopic = (topic: string): string => {
@@ -164,13 +161,10 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
     state.client?.end();
     state.client?.removeAllListeners();
-    setState((s) => {
-      s._internal.values.clear();
-      return {
-        status: "Disconnected",
-        _internal: s._internal,
-      };
-    });
+    setState((s) => ({
+      status: "Disconnected",
+      _subscriptions: s._subscriptions,
+    }));
   };
 
   const connect = ({ url, online, options }: MQTTConnectInfo) => {
@@ -202,17 +196,17 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             status: "Connected",
             client: s.client,
             online: s.online,
-            _internal: s._internal,
+            _subscriptions: s._subscriptions,
           };
         });
       });
-      client.on("error", (error: Error) => {
+      client.on("error", (error) => {
         setState((s) => ({
           status: "Error",
           error,
           client: s.client,
           online: s.online,
-          _internal: s._internal,
+          _subscriptions: s._subscriptions,
         }));
       });
       client.on("reconnect", () => {
@@ -220,7 +214,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           status: "Reconnecting",
           client: s.client,
           online: s.online,
-          _internal: s._internal,
+          _subscriptions: s._subscriptions,
         }));
       });
       client.on("close", () => {
@@ -228,7 +222,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           status: "Closed",
           client: s.client,
           online: s.online,
-          _internal: s._internal,
+          _subscriptions: s._subscriptions,
         }));
       });
       client.on("offline", () => {
@@ -236,7 +230,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           status: "Offline",
           client: s.client,
           online: s.online,
-          _internal: s._internal,
+          _subscriptions: s._subscriptions,
         }));
       });
       client.on("disconnect", () => {
@@ -244,14 +238,13 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           status: "Disconnecting",
           client: s.client,
           online: s.online,
-          _internal: s._internal,
+          _subscriptions: s._subscriptions,
         }));
       });
       client.on(
         "message",
         (topic: string, message: Buffer, packet: IPublishPacket) => {
-          console.log(packet);
-          state._internal.subscriptions.forEach((subs) => {
+          state._subscriptions.forEach((subs) => {
             if (match(subs.topic, topic)) {
               subs.listener({
                 topic,
@@ -263,18 +256,16 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
               });
             }
           });
-          state._internal.values.set(topic, message);
         }
       );
 
       setState((s) => {
-        s._internal.subscriptions.length = 0;
-        s._internal.values.clear();
+        s._subscriptions.length = 0;
         return {
           status: "Connecting",
           client,
           online,
-          _internal: s._internal,
+          _subscriptions: s._subscriptions,
         };
       });
     } catch (error) {
@@ -283,7 +274,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         error,
         client: s.client,
         online: s.online,
-        _internal: s._internal,
+        _subscriptions: s._subscriptions,
       }));
     }
   };
@@ -296,19 +287,12 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const topic = pubsubTopic(subtopic);
     if (state.client && topic !== "") {
       const handler = { topic, listener };
-      state._internal.subscriptions.push(handler);
+      state._subscriptions.push(handler);
       if (
-        !state._internal.subscriptions.some(
-          (s) => s !== handler && s.topic === topic
-        )
+        !state._subscriptions.some((s) => s !== handler && s.topic === topic)
       ) {
         state.client.subscribe(topic, options || { qos: 0 });
       }
-      // in case message is retain, system will call two times the listener
-      const time = new Date().getTime();
-      Array.from(state._internal.values.entries())
-        .filter(([key]) => match(topic, key))
-        .forEach(([key, message]) => listener({ topic: key, time, message }));
       return handler;
     }
     return null;
@@ -316,16 +300,12 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const unsubscribe = (handler: SubscribeHandler | null) => {
     if (state.client && handler) {
-      const inx: number = state._internal.subscriptions.findIndex(
-        (s) => s === handler
-      );
+      const inx: number = state._subscriptions.findIndex((s) => s === handler);
       if (inx < 0) {
         throw new Error("Not subscribed");
       }
-      state._internal.subscriptions.splice(inx, 1);
-      if (
-        !state._internal.subscriptions.some((s) => s.topic === handler.topic)
-      ) {
+      state._subscriptions.splice(inx, 1);
+      if (!state._subscriptions.some((s) => s.topic === handler.topic)) {
         state.client.unsubscribe(handler.topic);
       }
     }

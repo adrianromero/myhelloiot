@@ -71,7 +71,8 @@ const Dashboard: React.FC<DashboardProps> = ({
   }
 
   const menus: React.ReactElement<any, any>[] = [];
-  let child: React.ReactElement<DashboardContentProps, any> | undefined;
+  const allchildren: React.ReactElement<DashboardContentProps, any>[] = [];
+  let cvisible: React.ReactElement<DashboardContentProps, any> | undefined;
   let menDisabled: boolean = false;
   let disDisabled: boolean = false;
   let index = 0;
@@ -86,11 +87,12 @@ const Dashboard: React.FC<DashboardProps> = ({
           </Menu.Item>
         );
       }
-      if (key === panelkey || !child) {
-        child = c;
-        menDisabled = child.props.menuDisabled ?? false;
-        disDisabled = child.props.disconnectDisabled ?? false;
+      if (key === panelkey || !cvisible) {
+        cvisible = c;
+        menDisabled = c.props.menuDisabled ?? false;
+        disDisabled = c.props.disconnectDisabled ?? false;
       }
+      allchildren.push(c);
     }
   });
 
@@ -127,7 +129,11 @@ const Dashboard: React.FC<DashboardProps> = ({
             </Menu>
           </Drawer>
         )}
-        {child}
+        {allchildren.map((c) => (
+          <div key={c.key} style={c === cvisible ? {} : { display: "none" }}>
+            {c}
+          </div>
+        ))}
       </Layout.Content>
     </Layout>
   );
