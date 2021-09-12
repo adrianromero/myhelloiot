@@ -25,7 +25,7 @@ import {
   StrValueFormat,
 } from "../format/ValueFormat";
 import LogView from "./LogView";
-import { Button, CheckboxOptionType, Radio } from "antd";
+import { Button, CheckboxOptionType, Col, Radio, Row } from "antd";
 import {
   CaretRightOutlined,
   PauseOutlined,
@@ -71,40 +71,46 @@ const LogTool: React.FC<LogToolProps> = ({
 
   return (
     <div className={`myhLogTool ${className}`}>
-      <div className="myhLog-header">
-        <div className="myhLog-title">
-          <Title level={5}>{subtopic}</Title>
-        </div>
-        <div className="myhLog-toolbar">
-          <Button
-            type="primary"
-            icon={paused ? <PauseOutlined /> : <CaretRightOutlined />}
-            disabled={!connected}
-            onClick={() => setTool(([p, msgs]) => [!p, msgs])}
+      <Row gutter={8}>
+        <Col xs={0} sm={0} md={0} lg={4} />
+        <Col xs={24} sm={24} md={24} lg={16}>
+          <div className="myhLogTool-header">
+            <div className="myhLogTool-title">
+              <Title level={5}>{subtopic}</Title>
+            </div>
+            <div className="myhLogTool-toolbar">
+              <Button
+                type="primary"
+                icon={paused ? <PauseOutlined /> : <CaretRightOutlined />}
+                disabled={!connected}
+                onClick={() => setTool(([p, msgs]) => [!p, msgs])}
+              />
+              <Button
+                icon={<StopOutlined />}
+                disabled={!connected}
+                onClick={() => setTool(([p]) => [p, []])}
+              />
+              <Radio.Group
+                options={OPTIONS}
+                onChange={(e) => setStrformat(e.target.value)}
+                value={strformat}
+                optionType="button"
+              />
+            </div>
+          </div>
+          <LogView
+            subtopic={subtopic}
+            suboptions={suboptions}
+            messages={messages}
+            onMessage={(mqttmessage: MQTTMessage) =>
+              setTool(([p, msgs]) => [p, p ? msgs : [mqttmessage, ...msgs]])
+            }
+            format={format}
+            className={!ready ? "myhDisabled" : ""}
           />
-          <Button
-            icon={<StopOutlined />}
-            disabled={!connected}
-            onClick={() => setTool(([p]) => [p, []])}
-          />
-          <Radio.Group
-            options={OPTIONS}
-            onChange={(e) => setStrformat(e.target.value)}
-            value={strformat}
-            optionType="button"
-          />
-        </div>
-      </div>
-      <LogView
-        subtopic={subtopic}
-        suboptions={suboptions}
-        messages={messages}
-        onMessage={(mqttmessage: MQTTMessage) =>
-          setTool(([p, msgs]) => [p, p ? msgs : [mqttmessage, ...msgs]])
-        }
-        format={format}
-        className={!ready ? "myhDisabled" : ""}
-      />
+        </Col>
+        <Col xs={0} sm={0} md={0} lg={4} />
+      </Row>
     </div>
   );
 };

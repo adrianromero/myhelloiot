@@ -54,13 +54,13 @@ const LogView: React.FC<LogViewProps> = ({
       dataSource={messages}
       renderItem={(item) => (
         <List.Item>
-          <Paragraph className="myhLog-message" copyable>
+          <Paragraph className="myhLogView-message" copyable>
             {format.toDisplay(item.message)}
           </Paragraph>
-          <div className="myhLog-tags">
+          <div className="myhLogView-tags">
             <Tag>{item.topic}</Tag>
           </div>
-          <div className="myhLog-tags">
+          <div className="myhLogView-tags">
             {item.dup && <Tag color="lime">Dup</Tag>}
             {item.retain && <Tag color="green">Retain</Tag>}
             {typeof item.qos === "number" && (

@@ -141,32 +141,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   height: 70px;
 }
 
-.myhLog-tags {
+.myhLogView .ant-list-items {
+  background-color: #fff;
+}
+
+.myhLogView-tags {
   text-align: right;
 }
 
-.myhLog-tags .ant-tag {
+.myhLogView-tags .ant-tag {
   margin-bottom: 4px;
 }
 
-.myhLog-header {
+.myhLogView-message {
+  margin: 0 0.2em;
+  padding: 0.2em 0.4em 0.1em;
+  font-size: 85%;
+  font-family: monospace;
+}
+
+.myhLogTool-header {
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
 }
 
-.myhLog-title {
+.myhLogTool-title {
   flex-grow: 1;
 }
 
-.myhLog-toolbar .ant-btn {
+.myhLogTool-toolbar .ant-btn {
   margin-right: 8px;
   margin-bottom: 12px;
-}
-
-.myhLog-message {
-  margin: 0 0.2em;
-  padding: 0.2em 0.4em 0.1em;
-  font-size: 85%;
-  font-family: monospace;
 }
