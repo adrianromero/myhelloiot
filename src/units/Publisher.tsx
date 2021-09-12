@@ -25,6 +25,7 @@ import {
   Row,
   Col,
   RadioChangeEvent,
+  message,
 } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import { QoS } from "mqtt";
@@ -117,6 +118,7 @@ const Publisher: React.FC<PublisherProps> = ({
       qos: values.qos,
       retain: values.retain,
     });
+    message.success(`Published: ${values.value}`);
   };
 
   const onFMTChange = (e: RadioChangeEvent) => {
@@ -125,7 +127,7 @@ const Publisher: React.FC<PublisherProps> = ({
 
   return (
     <Form
-      className={`myhPublisherl ${className || ""}`}
+      className={`myhPublisher ${className || ""}`}
       form={form}
       name={`publisher_${Math.random().toString(16).substr(2).padEnd(13, "0")}`}
       onFinish={onFinish}
