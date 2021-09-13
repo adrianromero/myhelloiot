@@ -90,7 +90,7 @@ const FMTValueFormat: Map<FMT, { format: ValueFormat; message: string }> =
 
 const Publisher: React.FC<PublisherProps> = ({
   prefixtopic = "",
-  className,
+  className = "",
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
   const [form] = Form.useForm<PublisherValues>();
@@ -127,7 +127,7 @@ const Publisher: React.FC<PublisherProps> = ({
 
   return (
     <Form
-      className={`myhPublisher ${className || ""}`}
+      className={`myhPublisher ${className}`}
       form={form}
       name={`publisher_${Math.random().toString(16).substr(2).padEnd(13, "0")}`}
       onFinish={onFinish}
