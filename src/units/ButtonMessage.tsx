@@ -32,6 +32,7 @@ export type ButtonMessageProps = {
   icon?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  children: React.ReactNode;
 };
 
 const ButtonMessage: React.FC<ButtonMessageProps> = ({
@@ -41,7 +42,8 @@ const ButtonMessage: React.FC<ButtonMessageProps> = ({
   value,
   label,
   icon,
-  className,
+  children,
+  className = "",
   style,
 }) => {
   const [{ connected }, { publish }] = useMQTTContext();
@@ -57,7 +59,8 @@ const ButtonMessage: React.FC<ButtonMessageProps> = ({
       className={`myhPublishingButton ${className}`}
       style={style}
     >
-      {label ?? pubtopic}
+      {label}
+      {children}
     </Button>
   );
 };

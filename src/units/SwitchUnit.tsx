@@ -28,8 +28,8 @@ import { ValueFormat } from "../format/FormatTypes";
 import { StrValueFormat } from "../format/ValueFormat";
 
 type SwitchUnitProps = {
-  pubtopic: string;
-  subtopic: string;
+  pubtopic?: string;
+  subtopic?: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
   format?: ValueFormat;
@@ -37,8 +37,8 @@ type SwitchUnitProps = {
 };
 
 const SwitchUnit: React.FC<SwitchUnitProps> = ({
-  pubtopic,
-  subtopic,
+  pubtopic = "",
+  subtopic = "",
   puboptions,
   suboptions,
   format = StrValueFormat(),
@@ -68,7 +68,7 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
     <Switch
       checked={checked}
       onChange={onChange}
-      disabled={!connected}
+      disabled={!connected || pubtopic === ""}
       className={className}
     />
   );

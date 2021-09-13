@@ -42,7 +42,7 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
   puboptions,
   suboptions,
   format = LabelIconValueFormat(SwitchValueFormat()),
-  className,
+  className = "",
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
@@ -67,7 +67,7 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
 
   return (
     <Button
-      className={`myhPublishingButton ${className || ""}`}
+      className={`myhPublishingButton ${className}`}
       type="primary"
       onClick={onClick}
       disabled={!connected}
