@@ -36,7 +36,7 @@ const ViewUnit: React.FC<ViewUnitProps> = ({
   subtopic,
   suboptions,
   format = StrIconFormat(),
-  className,
+  className = "",
 }) => {
   const [{ ready }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
