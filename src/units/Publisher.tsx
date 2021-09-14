@@ -25,7 +25,7 @@ import {
   Row,
   Col,
   RadioChangeEvent,
-  message,
+  notification,
 } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import { QoS } from "mqtt";
@@ -118,7 +118,11 @@ const Publisher: React.FC<PublisherProps> = ({
       qos: values.qos,
       retain: values.retain,
     });
-    message.success(`Published: ${values.value}`);
+    notification.success({
+      message: values.topic,
+      description: values.value ?? "<NULL>",
+      duration: 2.5,
+    });
   };
 
   const onFMTChange = (e: RadioChangeEvent) => {
