@@ -40,17 +40,23 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
   const locale = navigator.language;
   const intlvalue = new Intl.NumberFormat(locale, valueformat);
 
+  const startangle = 90;
+  const endangle = 360;
+
   const r1 = 50;
   const centerx = 100;
   const centery = 65;
 
-  let arcvalue: number;
+  const arctotal = endangle - startangle;
+  const arctotalrad = r1 * radians(arctotal);
+
+  let arcvaluerad: number;
   let formatvalue: string;
   if (typeof value === "undefined" || isNaN(value)) {
-    arcvalue = NaN;
+    arcvaluerad = NaN;
     formatvalue = "";
   } else {
-    arcvalue = padvalue(min, max, r1 * radians(270))(value);
+    arcvaluerad = padvalue(min, max, arctotalrad)(value);
     formatvalue = intlvalue.format(value);
   }
 
@@ -67,32 +73,35 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
           cx: centerx,
           cy: centery,
           r: r1,
-          start: radians(90),
-          end: radians(0),
-          orientation: 1,
+          start: radians(startangle),
+          end: radians(endangle),
+          orientation: arctotal > 180 ? 1 : 0,
           sweep: 1,
         })}
         className="space-indicator-background"
         style={{
           fill: "#00000000",
+          strokeMiterlimit: 0,
+          strokeDasharray: "none",
         }}
       />
-      {!isNaN(arcvalue) && (
+      {!isNaN(arcvaluerad) && (
         <path
           id="path2"
           d={arcpath({
             cx: centerx,
             cy: centery,
             r: r1,
-            start: radians(90),
-            end: radians(0),
-            orientation: 1,
+            start: radians(startangle),
+            end: radians(endangle),
+            orientation: arctotal > 180 ? 1 : 0,
             sweep: 1,
           })}
           className="space-indicator-bar"
           style={{
-            strokeDasharray: `${arcvalue} 400`,
             fill: "#00000000",
+            strokeMiterlimit: 0,
+            strokeDasharray: `${arcvaluerad} 400`,
           }}
         />
       )}
