@@ -47,7 +47,6 @@ const NotifyUnit: React.FC<NotifyUnitProps> = ({
         message: format.toDisplay(message),
         duration,
         className,
-        closeIcon: null,
       });
     },
     suboptions
