@@ -18,7 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { useState, useEffect } from "react";
 
 const useAudio = (
-  url: string
+  url: string,
+  options: { loop?: boolean; volume?: number } = {}
 ): [
   { playing: boolean },
   { play: () => void; pause: () => void; resume: () => void }
@@ -28,8 +29,8 @@ const useAudio = (
   const forceUpdate = () => setUpdate((prevState) => !prevState);
 
   useEffect(() => {
-    // audio.loop = true;
-    // audio.volume = 0.5;
+    audio.loop = options.loop ?? false;
+    audio.volume = options.volume ?? 1.0;
     audio.addEventListener("play", forceUpdate);
     audio.addEventListener("pause", forceUpdate);
     audio.addEventListener("ended", forceUpdate);
@@ -39,6 +40,7 @@ const useAudio = (
       audio.removeEventListener("pause", forceUpdate);
       audio.removeEventListener("ended", forceUpdate);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audio]);
 
   const play = () => {

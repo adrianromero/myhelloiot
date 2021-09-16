@@ -34,26 +34,31 @@ const messagepop = require("../assets/media/537061_7117640-lq.mp3").default;
 type SoundUnitProps = {
   subtopic: string;
   suboptions?: IClientSubscribeOptions;
+  volume?: number;
 };
 
 const FORMAT: ValueFormat = StrValueFormat();
 
-const SoundUnit: React.FC<SoundUnitProps> = ({ subtopic, suboptions }) => {
-  const [, { play: playClockalarm }] = useAudio(clockalarm);
-  const [, { play: playGameitem }] = useAudio(gameitem);
-  const [, { play: playBottlewhoo }] = useAudio(bottlewhoo);
-  const [, { play: playGreek }] = useAudio(greek);
-  const [, { play: playBell }] = useAudio(bell);
-  const [, { play: playSmokealarm }] = useAudio(smokealarm);
-  const [, { play: playChimes }] = useAudio(chimes);
-  const [, { play: playHarp }] = useAudio(harp);
-  const [, { play: playMessagepop }] = useAudio(messagepop);
+const SoundUnit: React.FC<SoundUnitProps> = ({
+  subtopic,
+  suboptions,
+  volume = 1.0,
+}) => {
+  const [, { play: playClockalarm }] = useAudio(clockalarm, { volume });
+  const [, { play: playGameitem }] = useAudio(gameitem, { volume });
+  const [, { play: playBottlewhoo }] = useAudio(bottlewhoo, { volume });
+  const [, { play: playGreek }] = useAudio(greek, { volume });
+  const [, { play: playBell }] = useAudio(bell, { volume });
+  const [, { play: playSmokealarm }] = useAudio(smokealarm, { volume });
+  const [, { play: playChimes }] = useAudio(chimes, { volume });
+  const [, { play: playHarp }] = useAudio(harp, { volume });
+  const [, { play: playMessagepop }] = useAudio(messagepop, { volume });
 
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
       switch (FORMAT.toDisplay(message)) {
-        case "clockAlarm":
+        case "clockalarm":
           playClockalarm();
           break;
         case "botlewhoo":
