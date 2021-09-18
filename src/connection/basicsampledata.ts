@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 const pubsubsampledata = `{/* Basic units example. */}
-<DashboardGrid className="myhDashboard">
+<DashboardGrid>
   <CCard title="Temperature pub/sub">
     <InputUnit 
       pubtopic="myhelloiot/temperature"

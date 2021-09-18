@@ -24,6 +24,7 @@ import {
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
 import { NumberValidation } from "../format/FormatTypes";
+import "./SliderUnit.css";
 
 type SliderUnitProps = {
   pubtopic: string;
@@ -40,7 +41,7 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
   puboptions,
   suboptions,
   numberValidation,
-  className,
+  className = "",
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
@@ -75,7 +76,7 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
       onChange={onChange}
       onAfterChange={onAfterChange}
       disabled={!connected}
-      className={className}
+      className={`myhSliderUnit ${className}`}
     />
   );
 };

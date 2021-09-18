@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 const mosquittosampledata = `{/* Mosquitto SYS topics example. */}
-<DashboardGrid className="myhDashboard">
+<DashboardGrid>
   <LSection>Broker</LSection>
   <CCard title="Version">
     <InputUnit subtopic="$SYS/broker/version" />

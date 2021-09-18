@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 const pubsampledata = `{/* Publication example. */}
-<Dashboard className="myhDashboard">
+<Dashboard>
   <DashboardContent >
     <PanelGrid>
       <CCard title="myhelloiot/testing/topic1">

@@ -122,14 +122,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   display: flex;
   justify-content: flex-end;
 }
-
-.myhDashboard .myhAppContent-panel .ant-slider {
-  margin: 20px 26px 20px 26px;
-}
-
-.myhDashboard .myhAppContent-panel .ant-slider .ant-slider-handle {
-  width: 40px;
-  height: 40px;
-  margin-top: -18px;
-  border-width: 5px;
-}
