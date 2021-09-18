@@ -24,6 +24,7 @@ import {
 import { Row, Col, Typography, Button, Divider, Popover, Space } from "antd";
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import { useDispatchDisconnect } from "../AppStoreProvider";
+import ConnectionStatus from "./ConnectionStatus";
 
 const { Text } = Typography;
 
@@ -52,19 +53,19 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
   if (status === "Connected") {
     toolbar = (
       <Space>
-        <span className="myhConnectionStatus-label">{options.hostname}</span>
-        <span className="myhConnectionStatus-icon">
-          <CheckCircleOutlined style={{ color: "#52c41a" }} />
-        </span>
+        <ConnectionStatus
+          label={options.hostname ?? ""}
+          icon={<CheckCircleOutlined style={{ color: "#52c41a" }} />}
+        />
       </Space>
     );
   } else {
     toolbar = (
       <Space>
-        <span className="myhConnectionStatus-label">{status}</span>
-        <span className="myhConnectionStatus-icon">
-          <LoadingOutlined style={{ color: "white" }} />
-        </span>
+        <ConnectionStatus
+          label={status}
+          icon={<LoadingOutlined style={{ color: "#ffffff" }} />}
+        />
       </Space>
     );
   }

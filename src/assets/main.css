@@ -43,14 +43,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   order: -1;
 }
 
-.myhConnectionStatus-label {
-  color: darkgray;
-  margin-right: 8px;
-}
-.myhConnectionStatus-icon {
-  font-size: 140%;
-}
-
 .myhMainLayout {
   margin-top: 64px;
   min-height: calc(100vh - 64px);

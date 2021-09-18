@@ -22,6 +22,7 @@ import AppHeader from "./AppHeader";
 import ModalError from "./ModalError";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import "./AppError.css";
+import ConnectionStatus from "./dashboard/ConnectionStatus";
 
 const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
   title,
@@ -41,12 +42,10 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
       <Layout>
         <AppHeader>
           <div className="myhMenuDisplayButton"></div>
-          <>
-            <span className="myhConnectionStatus-label">Error</span>
-            <span className="myhConnectionStatus-icon">
-              <CloseCircleOutlined style={{ color: "#FF0000" }} />
-            </span>
-          </>
+          <ConnectionStatus
+            label="Error"
+            icon={<CloseCircleOutlined style={{ color: "#FF0000" }} />}
+          />
         </AppHeader>
         <Layout.Content className="myhMainLayout">
           <div className="myhAppContent-panel">
