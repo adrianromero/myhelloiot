@@ -33,6 +33,8 @@ import {
 } from "@ant-design/icons";
 import Title from "antd/lib/typography/Title";
 
+import "./LogTool.css";
+
 export type LogToolProps = {
   subtopic: string;
   suboptions?: IClientSubscribeOptions;

@@ -152,18 +152,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   font-size: 85%;
   font-family: monospace;
 }
-
-.myhLogTool-header {
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
-
-.myhLogTool-title {
-  flex-grow: 1;
-}
-
-.myhLogTool-toolbar .ant-btn {
-  margin-right: 8px;
-  margin-bottom: 12px;
-}
