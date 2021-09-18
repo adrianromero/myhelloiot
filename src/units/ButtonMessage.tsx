@@ -23,6 +23,8 @@ import { useMQTTContext } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";
 import { StrValueFormat } from "../format/ValueFormat";
 
+import "./ButtonMessage.css";
+
 export type ButtonMessageProps = {
   pubtopic: string;
   puboptions?: IClientPublishOptions;
@@ -56,7 +58,7 @@ const ButtonMessage: React.FC<ButtonMessageProps> = ({
       onClick={onClick}
       disabled={!connected}
       icon={icon}
-      className={`myhPublishingButton ${className}`}
+      className={`myhButtonMessage ${className}`}
       style={style}
     >
       {label}

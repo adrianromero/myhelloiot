@@ -27,6 +27,8 @@ import { IconValueFormat } from "../format/FormatTypes";
 import { LabelIconValueFormat } from "../format/IconFormat";
 import { SwitchValueFormat } from "../format/ValueFormat";
 
+import "./ButtonUnit.css";
+
 export type ButtonUnitProps = {
   pubtopic: string;
   subtopic?: string;
@@ -67,7 +69,7 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
 
   return (
     <Button
-      className={`myhPublishingButton ${className}`}
+      className={`myhButtonUnit ${className}`}
       type="primary"
       onClick={onClick}
       disabled={!connected}

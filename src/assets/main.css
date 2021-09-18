@@ -134,14 +134,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   border-width: 5px;
 }
 
-.myhPublishingButton {
-  font-size: 200%;
-  font-weight: 800;
-  width: 100%;
-  height: unset;
-  margin-bottom: 4px;
-}
-
 .myhLogView .ant-list-items {
   background-color: #fff;
 }
