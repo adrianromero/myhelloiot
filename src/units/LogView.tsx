@@ -23,6 +23,8 @@ import { ValueFormat } from "../format/FormatTypes";
 import { StrValueFormat } from "../format/ValueFormat";
 import Paragraph from "antd/lib/typography/Paragraph";
 
+import "./LogView.css";
+
 export type LogViewProps = {
   subtopic: string;
   suboptions?: IClientSubscribeOptions;

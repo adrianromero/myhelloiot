@@ -133,22 +133,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   margin-top: -18px;
   border-width: 5px;
 }
-
-.myhLogView .ant-list-items {
-  background-color: #fff;
-}
-
-.myhLogView-tags {
-  text-align: right;
-}
-
-.myhLogView-tags .ant-tag {
-  margin-bottom: 4px;
-}
-
-.myhLogView-message {
-  margin: 0 0.2em;
-  padding: 0.2em 0.4em 0.1em;
-  font-size: 85%;
-  font-family: monospace;
-}
