@@ -227,12 +227,7 @@ const Publisher: React.FC<PublisherProps> = ({
               },
             ]}
           >
-            <Input.TextArea
-              className="myh-value"
-              rows={6}
-              autoComplete="off"
-              disabled={!connected}
-            />
+            <Input.TextArea rows={6} autoComplete="off" disabled={!connected} />
           </Form.Item>
         </Col>
         <Col xs={0} sm={0} md={0} lg={4} />

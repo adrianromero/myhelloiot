@@ -110,7 +110,7 @@ const Dashboard: React.FC<DashboardProps> = ({
     <Layout className={className}>
       <AppHeader title={title}>
         {menus.length > 0 && (
-          <div className="myhMenuDisplayButton">
+          <div className="myhDashboard-buttonmenu">
             <Button onClick={showDrawer} ghost hidden={menDisabled}>
               <MenuUnfoldOutlined />
             </Button>
@@ -123,7 +123,7 @@ const Dashboard: React.FC<DashboardProps> = ({
       <Layout.Content className="myhMainLayout">
         {menus.length > 0 && (
           <Drawer
-            className="myhDrawerMenu"
+            className="myhDashboard-drawermenu"
             placement="left"
             closable={false}
             onClose={hideDrawer}

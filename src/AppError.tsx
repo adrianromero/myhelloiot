@@ -41,7 +41,6 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
       />
       <Layout>
         <AppHeader>
-          <div className="myhMenuDisplayButton"></div>
           <ConnectionStatus
             label="Error"
             icon={<CloseCircleOutlined style={{ color: "#FF0000" }} />}

@@ -48,7 +48,7 @@ export type CCardProps = {
 
 export const CCard: React.FC<CCardProps> = ({ title, className, children }) => (
   <C>
-    <Card className={`myh-card ${className || ""}`} size="small" title={title}>
+    <Card className={`myhCCard ${className || ""}`} size="small" title={title}>
       {children}
     </Card>
   </C>
@@ -61,7 +61,7 @@ export type LSectionProps = {
 
 export const LSection: React.FC<LSectionProps> = ({ className, children }) => (
   <L>
-    <div className={`myh-section ${className || ""}`}>{children}</div>
+    <div className={`myhLSection ${className || ""}`}>{children}</div>
   </L>
 );
 
@@ -71,10 +71,10 @@ export type PanelGridProps = {
 };
 
 export const PanelGrid: React.FC<PanelGridProps> = ({
-  className,
+  className = "",
   children,
 }) => (
-  <div className={`myhAppContent-panel ${className || ""}`}>
+  <div className={`myhAppContent-panel ${className}`}>
     <Row
       gutter={[
         { xs: 8, sm: 8, md: 8, lg: 8 },
@@ -87,8 +87,6 @@ export const PanelGrid: React.FC<PanelGridProps> = ({
 );
 
 export const PanelContent: React.FC<PanelGridProps> = ({
-  className,
+  className = "",
   children,
-}) => (
-  <div className={`myhAppContent-panel ${className || ""}`}>{children}</div>
-);
+}) => <div className={`myhAppContent-panel ${className}`}>{children}</div>;

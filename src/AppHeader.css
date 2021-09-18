@@ -15,42 +15,25 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-.myhMainLayout {
-  margin-top: 64px;
-  min-height: calc(100vh - 64px);
+.myhAppHeader {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
 }
 
-.myhAppContent-panel {
-  margin: 24px;
+.myhAppHeader.ant-layout-header {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-.myhLSection {
-  font-weight: 500;
-  border-bottom: 1px solid #808080;
+.myhAppHeader-container {
+  display: flex;
+  align-items: center;
 }
 
-.myhCCard {
-  height: 100%;
-}
-
-.myhCCard .myh-value {
-  font-size: 200%;
-  font-weight: 800;
-}
-
-.myhCCard .myh-value-padding {
-  padding: 4px 11px;
-}
-
-.myh-class_alignright {
-  text-align: right;
-}
-
-.myhDashboard-buttonmenu {
-  width: 50px;
-  order: -1;
-}
-
-.myhDashboard-drawermenu .ant-drawer-body {
-  padding: 0;
+.myhAppHeader-title {
+  color: white;
+  font-size: 150%;
+  margin: 0px 8px;
+  flex-grow: 1;
 }
