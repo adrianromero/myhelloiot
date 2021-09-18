@@ -85,14 +85,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .myhDrawerMenu .ant-drawer-body {
   padding: 0;
 }
-
-.myhJSXErrorJSX {
-  font-family: monospace;
-  font-size: 10px;
-  padding: 5px;
-  background-color: #feffd6;
-  white-space: pre-wrap;
-  height: 400px;
-  overflow: auto;
-  color: #505050;
-}

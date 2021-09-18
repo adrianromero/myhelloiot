@@ -21,6 +21,7 @@ import { useDispatchDisconnect } from "./AppStoreProvider";
 import AppHeader from "./AppHeader";
 import ModalError from "./ModalError";
 import { CloseCircleOutlined } from "@ant-design/icons";
+import "./AppError.css";
 
 const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
   title,
@@ -49,7 +50,7 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
         </AppHeader>
         <Layout.Content className="myhMainLayout">
           <div className="myhAppContent-panel">
-            {jsx && <div className="myhJSXErrorJSX">{jsx}</div>}
+            {jsx && <div className="myhAppError-jsx">{jsx}</div>}
           </div>
         </Layout.Content>
       </Layout>
