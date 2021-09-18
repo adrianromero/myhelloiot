@@ -96,29 +96,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   overflow: auto;
   color: #505050;
 }
-
-.myhModalError-title {
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 10px;
-}
-
-.myhModalError-message {
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
-.myhModalError-icon {
-  padding-right: 20px;
-  color: #ff0000;
-  font-size: 140%;
-}
-
-.myhModalError-container {
-  display: flex;
-}
-
-.myhModalError-ok {
-  display: flex;
-  justify-content: flex-end;
-}
