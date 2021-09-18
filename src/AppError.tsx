@@ -17,8 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { Layout } from "antd";
-import { useDispatch } from "react-redux";
-import { AppStoreDispatch } from "./AppStoreProvider";
+import { useDispatchDisconnect } from "./AppStoreProvider";
 import AppHeader from "./AppHeader";
 import ModalError from "./ModalError";
 import { CloseCircleOutlined } from "@ant-design/icons";
@@ -28,14 +27,14 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
   error,
   jsx,
 }) => {
-  const dispatch = useDispatch<AppStoreDispatch>();
+  const dispatchDisconnect = useDispatchDisconnect();
 
   return (
     <>
       <ModalError
         title={title}
         error={error}
-        onOk={() => dispatch({ type: "set", newState: { connected: "" } })}
+        onOk={dispatchDisconnect}
         visible
       />
       <Layout>

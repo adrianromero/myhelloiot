@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { createStore, Store, Reducer, Action, Dispatch } from "redux";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { ConnectInfo, defaultConnectInfo } from "./connection/ConnectionInfo";
 
 const STORENAME = "myhelloiot-store";
@@ -25,12 +25,18 @@ const STORENAME = "myhelloiot-store";
 export type AppStoreValue = {
   connected: string;
   connectInfo: ConnectInfo;
+  properties: {
+    [key: string]: string;
+  };
 };
 
 export interface AppStoreAction extends Action<"set"> {
   newState: {
     connected?: string;
     connectInfo?: ConnectInfo;
+    properties?: {
+      [key: string]: string;
+    };
   };
 }
 export type AppStoreDispatch = Dispatch<AppStoreAction>;
@@ -38,13 +44,41 @@ export type AppStoreDispatch = Dispatch<AppStoreAction>;
 const emptyAppStoreValue: AppStoreValue = {
   connected: "",
   connectInfo: defaultConnectInfo,
+  properties: {},
+};
+
+export const useDispatchDisconnect = () => {
+  const dispatch = useDispatch<AppStoreDispatch>();
+  return () => {
+    dispatch({ type: "set", newState: { connected: "" } });
+  };
+};
+
+export const useDispatchConnect = () => {
+  const dispatch = useDispatch<AppStoreDispatch>();
+  return (connectInfo: ConnectInfo) => {
+    dispatch({
+      type: "set",
+      newState: { connected: "connected", connectInfo },
+    });
+  };
+};
+
+export const useDispatchProperties = () => {
+  const dispatch = useDispatch<AppStoreDispatch>();
+  return (properties: { [key: string]: string }) => {
+    dispatch({
+      type: "set",
+      newState: { properties },
+    });
+  };
 };
 
 const loadLS = (): AppStoreValue => {
   try {
     const lsvalue = localStorage.getItem(STORENAME);
     if (lsvalue) {
-      return JSON.parse(lsvalue);
+      return { ...emptyAppStoreValue, ...JSON.parse(lsvalue) };
     }
     return emptyAppStoreValue;
   } catch (e) {
@@ -60,7 +94,16 @@ const reducer: Reducer<AppStoreValue, AppStoreAction> = (
   prevState: AppStoreValue | undefined,
   action: AppStoreAction
 ): AppStoreValue => {
-  return { ...emptyAppStoreValue, ...prevState, ...action.newState };
+  const properties = {
+    ...prevState?.properties,
+    ...action.newState?.properties,
+  };
+  return {
+    ...emptyAppStoreValue,
+    ...prevState,
+    ...action.newState,
+    properties,
+  };
 };
 
 const store: Store<AppStoreValue, AppStoreAction> = createStore(

@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { FileInfo } from "./UploadRaw";
+import { cyrb53str, FileInfo } from "./UploadRaw";
 import basicsampledata from "./basicsampledata";
 
 export type ConnectInfo = {
@@ -52,6 +52,16 @@ export const defaultConnectInfo = {
   reconnectPeriod: 1000,
   onlinetopic: "",
   onlineqos: 0,
-  dashboard: { name: "basic.jsx", type: "text/jsx", data: basicsampledata },
-  dashboardcss: { name: "dashboard.css", type: "text/css", data: "" },
+  dashboard: {
+    name: "basic.jsx",
+    type: "text/jsx",
+    data: basicsampledata,
+    hash: cyrb53str(basicsampledata),
+  },
+  dashboardcss: {
+    name: "dashboard.css",
+    type: "text/css",
+    data: "",
+    hash: cyrb53str(""),
+  },
 };

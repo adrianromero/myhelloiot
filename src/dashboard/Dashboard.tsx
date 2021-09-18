@@ -16,8 +16,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Drawer, Button, Layout, Menu } from "antd";
 import { MenuUnfoldOutlined, PictureFilled } from "@ant-design/icons";
+import { AppStoreValue, useDispatchProperties } from "../AppStoreProvider";
 import AppHeader from "../AppHeader";
 import {
   MQTTMessage,
@@ -42,7 +44,15 @@ const Dashboard: React.FC<DashboardProps> = ({
   className,
   children,
 }) => {
-  const [panelkey, setPanelkey] = useState<string>("menu-0");
+  const panelkey: string = useSelector<AppStoreValue, string>(
+    (s) => s.properties.panelkey ?? "menu-0"
+  );
+  const dashboardhash: string = useSelector<AppStoreValue, string>(
+    (s) => s.connectInfo.dashboard.hash
+  );
+  const dispatchProperties = useDispatchProperties();
+  const setPanelkey = (panelkey: string) => dispatchProperties({ panelkey });
+
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
   const [, { publish }] = useMQTTContext();
   useMQTTSubscribe(topic, (mqttmessage: MQTTMessage) => {
@@ -79,7 +89,7 @@ const Dashboard: React.FC<DashboardProps> = ({
 
   React.Children.forEach(children, (c) => {
     if (React.isValidElement(c) && c.type === DashboardContent) {
-      const key: string = c.key ? c.key.toString() : "menu-" + index++;
+      const key: string = "menu-" + dashboardhash + index++;
       if (c.props.name) {
         menus.push(
           <Menu.Item key={key} icon={c.props.icon ?? <PictureFilled />}>

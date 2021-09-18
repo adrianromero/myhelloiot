@@ -27,11 +27,11 @@ import {
   Layout,
   Tabs,
 } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ConnectInfo } from "./ConnectionInfo";
 import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
-import { AppStoreValue, AppStoreDispatch } from "../AppStoreProvider";
+import { AppStoreValue, useDispatchConnect } from "../AppStoreProvider";
 import UploadRaw from "./UploadRaw";
 import ContentConnectAbout from "./ContentConnectAbout";
 import "./ContentConnect.css";
@@ -45,7 +45,7 @@ type ModalErrorInfo = {
 
 const PanelConnect: React.FC<{}> = () => {
   const [form] = Form.useForm<ConnectInfo>();
-  const dispatch = useDispatch<AppStoreDispatch>();
+  const dispatchConnect = useDispatchConnect();
   const connectInfo = useSelector<AppStoreValue, ConnectInfo>(
     (s) => s.connectInfo
   );
@@ -58,13 +58,6 @@ const PanelConnect: React.FC<{}> = () => {
     form.setFieldsValue(connectInfo);
     window.scrollTo(0, 0);
   }, [connectInfo, form]);
-
-  const handleConnect = (newConnectInfo: ConnectInfo): void => {
-    dispatch({
-      type: "set",
-      newState: { connected: "connected", connectInfo: newConnectInfo },
-    });
-  };
 
   const handleFail = (): void => {
     showError({
@@ -80,7 +73,7 @@ const PanelConnect: React.FC<{}> = () => {
       <Form
         form={form}
         name="connection"
-        onFinish={handleConnect}
+        onFinish={dispatchConnect}
         onFinishFailed={handleFail}
         className="myhConnectionForm"
       >

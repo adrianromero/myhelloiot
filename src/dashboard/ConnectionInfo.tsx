@@ -16,7 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { useDispatch } from "react-redux";
 import {
   ApiFilled,
   CheckCircleOutlined,
@@ -24,7 +23,7 @@ import {
 } from "@ant-design/icons";
 import { Row, Col, Typography, Button, Divider, Popover, Space } from "antd";
 import { useMQTTContext } from "../mqtt/MQTTProvider";
-import { AppStoreDispatch } from "../AppStoreProvider";
+import { useDispatchDisconnect } from "../AppStoreProvider";
 
 const { Text } = Typography;
 
@@ -36,7 +35,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
   disconnectDisabled = false,
 }) => {
   const [{ options, status }] = useMQTTContext();
-  const dispatch = useDispatch<AppStoreDispatch>();
+  const dispatchDisconnect = useDispatchDisconnect();
 
   const {
     protocol,
@@ -149,9 +148,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
           <Button
             type="primary"
             icon={<ApiFilled />}
-            onClick={() => {
-              dispatch({ type: "set", newState: { connected: "" } });
-            }}
+            onClick={dispatchDisconnect}
           >
             Disconnect
           </Button>
