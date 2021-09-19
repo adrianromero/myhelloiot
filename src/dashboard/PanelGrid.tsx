@@ -74,7 +74,7 @@ export const PanelGrid: React.FC<PanelGridProps> = ({
   className = "",
   children,
 }) => (
-  <div className={`myhAppContent-panel ${className}`}>
+  <div className={`myhLayoutContent-panel-panel ${className}`}>
     <Row
       gutter={[
         { xs: 8, sm: 8, md: 8, lg: 8 },
@@ -89,4 +89,6 @@ export const PanelGrid: React.FC<PanelGridProps> = ({
 export const PanelContent: React.FC<PanelGridProps> = ({
   className = "",
   children,
-}) => <div className={`myhAppContent-panel ${className}`}>{children}</div>;
+}) => (
+  <div className={`myhLayoutContent-panel-panel ${className}`}>{children}</div>
+);

@@ -37,7 +37,7 @@ const pubsampledata = `{/* Publication example. */}
         />
       </CCard>
     </PanelGrid>
-    <LogTool className="myhAppContent-panel" subtopic="myhelloiot/testing/#" suboptions={{ qos: 2 }}/>
+    <LogTool className="myhLayoutContent-panel-panel" subtopic="myhelloiot/testing/#" suboptions={{ qos: 2 }}/>
   </DashboardContent >
 </Dashboard>
 `;

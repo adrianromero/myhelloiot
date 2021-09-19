@@ -31,17 +31,17 @@ export type DashboardGridProps = {
 const DashboardGrid: React.FC<DashboardGridProps> = ({
   title,
   disconnectDisabled,
-  className,
+  className = "",
   children,
 }) => {
   useEffect(() => window.scrollTo(0, 0));
 
   return (
-    <Layout className={className}>
+    <Layout className={`myhLayout ${className}`}>
       <AppHeader title={title}>
         <ConnectionInfo disconnectDisabled={disconnectDisabled} />
       </AppHeader>
-      <Layout.Content className="myhMainLayout">
+      <Layout.Content className="myhLayoutContent">
         <PanelGrid> {children} </PanelGrid>
       </Layout.Content>
     </Layout>

@@ -39,15 +39,15 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
         onOk={dispatchDisconnect}
         visible
       />
-      <Layout>
+      <Layout className="myhLayout">
         <AppHeader>
           <ConnectionStatus
             label="Error"
             icon={<CloseCircleOutlined style={{ color: "#FF0000" }} />}
           />
         </AppHeader>
-        <Layout.Content className="myhMainLayout">
-          <div className="myhAppContent-panel">
+        <Layout.Content className="myhLayoutContent">
+          <div className="myhLayoutContent-panel-panel">
             {jsx && <div className="myhAppError-jsx">{jsx}</div>}
           </div>
         </Layout.Content>

@@ -41,7 +41,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   title,
   topic = "",
   disconnectDisabled = false,
-  className,
+  className = "",
   children,
 }) => {
   const panelkey: string = useSelector<AppStoreValue, string>(
@@ -107,7 +107,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   });
 
   return (
-    <Layout className={className}>
+    <Layout className={`myhLayout ${className}`}>
       <AppHeader title={title}>
         {menus.length > 0 && (
           <div className="myhDashboard-buttonmenu">
@@ -120,7 +120,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           disconnectDisabled={disconnectDisabled || disDisabled}
         />
       </AppHeader>
-      <Layout.Content className="myhMainLayout">
+      <Layout.Content className="myhLayoutContent">
         {menus.length > 0 && (
           <Drawer
             className="myhDashboard-drawermenu"

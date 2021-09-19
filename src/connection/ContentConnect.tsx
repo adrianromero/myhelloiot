@@ -77,14 +77,14 @@ const PanelConnect: React.FC<{}> = () => {
         onFinishFailed={handleFail}
         className="myhConnectionForm"
       >
-        <Layout>
+        <Layout className="myhLayout">
           <AppHeader>
             <Button icon={<ApiFilled />} type="primary" htmlType="submit">
               Connect
             </Button>
           </AppHeader>
-          <Layout.Content className="myhMainLayout">
-            <div className="myhAppContent-panel">
+          <Layout.Content className="myhLayoutContent">
+            <div className="myhLayoutContent-panel-panel">
               <Tabs defaultActiveKey="1">
                 <TabPane tab="MQTT connection" key="1" forceRender>
                   <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
