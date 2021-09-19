@@ -61,6 +61,9 @@ import ViewUnit from "./units/ViewUnit";
 import SliderUnit from "./units/SliderUnit";
 import SoundUnit from "./units/SoundUnit";
 import NotifyUnit from "./units/NotifyUnit";
+import KeypadUnit from "./units/KeypadUnit";
+import DisconnectUnit from "./units/DisconnectUnit";
+import SoundAlarmUnit from "./units/SoundAlarmUnit";
 
 import {
   HEXValueFormat,
@@ -178,6 +181,9 @@ const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
             LogUnit,
             LogTool,
             NotifyUnit,
+            KeypadUnit,
+            DisconnectUnit,
+            SoundAlarmUnit,
           }}
           jsx={jsx}
           renderError={({ error }) => (
