@@ -15,7 +15,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { MouseEvent } from "react";
+import React, {
+  MouseEvent,
+  KeyboardEvent,
+  ChangeEvent,
+  useEffect,
+  useState,
+} from "react";
 import { Button, Input } from "antd";
 import { IClientPublishOptions } from "mqtt";
 
@@ -24,13 +30,12 @@ import { ValueFormat } from "../format/FormatTypes";
 import { StrValueFormat } from "../format/ValueFormat";
 
 import "./KeypadUnit.css";
+import { CloseCircleFilled, EnterOutlined } from "@ant-design/icons";
 
 export type KeypadUnitProps = {
   pubtopic: string;
   puboptions?: IClientPublishOptions;
   format?: ValueFormat;
-  value: string;
-  hashkey: string;
   className?: string;
 };
 
@@ -38,39 +43,79 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
   pubtopic,
   puboptions,
   format = StrValueFormat(),
-  value,
-  hashkey,
   className = "",
 }) => {
-  const [{ connected }, { publish }] = useMQTTContext();
-  const onClick = (ev: MouseEvent<HTMLElement>) => {
+  const [{ connected, ready }, { publish }] = useMQTTContext();
+  const [value, setValue] = useState<string>("");
+  useEffect(() => {
+    setValue("");
+  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const publishValue = () => {
     publish(pubtopic, format.fromDisplay(value), puboptions);
+    setValue("");
   };
+
+  const onClickOK = (ev: MouseEvent<HTMLElement>) => {
+    publishValue();
+  };
+
+  const onPressEnter = (ev: KeyboardEvent<HTMLInputElement>) => {
+    publishValue();
+  };
+
+  const onClickClear = (ev: MouseEvent<HTMLElement>) => setValue("");
+
+  const onClickKey = (key: string) => (ev: MouseEvent<HTMLElement>) =>
+    setValue((prevValue) => prevValue + key);
+
   return (
     <div className={`myhKeypad ${className}`}>
       <Input.Password
+        value={value}
+        disabled={!connected}
+        onChange={(ev: ChangeEvent<HTMLInputElement>) =>
+          setValue(ev.target.value)
+        }
+        onPressEnter={onPressEnter}
         className="myhInput"
-        suffix="wrwerwer"
-        addonAfter={<Button className="ant-input-search-button">Delete</Button>}
+        addonAfter={
+          <Button
+            type="text"
+            onClick={onClickClear}
+            disabled={!connected}
+            icon={<CloseCircleFilled />}
+          />
+        }
       />
 
       <Button
         type="primary"
-        onClick={onClick}
+        onClick={onClickKey("1")}
         disabled={!connected}
         className="btn btn-1"
       >
         1
       </Button>
-      <Button onClick={onClick} disabled={!connected} className="btn btn-2">
+      <Button
+        type="primary"
+        onClick={onClickKey("2")}
+        disabled={!connected}
+        className="btn btn-2"
+      >
         2
       </Button>
-      <Button onClick={onClick} disabled={!connected} className="btn btn-3">
+      <Button
+        type="primary"
+        onClick={onClickKey("3")}
+        disabled={!connected}
+        className="btn btn-3"
+      >
         3
       </Button>
       <Button
         type="primary"
-        onClick={onClick}
+        onClick={onClickKey("4")}
         disabled={!connected}
         className="btn btn-4"
       >
@@ -78,7 +123,7 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       </Button>
       <Button
         type="primary"
-        onClick={onClick}
+        onClick={onClickKey("5")}
         disabled={!connected}
         className="btn btn-5"
       >
@@ -86,7 +131,7 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       </Button>
       <Button
         type="primary"
-        onClick={onClick}
+        onClick={onClickKey("6")}
         disabled={!connected}
         className="btn btn-6"
       >
@@ -94,7 +139,7 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       </Button>
       <Button
         type="primary"
-        onClick={onClick}
+        onClick={onClickKey("7")}
         disabled={!connected}
         className="btn btn-7"
       >
@@ -102,7 +147,7 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       </Button>
       <Button
         type="primary"
-        onClick={onClick}
+        onClick={onClickKey("8")}
         disabled={!connected}
         className="btn btn-8"
       >
@@ -110,7 +155,7 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       </Button>
       <Button
         type="primary"
-        onClick={onClick}
+        onClick={onClickKey("9")}
         disabled={!connected}
         className="btn btn-9"
       >
@@ -118,12 +163,19 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       </Button>
       <Button
         type="primary"
-        onClick={onClick}
+        onClick={onClickKey("0")}
         disabled={!connected}
         className="btn btn-0"
       >
         0
       </Button>
+      <Button
+        type="primary"
+        onClick={onClickOK}
+        disabled={!connected}
+        icon={<EnterOutlined className="icon" />}
+        className="btn btn-ok"
+      />
     </div>
   );
 };

@@ -24,17 +24,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     "btn-1 btn-2 btn-3"
     "btn-4 btn-5 btn-6"
     "btn-7 btn-8 btn-9"
-    "btn-0 btn-0 enter";
+    "btn-0 btn-ok btn-ok";
   grid-gap: 4px;
 }
 
 .myhKeypad > .btn {
   font-size: 200%;
-  width: 100px;
+  min-width: 100px;
   height: unset;
+  width: unset;
   text-shadow: 1px 1px 0 #4074b5, 1px -1px 0 #4074b5, -1px 1px 0 #4074b5,
     -1px -1px 0 #4074b5, 1px 0px 0 #4074b5, 0px 1px 0 #4074b5,
     -1px 0px 0 #4074b5, 0px -1px 0 #4074b5, -21px -21px 0px rgba(206, 89, 55, 0);
+}
+
+.myhKeypad > .btn > .icon {
+  font-size: 100%;
 }
 
 .myhKeypad > .btn-1 {
@@ -77,12 +82,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   grid-area: btn-0;
 }
 
-.myhKeypad > .myhInput {
-  grid-area: input;
+.myhKeypad > .btn-ok {
+  grid-area: btn-ok;
 }
 
-.myhKeypad > .myhInput > .ant-input-group > .ant-input-group-addon:last-child {
-  left: -1px;
-  padding: 0;
-  border: 0;
+.myhKeypad > .myhInput {
+  grid-area: input;
 }

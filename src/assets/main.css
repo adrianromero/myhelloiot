@@ -23,3 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .myhLayoutContent-panel {
   margin: 24px;
 }
+
+.myhLayoutContent-panel_center {
+  display: flex;
+  justify-content: center;
+}
