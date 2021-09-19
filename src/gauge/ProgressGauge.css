@@ -17,25 +17,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @import url("../assets/fonts.css");
 
-.progress-indicator-bar {
+.progressgauge-bar {
   stroke: #008f00;
   stroke-width: 8px;
   stroke-linecap: butt;
   transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
-.progress-indicator-background {
+.progressgauge-background {
   stroke: #cccccc;
   stroke-width: 8px;
   stroke-linecap: butt;
 }
 
-.progress-indicator-value {
+.progressgauge-value {
   fill: #000000d9;
   font: bold 10px "Roboto Condensed", sans-serif;
 }
 
-.progress-indicator-title {
+.progressgauge-title {
   fill: #0000008c;
   font: 8px "Roboto Condensed", sans-serif;
 }

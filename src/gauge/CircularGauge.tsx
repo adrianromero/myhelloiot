@@ -64,7 +64,7 @@ const CircularGauge: React.FC<CircularGaugeProps> = ({
         cx={centerx}
         cy={centery}
         r={r1}
-        className="circular-indicator-background"
+        className="circulargauge-background"
         style={{
           fill: "#00000000",
           strokeMiterlimit: 0,
@@ -75,7 +75,7 @@ const CircularGauge: React.FC<CircularGaugeProps> = ({
           cx={centerx}
           cy={centery}
           r={r1}
-          className="circular-indicator-bar"
+          className="circulargauge-bar"
           style={{
             fill: "#00000000",
             strokeMiterlimit: 0,
@@ -84,20 +84,10 @@ const CircularGauge: React.FC<CircularGaugeProps> = ({
           }}
         />
       )}
-      <text
-        x={100}
-        y={65}
-        textAnchor="middle"
-        className="circular-indicator-value"
-      >
+      <text x={100} y={65} textAnchor="middle" className="circulargauge-value">
         {formatvalue}
       </text>
-      <text
-        x={100}
-        y={85}
-        textAnchor="middle"
-        className="circular-indicator-title"
-      >
+      <text x={100} y={85} textAnchor="middle" className="circulargauge-title">
         {title}
       </text>
     </svg>

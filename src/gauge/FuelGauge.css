@@ -17,49 +17,49 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @import url("../assets/fonts.css");
 
-.fuel-indicator-mark {
+.fuelgauge-mark {
   stroke-width: 0.8px;
   stroke-linecap: butt;
 }
 
-.fuel-indicator-mark_ext {
+.fuelgauge-mark_ext {
   stroke: #606060;
 }
 
-.fuel-indicator-mark_int {
+.fuelgauge-mark_int {
   stroke: #606060;
 }
 
-.fuel-indicator-markstep {
+.fuelgauge-markstep {
   stroke: #606060;
   stroke-width: 1px;
   stroke-linecap: butt;
 }
 
-.fuel-indicator-marklabel {
+.fuelgauge-marklabel {
   fill: #0000008c;
   font: 6px "Roboto Condensed", sans-serif;
 }
 
-.fuel-indicator-arrow {
+.fuelgauge-arrow {
   fill: #ff0000af;
   stroke: #606060af;
   stroke-width: 0.5px;
   transition: transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
-.fuel-indicator-arrowpin {
+.fuelgauge-arrowpin {
   fill: #d1d1d1;
   stroke: #606060;
   stroke-width: 0.5px;
 }
 
-.fuel-indicator-value {
+.fuelgauge-value {
   fill: #000000d9;
   font: bold 14px "Roboto Condensed", sans-serif;
 }
 
-.fuel-indicator-title {
+.fuelgauge-title {
   fill: #0000008c;
   font: 10px "Roboto Condensed", sans-serif;
 }

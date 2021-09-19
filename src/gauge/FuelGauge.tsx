@@ -95,7 +95,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
         y1={centery + (r1 - 5) * sin}
         x2={centerx + (r1 - 10) * cos}
         y2={centery + (r1 - 10) * sin}
-        className="fuel-indicator-markstep"
+        className="fuelgauge-markstep"
       />
     );
   }
@@ -112,7 +112,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
         y1={centery + (r1 - 2) * sin}
         x2={centerx + (r1 - 10) * cos}
         y2={centery + (r1 - 10) * sin}
-        className="fuel-indicator-markstep"
+        className="fuelgauge-markstep"
       />
     );
     lines.push(
@@ -121,7 +121,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
         x={centerx + (r1 - 16) * cos}
         y={centery + 2 + (r1 - 16) * sin}
         textAnchor="middle"
-        className="fuel-indicator-marklabel"
+        className="fuelgauge-marklabel"
       >
         {intl.format(index)}
       </text>
@@ -156,7 +156,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
           orientation: arctotal > 180 ? 1 : 0,
           sweep: 1,
         })}
-        className="fuel-indicator-mark fuel-indicator-mark_ext"
+        className="fuelgauge-mark fuelgauge-mark_ext"
         style={{ fill: "#00000000" }}
       />
       <path
@@ -170,40 +170,25 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
           orientation: arctotal > 180 ? 1 : 0,
           sweep: 1,
         })}
-        className="fuel-indicator-mark fuel-indicator-mark_int"
+        className="fuelgauge-mark fuelgauge-mark_int"
         style={{ fill: "#00000000" }}
       />
-      <text
-        x={100}
-        y={105}
-        textAnchor="middle"
-        className="fuel-indicator-value"
-      >
+      <text x={100} y={105} textAnchor="middle" className="fuelgauge-value">
         {formatvalue}
       </text>
-      <text
-        x={centerx}
-        y={15}
-        textAnchor="middle"
-        className="fuel-indicator-title"
-      >
+      <text x={centerx} y={15} textAnchor="middle" className="fuelgauge-title">
         {title}
       </text>
       {!isNaN(arcvalue) && (
         <path
           d="M 2 10  L -2 10 L -1.5 -49 L 0 -50 L 1.5 -49 Z"
-          className="fuel-indicator-arrow"
+          className="fuelgauge-arrow"
           style={{
             transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
           }}
         />
       )}
-      <circle
-        cx={centerx}
-        cy={centery}
-        r={6}
-        className="fuel-indicator-arrowpin"
-      />
+      <circle cx={centerx} cy={centery} r={6} className="fuelgauge-arrowpin" />
     </svg>
   );
 };

@@ -17,23 +17,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @import url("../assets/fonts.css");
 
-.simple-indicator-labels {
+.simplegauge-labels {
   fill: #606060;
   font: 10px "Roboto Condensed", sans-serif;
 }
 
-.simple-indicator-background {
+.simplegauge-background {
   fill: #cccccc;
 }
 
-.simple-indicator-mark {
+.simplegauge-mark {
   stroke: #606060;
   stroke-width: 2px;
   stroke-linejoin: miter;
   fill: #00000000;
 }
 
-.simple-indicator-arrow {
+.simplegauge-arrow {
   fill: #ffffff;
   stroke: #606060;
   stroke-width: 2px;
@@ -41,17 +41,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   transition: transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
-.simple-indicator-value {
+.simplegauge-value {
   fill: #000000d9;
   font: bold 14px "Roboto Condensed", sans-serif;
 }
 
-.simple-indicator-title {
+.simplegauge-title {
   fill: #0000008c;
   font: 10px "Roboto Condensed", sans-serif;
 }
 
-.simple-indicator-section {
+.simplegauge-section {
   stroke-width: 30px;
   stroke-linecap: butt;
   stroke: rgb(25, 25, 173);

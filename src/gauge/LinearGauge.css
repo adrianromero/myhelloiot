@@ -17,42 +17,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @import url("../assets/fonts.css");
 
-.linear-indicator-bar {
+.lineargauge-bar {
   stroke: #ff0000;
   stroke-width: 25px;
   stroke-linecap: butt;
   transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
-.linear-indicator-background {
+.lineargauge-background {
   stroke: #cccccc;
   stroke-width: 25px;
   stroke-linecap: butt;
 }
 
-.linear-indicator-mark {
+.lineargauge-mark {
   stroke: #606060;
   stroke-width: 0.6px;
   stroke-linecap: butt;
 }
 
-.linear-indicator-markstep {
+.lineargauge-markstep {
   stroke: #606060;
   stroke-width: 1px;
   stroke-linecap: square;
 }
 
-.linear-indicator-marklabel {
+.lineargauge-marklabel {
   fill: #0000008c;
   font: 10px "Roboto Condensed", sans-serif;
 }
 
-.linear-indicator-value {
+.lineargauge-value {
   fill: #000000d9;
   font: bold 14px "Roboto Condensed", sans-serif;
 }
 
-.linear-indicator-title {
+.lineargauge-title {
   fill: #0000008c;
   font: 10px "Roboto Condensed", sans-serif;
 }

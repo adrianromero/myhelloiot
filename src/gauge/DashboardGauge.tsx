@@ -107,7 +107,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
           orientation: arctotal > 180 ? 1 : 0,
           sweep: 1,
         })}
-        className="dashboard-indicator-background"
+        className="dashboardgauge-background"
         style={{
           fill: "#00000000",
           strokeMiterlimit: 0,
@@ -135,7 +135,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
             orientation: arctotal > 180 ? 1 : 0,
             sweep: 1,
           })}
-          className="dashboard-indicator-bar"
+          className="dashboardgauge-bar"
           style={{
             fill: "#00000000",
             strokeMiterlimit: 0,
@@ -147,7 +147,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
         x={centerx - 2 + r1 * Math.cos(radians(startangle))}
         y={centery + 12 + r1 * Math.sin(radians(startangle))}
         textAnchor="middle"
-        className="dashboard-indicator-labels"
+        className="dashboardgauge-labels"
       >
         {intl.format(min)}
       </text>
@@ -155,23 +155,18 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
         x={centerx + 2 + r1 * Math.cos(radians(endangle))}
         y={centery + 12 + r1 * Math.sin(radians(endangle))}
         textAnchor="middle"
-        className="dashboard-indicator-labels"
+        className="dashboardgauge-labels"
       >
         {intl.format(max)}
       </text>
-      <text
-        x={100}
-        y={90}
-        textAnchor="middle"
-        className="dashboard-indicator-value"
-      >
+      <text x={100} y={90} textAnchor="middle" className="dashboardgauge-value">
         {formatvalue}
       </text>
       <text
         x={100}
         y={110}
         textAnchor="middle"
-        className="dashboard-indicator-title"
+        className="dashboardgauge-title"
       >
         {title}
       </text>

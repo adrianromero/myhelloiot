@@ -17,28 +17,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @import url("../assets/fonts.css");
 
-.dashboard-indicator-bar {
+.dashboardgauge-bar {
   stroke: #0000ff;
   stroke-width: 40px;
   transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
-.dashboard-indicator-background {
+.dashboardgauge-background {
   stroke: #cccccc;
   stroke-width: 40px;
 }
 
-.dashboard-indicator-labels {
+.dashboardgauge-labels {
   fill: #606060;
   font: 10px "Roboto Condensed", sans-serif;
 }
 
-.dashboard-indicator-value {
+.dashboardgauge-value {
   fill: #000000d9;
   font: bold 22px "Roboto Condensed", sans-serif;
 }
 
-.dashboard-indicator-title {
+.dashboardgauge-title {
   fill: #0000008c;
   font: 12px "Roboto Condensed", sans-serif;
 }

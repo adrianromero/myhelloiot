@@ -30,7 +30,7 @@ export const arcsSimpleGauge = (
     start: min + (i * (max - min)) / arcs,
     end: min + ((i + 1) * (max - min)) / arcs,
     r: 40,
-    className: "simple-indicator-section",
+    className: "simplegauge-section",
     style: {
       filter: `brightness(${1 + 1.2 * i})`,
     },
@@ -102,7 +102,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           orientation: arctotal > 180 ? 1 : 0,
           sweep: 1,
         })}
-        className="simple-indicator-background"
+        className="simplegauge-background"
       />
       <Arcs
         arcs={arcs ?? arcsSimpleGauge(min, max, 8)}
@@ -124,14 +124,14 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           orientation: arctotal > 180 ? 1 : 0,
           sweep: 1,
         })}
-        className="simple-indicator-mark"
+        className="simplegauge-mark"
       />
 
       <text
         x={centerx + (r1 + 16) * Math.cos(radians(startangle))}
         y={centery + (r1 + 16) * Math.sin(radians(startangle))}
         textAnchor="middle"
-        className="simple-indicator-labels"
+        className="simplegauge-labels"
       >
         {intl.format(min)}
       </text>
@@ -139,7 +139,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
         x={centerx + (r1 + 16) * Math.cos(radians(endangle))}
         y={centery + (r1 + 16) * Math.sin(radians(endangle))}
         textAnchor="middle"
-        className="simple-indicator-labels"
+        className="simplegauge-labels"
       >
         {intl.format(max)}
       </text>
@@ -150,7 +150,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
           cx={centerx}
           cy={centery}
           r={r2}
-          className="simple-indicator-arrow"
+          className="simplegauge-arrow"
         />
       ) : (
         <path
@@ -161,7 +161,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
             centery - cosr2 * r2
           } L ${centerx} ${centery - 45} Z`}
           opacity="1"
-          className="simple-indicator-arrow"
+          className="simplegauge-arrow"
           style={{
             transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg) translate(${-centerx}px, ${-centery}px)`,
           }}
@@ -172,16 +172,11 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
         x={centerx}
         y={centery + 5}
         textAnchor="middle"
-        className="simple-indicator-value"
+        className="simplegauge-value"
       >
         {formatvalue}
       </text>
-      <text
-        x={100}
-        y={110}
-        textAnchor="middle"
-        className="simple-indicator-title"
-      >
+      <text x={100} y={110} textAnchor="middle" className="simplegauge-title">
         {title}
       </text>
     </svg>

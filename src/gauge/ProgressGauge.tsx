@@ -89,7 +89,7 @@ const ProgressGauge: React.FC<ProgressGaugeProps> = ({
         y1={20}
         x2={180}
         y2={20}
-        className="progress-indicator-background"
+        className="progressgauge-background"
       />
       <Sections sections={sections} min={min} max={max} start={20} len={160} />
       {!isNaN(width) && (
@@ -98,7 +98,7 @@ const ProgressGauge: React.FC<ProgressGaugeProps> = ({
           y1={20}
           x2={180}
           y2={20}
-          className="progress-indicator-bar"
+          className="progressgauge-bar"
           style={{
             fill: "#00000000",
             strokeMiterlimit: 0,
@@ -107,20 +107,10 @@ const ProgressGauge: React.FC<ProgressGaugeProps> = ({
         />
       )}
 
-      <text
-        x={180}
-        y={12}
-        textAnchor="end"
-        className="progress-indicator-value"
-      >
+      <text x={180} y={12} textAnchor="end" className="progressgauge-value">
         {formatvalue}
       </text>
-      <text
-        x={20}
-        y={10}
-        textAnchor="start"
-        className="progress-indicator-title"
-      >
+      <text x={20} y={10} textAnchor="start" className="progressgauge-title">
         {title}
       </text>
     </svg>

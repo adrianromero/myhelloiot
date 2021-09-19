@@ -67,7 +67,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         <clipPath id="cut-off-bottom">
           {!isNaN(yvalue) && (
             <rect
-              className="liquid-indicator-bar"
+              className="liquidgauge-bar"
               x={0}
               y={yvalue}
               width={200}
@@ -80,7 +80,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         cx={centerx}
         cy={centery}
         r={r1}
-        className="liquid-indicator-border"
+        className="liquidgauge-border"
         style={{ fill: "#00000000" }}
       />
 
@@ -89,7 +89,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         x={100}
         y={65}
         textAnchor="middle"
-        className="liquid-indicator-value liquid-indicator-value_1"
+        className="liquidgauge-value liquidgauge-value_1"
       >
         {formatvalue}
       </text>
@@ -98,7 +98,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         x={100}
         y={85}
         textAnchor="middle"
-        className="liquid-indicator-title liquid-indicator-title_1"
+        className="liquidgauge-title liquidgauge-title_1"
       >
         {title}
       </text>
@@ -107,7 +107,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         cx={centerx}
         cy={centery}
         r={r2}
-        className="liquid-indicator-background"
+        className="liquidgauge-background"
         clipPath="url(#cut-off-bottom)"
       />
 
@@ -116,7 +116,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         x={100}
         y={65}
         textAnchor="middle"
-        className="liquid-indicator-value liquid-indicator-value_2"
+        className="liquidgauge-value liquidgauge-value_2"
         clipPath="url(#cut-off-bottom)"
       >
         {formatvalue}
@@ -126,7 +126,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         x={100}
         y={85}
         textAnchor="middle"
-        className="liquid-indicator-title liquid-indicator-title_2"
+        className="liquidgauge-title liquidgauge-title_2"
         clipPath="url(#cut-off-bottom)"
       >
         {title}

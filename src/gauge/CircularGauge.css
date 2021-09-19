@@ -17,23 +17,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @import url("../assets/fonts.css");
 
-.circular-indicator-bar {
+.circulargauge-bar {
   stroke: #0000ee;
   stroke-width: 5px;
   transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
-.circular-indicator-background {
+.circulargauge-background {
   stroke: #cccccc;
   stroke-width: 5px;
 }
 
-.circular-indicator-value {
+.circulargauge-value {
   fill: #000000d9;
   font: bold 22px "Roboto Condensed", sans-serif;
 }
 
-.circular-indicator-title {
+.circulargauge-title {
   fill: #0000008c;
   font: 10px "Roboto Condensed", sans-serif;
 }

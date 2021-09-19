@@ -92,7 +92,7 @@ const DialGauge: React.FC<DialGaugeProps> = ({
         y1={36}
         x2={mark}
         y2={54}
-        className="dial-indicator-mark"
+        className="dialgauge-mark"
       />
     );
   }
@@ -106,7 +106,7 @@ const DialGauge: React.FC<DialGaugeProps> = ({
         y1={30}
         x2={mark}
         y2={60}
-        className="dial-indicator-markstep"
+        className="dialgauge-markstep"
       />
     );
     lines.push(
@@ -115,7 +115,7 @@ const DialGauge: React.FC<DialGaugeProps> = ({
         x={mark}
         y={70}
         textAnchor="middle"
-        className="dial-indicator-marklabel"
+        className="dialgauge-marklabel"
       >
         {intl.format(index)}
       </text>
@@ -129,13 +129,7 @@ const DialGauge: React.FC<DialGaugeProps> = ({
       viewBox="0 0 200 90"
       className={className}
     >
-      <line
-        x1={20}
-        y1={45}
-        x2={180}
-        y2={45}
-        className="dial-indicator-background"
-      />
+      <line x1={20} y1={45} x2={180} y2={45} className="dialgauge-background" />
       <Sections sections={sections} min={min} max={max} start={20} len={160} />
       {lines}
       {!isNaN(width) && (
@@ -144,7 +138,7 @@ const DialGauge: React.FC<DialGaugeProps> = ({
           y1={45}
           x2={180}
           y2={45}
-          className="dial-indicator-bar"
+          className="dialgauge-bar"
           style={{
             fill: "#00000000",
             strokeMiterlimit: 0,
@@ -152,10 +146,10 @@ const DialGauge: React.FC<DialGaugeProps> = ({
           }}
         />
       )}
-      <text x={180} y={20} textAnchor="end" className="dial-indicator-value">
+      <text x={180} y={20} textAnchor="end" className="dialgauge-value">
         {formatvalue}
       </text>
-      <text x={20} y={20} textAnchor="start" className="dial-indicator-title">
+      <text x={20} y={20} textAnchor="start" className="dialgauge-title">
         {title}
       </text>
     </svg>

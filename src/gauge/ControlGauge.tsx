@@ -110,7 +110,7 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
           orientation: arctotal > 180 ? 1 : 0,
           sweep: 1,
         })}
-        className="control-indicator-background"
+        className="controlgauge-background"
         style={{
           fill: "#00000000",
           strokeMiterlimit: 0,
@@ -138,7 +138,7 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
             orientation: arctotal > 180 ? 1 : 0,
             sweep: 1,
           })}
-          className="control-indicator-bar"
+          className="controlgauge-bar"
           style={{
             fill: "#00000000",
             strokeMiterlimit: 0,
@@ -146,19 +146,14 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
           }}
         />
       )}
-      <text
-        x={100}
-        y={105}
-        textAnchor="middle"
-        className="control-indicator-value"
-      >
+      <text x={100} y={105} textAnchor="middle" className="controlgauge-value">
         {formatvalue}
       </text>
       <text
         x={centerx}
         y={15}
         textAnchor="middle"
-        className="control-indicator-title"
+        className="controlgauge-title"
       >
         {title}
       </text>
@@ -166,7 +161,7 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
         <path
           // d="M 1 10 L -1 10  L -1 -55 L 0 -60 L 1 -55 Z"
           d="M 5 5 L 0 10 L -5 5 L 0 -65  Z"
-          className="control-indicator-arrow"
+          className="controlgauge-arrow"
           style={{
             transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
           }}

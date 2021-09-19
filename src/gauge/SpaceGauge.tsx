@@ -78,7 +78,7 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
           orientation: arctotal > 180 ? 1 : 0,
           sweep: 1,
         })}
-        className="space-indicator-background"
+        className="spacegauge-background"
         style={{
           fill: "#00000000",
           strokeMiterlimit: 0,
@@ -97,7 +97,7 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
             orientation: arctotal > 180 ? 1 : 0,
             sweep: 1,
           })}
-          className="space-indicator-bar"
+          className="spacegauge-bar"
           style={{
             fill: "#00000000",
             strokeMiterlimit: 0,
@@ -106,15 +106,10 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
         />
       )}
 
-      <text
-        x={105}
-        y={105}
-        textAnchor="start"
-        className="space-indicator-value"
-      >
+      <text x={105} y={105} textAnchor="start" className="spacegauge-value">
         {formatvalue}
       </text>
-      <text x={105} y={80} textAnchor="start" className="space-indicator-title">
+      <text x={105} y={80} textAnchor="start" className="spacegauge-title">
         {title}
       </text>
     </svg>

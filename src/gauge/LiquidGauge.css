@@ -17,39 +17,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @import url("../assets/fonts.css");
 
-.liquid-indicator-background {
+.liquidgauge-background {
   fill: #0099ff;
 }
 
-.liquid-indicator-bar {
+.liquidgauge-bar {
   transition: y 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
-.liquid-indicator-border {
+.liquidgauge-border {
   stroke: #0099ff;
   stroke-width: 2px;
 }
 
-.liquid-indicator-value {
+.liquidgauge-value {
   font: bold 22px "Roboto Condensed", sans-serif;
 }
 
-.liquid-indicator-value_1 {
+.liquidgauge-value_1 {
   fill: #000000d9;
 }
 
-.liquid-indicator-value_2 {
+.liquidgauge-value_2 {
   fill: #ffffffe9;
 }
 
-.liquid-indicator-title {
+.liquidgauge-title {
   font: 10px "Roboto Condensed", sans-serif;
 }
 
-.liquid-indicator-title_1 {
+.liquidgauge-title_1 {
   fill: #0000008c;
 }
 
-.liquid-indicator-title_2 {
+.liquidgauge-title_2 {
   fill: #ffffffac;
 }

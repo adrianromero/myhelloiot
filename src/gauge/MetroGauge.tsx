@@ -107,7 +107,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
         y1={centery + r1 * sin}
         x2={centerx + (r1 - 3) * cos}
         y2={centery + (r1 - 3) * sin}
-        className="metro-indicator-mark"
+        className="metrogauge-mark"
       />
     );
   }
@@ -124,7 +124,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
         y1={centery + r1 * sin}
         x2={centerx + (r1 - 6) * cos}
         y2={centery + (r1 - 6) * sin}
-        className="metro-indicator-markstep"
+        className="metrogauge-markstep"
       />
     );
     lines.push(
@@ -133,7 +133,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
         x={centerx + (r1 - 13) * cos}
         y={centery + 2 + (r1 - 13) * sin}
         textAnchor="middle"
-        className="metro-indicator-marklabel"
+        className="metrogauge-marklabel"
       >
         {intl.format(index)}
       </text>
@@ -168,29 +168,19 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
           orientation: arctotal > 180 ? 1 : 0,
           sweep: 1,
         })}
-        className="metro-indicator-mark"
+        className="metrogauge-mark"
         style={{ fill: "#00000000" }}
       />
-      <text
-        x={100}
-        y={85}
-        textAnchor="middle"
-        className="metro-indicator-value"
-      >
+      <text x={100} y={85} textAnchor="middle" className="metrogauge-value">
         {formatvalue}
       </text>
-      <text
-        x={centerx}
-        y={55}
-        textAnchor="middle"
-        className="metro-indicator-title"
-      >
+      <text x={centerx} y={55} textAnchor="middle" className="metrogauge-title">
         {title}
       </text>
       {!isNaN(arcvalue) && (
         <path
           d="M 3 10 L -3 10 L 0 -50 Z"
-          className="metro-indicator-arrow"
+          className="metrogauge-arrow"
           style={{
             transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
           }}
@@ -200,7 +190,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
         cx={centerx}
         cy={centery}
         r={1.2}
-        className="metro-indicator-arrowpin"
+        className="metrogauge-arrowpin"
       />
     </svg>
   );

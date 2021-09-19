@@ -92,7 +92,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         y1={60}
         x2={mark}
         y2={63}
-        className="linear-indicator-mark"
+        className="lineargauge-mark"
       />
     );
   }
@@ -106,7 +106,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         y1={60}
         x2={mark}
         y2={65}
-        className="linear-indicator-markstep"
+        className="lineargauge-markstep"
       />
     );
     lines.push(
@@ -115,7 +115,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         x={mark}
         y={75}
         textAnchor="middle"
-        className="linear-indicator-marklabel"
+        className="lineargauge-marklabel"
       >
         {intl.format(index)}
       </text>
@@ -135,7 +135,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         y1={45}
         x2={180}
         y2={45}
-        className="linear-indicator-background"
+        className="lineargauge-background"
       />
       <Sections sections={sections} min={min} max={max} start={20} len={160} />
       <line
@@ -144,7 +144,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         y1={30}
         x2={180}
         y2={30}
-        className="linear-indicator-markstep"
+        className="lineargauge-markstep"
       />
       {!isNaN(width) && (
         <line
@@ -153,7 +153,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
           y1={45}
           x2={180}
           y2={45}
-          className="linear-indicator-bar"
+          className="lineargauge-bar"
           style={{
             fill: "#00000000",
             strokeMiterlimit: 0,
@@ -168,7 +168,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         y1={60}
         x2={180}
         y2={60}
-        className="linear-indicator-markstep"
+        className="lineargauge-markstep"
       />
       {lines}
       <text
@@ -176,7 +176,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         x={180}
         y={20}
         textAnchor="end"
-        className="linear-indicator-value"
+        className="lineargauge-value"
       >
         {formatvalue}
       </text>
@@ -185,7 +185,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
         x={20}
         y={20}
         textAnchor="start"
-        className="linear-indicator-title"
+        className="lineargauge-title"
       >
         {title}
       </text>
