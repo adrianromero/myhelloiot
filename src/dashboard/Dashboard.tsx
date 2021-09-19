@@ -83,28 +83,33 @@ const Dashboard: React.FC<DashboardProps> = ({
   }
 
   const menus: React.ReactElement<any, any>[] = [];
-  const allchildren: React.ReactElement<DashboardContentProps, any>[] = [];
+  const dcchildren: React.ReactElement<DashboardContentProps, any>[] = [];
+  const remainingchildren: React.ReactElement<any, any>[] = [];
   let cvisible: React.ReactElement<DashboardContentProps, any> | undefined;
   let menDisabled: boolean = false;
   let disDisabled: boolean = false;
   let index = 0;
 
   React.Children.forEach(children, (c) => {
-    if (React.isValidElement(c) && c.type === DashboardContent) {
-      const key: string = "menu-" + dashboardhash + index++;
-      if (c.props.name) {
-        menus.push(
-          <Menu.Item key={key} icon={c.props.icon ?? <PictureFilled />}>
-            {c.props.name}
-          </Menu.Item>
-        );
+    if (React.isValidElement(c)) {
+      if (c.type === DashboardContent) {
+        const key: string = `menu-${dashboardhash}-${index++}`;
+        if (c.props.name) {
+          menus.push(
+            <Menu.Item key={key} icon={c.props.icon ?? <PictureFilled />}>
+              {c.props.name}
+            </Menu.Item>
+          );
+        }
+        if (key === panelkey || !cvisible) {
+          cvisible = c;
+          menDisabled = c.props.menuDisabled ?? false;
+          disDisabled = c.props.disconnectDisabled ?? false;
+        }
+        dcchildren.push(c);
+      } else {
+        remainingchildren.push(c);
       }
-      if (key === panelkey || !cvisible) {
-        cvisible = c;
-        menDisabled = c.props.menuDisabled ?? false;
-        disDisabled = c.props.disconnectDisabled ?? false;
-      }
-      allchildren.push(c);
     }
   });
 
@@ -141,11 +146,12 @@ const Dashboard: React.FC<DashboardProps> = ({
             </Menu>
           </Drawer>
         )}
-        {allchildren.map((c) => (
+        {dcchildren.map((c) => (
           <div key={c.key} style={c === cvisible ? {} : { display: "none" }}>
             {c}
           </div>
         ))}
+        {remainingchildren}
       </Layout.Content>
     </Layout>
   );
