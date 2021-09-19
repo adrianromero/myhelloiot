@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { IClientSubscribeOptions } from "mqtt";
 import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import useAudio from "./useAudio";
@@ -44,15 +44,33 @@ const SoundUnit: React.FC<SoundUnitProps> = ({
   suboptions,
   volume = 1.0,
 }) => {
-  const [, { play: playClockalarm }] = useAudio(clockalarm, { volume });
-  const [, { play: playGameitem }] = useAudio(gameitem, { volume });
-  const [, { play: playBottlewhoo }] = useAudio(bottlewhoo, { volume });
-  const [, { play: playGreek }] = useAudio(greek, { volume });
-  const [, { play: playBell }] = useAudio(bell, { volume });
-  const [, { play: playSmokealarm }] = useAudio(smokealarm, { volume });
-  const [, { play: playChimes }] = useAudio(chimes, { volume });
-  const [, { play: playHarp }] = useAudio(harp, { volume });
-  const [, { play: playMessagepop }] = useAudio(messagepop, { volume });
+  const [, { play: playClockalarm, pause: pauseClockAlarm }] = useAudio(
+    clockalarm,
+    { volume }
+  );
+  const [, { play: playGameitem, pause: pauseGameitem }] = useAudio(gameitem, {
+    volume,
+  });
+  const [, { play: playBottlewhoo, pause: pauseBottlewhoo }] = useAudio(
+    bottlewhoo,
+    { volume }
+  );
+  const [, { play: playGreek, pause: pauseGreek }] = useAudio(greek, {
+    volume,
+  });
+  const [, { play: playBell, pause: pauseBell }] = useAudio(bell, { volume });
+  const [, { play: playSmokealarm, pause: pauseSmokealarm }] = useAudio(
+    smokealarm,
+    { volume }
+  );
+  const [, { play: playChimes, pause: pauseChimes }] = useAudio(chimes, {
+    volume,
+  });
+  const [, { play: playHarp, pause: pauseHarp }] = useAudio(harp, { volume });
+  const [, { play: playMessagepop, pause: pauseMessagepop }] = useAudio(
+    messagepop,
+    { volume }
+  );
 
   useMQTTSubscribe(
     subtopic,
@@ -89,6 +107,21 @@ const SoundUnit: React.FC<SoundUnitProps> = ({
     suboptions
   );
 
+  useEffect(
+    () => () => {
+      pauseClockAlarm();
+      pauseGameitem();
+      pauseBottlewhoo();
+      pauseGreek();
+      pauseBell();
+      pauseSmokealarm();
+      pauseChimes();
+      pauseHarp();
+      pauseMessagepop();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
   return <></>;
 };
 
