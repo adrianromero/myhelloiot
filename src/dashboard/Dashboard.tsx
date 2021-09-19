@@ -19,7 +19,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Drawer, Button, Layout, Menu } from "antd";
 import { MenuUnfoldOutlined, PictureFilled } from "@ant-design/icons";
-import { AppStoreValue, useDispatchProperties } from "../AppStoreProvider";
+import { AppStoreValue, useAppStoreProperty } from "../AppStoreProvider";
 import AppHeader from "../AppHeader";
 import {
   MQTTMessage,
@@ -46,15 +46,10 @@ const Dashboard: React.FC<DashboardProps> = ({
   className = "",
   children,
 }) => {
-  const panelkey: string = useSelector<AppStoreValue, string>(
-    (s) => s.properties.panelkey ?? "menu-0"
-  );
   const dashboardhash: string = useSelector<AppStoreValue, string>(
     (s) => s.connectInfo.dashboard.hash
   );
-  const dispatchProperties = useDispatchProperties();
-  const setPanelkey = (panelkey: string) => dispatchProperties({ panelkey });
-
+  const [panelkey, setPanelkey] = useAppStoreProperty("panelkey");
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
   const [, { publish }] = useMQTTContext();
   useMQTTSubscribe(topic, (mqttmessage: MQTTMessage) => {

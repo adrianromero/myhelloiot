@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { createStore, Store, Reducer, Action, Dispatch } from "redux";
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { ConnectInfo, defaultConnectInfo } from "./connection/ConnectionInfo";
 
 const STORENAME = "myhelloiot-store";
@@ -72,6 +72,18 @@ export const useDispatchProperties = () => {
       newState: { properties },
     });
   };
+};
+
+export const useAppStoreProperty = (
+  name: string
+): [string, (value: string) => void] => {
+  const property: string = useSelector<AppStoreValue, string>(
+    (s) => s.properties[name]
+  );
+  const dispatchProperties = useDispatchProperties();
+  const setProperty = (value: string) => dispatchProperties({ [name]: value });
+
+  return [property, setProperty];
 };
 
 const loadLS = (): AppStoreValue => {
