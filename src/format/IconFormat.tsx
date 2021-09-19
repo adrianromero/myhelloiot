@@ -32,6 +32,8 @@ import {
   SwitchValueFormat,
 } from "./ValueFormat";
 
+import "./IconFormat.css";
+
 export const BulbIconFormat = (): IconFormat => ({
   toIcon: (b: Buffer) =>
     b.toString() === "1" ? (
@@ -64,7 +66,7 @@ export const ThuderboltIconFormat = (): IconFormat => ({
 
 export const ToIconFormat = (format: ValueFormat): IconFormat => ({
   toIcon: (b: Buffer) => (
-    <div className={`myh-value myh-value-padding ${format.className()}`}>
+    <div className={`myhToIconFormat ${format.className()}`}>
       {format.toDisplay(b) || "\u00A0"}
     </div>
   ),

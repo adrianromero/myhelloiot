@@ -84,7 +84,7 @@ const PanelConnect: React.FC<{}> = () => {
             </Button>
           </AppHeader>
           <Layout.Content className="myhLayoutContent">
-            <div className="myhLayoutContent-panel-panel">
+            <div className="myhLayoutContent-panel">
               <Tabs defaultActiveKey="1">
                 <TabPane tab="MQTT connection" key="1" forceRender>
                   <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>

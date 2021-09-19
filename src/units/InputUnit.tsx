@@ -28,6 +28,8 @@ import {
 import { ValueFormat } from "../format/FormatTypes";
 import { StrValueFormat } from "../format/ValueFormat";
 
+import "./InputUnit.css";
+
 type InputUnitProps = {
   pubtopic?: string;
   subtopic?: string;
@@ -96,7 +98,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
             ]}
           >
             <Input
-              className={`myh-value ${format.className()}`}
+              className={`myhInputUnit-input ${format.className()}`}
               autoComplete="off"
               readOnly={pubtopic === ""}
               bordered={pubtopic !== ""}

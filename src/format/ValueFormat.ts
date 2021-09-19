@@ -123,6 +123,6 @@ export const NumberValueFormat = (
       Buffer.from(pad(Number(b.toString()) + inc).toString()),
     prev: (b: Buffer) =>
       Buffer.from(pad(Number(b.toString()) - inc).toString()),
-    className: () => "myh-class_alignright",
+    className: () => "myhToIconFormat_alignright",
   };
 };

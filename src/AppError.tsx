@@ -47,7 +47,7 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
           />
         </AppHeader>
         <Layout.Content className="myhLayoutContent">
-          <div className="myhLayoutContent-panel-panel">
+          <div className="myhLayoutContent-panel">
             {jsx && <div className="myhAppError-jsx">{jsx}</div>}
           </div>
         </Layout.Content>

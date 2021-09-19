@@ -29,6 +29,8 @@ import {
 import DashboardContent, { DashboardContentProps } from "./DashboardContent";
 import ConnectionInfo from "./ConnectionInfo";
 
+import "./Dashboard.css";
+
 export type DashboardProps = {
   title?: string;
   topic?: string;

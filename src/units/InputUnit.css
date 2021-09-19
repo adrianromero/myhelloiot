@@ -15,11 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-.myhLayoutContent {
-  margin-top: 64px;
-  min-height: calc(100vh - 64px);
-}
-
-.myhLayoutContent-panel {
-  margin: 24px;
+.myhInputUnit-input {
+  font-size: 200%;
+  font-weight: 800;
 }
