@@ -21,6 +21,7 @@ import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import useAudio from "./useAudio";
 import { StrValueFormat } from "../format/ValueFormat";
 import { ValueFormat } from "../format/FormatTypes";
+import { useAppStoreProperty } from "../AppStoreProvider";
 const clockalarm = require("../assets/media/128138_1542160-lq.mp3").default;
 const gameitem = require("../assets/media/162467_311243-lq.mp3").default;
 const bottlewhoo = require("../assets/media/249703_3930831-lq.mp3").default;
@@ -32,6 +33,7 @@ const harp = require("../assets/media/486952_6657415-lq.mp3").default;
 const messagepop = require("../assets/media/537061_7117640-lq.mp3").default;
 
 type SoundAlarmUnitProps = {
+  instancekey: string;
   subtopic: string;
   suboptions?: IClientSubscribeOptions;
   sound?: string;
@@ -42,6 +44,7 @@ type SoundAlarmUnitProps = {
 const FORMAT: ValueFormat = StrValueFormat();
 
 const SoundAlarmUnit: React.FC<SoundAlarmUnitProps> = ({
+  instancekey,
   subtopic,
   suboptions,
   sound = "gameitem",
@@ -77,15 +80,22 @@ const SoundAlarmUnit: React.FC<SoundAlarmUnitProps> = ({
     default:
       url = gameitem;
   }
+  const [isPlaying, setPlaying] = useAppStoreProperty(
+    instancekey + "-soundalarm-playing"
+  );
 
   const [, { play, pause }] = useAudio(url, { volume, loop });
 
   useMQTTSubscribe(
     subtopic,
-    ({ message }: MQTTMessage) =>
-      FORMAT.toDisplay(message) === "1" ? play() : pause(),
+    ({ message }: MQTTMessage) => setPlaying(FORMAT.toDisplay(message)),
     suboptions
   );
+
+  useEffect(() => {
+    isPlaying === "1" ? play() : pause();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlaying]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => pause, []);

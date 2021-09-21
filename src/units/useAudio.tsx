@@ -45,7 +45,11 @@ const useAudio = (
 
   const play = () => {
     audio.currentTime = 0;
-    audio.play();
+    try {
+      audio.play();
+    } catch (ex) {
+      // Might fail if no user gesture since loading the page
+    }
   };
   const pause = () => audio.pause();
   const resume = () => audio.play();
