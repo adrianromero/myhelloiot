@@ -76,8 +76,8 @@ export const useDispatchProperties = () => {
 
 export const useAppStoreProperty = (
   name: string
-): [string, (value: string) => void] => {
-  const property: string = useSelector<AppStoreValue, string>(
+): [string | undefined, (value: string) => void] => {
+  const property: string | undefined = useSelector<AppStoreValue, string>(
     (s) => s.properties[name]
   );
   const dispatchProperties = useDispatchProperties();
@@ -106,10 +106,12 @@ const reducer: Reducer<AppStoreValue, AppStoreAction> = (
   prevState: AppStoreValue | undefined,
   action: AppStoreAction
 ): AppStoreValue => {
-  const properties = {
-    ...prevState?.properties,
-    ...action.newState?.properties,
-  };
+  const prevHash = prevState?.connectInfo.dashboard.hash;
+  const newHash = action.newState?.connectInfo?.dashboard.hash;
+  const prevProperties =
+    newHash && newHash !== prevHash ? {} : prevState?.properties;
+
+  const properties = { ...prevProperties, ...action.newState?.properties };
   return {
     ...emptyAppStoreValue,
     ...prevState,

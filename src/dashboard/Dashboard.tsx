@@ -16,10 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Drawer, Button, Layout, Menu } from "antd";
 import { MenuUnfoldOutlined, PictureFilled } from "@ant-design/icons";
-import { AppStoreValue, useAppStoreProperty } from "../AppStoreProvider";
+import { useAppStoreProperty } from "../AppStoreProvider";
 import AppHeader from "../AppHeader";
 import {
   MQTTMessage,
@@ -32,6 +31,7 @@ import ConnectionInfo from "./ConnectionInfo";
 import "./Dashboard.css";
 
 export type DashboardProps = {
+  instancekey: string;
   title?: string;
   topic?: string;
   disconnectDisabled?: boolean;
@@ -40,16 +40,16 @@ export type DashboardProps = {
 };
 
 const Dashboard: React.FC<DashboardProps> = ({
+  instancekey,
   title,
   topic = "",
   disconnectDisabled = false,
   className = "",
   children,
 }) => {
-  const dashboardhash: string = useSelector<AppStoreValue, string>(
-    (s) => s.connectInfo.dashboard.hash
+  const [panelkey, setPanelkey] = useAppStoreProperty(
+    instancekey + "-dashboard-panelkey"
   );
-  const [panelkey, setPanelkey] = useAppStoreProperty("panelkey");
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
   const [, { publish }] = useMQTTContext();
   useMQTTSubscribe(topic, (mqttmessage: MQTTMessage) => {
@@ -81,6 +81,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   const dcchildren: React.ReactElement<DashboardContentProps, any>[] = [];
   const remainingchildren: React.ReactElement<any, any>[] = [];
   let cvisible: React.ReactElement<DashboardContentProps, any> | undefined;
+  let keyvisible: string | undefined;
   let menDisabled: boolean = false;
   let disDisabled: boolean = false;
   let index = 0;
@@ -88,7 +89,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   React.Children.forEach(children, (c) => {
     if (React.isValidElement(c)) {
       if (c.type === DashboardContent) {
-        const key: string = `menu-${dashboardhash}-${index++}`;
+        const key: string = `menu-${index++}`;
         if (c.props.name) {
           menus.push(
             <Menu.Item key={key} icon={c.props.icon ?? <PictureFilled />}>
@@ -98,6 +99,7 @@ const Dashboard: React.FC<DashboardProps> = ({
         }
         if (key === panelkey || !cvisible) {
           cvisible = c;
+          keyvisible = key;
           menDisabled = c.props.menuDisabled ?? false;
           disDisabled = c.props.disconnectDisabled ?? false;
         }
@@ -134,7 +136,7 @@ const Dashboard: React.FC<DashboardProps> = ({
             <Menu
               theme="light"
               mode="inline"
-              selectedKeys={[panelkey.toString()]}
+              selectedKeys={keyvisible ? [keyvisible] : []}
               onSelect={handleSelect}
             >
               {menus}
