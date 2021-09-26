@@ -119,8 +119,8 @@ const Publisher: React.FC<PublisherProps> = ({
       retain: values.retain,
     });
     notification.success({
-      message: values.topic,
-      description: values.value ?? "<NULL>",
+      message: values.topic ? values.topic : "<EMPTY>",
+      description: values.value ? values.value : "<EMPTY>",
       duration: 2.5,
     });
   };
