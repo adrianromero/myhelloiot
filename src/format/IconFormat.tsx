@@ -34,6 +34,39 @@ import {
 
 import "./IconFormat.css";
 
+export const DimIconFormat = (): IconFormat => ({
+  toIcon: (b: Buffer) => {
+    const value = parseInt(b.toString());
+
+    return (
+      <div className="myhToIconFormat myhToIconFormat_aligncenter">
+        {value ? (
+          <BulbFilled
+            style={{ fontSize: "280%", color: `hsl(60, ${value}%, 60%)` }}
+          />
+        ) : (
+          <BulbTwoTone
+            style={{ fontSize: "280%" }}
+            twoToneColor="hsl(60, 0%, 60%)"
+          />
+        )}
+      </div>
+    );
+  },
+});
+
+export const ViewIconFormat = (): IconFormat => ({
+  toIcon: (b: Buffer) => (
+    <div className="myhToIconFormat myhToIconFormat_aligncenter">
+      {b.toString() === "1" ? (
+        <BulbFilled style={{ fontSize: "280%", color: "yellow" }} />
+      ) : (
+        <BulbTwoTone style={{ fontSize: "280%" }} twoToneColor="lightgray" />
+      )}
+    </div>
+  ),
+});
+
 export const BulbIconFormat = (): IconFormat => ({
   toIcon: (b: Buffer) =>
     b.toString() === "1" ? (

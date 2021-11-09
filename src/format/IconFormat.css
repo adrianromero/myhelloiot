@@ -24,3 +24,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .myhToIconFormat_alignright {
   text-align: right;
 }
+
+.myhToIconFormat_alignleft {
+  text-align: left;
+}
+
+.myhToIconFormat_aligncenter {
+  text-align: center;
+}

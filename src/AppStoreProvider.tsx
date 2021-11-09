@@ -64,7 +64,7 @@ export const useDispatchConnect = () => {
   };
 };
 
-export const useDispatchProperties = () => {
+const useDispatchProperties = () => {
   const dispatch = useDispatch<AppStoreDispatch>();
   return (properties: { [key: string]: string }) => {
     dispatch({
