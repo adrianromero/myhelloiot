@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/myhelloiot/static/css/main.859307f4.chunk.css",
-    "main.js": "/myhelloiot/static/js/main.0c6af5dc.chunk.js",
-    "runtime-main.js": "/myhelloiot/static/js/runtime-main.38cafb88.js",
-    "static/css/2.59af6703.chunk.css": "/myhelloiot/static/css/2.59af6703.chunk.css",
-    "static/js/2.134d1fe5.chunk.js": "/myhelloiot/static/js/2.134d1fe5.chunk.js",
-    "static/js/3.0457a8ad.chunk.js": "/myhelloiot/static/js/3.0457a8ad.chunk.js",
+    "main.css": "/myhelloiot/static/css/main.7eee505c.chunk.css",
+    "main.js": "/myhelloiot/static/js/main.f7433fb8.chunk.js",
+    "runtime-main.js": "/myhelloiot/static/js/runtime-main.0c1d3606.js",
+    "static/css/2.211cb4c2.chunk.css": "/myhelloiot/static/css/2.211cb4c2.chunk.css",
+    "static/js/2.707d9e33.chunk.js": "/myhelloiot/static/js/2.707d9e33.chunk.js",
+    "static/js/3.821952f1.chunk.js": "/myhelloiot/static/js/3.821952f1.chunk.js",
     "index.html": "/myhelloiot/index.html",
     "service-worker.js": "/myhelloiot/service-worker.js",
-    "static/js/2.134d1fe5.chunk.js.LICENSE.txt": "/myhelloiot/static/js/2.134d1fe5.chunk.js.LICENSE.txt",
+    "static/js/2.707d9e33.chunk.js.LICENSE.txt": "/myhelloiot/static/js/2.707d9e33.chunk.js.LICENSE.txt",
     "static/media/128138_1542160-lq.mp3": "/myhelloiot/static/media/128138_1542160-lq.d15febc7.mp3",
     "static/media/162467_311243-lq.mp3": "/myhelloiot/static/media/162467_311243-lq.7d1d05b8.mp3",
     "static/media/249703_3930831-lq.mp3": "/myhelloiot/static/media/249703_3930831-lq.cadb50cc.mp3",
@@ -24,10 +24,10 @@
     "static/media/themes.svg": "/myhelloiot/static/media/themes.8b0983ed.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.38cafb88.js",
-    "static/css/2.59af6703.chunk.css",
-    "static/js/2.134d1fe5.chunk.js",
-    "static/css/main.859307f4.chunk.css",
-    "static/js/main.0c6af5dc.chunk.js"
+    "static/js/runtime-main.0c1d3606.js",
+    "static/css/2.211cb4c2.chunk.css",
+    "static/js/2.707d9e33.chunk.js",
+    "static/css/main.7eee505c.chunk.css",
+    "static/js/main.f7433fb8.chunk.js"
   ]
 }
