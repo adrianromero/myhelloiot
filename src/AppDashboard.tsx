@@ -100,6 +100,7 @@ import {
   FuelIconFormat,
   ControlIconFormat,
 } from "./format/GaugeFormat";
+import { ChartIconFormat } from "./format/ChartFormat";
 import AppError from "./AppError";
 
 const ErrorFallback: React.FC<{ error: Error }> = ({ error }) => (
@@ -147,6 +148,7 @@ const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
             DialIconFormat,
             FuelIconFormat,
             ControlIconFormat,
+            ChartIconFormat,
             Themes,
           }}
           components={{

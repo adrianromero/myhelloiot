@@ -23,6 +23,7 @@
     "react-redux": "^7.2.4",
     "react-scripts": "4.0.3",
     "typescript": "^4.1.2",
+    "victory": "^36.2.0",
     "web-vitals": "^1.0.1",
     "workbox-background-sync": "^5.1.3",
     "workbox-broadcast-update": "^5.1.3",
