@@ -16,7 +16,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { createStore, Store, Reducer, Action, Dispatch } from "redux";
+import {
+  createStore,
+  Store,
+  Reducer,
+  Action,
+  AnyAction,
+  Dispatch,
+} from "redux";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { ConnectInfo, defaultConnectInfo } from "./connection/ConnectionInfo";
 
@@ -30,59 +37,35 @@ export type AppStoreValue = {
   };
 };
 
-export interface AppStoreAction extends Action<"set"> {
-  newState: {
-    connected?: string;
-    connectInfo?: ConnectInfo;
-    properties?: {
-      [key: string]: string;
-    };
-  };
-}
-export type AppStoreDispatch = Dispatch<AppStoreAction>;
-
 const emptyAppStoreValue: AppStoreValue = {
   connected: "",
   connectInfo: defaultConnectInfo,
   properties: {},
 };
 
-export const useDispatchDisconnect = () => {
-  const dispatch = useDispatch<AppStoreDispatch>();
-  return () => {
-    dispatch({ type: "set", newState: { connected: "" } });
-  };
-};
+export interface ActionDisconnect extends Action<"disconnect"> {}
+export type DispatchDisconnect = Dispatch<ActionDisconnect>;
 
-export const useDispatchConnect = () => {
-  const dispatch = useDispatch<AppStoreDispatch>();
-  return (connectInfo: ConnectInfo) => {
-    dispatch({
-      type: "set",
-      newState: { connected: "connected", connectInfo },
-    });
-  };
-};
+export interface ActionConnect extends Action<"connect"> {
+  connectInfo: ConnectInfo;
+}
+export type DispatchConnect = Dispatch<ActionConnect>;
 
-const useDispatchProperties = () => {
-  const dispatch = useDispatch<AppStoreDispatch>();
-  return (properties: { [key: string]: string }) => {
-    dispatch({
-      type: "set",
-      newState: { properties },
-    });
+interface ActionProperties extends Action<"properties"> {
+  properties: {
+    [key: string]: string;
   };
-};
-
+}
+type DispatchProperties = Dispatch<ActionProperties>;
 export const useAppStoreProperty = (
   name: string
 ): [string | undefined, (value: string) => void] => {
   const property: string | undefined = useSelector<AppStoreValue, string>(
     (s) => s.properties[name]
   );
-  const dispatchProperties = useDispatchProperties();
-  const setProperty = (value: string) => dispatchProperties({ [name]: value });
-
+  const dispatch = useDispatch<DispatchProperties>();
+  const setProperty = (value: string) =>
+    dispatch({ type: "properties", properties: { [name]: value } });
   return [property, setProperty];
 };
 
@@ -102,28 +85,48 @@ const saveLS = (state: AppStoreValue) => {
     localStorage.setItem(STORENAME, JSON.stringify(state));
   } catch (e) {}
 };
-const reducer: Reducer<AppStoreValue, AppStoreAction> = (
+const reducer: Reducer<AppStoreValue, AnyAction> = (
   prevState: AppStoreValue | undefined,
-  action: AppStoreAction
+  action: AnyAction
 ): AppStoreValue => {
-  const prevHash = prevState?.connectInfo.dashboard.hash;
-  const newHash = action.newState?.connectInfo?.dashboard.hash;
-  const prevProperties =
-    newHash && newHash !== prevHash ? {} : prevState?.properties;
+  if (action.type === "properties") {
+    const { properties } = action as ActionProperties;
+    return {
+      ...emptyAppStoreValue,
+      ...prevState,
+      properties: { ...prevState?.properties, ...properties },
+    };
+  }
 
-  const properties = { ...prevProperties, ...action.newState?.properties };
+  if (action.type === "disconnect") {
+    return {
+      ...emptyAppStoreValue,
+      ...prevState,
+      connected: "",
+    };
+  }
+
+  if (action.type === "connect") {
+    const { connectInfo } = action as ActionConnect;
+    const prevHash = prevState?.connectInfo.dashboard.hash;
+    const newHash = connectInfo.dashboard.hash;
+    const properties = newHash === prevHash ? prevState?.properties ?? {} : {};
+    return {
+      ...emptyAppStoreValue,
+      ...prevState,
+      connected: "connected",
+      connectInfo,
+      properties,
+    };
+  }
+
   return {
     ...emptyAppStoreValue,
     ...prevState,
-    ...action.newState,
-    properties,
   };
 };
 
-const store: Store<AppStoreValue, AppStoreAction> = createStore(
-  reducer,
-  loadLS()
-);
+const store: Store<AppStoreValue, AnyAction> = createStore(reducer, loadLS());
 store.subscribe(() => saveLS(store.getState()));
 
 const AppStoreProvider: React.FC<{ children: React.ReactNode }> = ({
