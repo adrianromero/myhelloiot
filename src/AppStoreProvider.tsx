@@ -25,13 +25,13 @@ import {
   Dispatch,
 } from "redux";
 import { Provider, useDispatch, useSelector } from "react-redux";
-import { ConnectInfo, defaultConnectInfo } from "./connection/ConnectionInfo";
+import { ConnectInfo } from "./connection/ConnectionInfo";
 
-const STORENAME = "myhelloiot-store";
+const STORERUNTIME = "myhelloiot-runtime";
 
 export type AppStoreValue = {
+  connectInfo?: ConnectInfo;
   connected: string;
-  connectInfo: ConnectInfo;
   properties: {
     [key: string]: string;
   };
@@ -39,7 +39,6 @@ export type AppStoreValue = {
 
 const emptyAppStoreValue: AppStoreValue = {
   connected: "",
-  connectInfo: defaultConnectInfo,
   properties: {},
 };
 
@@ -50,6 +49,11 @@ export interface ActionConnect extends Action<"connect"> {
   connectInfo: ConnectInfo;
 }
 export type DispatchConnect = Dispatch<ActionConnect>;
+
+export interface ActionLoadConnectInfo extends Action<"loadconnectinfo"> {
+  connectInfo: ConnectInfo;
+}
+export type DispatchLoadConnectInfo = Dispatch<ActionLoadConnectInfo>;
 
 interface ActionProperties extends Action<"properties"> {
   properties: {
@@ -69,22 +73,32 @@ export const useAppStoreProperty = (
   return [property, setProperty];
 };
 
-const loadLS = (): AppStoreValue => {
+const loadRUNTIME = (): AppStoreValue => {
   try {
-    const lsvalue = localStorage.getItem(STORENAME);
+    const lsvalue = localStorage.getItem(STORERUNTIME);
     if (lsvalue) {
-      return { ...emptyAppStoreValue, ...JSON.parse(lsvalue) };
+      const runtime = JSON.parse(lsvalue);
+      return {
+        ...emptyAppStoreValue,
+        connected: runtime[0],
+        properties: runtime[1],
+      };
     }
     return emptyAppStoreValue;
   } catch (e) {
     return emptyAppStoreValue;
   }
 };
-const saveLS = (state: AppStoreValue) => {
+
+const saveRUNTIME = (state: AppStoreValue) => {
   try {
-    localStorage.setItem(STORENAME, JSON.stringify(state));
+    localStorage.setItem(
+      STORERUNTIME,
+      JSON.stringify([state.connected, state.properties])
+    );
   } catch (e) {}
 };
+
 const reducer: Reducer<AppStoreValue, AnyAction> = (
   prevState: AppStoreValue | undefined,
   action: AnyAction
@@ -108,7 +122,7 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
 
   if (action.type === "connect") {
     const { connectInfo } = action as ActionConnect;
-    const prevHash = prevState?.connectInfo.dashboard.hash;
+    const prevHash = prevState?.connectInfo?.dashboard.hash;
     const newHash = connectInfo.dashboard.hash;
     const properties = newHash === prevHash ? prevState?.properties ?? {} : {};
     return {
@@ -120,14 +134,26 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
     };
   }
 
+  if (action.type === "loadconnectinfo") {
+    const { connectInfo } = action as ActionLoadConnectInfo;
+    return {
+      ...emptyAppStoreValue,
+      ...prevState,
+      connectInfo,
+    };
+  }
+
   return {
     ...emptyAppStoreValue,
     ...prevState,
   };
 };
 
-const store: Store<AppStoreValue, AnyAction> = createStore(reducer, loadLS());
-store.subscribe(() => saveLS(store.getState()));
+const store: Store<AppStoreValue, AnyAction> = createStore(
+  reducer,
+  loadRUNTIME()
+);
+store.subscribe(() => saveRUNTIME(store.getState()));
 
 const AppStoreProvider: React.FC<{ children: React.ReactNode }> = ({
   children,

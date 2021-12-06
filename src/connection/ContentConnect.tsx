@@ -27,11 +27,11 @@ import {
   Layout,
   Tabs,
 } from "antd";
-import { useSelector, useDispatch } from "react-redux";
-import { ConnectInfo } from "./ConnectionInfo";
+import { useDispatch } from "react-redux";
+import { DispatchConnect } from "../AppStoreProvider";
+import { ConnectInfo, saveConnectInfo } from "./ConnectionInfo";
 import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
-import { AppStoreValue, DispatchConnect } from "../AppStoreProvider";
 import UploadRaw from "./UploadRaw";
 import ContentConnectAbout from "./ContentConnectAbout";
 import "./ContentConnect.css";
@@ -43,12 +43,11 @@ type ModalErrorInfo = {
   visible: boolean;
 };
 
-const PanelConnect: React.FC<{}> = () => {
+const PanelConnect: React.FC<{ connectInfo: ConnectInfo }> = ({
+  connectInfo,
+}) => {
   const [form] = Form.useForm<ConnectInfo>();
   const dispatch = useDispatch<DispatchConnect>();
-  const connectInfo = useSelector<AppStoreValue, ConnectInfo>(
-    (s) => s.connectInfo
-  );
   const HIDDEN: ModalErrorInfo = { visible: false, title: "", error: "" };
   const [errorinf, showError] = useState<ModalErrorInfo>(HIDDEN);
 
@@ -73,7 +72,10 @@ const PanelConnect: React.FC<{}> = () => {
       <Form
         form={form}
         name="connection"
-        onFinish={(connectInfo) => dispatch({ type: "connect", connectInfo })}
+        onFinish={(connectInfo) => {
+          saveConnectInfo(connectInfo);
+          dispatch({ type: "connect", connectInfo });
+        }}
         onFinishFailed={handleFail}
         className="myhConnectionForm"
       >

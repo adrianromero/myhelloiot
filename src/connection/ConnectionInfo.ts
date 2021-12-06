@@ -40,7 +40,7 @@ if (storedClientId) {
 } else {
   clientId =
     "myhelloiot_" + Math.random().toString(16).substr(2).padEnd(13, "0");
-  localStorage.setItem("myhelloiot_defaultClientId", clientId);
+  localStorage.setItem("myhelloiot-defaultid", clientId);
 }
 
 export const defaultConnectInfo = {
@@ -65,4 +65,24 @@ export const defaultConnectInfo = {
     data: "",
     hash: cyrb53str(""),
   },
+};
+
+const STORECONNECTINFO = "myhelloiot-connectinfo";
+
+export const loadConnectInfo = (): ConnectInfo => {
+  try {
+    const lsvalue = localStorage.getItem(STORECONNECTINFO);
+    if (lsvalue) {
+      return JSON.parse(lsvalue);
+    }
+    return defaultConnectInfo;
+  } catch (e) {
+    return defaultConnectInfo;
+  }
+};
+
+export const saveConnectInfo = (connectInfo: ConnectInfo): void => {
+  try {
+    localStorage.setItem(STORECONNECTINFO, JSON.stringify(connectInfo));
+  } catch (e) {}
 };

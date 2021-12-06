@@ -17,12 +17,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect } from "react";
 import { QoS } from "mqtt";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import AppStoreProvider, {
+  AppStoreValue,
+  DispatchLoadConnectInfo,
+} from "./AppStoreProvider";
 import ContentConnect from "./connection/ContentConnect";
 import AppDashboard from "./AppDashboard";
-import { ConnectInfo } from "./connection/ConnectionInfo";
+import { ConnectInfo, loadConnectInfo } from "./connection/ConnectionInfo";
 import MQTTProvider, { OnlineInfo, useMQTTContext } from "./mqtt/MQTTProvider";
-import AppStoreProvider, { AppStoreValue } from "./AppStoreProvider";
 import AppError from "./AppError";
 import "antd/dist/antd.css";
 import "./assets/main.css";
@@ -36,65 +39,62 @@ const App: React.FC<{}> = () => (
 );
 
 const MQTTApp: React.FC<{}> = () => {
-  const [, { connect, disconnect }] = useMQTTContext();
+  const [{ error }, { connect, disconnect }] = useMQTTContext();
   const connected = useSelector<AppStoreValue, string>((s) => s.connected);
-  const connectInfo = useSelector<AppStoreValue, ConnectInfo>(
+  const connectInfo = useSelector<AppStoreValue, ConnectInfo | undefined>(
     (s) => s.connectInfo
   );
+  const dispatch = useDispatch<DispatchLoadConnectInfo>();
 
   useEffect(() => {
-    if (connected === "connected") {
-      const {
-        url,
-        username,
-        password,
-        clientId,
-        keepalive,
-        connectTimeout,
-        reconnectPeriod,
-        onlinetopic,
-        onlineqos,
-      } = connectInfo;
-      const online: OnlineInfo | undefined = onlinetopic
-        ? {
-            topic: onlinetopic,
-            qos: onlineqos as QoS,
-            retain: true,
-          }
-        : undefined;
-      connect({
-        url,
-        online,
-        options: {
+    if (connectInfo) {
+      if (connected === "connected") {
+        const {
+          url,
           username,
           password,
           clientId,
           keepalive,
           connectTimeout,
           reconnectPeriod,
-        },
-      });
+          onlinetopic,
+          onlineqos,
+        } = connectInfo;
+        const online: OnlineInfo | undefined = onlinetopic
+          ? {
+              topic: onlinetopic,
+              qos: onlineqos as QoS,
+              retain: true,
+            }
+          : undefined;
+        connect({
+          url,
+          online,
+          options: {
+            username,
+            password,
+            clientId,
+            keepalive,
+            connectTimeout,
+            reconnectPeriod,
+          },
+        });
+      } else {
+        disconnect();
+      }
     } else {
-      disconnect();
+      dispatch({ type: "loadconnectinfo", connectInfo: loadConnectInfo() });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected]);
+  }, [connected, connectInfo]);
 
-  return <ConnectedApp />;
-};
+  if (!connectInfo) {
+    return null;
+  }
 
-const ConnectedApp: React.FC<{}> = () => {
-  const [{ error }] = useMQTTContext();
-  const connected = useSelector<AppStoreValue, string>((s) => s.connected);
-  const jsx = useSelector<AppStoreValue, string>(
-    (s) => s.connectInfo.dashboard.data
-  );
-  const css = useSelector<AppStoreValue, string>(
-    (s) => s.connectInfo.dashboardcss.data
-  );
   if (!connected) {
     // Connection Component
-    return <ContentConnect />;
+    return <ContentConnect connectInfo={connectInfo} />;
   }
 
   // Connectiiiing
@@ -107,6 +107,8 @@ const ConnectedApp: React.FC<{}> = () => {
     );
   }
 
+  const jsx = connectInfo.dashboard.data;
+  const css = connectInfo.dashboardcss.data;
   if (!jsx) {
     return <AppError title="Failed to load JSX code" error="Storage empty" />;
   }
