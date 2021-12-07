@@ -16,7 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { FileInfo } from "./UploadRaw";
-import { cyrb53str } from "./CryptFunctions";
 import basicsampledata from "./basicsampledata";
 
 export type ConnectInfo = {
@@ -57,13 +56,11 @@ export const defaultConnectInfo = {
     name: "basic.jsx",
     type: "text/jsx",
     data: basicsampledata,
-    hash: cyrb53str(basicsampledata),
   },
   dashboardcss: {
     name: "dashboard.css",
     type: "text/css",
     data: "",
-    hash: cyrb53str(""),
   },
 };
 

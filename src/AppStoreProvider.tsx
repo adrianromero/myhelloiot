@@ -26,6 +26,7 @@ import {
 } from "redux";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { ConnectInfo } from "./connection/ConnectionInfo";
+import { cyrb53str } from "./CryptFunctions";
 
 const STORERUNTIME = "myhelloiot-runtime";
 
@@ -33,13 +34,14 @@ export type AppStoreValue = {
   connectInfo?: ConnectInfo;
   connected: string;
   properties: {
-    [key: string]: string;
+    hash: string | undefined;
+    attrs: { [key: string]: string };
   };
 };
 
 const emptyAppStoreValue: AppStoreValue = {
   connected: "",
-  properties: {},
+  properties: { hash: "", attrs: {} },
 };
 
 export interface ActionDisconnect extends Action<"disconnect"> {}
@@ -56,7 +58,7 @@ export interface ActionLoadConnectInfo extends Action<"loadconnectinfo"> {
 export type DispatchLoadConnectInfo = Dispatch<ActionLoadConnectInfo>;
 
 interface ActionProperties extends Action<"properties"> {
-  properties: {
+  attrs: {
     [key: string]: string;
   };
 }
@@ -65,11 +67,11 @@ export const useAppStoreProperty = (
   name: string
 ): [string | undefined, (value: string) => void] => {
   const property: string | undefined = useSelector<AppStoreValue, string>(
-    (s) => s.properties[name]
+    (s) => s.properties.attrs[name]
   );
   const dispatch = useDispatch<DispatchProperties>();
   const setProperty = (value: string) =>
-    dispatch({ type: "properties", properties: { [name]: value } });
+    dispatch({ type: "properties", attrs: { [name]: value } });
   return [property, setProperty];
 };
 
@@ -104,11 +106,14 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
   action: AnyAction
 ): AppStoreValue => {
   if (action.type === "properties") {
-    const { properties } = action as ActionProperties;
+    const { attrs } = action as ActionProperties;
     return {
       ...emptyAppStoreValue,
       ...prevState,
-      properties: { ...prevState?.properties, ...properties },
+      properties: {
+        hash: prevState?.properties.hash,
+        attrs: { ...attrs, ...prevState?.properties.attrs },
+      },
     };
   }
 
@@ -122,9 +127,12 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
 
   if (action.type === "connect") {
     const { connectInfo } = action as ActionConnect;
-    const prevHash = prevState?.connectInfo?.dashboard.hash;
-    const newHash = connectInfo.dashboard.hash;
-    const properties = newHash === prevHash ? prevState?.properties ?? {} : {};
+    const prevHash = prevState?.properties.hash;
+    const hash = cyrb53str(connectInfo.dashboard.data);
+    const properties = {
+      hash,
+      attrs: hash === prevHash ? prevState?.properties.attrs ?? {} : {},
+    };
     return {
       ...emptyAppStoreValue,
       ...prevState,

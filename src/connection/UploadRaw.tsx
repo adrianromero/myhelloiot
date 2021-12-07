@@ -19,14 +19,12 @@ import React from "react";
 import { DownloadOutlined, UploadOutlined } from "@ant-design/icons";
 import { Upload, Button, Input, Col, Row } from "antd";
 import { RcFile } from "antd/lib/upload/interface";
-import { cyrb53str } from "./CryptFunctions";
 import "./UploadRaw.css";
 
 export type FileInfo = {
   name: string;
   type: string;
   data: string;
-  hash: string;
 };
 
 export type UploadRawProps = {
@@ -52,7 +50,6 @@ const UploadRaw: React.FC<UploadRawProps> = ({
           name: file.name,
           type: file.type,
           data: "",
-          hash: cyrb53str(""),
         });
       } else {
         fetch(urldata)
@@ -62,7 +59,6 @@ const UploadRaw: React.FC<UploadRawProps> = ({
               name: file.name,
               type: file.type,
               data,
-              hash: cyrb53str(data),
             })
           );
       }
@@ -102,7 +98,6 @@ const UploadRaw: React.FC<UploadRawProps> = ({
                     name: e.target.value,
                     type: value?.type || "",
                     data: value?.data || "",
-                    hash: cyrb53str(value?.data || ""),
                   })
                 }
                 value={value?.name || ""}
@@ -136,7 +131,6 @@ const UploadRaw: React.FC<UploadRawProps> = ({
                 name: value?.name || "",
                 type: value?.type || "",
                 data: e.target.value,
-                hash: cyrb53str(e.target.value),
               })
             }
             value={value?.data || ""}
