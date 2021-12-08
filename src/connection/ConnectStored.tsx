@@ -43,7 +43,7 @@ type ModalErrorInfo = {
   visible: boolean;
 };
 
-const PanelConnect: React.FC<{ connectInfo: ConnectInfo }> = ({
+const ConnectStored: React.FC<{ connectInfo: ConnectInfo }> = ({
   connectInfo,
 }) => {
   const [form] = Form.useForm<ConnectInfo>();
@@ -74,7 +74,7 @@ const PanelConnect: React.FC<{ connectInfo: ConnectInfo }> = ({
         name="connection"
         onFinish={(connectInfo) => {
           saveConnectInfo(connectInfo);
-          dispatch({ type: "connect", connectInfo });
+          dispatch({ type: "connect", connectInfo, connectInfoType: "STORED" });
         }}
         onFinishFailed={handleFail}
         className="myhConnectionForm"
@@ -371,4 +371,4 @@ const PanelConnect: React.FC<{ connectInfo: ConnectInfo }> = ({
     </>
   );
 };
-export default PanelConnect;
+export default ConnectStored;

@@ -22,9 +22,14 @@ import AppStoreProvider, {
   AppStoreValue,
   DispatchLoadConnectInfo,
 } from "./AppStoreProvider";
-import ContentConnect from "./connection/ContentConnect";
+import ConnectStored from "./connection/ConnectStored";
+import ConnectRemote from "./connection/ConnectRemote";
 import AppDashboard from "./AppDashboard";
-import { ConnectInfo, loadConnectInfo } from "./connection/ConnectionInfo";
+import {
+  ConnectInfo,
+  loadConnectInfo,
+  LOCALCLIENTID,
+} from "./connection/ConnectionInfo";
 import MQTTProvider, { OnlineInfo, useMQTTContext } from "./mqtt/MQTTProvider";
 import AppError from "./AppError";
 import "antd/dist/antd.css";
@@ -44,6 +49,10 @@ const MQTTApp: React.FC<{}> = () => {
   const connectInfo = useSelector<AppStoreValue, ConnectInfo | undefined>(
     (s) => s.connectInfo
   );
+  const connectInfoType = useSelector<
+    AppStoreValue,
+    "REMOTE" | "STORED" | undefined
+  >((s) => s.connectInfoType);
   const dispatch = useDispatch<DispatchLoadConnectInfo>();
 
   useEffect(() => {
@@ -83,18 +92,54 @@ const MQTTApp: React.FC<{}> = () => {
         disconnect();
       }
     } else {
-      dispatch({ type: "loadconnectinfo", connectInfo: loadConnectInfo() });
+      const fetchConnectInfo = async (): Promise<{
+        connectInfo: ConnectInfo;
+        connectInfoType: "REMOTE" | "STORED";
+      }> => {
+        const app = new URLSearchParams(window.location.search).get(
+          "connectinfo"
+        );
+        if (app) {
+          const infofetch = fetch("./resources/" + app + "/connectinfo.json");
+          const jsxfetch = fetch("./resources/" + app + "/dashboard.jsx");
+          const cssfetch = fetch("./resources/" + app + "/dashboard.css");
+          const [infobody, jsxbody, cssbody] = await Promise.all([
+            infofetch,
+            jsxfetch,
+            cssfetch,
+          ]);
+          const [infodata, jsxdata, cssdata] = await Promise.all([
+            infobody.json(),
+            jsxbody.text(),
+            cssbody.text(),
+          ]);
+          infodata.clientId = infodata.clientId ?? LOCALCLIENTID;
+          infodata.dashboard.data = jsxdata;
+          infodata.dashboardcss.data = cssdata;
+          return { connectInfo: infodata, connectInfoType: "REMOTE" };
+        }
+        return Promise.resolve({
+          connectInfo: loadConnectInfo(),
+          connectInfoType: "STORED",
+        });
+      };
+      fetchConnectInfo().then(({ connectInfo, connectInfoType }) =>
+        dispatch({ type: "loadconnectinfo", connectInfo, connectInfoType })
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected, connectInfo]);
 
-  if (!connectInfo) {
-    return null;
+  if (!connectInfo || !connectInfoType) {
+    return null; // Loading
   }
 
   if (!connected) {
     // Connection Component
-    return <ContentConnect connectInfo={connectInfo} />;
+    if (connectInfoType === "STORED") {
+      return <ConnectStored connectInfo={connectInfo} />;
+    }
+    return <ConnectRemote connectInfo={connectInfo} />;
   }
 
   // Connectiiiing

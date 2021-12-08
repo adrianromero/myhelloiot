@@ -32,15 +32,17 @@ export type ConnectInfo = {
   dashboardcss: FileInfo;
 };
 
-const storedClientId = localStorage.getItem("myhelloiot_defaultClientId");
+const storedClientId = localStorage.getItem("myhelloiot_storedClientId");
 let clientId;
 if (storedClientId) {
   clientId = storedClientId;
 } else {
   clientId =
     "myhelloiot_" + Math.random().toString(16).substr(2).padEnd(13, "0");
-  localStorage.setItem("myhelloiot-defaultid", clientId);
+  localStorage.setItem("myhelloiot_storedClientId", clientId);
 }
+
+export const LOCALCLIENTID = clientId;
 
 export const defaultConnectInfo = {
   url: "wss://mymqttbroker",

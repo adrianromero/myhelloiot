@@ -32,6 +32,7 @@ const STORERUNTIME = "myhelloiot-runtime";
 
 export type AppStoreValue = {
   connectInfo?: ConnectInfo;
+  connectInfoType?: "STORED" | "REMOTE";
   connected: string;
   properties: {
     hash: string | undefined;
@@ -49,11 +50,13 @@ export type DispatchDisconnect = Dispatch<ActionDisconnect>;
 
 export interface ActionConnect extends Action<"connect"> {
   connectInfo: ConnectInfo;
+  connectInfoType: "STORED" | "REMOTE";
 }
 export type DispatchConnect = Dispatch<ActionConnect>;
 
 export interface ActionLoadConnectInfo extends Action<"loadconnectinfo"> {
   connectInfo: ConnectInfo;
+  connectInfoType: "STORED" | "REMOTE";
 }
 export type DispatchLoadConnectInfo = Dispatch<ActionLoadConnectInfo>;
 
@@ -126,7 +129,7 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
   }
 
   if (action.type === "connect") {
-    const { connectInfo } = action as ActionConnect;
+    const { connectInfo, connectInfoType } = action as ActionConnect;
     const prevHash = prevState?.properties.hash;
     const hash = cyrb53str(connectInfo.dashboard.data);
     const properties = {
@@ -138,16 +141,18 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
       ...prevState,
       connected: "connected",
       connectInfo,
+      connectInfoType,
       properties,
     };
   }
 
   if (action.type === "loadconnectinfo") {
-    const { connectInfo } = action as ActionLoadConnectInfo;
+    const { connectInfo, connectInfoType } = action as ActionLoadConnectInfo;
     return {
       ...emptyAppStoreValue,
       ...prevState,
       connectInfo,
+      connectInfoType,
     };
   }
 
