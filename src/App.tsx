@@ -53,7 +53,7 @@ const MQTTApp: React.FC<{}> = () => {
     AppStoreValue,
     "REMOTE" | "STORED" | undefined
   >((s) => s.connectInfoType);
-  const dispatch = useDispatch<DispatchLoadConnectInfo>();
+  const dispatchLoad = useDispatch<DispatchLoadConnectInfo>();
 
   useEffect(() => {
     if (connectInfo) {
@@ -124,7 +124,7 @@ const MQTTApp: React.FC<{}> = () => {
         });
       };
       fetchConnectInfo().then(({ connectInfo, connectInfoType }) =>
-        dispatch({ type: "loadconnectinfo", connectInfo, connectInfoType })
+        dispatchLoad({ type: "loadconnectinfo", connectInfo, connectInfoType })
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

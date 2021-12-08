@@ -29,7 +29,7 @@ import { ApiFilled } from "@ant-design/icons";
 const ConnectRemote: React.FC<{ connectInfo: ConnectInfo }> = ({
   connectInfo,
 }) => {
-  const dispatch = useDispatch<DispatchConnect>();
+  const dispatchConnect = useDispatch<DispatchConnect>();
   return (
     <Layout className="myhLayout">
       <AppHeader>
@@ -37,11 +37,7 @@ const ConnectRemote: React.FC<{ connectInfo: ConnectInfo }> = ({
           icon={<ApiFilled />}
           type="primary"
           onClick={() => {
-            dispatch({
-              type: "connect",
-              connectInfo,
-              connectInfoType: "REMOTE",
-            });
+            dispatchConnect({ type: "connect" });
           }}
         >
           Connect

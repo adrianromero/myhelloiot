@@ -28,7 +28,7 @@ import {
   Tabs,
 } from "antd";
 import { useDispatch } from "react-redux";
-import { DispatchConnect } from "../AppStoreProvider";
+import { DispatchConnect, DispatchLoadConnectInfo } from "../AppStoreProvider";
 import { ConnectInfo, saveConnectInfo } from "./ConnectionInfo";
 import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
@@ -47,7 +47,8 @@ const ConnectStored: React.FC<{ connectInfo: ConnectInfo }> = ({
   connectInfo,
 }) => {
   const [form] = Form.useForm<ConnectInfo>();
-  const dispatch = useDispatch<DispatchConnect>();
+  const dispatchLoad = useDispatch<DispatchLoadConnectInfo>();
+  const dispatchConnect = useDispatch<DispatchConnect>();
   const HIDDEN: ModalErrorInfo = { visible: false, title: "", error: "" };
   const [errorinf, showError] = useState<ModalErrorInfo>(HIDDEN);
 
@@ -74,7 +75,12 @@ const ConnectStored: React.FC<{ connectInfo: ConnectInfo }> = ({
         name="connection"
         onFinish={(connectInfo) => {
           saveConnectInfo(connectInfo);
-          dispatch({ type: "connect", connectInfo, connectInfoType: "STORED" });
+          dispatchLoad({
+            type: "loadconnectinfo",
+            connectInfo,
+            connectInfoType: "STORED",
+          });
+          dispatchConnect({ type: "connect" });
         }}
         onFinishFailed={handleFail}
         className="myhConnectionForm"

@@ -48,10 +48,7 @@ const emptyAppStoreValue: AppStoreValue = {
 export interface ActionDisconnect extends Action<"disconnect"> {}
 export type DispatchDisconnect = Dispatch<ActionDisconnect>;
 
-export interface ActionConnect extends Action<"connect"> {
-  connectInfo: ConnectInfo;
-  connectInfoType: "STORED" | "REMOTE";
-}
+export interface ActionConnect extends Action<"connect"> {}
 export type DispatchConnect = Dispatch<ActionConnect>;
 
 export interface ActionLoadConnectInfo extends Action<"loadconnectinfo"> {
@@ -129,9 +126,9 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
   }
 
   if (action.type === "connect") {
-    const { connectInfo, connectInfoType } = action as ActionConnect;
+    //const { connectInfo, connectInfoType } = action as ActionConnect;
     const prevHash = prevState?.properties.hash;
-    const hash = cyrb53str(connectInfo.dashboard.data);
+    const hash = cyrb53str(prevState?.connectInfo?.dashboard.data ?? "");
     const properties = {
       hash,
       attrs: hash === prevHash ? prevState?.properties.attrs ?? {} : {},
@@ -140,8 +137,6 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
       ...emptyAppStoreValue,
       ...prevState,
       connected: "connected",
-      connectInfo,
-      connectInfoType,
       properties,
     };
   }
