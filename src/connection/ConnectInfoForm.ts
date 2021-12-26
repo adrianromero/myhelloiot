@@ -15,25 +15,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
-import { Layout } from "antd";
+import { FileInfo } from "./UploadRaw";
 
-import "./AppHeader.css";
-
-const AppHeader: React.FC<{
-  title?: string;
-  subtitle?: string;
-  children: React.ReactNode;
-}> = ({ title = "MYHELLOIOT", subtitle, children }) => {
-  return (
-    <Layout.Header className="myhAppHeader">
-      <div className="myhAppHeader-container">
-        <span className="myhAppHeader-title">
-          {title + (subtitle ? " - " + subtitle : "")}
-        </span>
-        {children}
-      </div>
-    </Layout.Header>
-  );
+export type ConnectInfoForm = {
+  url: string;
+  username: string;
+  password: string;
+  clientId: string;
+  keepalive: number;
+  connectTimeout: number;
+  reconnectPeriod: number;
+  onlinetopic: string;
+  onlineqos: number;
+  dashboard: FileInfo;
+  dashboardcss: FileInfo;
 };
-export default AppHeader;

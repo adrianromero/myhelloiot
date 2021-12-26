@@ -1,7 +1,5 @@
 {
   "url": "ws://localhost:9001",
-  "username": "",
-  "password": "",
   "keepalive": 60,
   "connectTimeout": 30000,
   "reconnectPeriod": 1000,

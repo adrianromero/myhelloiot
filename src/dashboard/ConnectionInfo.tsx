@@ -75,6 +75,16 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
       <div style={{ width: 280 }}>
         <Row wrap={false}>
           <Col flex="120px">
+            <Text>User name:</Text>
+          </Col>
+          <Col flex="auto">
+            <Text type="secondary" strong>
+              {username}
+            </Text>
+          </Col>
+        </Row>
+        <Row wrap={false}>
+          <Col flex="120px">
             <Text>Protocol:</Text>
           </Col>
           <Col flex="auto">
@@ -120,16 +130,6 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
           <Col flex="auto">
             <Text type="secondary" strong>
               {protocolId} {protocolVersion}
-            </Text>
-          </Col>
-        </Row>
-        <Row wrap={false}>
-          <Col flex="120px">
-            <Text>User name:</Text>
-          </Col>
-          <Col flex="auto">
-            <Text type="secondary" strong>
-              {username}
             </Text>
           </Col>
         </Row>

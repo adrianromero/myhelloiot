@@ -28,12 +28,15 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { ConnectInfo } from "./connection/ConnectionInfo";
 import { cyrb53str } from "./CryptFunctions";
 
-const STORERUNTIME = "myhelloiot-runtime";
+const STORERUNTIME = "myhelloiot-runtime-" + window.location.href;
 
 export type AppStoreValue = {
   connectInfo?: ConnectInfo;
   connectInfoType?: "STORED" | "REMOTE";
   connected: string;
+  username: string;
+  password: string;
+  clientId: string;
   properties: {
     hash: string | undefined;
     attrs: { [key: string]: string };
@@ -42,13 +45,21 @@ export type AppStoreValue = {
 
 const emptyAppStoreValue: AppStoreValue = {
   connected: "",
+  username: "Anonymous",
+  password: "",
+  clientId:
+    "myhelloiot_" + Math.random().toString(16).substr(2).padEnd(13, "0"),
   properties: { hash: "", attrs: {} },
 };
 
 export interface ActionDisconnect extends Action<"disconnect"> {}
 export type DispatchDisconnect = Dispatch<ActionDisconnect>;
 
-export interface ActionConnect extends Action<"connect"> {}
+export interface ActionConnect extends Action<"connect"> {
+  username: string;
+  password: string;
+  clientId: string;
+}
 export type DispatchConnect = Dispatch<ActionConnect>;
 
 export interface ActionLoadConnectInfo extends Action<"loadconnectinfo"> {
@@ -84,6 +95,9 @@ const loadRUNTIME = (): AppStoreValue => {
         ...emptyAppStoreValue,
         connected: runtime[0],
         properties: runtime[1],
+        username: runtime[2],
+        password: runtime[3],
+        clientId: runtime[4],
       };
     }
     return emptyAppStoreValue;
@@ -96,7 +110,13 @@ const saveRUNTIME = (state: AppStoreValue) => {
   try {
     localStorage.setItem(
       STORERUNTIME,
-      JSON.stringify([state.connected, state.properties])
+      JSON.stringify([
+        state.connected,
+        state.properties,
+        state.username,
+        state.password,
+        state.clientId,
+      ])
     );
   } catch (e) {}
 };
@@ -112,7 +132,7 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
       ...prevState,
       properties: {
         hash: prevState?.properties.hash,
-        attrs: { ...attrs, ...prevState?.properties.attrs },
+        attrs: { ...prevState?.properties.attrs, ...attrs },
       },
     };
   }
@@ -126,7 +146,7 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
   }
 
   if (action.type === "connect") {
-    //const { connectInfo, connectInfoType } = action as ActionConnect;
+    const { username, password, clientId } = action as ActionConnect;
     const prevHash = prevState?.properties.hash;
     const hash = cyrb53str(prevState?.connectInfo?.dashboard.data ?? "");
     const properties = {
@@ -137,6 +157,9 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
       ...emptyAppStoreValue,
       ...prevState,
       connected: "connected",
+      username,
+      password,
+      clientId,
       properties,
     };
   }

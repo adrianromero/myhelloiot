@@ -25,11 +25,7 @@ import AppStoreProvider, {
 import ConnectStored from "./connection/ConnectStored";
 import ConnectRemote from "./connection/ConnectRemote";
 import AppDashboard from "./AppDashboard";
-import {
-  ConnectInfo,
-  loadConnectInfo,
-  LOCALCLIENTID,
-} from "./connection/ConnectionInfo";
+import { ConnectInfo, loadConnectInfo } from "./connection/ConnectionInfo";
 import MQTTProvider, { OnlineInfo, useMQTTContext } from "./mqtt/MQTTProvider";
 import AppError from "./AppError";
 import "antd/dist/antd.css";
@@ -46,6 +42,9 @@ const App: React.FC<{}> = () => (
 const MQTTApp: React.FC<{}> = () => {
   const [{ error }, { connect, disconnect }] = useMQTTContext();
   const connected = useSelector<AppStoreValue, string>((s) => s.connected);
+  const username = useSelector<AppStoreValue, string>((s) => s.username);
+  const password = useSelector<AppStoreValue, string>((s) => s.password);
+  const clientId = useSelector<AppStoreValue, string>((s) => s.clientId);
   const connectInfo = useSelector<AppStoreValue, ConnectInfo | undefined>(
     (s) => s.connectInfo
   );
@@ -60,9 +59,6 @@ const MQTTApp: React.FC<{}> = () => {
       if (connected === "connected") {
         const {
           url,
-          username,
-          password,
-          clientId,
           keepalive,
           connectTimeout,
           reconnectPeriod,
@@ -113,7 +109,6 @@ const MQTTApp: React.FC<{}> = () => {
             jsxbody.text(),
             cssbody.text(),
           ]);
-          infodata.clientId = infodata.clientId ?? LOCALCLIENTID;
           infodata.dashboard.data = jsxdata;
           infodata.dashboardcss.data = cssdata;
           return { connectInfo: infodata, connectInfoType: "REMOTE" };
@@ -137,9 +132,23 @@ const MQTTApp: React.FC<{}> = () => {
   if (!connected) {
     // Connection Component
     if (connectInfoType === "STORED") {
-      return <ConnectStored connectInfo={connectInfo} />;
+      return (
+        <ConnectStored
+          connectInfo={connectInfo}
+          username={username}
+          password={password}
+          clientId={clientId}
+        />
+      );
     }
-    return <ConnectRemote connectInfo={connectInfo} />;
+    return (
+      <ConnectRemote
+        connectInfo={connectInfo}
+        username={username}
+        password={password}
+        clientId={clientId}
+      />
+    );
   }
 
   // Connectiiiing

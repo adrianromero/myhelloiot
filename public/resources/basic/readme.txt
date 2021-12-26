@@ -1,0 +1,1 @@
+http://localhost:3000/myhelloiot/?connectinfo=basic

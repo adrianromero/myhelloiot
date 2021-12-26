@@ -30,6 +30,7 @@ import {
 import { useDispatch } from "react-redux";
 import { DispatchConnect, DispatchLoadConnectInfo } from "../AppStoreProvider";
 import { ConnectInfo, saveConnectInfo } from "./ConnectionInfo";
+import { ConnectInfoForm } from "./ConnectInfoForm";
 import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
 import UploadRaw from "./UploadRaw";
@@ -43,10 +44,13 @@ type ModalErrorInfo = {
   visible: boolean;
 };
 
-const ConnectStored: React.FC<{ connectInfo: ConnectInfo }> = ({
-  connectInfo,
-}) => {
-  const [form] = Form.useForm<ConnectInfo>();
+const ConnectStored: React.FC<{
+  connectInfo: ConnectInfo;
+  username: string;
+  password: string;
+  clientId: string;
+}> = ({ connectInfo, username, password, clientId }) => {
+  const [form] = Form.useForm<ConnectInfoForm>();
   const dispatchLoad = useDispatch<DispatchLoadConnectInfo>();
   const dispatchConnect = useDispatch<DispatchConnect>();
   const HIDDEN: ModalErrorInfo = { visible: false, title: "", error: "" };
@@ -55,9 +59,15 @@ const ConnectStored: React.FC<{ connectInfo: ConnectInfo }> = ({
   const { TabPane } = Tabs;
 
   useEffect(() => {
-    form.setFieldsValue(connectInfo);
+    const connectInfoForm: ConnectInfoForm = {
+      ...connectInfo,
+      username,
+      password,
+      clientId,
+    };
+    form.setFieldsValue(connectInfoForm);
     window.scrollTo(0, 0);
-  }, [connectInfo, form]);
+  }, [connectInfo, username, password, clientId, form]);
 
   const handleFail = (): void => {
     showError({
@@ -73,14 +83,30 @@ const ConnectStored: React.FC<{ connectInfo: ConnectInfo }> = ({
       <Form
         form={form}
         name="connection"
-        onFinish={(connectInfo) => {
+        onFinish={(connectInfoForm) => {
+          const connectInfo: ConnectInfo = {
+            url: connectInfoForm.url,
+            keepalive: connectInfoForm.keepalive,
+            connectTimeout: connectInfoForm.connectTimeout,
+            reconnectPeriod: connectInfoForm.reconnectPeriod,
+            onlinetopic: connectInfoForm.onlinetopic,
+            onlineqos: connectInfoForm.onlineqos,
+            dashboard: connectInfoForm.dashboard,
+            dashboardcss: connectInfoForm.dashboardcss,
+          };
+
           saveConnectInfo(connectInfo);
           dispatchLoad({
             type: "loadconnectinfo",
             connectInfo,
             connectInfoType: "STORED",
           });
-          dispatchConnect({ type: "connect" });
+          dispatchConnect({
+            type: "connect",
+            username: connectInfoForm.username,
+            password: connectInfoForm.password,
+            clientId: connectInfoForm.clientId,
+          });
         }}
         onFinishFailed={handleFail}
         className="myhConnectionForm"
@@ -94,7 +120,48 @@ const ConnectStored: React.FC<{ connectInfo: ConnectInfo }> = ({
           <Layout.Content className="myhLayoutContent">
             <div className="myhLayoutContent-panel">
               <Tabs defaultActiveKey="1">
-                <TabPane tab="MQTT connection" key="1" forceRender>
+                <TabPane tab="Credentials" key="1" forceRender>
+                  <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+                    <Col xs={0} sm={0} md={0} lg={4} />
+                    <Col
+                      xs={24}
+                      sm={6}
+                      md={6}
+                      lg={4}
+                      className="ant-form-item-label"
+                    >
+                      <label htmlFor="username" title="User">
+                        User
+                      </label>
+                    </Col>
+                    <Col xs={24} sm={18} md={18} lg={12}>
+                      <Form.Item name="username">
+                        <Input autoComplete="off" />
+                      </Form.Item>
+                    </Col>
+                    <Col xs={0} sm={0} md={0} lg={4} />
+
+                    <Col xs={0} sm={0} md={0} lg={4} />
+                    <Col
+                      xs={24}
+                      sm={6}
+                      md={6}
+                      lg={4}
+                      className="ant-form-item-label"
+                    >
+                      <label htmlFor="password" title="Password">
+                        Password
+                      </label>
+                    </Col>
+                    <Col xs={24} sm={18} md={18} lg={12}>
+                      <Form.Item name="password">
+                        <Input.Password />
+                      </Form.Item>
+                    </Col>
+                    <Col xs={0} sm={0} md={0} lg={4} />
+                  </Row>
+                </TabPane>
+                <TabPane tab="MQTT Connection" key="2" forceRender>
                   <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
                     <Col xs={0} sm={0} md={0} lg={4} />
                     <Col
@@ -123,41 +190,6 @@ const ConnectStored: React.FC<{ connectInfo: ConnectInfo }> = ({
                         ]}
                       >
                         <Input autoComplete="off" />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={0} sm={0} md={0} lg={4} />
-
-                    <Col xs={0} sm={0} md={0} lg={4} />
-                    <Col
-                      xs={24}
-                      sm={6}
-                      md={6}
-                      lg={4}
-                      className="ant-form-item-label"
-                    >
-                      <label htmlFor="username" title="User">
-                        User
-                      </label>
-                    </Col>
-                    <Col xs={24} sm={18} md={6} lg={4}>
-                      <Form.Item name="username">
-                        <Input autoComplete="off" />
-                      </Form.Item>
-                    </Col>
-                    <Col
-                      xs={24}
-                      sm={6}
-                      md={6}
-                      lg={4}
-                      className="ant-form-item-label"
-                    >
-                      <label htmlFor="password" title="Password">
-                        Password
-                      </label>
-                    </Col>
-                    <Col xs={24} sm={18} md={6} lg={4}>
-                      <Form.Item name="password">
-                        <Input.Password />
                       </Form.Item>
                     </Col>
                     <Col xs={0} sm={0} md={0} lg={4} />
@@ -315,14 +347,14 @@ const ConnectStored: React.FC<{ connectInfo: ConnectInfo }> = ({
                     <Col xs={0} sm={0} md={0} lg={4} />
                   </Row>
                 </TabPane>
-                <TabPane tab="Dashboard" key="2" forceRender>
+                <TabPane tab="Dashboard" key="3" forceRender>
                   <Tabs
                     defaultActiveKey="1"
                     type="card"
                     tabPosition="bottom"
                     size="small"
                   >
-                    <TabPane tab="JSX" key="2" forceRender>
+                    <TabPane tab="JSX" key="3-1" forceRender>
                       <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
                         <Col xs={0} sm={0} md={0} lg={4} />
                         <Col xs={24} sm={24} md={24} lg={16}>
@@ -350,7 +382,7 @@ const ConnectStored: React.FC<{ connectInfo: ConnectInfo }> = ({
                         <Col xs={0} sm={0} md={0} lg={4} />
                       </Row>
                     </TabPane>
-                    <TabPane tab="CSS" key="3" forceRender>
+                    <TabPane tab="CSS" key="3-2" forceRender>
                       <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
                         <Col xs={0} sm={0} md={0} lg={4} />
                         <Col xs={24} sm={24} md={24} lg={16}>
@@ -366,7 +398,7 @@ const ConnectStored: React.FC<{ connectInfo: ConnectInfo }> = ({
                     </TabPane>
                   </Tabs>
                 </TabPane>
-                <TabPane tab="About" key="3">
+                <TabPane tab="About" key="4">
                   <ContentConnectAbout form={form} />
                 </TabPane>
               </Tabs>
