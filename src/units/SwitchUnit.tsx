@@ -25,7 +25,7 @@ import {
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";
-import { StrValueFormat } from "../format/ValueFormat";
+import { SwitchValueFormat } from "../format/ValueFormat";
 
 type SwitchUnitProps = {
   pubtopic?: string;
@@ -41,7 +41,7 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   subtopic = "",
   puboptions,
   suboptions,
-  format = StrValueFormat(),
+  format = SwitchValueFormat(),
   className,
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
@@ -54,14 +54,14 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
-      setChecked(format.toDisplay(message) === "1");
+      setChecked(format.toDisplay(message) === "ON");
     },
     suboptions
   );
 
   const onChange = (value: boolean) => {
     setChecked(value);
-    publish(pubtopic, format.fromDisplay(value ? "1" : "0"), puboptions);
+    publish(pubtopic, format.fromDisplay(value ? "ON" : "OFF"), puboptions);
   };
 
   return (

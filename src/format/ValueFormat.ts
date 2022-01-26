@@ -50,11 +50,18 @@ export const Base64ValueFormat = (): ValueFormat => ({
   prev: (b: Buffer) => b,
 });
 
-export const SwitchValueFormat = (): ValueFormat => ({
-  toDisplay: (b: Buffer) => (b.toString() === "1" ? "ON" : "OFF"),
-  fromDisplay: (s: string) => Buffer.from(s === "ON" ? "1" : "0"),
-  next: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
-  prev: (b: Buffer) => Buffer.from(b.toString() === "1" ? "0" : "1"),
+export type ONOFF = {
+  on: string;
+  off: string;
+};
+
+export const SwitchValueFormat = (
+  { on, off }: ONOFF = { on: "1", off: "0" }
+): ValueFormat => ({
+  toDisplay: (b: Buffer) => (b.toString() === on ? "ON" : "OFF"),
+  fromDisplay: (s: string) => Buffer.from(s === "ON" ? on : off),
+  next: (b: Buffer) => Buffer.from(b.toString() === on ? off : on),
+  prev: (b: Buffer) => Buffer.from(b.toString() === on ? off : on),
   className: () => "",
 });
 

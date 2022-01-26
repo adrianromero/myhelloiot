@@ -55,33 +55,12 @@ export const DimIconFormat = (): IconFormat => ({
   },
 });
 
-export const ViewIconFormat = (): IconFormat => ({
-  toIcon: (b: Buffer) => (
-    <div className="myhToIconFormat myhToIconFormat_aligncenter">
-      {b.toString() === "1" ? (
-        <BulbFilled style={{ fontSize: "280%", color: "yellow" }} />
-      ) : (
-        <BulbTwoTone style={{ fontSize: "280%" }} twoToneColor="lightgray" />
-      )}
-    </div>
-  ),
-});
-
 export const BulbIconFormat = (): IconFormat => ({
   toIcon: (b: Buffer) =>
     b.toString() === "1" ? (
       <BulbFilled style={{ fontSize: "180%", color: "yellow" }} />
     ) : (
       <BulbTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
-    ),
-});
-
-export const StarIconFormat = (): IconFormat => ({
-  toIcon: (b: Buffer) =>
-    b.toString() === "1" ? (
-      <StarFilled style={{ fontSize: "180%", color: "yellow" }} />
-    ) : (
-      <StarTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
     ),
 });
 
@@ -111,6 +90,16 @@ export const ToIconValueFormat = (
 ): IconValueFormat => ({
   ...valueformat,
   ...iconformat,
+});
+
+export const StarIconValueFormat = (format: ValueFormat): IconValueFormat => ({
+  ...format,
+  toIcon: (b: Buffer) =>
+    b.equals(format.fromDisplay("ON")) ? (
+      <StarFilled style={{ fontSize: "180%", color: "yellow" }} />
+    ) : (
+      <StarTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
+    ),
 });
 
 export const SwitchIconValueFormat = (

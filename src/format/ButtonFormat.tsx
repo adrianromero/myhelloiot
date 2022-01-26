@@ -25,14 +25,6 @@ export const LabelIconFormat = (text: string): IconFormat => ({
   toIcon: (b: Buffer): React.ReactNode => text ?? "\u00A0",
 });
 
-export const LabelIconValueFormat = (
-  text: string,
-  valueformat: ValueFormat
-): IconValueFormat => ({
-  ...valueformat,
-  ...LabelIconFormat(text),
-});
-
 export const ImageIconFormat = (
   component:
     | ComponentType<CustomIconComponentProps | SVGProps<SVGSVGElement>>
