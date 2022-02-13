@@ -22,7 +22,7 @@ import { ValueFormat } from "../format/FormatTypes";
 import {
   Base64ValueFormat,
   HEXValueFormat,
-  StrValueFormat,
+  StringValueFormat,
 } from "../format/ValueFormat";
 import LogView from "./LogView";
 import { Button, CheckboxOptionType, Col, Radio, Row } from "antd";
@@ -42,13 +42,13 @@ export type LogToolProps = {
 };
 
 const FMTOPTIONS: Map<String, ValueFormat> = new Map([
-  ["StrValueFormat", StrValueFormat()],
+  ["StringValueFormat", StringValueFormat()],
   ["HEXValueFormat", HEXValueFormat()],
   ["Base64ValueFormat", Base64ValueFormat()],
 ]);
 
 const OPTIONS: CheckboxOptionType[] = [
-  { label: "Str", value: "StrValueFormat" },
+  { label: "String", value: "StringValueFormat" },
   { label: "Hex", value: "HEXValueFormat" },
   { label: "Base64", value: "Base64ValueFormat" },
 ];
@@ -63,13 +63,13 @@ const LogTool: React.FC<LogToolProps> = ({
     false,
     [],
   ]);
-  const [strformat, setStrformat] = useState<string>("StrValueFormat");
+  const [strformat, setStrformat] = useState<string>("StringValueFormat");
 
   useEffect(() => {
     setTool([false, []]);
   }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const format: ValueFormat = FMTOPTIONS.get(strformat) ?? StrValueFormat();
+  const format: ValueFormat = FMTOPTIONS.get(strformat) ?? StringValueFormat();
 
   return (
     <div className={`myhLogTool ${className}`}>

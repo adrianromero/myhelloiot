@@ -33,7 +33,7 @@ import { QoS } from "mqtt";
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";
 import {
-  StrValueFormat,
+  StringValueFormat,
   JSONValueFormat,
   HEXValueFormat,
   Base64ValueFormat,
@@ -63,7 +63,7 @@ const FMTValueFormat: Map<FMT, { format: ValueFormat; message: string }> =
   new Map([
     [
       FMT.PLAIN,
-      { format: StrValueFormat(), message: "Value cannot be formatted." },
+      { format: StringValueFormat(), message: "Value cannot be formatted." },
     ],
     [
       FMT.JSON,
@@ -113,7 +113,7 @@ const Publisher: React.FC<PublisherProps> = ({
 
   const onFinish = (values: PublisherValues) => {
     const format: ValueFormat =
-      FMTValueFormat.get(values.fmt)?.format ?? StrValueFormat();
+      FMTValueFormat.get(values.fmt)?.format ?? StringValueFormat();
     publish(prefixtopic + values.topic, format.fromDisplay(values.value), {
       qos: values.qos,
       retain: values.retain,
@@ -212,7 +212,7 @@ const Publisher: React.FC<PublisherProps> = ({
                 validator: (r, value) => {
                   try {
                     const format: ValueFormat =
-                      FMTValueFormat.get(fmt)?.format ?? StrValueFormat();
+                      FMTValueFormat.get(fmt)?.format ?? StringValueFormat();
                     format.fromDisplay(value);
                     return Promise.resolve();
                   } catch {

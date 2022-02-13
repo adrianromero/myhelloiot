@@ -24,8 +24,7 @@ import {
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
 import { IconValueFormat } from "../format/FormatTypes";
-import { LabelIconValueFormat } from "../format/IconFormat";
-import { SwitchValueFormat } from "../format/ValueFormat";
+import { SwitchIconValueFormat } from "../format/IconValueFormat";
 
 import "./ButtonUnit.css";
 
@@ -43,7 +42,7 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
   subtopic = "",
   puboptions,
   suboptions,
-  format = LabelIconValueFormat(SwitchValueFormat()),
+  format = SwitchIconValueFormat(),
   className = "",
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();

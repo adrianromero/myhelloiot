@@ -19,7 +19,7 @@ import React, { useEffect, useState } from "react";
 import { IClientSubscribeOptions } from "mqtt";
 import { MQTTMessage, useMQTTContext } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";
-import { StrValueFormat } from "../format/ValueFormat";
+import { StringValueFormat } from "../format/ValueFormat";
 import LogView from "./LogView";
 
 export type LogUnitProps = {
@@ -32,7 +32,7 @@ export type LogUnitProps = {
 const LogUnit: React.FC<LogUnitProps> = ({
   subtopic,
   suboptions,
-  format = StrValueFormat(),
+  format = StringValueFormat(),
   className,
 }) => {
   const [{ ready }] = useMQTTContext();

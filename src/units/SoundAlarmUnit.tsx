@@ -19,7 +19,7 @@ import React, { useEffect } from "react";
 import { IClientSubscribeOptions } from "mqtt";
 import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import useAudio from "./useAudio";
-import { StrValueFormat } from "../format/ValueFormat";
+import { StringValueFormat } from "../format/ValueFormat";
 import { ValueFormat } from "../format/FormatTypes";
 import { useAppStoreProperty } from "../AppStoreProvider";
 const clockalarm = require("../assets/media/128138_1542160-lq.mp3").default;
@@ -41,7 +41,7 @@ type SoundAlarmUnitProps = {
   loop?: boolean;
 };
 
-const FORMAT: ValueFormat = StrValueFormat();
+const FORMAT: ValueFormat = StringValueFormat();
 
 const SoundAlarmUnit: React.FC<SoundAlarmUnitProps> = ({
   instancekey,

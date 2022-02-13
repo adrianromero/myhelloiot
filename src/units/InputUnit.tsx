@@ -26,7 +26,7 @@ import {
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";
-import { StrValueFormat } from "../format/ValueFormat";
+import { StringValueFormat } from "../format/ValueFormat";
 
 import "./InputUnit.css";
 
@@ -46,7 +46,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
   subtopic = "",
   puboptions,
   suboptions,
-  format = StrValueFormat(),
+  format = StringValueFormat(),
   className,
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();

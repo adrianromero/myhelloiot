@@ -20,7 +20,7 @@ import { IClientSubscribeOptions } from "mqtt";
 import { Modal } from "antd";
 import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";
-import { StrValueFormat } from "../format/ValueFormat";
+import { StringValueFormat } from "../format/ValueFormat";
 import { useAppStoreProperty } from "../AppStoreProvider";
 
 type ModalUnitProps = {
@@ -38,7 +38,7 @@ const ModalUnit: React.FC<ModalUnitProps> = ({
   instancekey,
   subtopic,
   suboptions,
-  format = StrValueFormat(),
+  format = StringValueFormat(),
   title,
   cancelable = true,
   className = "",

@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { ValueFormat, NumberValidation } from "./FormatTypes";
 import { padsegment } from "../gauge/svgdraw";
 
-export const StrValueFormat = (): ValueFormat => ({
+export const StringValueFormat = (): ValueFormat => ({
   toDisplay: (b: Buffer) => b.toString(),
   fromDisplay: (s: string) => Buffer.from(s),
   className: () => "",

@@ -21,7 +21,7 @@ import { IClientSubscribeOptions } from "mqtt";
 
 import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";
-import { StrValueFormat } from "../format/ValueFormat";
+import { StringValueFormat } from "../format/ValueFormat";
 
 type NotifyUnitProps = {
   subtopic: string;
@@ -36,7 +36,7 @@ const NotifyUnit: React.FC<NotifyUnitProps> = ({
   subtopic,
   suboptions,
   type = "info",
-  format = StrValueFormat(),
+  format = StringValueFormat(),
   duration = 2.5,
   className,
 }) => {

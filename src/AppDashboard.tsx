@@ -65,28 +65,27 @@ import KeypadUnit from "./units/KeypadUnit";
 import DisconnectUnit from "./units/DisconnectUnit";
 import SoundAlarmUnit from "./units/SoundAlarmUnit";
 import ModalUnit from "./units/ModalUnit";
-
+import { ToIconFormat, ToIconValueFormat } from "./format/FormatTypes";
 import {
+  StringValueFormat,
+  JSONValueFormat,
   HEXValueFormat,
   Base64ValueFormat,
   SwitchValueFormat,
   NumberValueFormat,
 } from "./format/ValueFormat";
 import {
-  TitleIconValueFormat,
-  LiteralIconValueFormat,
-  ImageIconValueFormat,
-} from "./format/ButtonFormat";
-import {
   DimIconFormat,
   BulbIconFormat,
   ThuderboltIconFormat,
+  StringIconFormat,
+  NumberIconFormat,
+} from "./format/IconFormat";
+import {
   StarIconValueFormat,
   SwitchIconValueFormat,
-  NumberIconFormat,
-  ToIconValueFormat,
-  LabelIconValueFormat,
-} from "./format/IconFormat";
+  StringIconValueFormat,
+} from "./format/IconValueFormat";
 import {
   DashboardIconFormat,
   LinearIconFormat,
@@ -107,6 +106,86 @@ const ErrorFallback: React.FC<{ error: Error }> = ({ error }) => (
   <AppError title="Failed to execute JSX code" error={error.message} />
 );
 
+const bindings = {
+  Buffer,
+  ToIconFormat,
+  ToIconValueFormat,
+
+  StringValueFormat,
+  JSONValueFormat,
+  HEXValueFormat,
+  Base64ValueFormat,
+  SwitchValueFormat,
+  NumberValueFormat,
+
+  DimIconFormat,
+  BulbIconFormat,
+  ThuderboltIconFormat,
+  StringIconFormat,
+  NumberIconFormat,
+
+  StarIconValueFormat,
+  SwitchIconValueFormat,
+  StringIconValueFormat,
+
+  DashboardIconFormat,
+  LinearIconFormat,
+  SimpleIconFormat,
+  CircularIconFormat,
+  MetroIconFormat,
+  ProgressIconFormat,
+  SpaceIconFormat,
+  LiquidIconFormat,
+  DialIconFormat,
+  FuelIconFormat,
+  ControlIconFormat,
+  ChartIconFormat,
+  Themes,
+};
+
+const components = {
+  AlertFilled,
+  ApiFilled,
+  AudioFilled,
+  BankFilled,
+  BellFilled,
+  BookFilled,
+  BugFilled,
+  BuildFilled,
+  BulbFilled,
+  CameraFilled,
+  CarFilled,
+  DashboardFilled,
+  PictureFilled,
+  Row,
+  Col,
+  Dashboard,
+  DashboardGrid,
+  DashboardContent,
+  PanelGrid,
+  PanelContent,
+  C,
+  CCard,
+  L,
+  LSection,
+  InputUnit,
+  Publisher,
+  ButtonMessage,
+  Publishing,
+  ButtonUnit,
+  SwitchUnit,
+  ViewUnit,
+  SliderUnit,
+  SoundUnit,
+  LogUnit,
+  LogTool,
+  NotifyUnit,
+  KeypadUnit,
+  DisconnectUnit,
+  SoundAlarmUnit,
+  ModalUnit,
+};
+
 const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
   ({ jsx, css }) => (
     <>
@@ -120,79 +199,8 @@ const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
       <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => {}}>
         <JsxParser
           renderInWrapper={false}
-          bindings={{
-            Buffer,
-            HEXValueFormat,
-            Base64ValueFormat,
-            SwitchValueFormat,
-            NumberValueFormat,
-            TitleIconValueFormat,
-            LiteralIconValueFormat,
-            ImageIconValueFormat,
-            LabelIconValueFormat,
-            DimIconFormat,
-            BulbIconFormat,
-            ThuderboltIconFormat,
-            StarIconValueFormat,
-            SwitchIconValueFormat,
-            NumberIconFormat,
-            ToIconValueFormat,
-            DashboardIconFormat,
-            LinearIconFormat,
-            SimpleIconFormat,
-            CircularIconFormat,
-            MetroIconFormat,
-            ProgressIconFormat,
-            SpaceIconFormat,
-            LiquidIconFormat,
-            DialIconFormat,
-            FuelIconFormat,
-            ControlIconFormat,
-            ChartIconFormat,
-            Themes,
-          }}
-          components={{
-            AlertFilled,
-            ApiFilled,
-            AudioFilled,
-            BankFilled,
-            BellFilled,
-            BookFilled,
-            BugFilled,
-            BuildFilled,
-            BulbFilled,
-            CameraFilled,
-            CarFilled,
-            DashboardFilled,
-            PictureFilled,
-            Row,
-            Col,
-            Dashboard,
-            DashboardGrid,
-            DashboardContent,
-            PanelGrid,
-            PanelContent,
-            C,
-            CCard,
-            L,
-            LSection,
-            InputUnit,
-            Publisher,
-            ButtonMessage,
-            Publishing,
-            ButtonUnit,
-            SwitchUnit,
-            ViewUnit,
-            SliderUnit,
-            SoundUnit,
-            LogUnit,
-            LogTool,
-            NotifyUnit,
-            KeypadUnit,
-            DisconnectUnit,
-            SoundAlarmUnit,
-            ModalUnit,
-          }}
+          bindings={bindings}
+          components={components}
           jsx={jsx}
           renderError={({ error }) => (
             <AppError

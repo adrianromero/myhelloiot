@@ -23,7 +23,7 @@ import {
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
 import { IconFormat } from "../format/FormatTypes";
-import { StrIconFormat } from "../format/IconFormat";
+import { StringIconFormat } from "../format/IconFormat";
 
 type ViewUnitProps = {
   subtopic: string;
@@ -35,7 +35,7 @@ type ViewUnitProps = {
 const ViewUnit: React.FC<ViewUnitProps> = ({
   subtopic,
   suboptions,
-  format = StrIconFormat(),
+  format = StringIconFormat(),
   className = "",
 }) => {
   const [{ ready }] = useMQTTContext();

@@ -20,7 +20,7 @@ import { List, Tag } from "antd";
 import { IClientSubscribeOptions } from "mqtt";
 import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";
-import { StrValueFormat } from "../format/ValueFormat";
+import { StringValueFormat } from "../format/ValueFormat";
 import Paragraph from "antd/lib/typography/Paragraph";
 
 import "./LogView.css";
@@ -37,7 +37,7 @@ export type LogViewProps = {
 const LogView: React.FC<LogViewProps> = ({
   subtopic,
   suboptions,
-  format = StrValueFormat(),
+  format = StringValueFormat(),
   messages,
   onMessage,
   className,

@@ -21,7 +21,7 @@ import { IClientPublishOptions } from "mqtt";
 
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";
-import { StrValueFormat } from "../format/ValueFormat";
+import { StringValueFormat } from "../format/ValueFormat";
 
 import "./ButtonMessage.css";
 
@@ -40,7 +40,7 @@ export type ButtonMessageProps = {
 const ButtonMessage: React.FC<ButtonMessageProps> = ({
   pubtopic,
   puboptions,
-  format = StrValueFormat(),
+  format = StringValueFormat(),
   value,
   label,
   icon,

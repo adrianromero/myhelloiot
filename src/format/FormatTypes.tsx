@@ -17,6 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 
+import "./FormatTypes.css";
+
 export type IconFormat = {
   toIcon: (b: Buffer) => React.ReactNode;
 };
@@ -36,3 +38,19 @@ export type NumberValidation = {
 };
 
 export type IconValueFormat = IconFormat & ValueFormat;
+
+export const ToIconFormat = (format: ValueFormat): IconFormat => ({
+  toIcon: (b: Buffer) => (
+    <div className={`myhToIconFormat ${format.className()}`}>
+      {format.toDisplay(b) || "\u00A0"}
+    </div>
+  ),
+});
+
+export const ToIconValueFormat = (
+  valueformat: ValueFormat,
+  iconformat: IconFormat = ToIconFormat(valueformat)
+): IconValueFormat => ({
+  ...valueformat,
+  ...iconformat,
+});

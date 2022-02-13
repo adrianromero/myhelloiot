@@ -27,7 +27,7 @@ import { IClientPublishOptions } from "mqtt";
 
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";
-import { StrValueFormat } from "../format/ValueFormat";
+import { StringValueFormat } from "../format/ValueFormat";
 
 import "./KeypadUnit.css";
 import { CloseCircleFilled, EnterOutlined } from "@ant-design/icons";
@@ -42,7 +42,7 @@ export type KeypadUnitProps = {
 const KeypadUnit: React.FC<KeypadUnitProps> = ({
   pubtopic,
   puboptions,
-  format = StrValueFormat(),
+  format = StringValueFormat(),
   className = "",
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();

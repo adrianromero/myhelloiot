@@ -19,7 +19,7 @@ import React, { useEffect } from "react";
 import { IClientSubscribeOptions } from "mqtt";
 import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import useAudio from "./useAudio";
-import { StrValueFormat } from "../format/ValueFormat";
+import { StringValueFormat } from "../format/ValueFormat";
 import { ValueFormat } from "../format/FormatTypes";
 const clockalarm = require("../assets/media/128138_1542160-lq.mp3").default;
 const gameitem = require("../assets/media/162467_311243-lq.mp3").default;
@@ -37,7 +37,7 @@ type SoundUnitProps = {
   volume?: number;
 };
 
-const FORMAT: ValueFormat = StrValueFormat();
+const FORMAT: ValueFormat = StringValueFormat();
 
 const SoundUnit: React.FC<SoundUnitProps> = ({
   subtopic,

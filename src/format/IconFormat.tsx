@@ -22,17 +22,11 @@ import {
   BulbFilled,
   ThunderboltFilled,
   ThunderboltTwoTone,
-  StarFilled,
-  StarTwoTone,
 } from "@ant-design/icons";
-import { IconFormat, IconValueFormat, ValueFormat } from "./FormatTypes";
-import {
-  NumberValueFormat,
-  StrValueFormat,
-  SwitchValueFormat,
-} from "./ValueFormat";
+import { IconFormat, ValueFormat, ToIconFormat } from "./FormatTypes";
+import { NumberValueFormat, StringValueFormat } from "./ValueFormat";
 
-import "./IconFormat.css";
+import "./FormatTypes.css";
 
 export const DimIconFormat = (): IconFormat => ({
   toIcon: (b: Buffer) => {
@@ -76,47 +70,9 @@ export const ThuderboltIconFormat = (): IconFormat => ({
     ),
 });
 
-export const ToIconFormat = (format: ValueFormat): IconFormat => ({
-  toIcon: (b: Buffer) => (
-    <div className={`myhToIconFormat ${format.className()}`}>
-      {format.toDisplay(b) || "\u00A0"}
-    </div>
-  ),
-});
-
-export const ToIconValueFormat = (
-  valueformat: ValueFormat,
-  iconformat: IconFormat = ToIconFormat(valueformat)
-): IconValueFormat => ({
-  ...valueformat,
-  ...iconformat,
-});
-
-export const StarIconValueFormat = (format: ValueFormat): IconValueFormat => ({
-  ...format,
-  toIcon: (b: Buffer) =>
-    b.equals(format.fromDisplay("ON")) ? (
-      <StarFilled style={{ fontSize: "180%", color: "yellow" }} />
-    ) : (
-      <StarTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
-    ),
-});
-
-export const SwitchIconValueFormat = (
-  iconformat: IconFormat = StrIconFormat()
-): IconValueFormat => ToIconValueFormat(SwitchValueFormat(), iconformat);
-
-export const LabelIconFormat = (format: ValueFormat): IconFormat => ({
-  toIcon: (b: Buffer) => format.toDisplay(b) || "\u00A0",
-});
-
-export const LabelIconValueFormat = (format: ValueFormat): IconValueFormat =>
-  ToIconValueFormat(format, LabelIconFormat(format));
-
-export const StrIconFormat = (): IconFormat => ToIconFormat(StrValueFormat());
-
-export const StrIconValueFormat = (): IconValueFormat =>
-  ToIconValueFormat(StrValueFormat());
+export const StringIconFormat = (
+  valueformat: ValueFormat = StringValueFormat()
+): IconFormat => ToIconFormat(valueformat);
 
 export const NumberIconFormat = (
   options?: Intl.NumberFormatOptions

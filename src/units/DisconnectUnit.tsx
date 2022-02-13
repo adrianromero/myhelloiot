@@ -21,7 +21,7 @@ import { notification } from "antd";
 import { IClientSubscribeOptions } from "mqtt";
 import { DispatchDisconnect } from "../AppStoreProvider";
 import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { StrValueFormat } from "../format/ValueFormat";
+import { StringValueFormat } from "../format/ValueFormat";
 
 type DisconnectUnitProps = {
   subtopic: string;
@@ -34,7 +34,7 @@ const DisconnectUnit: React.FC<DisconnectUnitProps> = ({
   suboptions,
   keyvalue,
 }) => {
-  const format = StrValueFormat();
+  const format = StringValueFormat();
   const dispatch = useDispatch<DispatchDisconnect>();
   useMQTTSubscribe(
     subtopic,
