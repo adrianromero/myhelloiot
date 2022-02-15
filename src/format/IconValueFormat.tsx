@@ -16,7 +16,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { StarFilled, StarTwoTone } from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import {
   IconFormat,
   IconValueFormat,
@@ -26,15 +27,56 @@ import {
 import { StringIconFormat } from "./IconFormat";
 import { SwitchValueFormat, StringValueFormat } from "./ValueFormat";
 
-export const StarIconValueFormat = (format: ValueFormat): IconValueFormat => ({
+export const StarIconValueFormat = (
+  format: ValueFormat = SwitchValueFormat()
+): IconValueFormat => ({
   ...format,
   toIcon: (b: Buffer) =>
     b.equals(format.fromDisplay("ON")) ? (
-      <StarFilled style={{ fontSize: "180%", color: "yellow" }} />
+      <FontAwesomeIcon
+        className="anticon"
+        icon={faStar}
+        style={{
+          fontSize: "180%",
+          color: "yellow",
+          stroke: "darkgray",
+          strokeWidth: "16px",
+        }}
+      />
     ) : (
-      <StarTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
+      <FontAwesomeIcon
+        className="anticon"
+        icon={faStar}
+        style={{
+          fontSize: "180%",
+          color: "#dcdcdc",
+          stroke: "darkgray",
+          strokeWidth: "16px",
+        }}
+      />
     ),
 });
+
+// export const BulbIconFormat = (): IconFormat => ({
+//   toIcon: (b: Buffer) =>
+//     b.toString() === "1" ? (
+//       <BulbFilled style={{ fontSize: "180%", color: "yellow" }} />
+//     ) : (
+//       <BulbTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
+//     ),
+// });
+
+// export const ThuderboltIconFormat = (): IconFormat => ({
+//   toIcon: (b: Buffer) =>
+//     b.toString() === "1" ? (
+//       <ThunderboltFilled style={{ fontSize: "180%", color: "yellow" }} />
+//     ) : (
+//       <ThunderboltTwoTone
+//         style={{ fontSize: "180%" }}
+//         twoToneColor="lightgray"
+//       />
+//     ),
+// });
 
 export const SwitchIconValueFormat = (
   iconformat: IconFormat = StringIconFormat()

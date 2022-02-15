@@ -21,7 +21,8 @@ import { Layout } from "antd";
 import { DispatchDisconnect } from "./AppStoreProvider";
 import AppHeader from "./AppHeader";
 import ModalError from "./ModalError";
-import { CloseCircleOutlined } from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import "./AppError.css";
 import ConnectionStatus from "./dashboard/ConnectionStatus";
 
@@ -44,7 +45,13 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
         <AppHeader>
           <ConnectionStatus
             label="Error"
-            icon={<CloseCircleOutlined style={{ color: "#FF0000" }} />}
+            icon={
+              <FontAwesomeIcon
+                icon={faCircleExclamation}
+                className="anticon"
+                style={{ color: "red" }}
+              />
+            }
           />
         </AppHeader>
         <Layout.Content className="myhLayoutContent">

@@ -26,11 +26,8 @@ import {
 } from "../format/ValueFormat";
 import LogView from "./LogView";
 import { Button, CheckboxOptionType, Col, Radio, Row } from "antd";
-import {
-  CaretRightOutlined,
-  PauseOutlined,
-  StopOutlined,
-} from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay, faPause, faBan } from "@fortawesome/free-solid-svg-icons";
 import Title from "antd/lib/typography/Title";
 
 import "./LogTool.css";
@@ -83,12 +80,17 @@ const LogTool: React.FC<LogToolProps> = ({
             <div className="myhLogTool-toolbar">
               <Button
                 type="primary"
-                icon={paused ? <PauseOutlined /> : <CaretRightOutlined />}
+                icon={
+                  <FontAwesomeIcon
+                    className="anticon"
+                    icon={paused ? faPause : faPlay}
+                  />
+                }
                 disabled={!connected}
                 onClick={() => setTool(([p, msgs]) => [!p, msgs])}
               />
               <Button
-                icon={<StopOutlined />}
+                icon={<FontAwesomeIcon className="anticon" icon={faBan} />}
                 disabled={!connected}
                 onClick={() => setTool(([p]) => [p, []])}
               />

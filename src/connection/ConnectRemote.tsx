@@ -24,7 +24,8 @@ import { ConnectInfoForm } from "./ConnectInfoForm";
 import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
 import "./ContentConnect.css";
-import { ApiFilled } from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 
 type ModalErrorInfo = {
   title: string;
@@ -87,7 +88,11 @@ const ConnectRemote: React.FC<{
       >
         <Layout className="myhLayout">
           <AppHeader subtitle={appname}>
-            <Button icon={<ApiFilled />} type="primary" htmlType="submit">
+            <Button
+              icon={<FontAwesomeIcon icon={faPowerOff} className="anticon" />}
+              type="primary"
+              htmlType="submit"
+            >
               Connect
             </Button>
           </AppHeader>

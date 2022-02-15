@@ -30,7 +30,8 @@ import { ValueFormat } from "../format/FormatTypes";
 import { StringValueFormat } from "../format/ValueFormat";
 
 import "./KeypadUnit.css";
-import { CloseCircleFilled, EnterOutlined } from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTurnDown, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 export type KeypadUnitProps = {
   pubtopic: string;
@@ -84,7 +85,7 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
             type="text"
             onClick={onClickClear}
             disabled={!connected}
-            icon={<CloseCircleFilled />}
+            icon={<FontAwesomeIcon className="anticon" icon={faCircleXmark} />}
           />
         }
       />
@@ -173,7 +174,13 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
         type="primary"
         onClick={onClickOK}
         disabled={!connected}
-        icon={<EnterOutlined className="icon" />}
+        icon={
+          <FontAwesomeIcon
+            className="anticon"
+            icon={faTurnDown}
+            style={{ transform: "rotate(90deg)" }}
+          />
+        }
         className="btn btn-ok"
       />
     </div>

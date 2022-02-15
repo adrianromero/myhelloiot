@@ -17,11 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { useDispatch } from "react-redux";
-import {
-  ApiFilled,
-  CheckCircleOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPowerOff, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 import { Row, Col, Typography, Button, Divider, Popover, Space } from "antd";
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import { DispatchDisconnect } from "../AppStoreProvider";
@@ -56,7 +54,13 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
       <Space>
         <ConnectionStatus
           label={options.hostname ?? ""}
-          icon={<CheckCircleOutlined style={{ color: "#52c41a" }} />}
+          icon={
+            <FontAwesomeIcon
+              icon={faCircleCheck}
+              className="anticon"
+              style={{ color: "#52c41a" }}
+            />
+          }
         />
       </Space>
     );
@@ -65,7 +69,16 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
       <Space>
         <ConnectionStatus
           label={status}
-          icon={<LoadingOutlined style={{ color: "#ffffff" }} />}
+          icon={
+            <FontAwesomeIcon
+              icon={faSpinner}
+              className="anticon"
+              style={{
+                color: "#ffffff",
+                animation: "loadingCircle 1s infinite linear",
+              }}
+            />
+          }
         />
       </Space>
     );
@@ -149,7 +162,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
           <Divider />
           <Button
             type="primary"
-            icon={<ApiFilled />}
+            icon={<FontAwesomeIcon icon={faPowerOff} className="anticon" />}
             onClick={() => dispatch({ type: "disconnect" })}
           >
             Disconnect

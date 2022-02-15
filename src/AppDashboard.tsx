@@ -15,25 +15,30 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// @ts-nocheck
-
 import React from "react";
 import { Row, Col } from "antd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  AlertFilled,
-  ApiFilled,
-  AudioFilled,
-  BankFilled,
-  BellFilled,
-  BookFilled,
-  BugFilled,
-  BuildFilled,
-  BulbFilled,
-  CameraFilled,
-  CarFilled,
-  DashboardFilled,
-  PictureFilled,
-} from "@ant-design/icons";
+  faUpload,
+  faDownload,
+  faCodeBranch,
+  faBars,
+  faImage,
+  faBolt,
+  faLightbulb,
+  faStar,
+  faPaperPlane,
+  faTurnDown,
+  faCircleXmark,
+  faPlay,
+  faPause,
+  faBan,
+  faPencil,
+  faCircleExclamation,
+  faPowerOff,
+  faSpinner,
+} from "@fortawesome/free-solid-svg-icons";
+
 import { ErrorBoundary } from "react-error-boundary";
 import { ReactComponent as Themes } from "./assets/svg/themes.svg";
 import JsxParser from "react-jsx-parser";
@@ -107,7 +112,28 @@ const ErrorFallback: React.FC<{ error: Error }> = ({ error }) => (
 );
 
 const bindings = {
+  faUpload,
+  faDownload,
+  faCodeBranch,
+  faBars,
+  faImage,
+  faBolt,
+  faLightbulb,
+  faStar,
+  faPaperPlane,
+  faTurnDown,
+  faCircleXmark,
+  faPlay,
+  faPause,
+  faBan,
+  faPencil,
+  faCircleExclamation,
+  faPowerOff,
+  faSpinner,
+
+  Themes,
   Buffer,
+
   ToIconFormat,
   ToIconValueFormat,
 
@@ -140,23 +166,10 @@ const bindings = {
   FuelIconFormat,
   ControlIconFormat,
   ChartIconFormat,
-  Themes,
 };
 
-const components = {
-  AlertFilled,
-  ApiFilled,
-  AudioFilled,
-  BankFilled,
-  BellFilled,
-  BookFilled,
-  BugFilled,
-  BuildFilled,
-  BulbFilled,
-  CameraFilled,
-  CarFilled,
-  DashboardFilled,
-  PictureFilled,
+const components: Record<string, React.ComponentType<any>> = {
+  FontAwesomeIcon,
   Row,
   Col,
   Dashboard,

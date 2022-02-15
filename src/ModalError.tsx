@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { Button, Modal } from "antd";
-import { CloseCircleOutlined } from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import "./ModalError.css";
 
 const ModalError: React.FC<{
@@ -29,7 +30,11 @@ const ModalError: React.FC<{
   return (
     <Modal footer={null} closable={false} visible={visible}>
       <div className="myhModalError-container">
-        <CloseCircleOutlined className="myhModalError-icon" />
+        <FontAwesomeIcon
+          icon={faCircleExclamation}
+          className="anticon myhModalError-icon"
+          style={{ color: "red" }}
+        />
         <div>
           <div className="myhModalError-title">{title}</div>
           <div className="myhModalError-message">{error}</div>

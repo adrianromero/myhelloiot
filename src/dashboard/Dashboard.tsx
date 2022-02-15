@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect, useState } from "react";
 import { Drawer, Button, Layout, Menu } from "antd";
-import { MenuUnfoldOutlined, PictureFilled } from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faImage } from "@fortawesome/free-solid-svg-icons";
 import { useAppStoreProperty } from "../AppStoreProvider";
 import AppHeader from "../AppHeader";
 import {
@@ -92,7 +93,14 @@ const Dashboard: React.FC<DashboardProps> = ({
         const key: string = `menu-${index++}`;
         if (c.props.name) {
           menus.push(
-            <Menu.Item key={key} icon={c.props.icon ?? <PictureFilled />}>
+            <Menu.Item
+              key={key}
+              icon={
+                c.props.icon ?? (
+                  <FontAwesomeIcon className="anticon" icon={faImage} />
+                )
+              }
+            >
               {c.props.name}
             </Menu.Item>
           );
@@ -116,7 +124,7 @@ const Dashboard: React.FC<DashboardProps> = ({
         {menus.length > 0 && (
           <div className="myhDashboard-buttonmenu">
             <Button onClick={showDrawer} ghost hidden={menDisabled}>
-              <MenuUnfoldOutlined />
+              <FontAwesomeIcon className="anticon" icon={faBars} />
             </Button>
           </div>
         )}

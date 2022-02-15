@@ -17,12 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 
-import {
-  BulbTwoTone,
-  BulbFilled,
-  ThunderboltFilled,
-  ThunderboltTwoTone,
-} from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBolt, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { IconFormat, ValueFormat, ToIconFormat } from "./FormatTypes";
 import { NumberValueFormat, StringValueFormat } from "./ValueFormat";
 
@@ -35,13 +31,26 @@ export const DimIconFormat = (): IconFormat => ({
     return (
       <div className="myhToIconFormat myhToIconFormat_aligncenter">
         {value ? (
-          <BulbFilled
-            style={{ fontSize: "280%", color: `hsl(60, ${value}%, 60%)` }}
+          <FontAwesomeIcon
+            className="anticon"
+            icon={faLightbulb}
+            style={{
+              fontSize: "280%",
+              color: `hsl(60, ${value}%, 60%)`,
+              stroke: "darkgray",
+              strokeWidth: "16px",
+            }}
           />
         ) : (
-          <BulbTwoTone
-            style={{ fontSize: "280%" }}
-            twoToneColor="hsl(60, 0%, 60%)"
+          <FontAwesomeIcon
+            className="anticon"
+            icon={faLightbulb}
+            style={{
+              fontSize: "280%",
+              color: "hsl(60, 0%, 60%)",
+              stroke: "darkgray",
+              strokeWidth: "16px",
+            }}
           />
         )}
       </div>
@@ -52,20 +61,53 @@ export const DimIconFormat = (): IconFormat => ({
 export const BulbIconFormat = (): IconFormat => ({
   toIcon: (b: Buffer) =>
     b.toString() === "1" ? (
-      <BulbFilled style={{ fontSize: "180%", color: "yellow" }} />
+      <FontAwesomeIcon
+        className="anticon"
+        icon={faLightbulb}
+        style={{
+          fontSize: "180%",
+          color: "yellow",
+          stroke: "darkgray",
+          strokeWidth: "16px",
+        }}
+      />
     ) : (
-      <BulbTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
+      <FontAwesomeIcon
+        className="anticon"
+        icon={faLightbulb}
+        style={{
+          fontSize: "180%",
+          color: "#dcdcdc",
+          stroke: "darkgray",
+          strokeWidth: "16px",
+        }}
+      />
     ),
 });
 
 export const ThuderboltIconFormat = (): IconFormat => ({
   toIcon: (b: Buffer) =>
     b.toString() === "1" ? (
-      <ThunderboltFilled style={{ fontSize: "180%", color: "yellow" }} />
+      <FontAwesomeIcon
+        className="anticon"
+        icon={faBolt}
+        style={{
+          fontSize: "180%",
+          color: "yellow",
+          stroke: "darkgray",
+          strokeWidth: "16px",
+        }}
+      />
     ) : (
-      <ThunderboltTwoTone
-        style={{ fontSize: "180%" }}
-        twoToneColor="lightgray"
+      <FontAwesomeIcon
+        className="anticon"
+        icon={faBolt}
+        style={{
+          fontSize: "180%",
+          color: "#dcdcdc",
+          stroke: "darkgray",
+          strokeWidth: "16px",
+        }}
       />
     ),
 });

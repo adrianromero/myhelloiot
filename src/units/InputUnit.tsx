@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect } from "react";
 import { Button, Input, Form, Row, Col } from "antd";
-import { SendOutlined } from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
 
 import {
@@ -110,7 +111,9 @@ const InputUnit: React.FC<InputUnitProps> = ({
           <Col flex="none">
             <Form.Item>
               <Button
-                icon={<SendOutlined style={{ lineHeight: 1.3 }} />}
+                icon={
+                  <FontAwesomeIcon className="anticon" icon={faPaperPlane} />
+                }
                 type="primary"
                 disabled={!connected}
                 htmlType="submit"
