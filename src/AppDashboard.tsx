@@ -70,7 +70,12 @@ import KeypadUnit from "./units/KeypadUnit";
 import DisconnectUnit from "./units/DisconnectUnit";
 import SoundAlarmUnit from "./units/SoundAlarmUnit";
 import ModalUnit from "./units/ModalUnit";
-import { ToIconFormat, ToIconValueFormat } from "./format/FormatTypes";
+import {
+  ToIconFormat,
+  ToIconValueFormat,
+  onoffnum,
+  onoffst,
+} from "./format/FormatTypes";
 import {
   StringValueFormat,
   JSONValueFormat,
@@ -81,14 +86,18 @@ import {
 } from "./format/ValueFormat";
 import {
   DimIconFormat,
+  SwitchIconFormat,
   BulbIconFormat,
   ThuderboltIconFormat,
+  StarIconFormat,
   StringIconFormat,
   NumberIconFormat,
 } from "./format/IconFormat";
 import {
-  StarIconValueFormat,
   SwitchIconValueFormat,
+  BulbIconValueFormat,
+  ThuderboltIconValueFormat,
+  StarIconValueFormat,
   StringIconValueFormat,
 } from "./format/IconValueFormat";
 import {
@@ -136,6 +145,8 @@ const bindings = {
 
   ToIconFormat,
   ToIconValueFormat,
+  onoffnum,
+  onoffst,
 
   StringValueFormat,
   JSONValueFormat,
@@ -145,13 +156,17 @@ const bindings = {
   NumberValueFormat,
 
   DimIconFormat,
+  SwitchIconFormat,
   BulbIconFormat,
   ThuderboltIconFormat,
+  StarIconFormat,
   StringIconFormat,
   NumberIconFormat,
 
-  StarIconValueFormat,
   SwitchIconValueFormat,
+  BulbIconValueFormat,
+  ThuderboltIconValueFormat,
+  StarIconValueFormat,
   StringIconValueFormat,
 
   DashboardIconFormat,
