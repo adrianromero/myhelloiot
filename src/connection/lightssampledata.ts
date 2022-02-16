@@ -72,7 +72,7 @@ const lightssampledata = `{/* Light switches example. */}
       pubtopic="myhelloiot/testswitch1"
       puboptions={{ retain: true }}
       subtopic="myhelloiot/testswitch1"
-      format={SwitchIconValueFormat(ThuderboltIconFormat())}
+      format={SwitchIconValueFormat()}
     />
   </CCard>
   <CCard title="Light test 2">
@@ -80,7 +80,7 @@ const lightssampledata = `{/* Light switches example. */}
       pubtopic="myhelloiot/testswitch2"
       puboptions={{ retain: true }}
       subtopic="myhelloiot/testswitch2"
-      format={SwitchIconValueFormat(ThuderboltIconFormat())}
+      format={SwitchIconValueFormat()}
     />
   </CCard>
   <CCard title="Light test 3">
@@ -88,7 +88,7 @@ const lightssampledata = `{/* Light switches example. */}
       pubtopic="myhelloiot/testswitch3"
       puboptions={{ retain: true }}
       subtopic="myhelloiot/testswitch3"
-      format={SwitchIconValueFormat(ThuderboltIconFormat())}
+      format={SwitchIconValueFormat({icon:faBolt})}
     />
   </CCard>
 </DashboardGrid>

@@ -16,71 +16,59 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
+
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import {
-  IconFormat,
-  IconValueFormat,
-  ValueFormat,
-  ToIconValueFormat,
-} from "./FormatTypes";
-import { StringIconFormat } from "./IconFormat";
+import { faLightbulb, faStar, faBolt } from "@fortawesome/free-solid-svg-icons";
+import { IconValueFormat, ValueFormat, ToIconValueFormat } from "./FormatTypes";
 import { SwitchValueFormat, StringValueFormat } from "./ValueFormat";
 
-export const StarIconValueFormat = (
-  format: ValueFormat = SwitchValueFormat()
-): IconValueFormat => ({
-  ...format,
-  toIcon: (b: Buffer) =>
-    b.equals(format.fromDisplay("ON")) ? (
-      <FontAwesomeIcon
-        className="anticon"
-        icon={faStar}
-        style={{
-          fontSize: "180%",
-          color: "yellow",
-          stroke: "darkgray",
-          strokeWidth: "16px",
-        }}
-      />
-    ) : (
-      <FontAwesomeIcon
-        className="anticon"
-        icon={faStar}
-        style={{
-          fontSize: "180%",
-          color: "#dcdcdc",
-          stroke: "darkgray",
-          strokeWidth: "16px",
-        }}
-      />
-    ),
-});
-
-// export const BulbIconFormat = (): IconFormat => ({
-//   toIcon: (b: Buffer) =>
-//     b.toString() === "1" ? (
-//       <BulbFilled style={{ fontSize: "180%", color: "yellow" }} />
-//     ) : (
-//       <BulbTwoTone style={{ fontSize: "180%" }} twoToneColor="lightgray" />
-//     ),
-// });
-
-// export const ThuderboltIconFormat = (): IconFormat => ({
-//   toIcon: (b: Buffer) =>
-//     b.toString() === "1" ? (
-//       <ThunderboltFilled style={{ fontSize: "180%", color: "yellow" }} />
-//     ) : (
-//       <ThunderboltTwoTone
-//         style={{ fontSize: "180%" }}
-//         twoToneColor="lightgray"
-//       />
-//     ),
-// });
+export type SwitchIconValueFormatProps = {
+  icon?: IconProp;
+  format?: ValueFormat;
+};
 
 export const SwitchIconValueFormat = (
-  iconformat: IconFormat = StringIconFormat()
-): IconValueFormat => ToIconValueFormat(SwitchValueFormat(), iconformat);
+  props: SwitchIconValueFormatProps = {}
+): IconValueFormat => {
+  const { icon, format } = {
+    icon: faLightbulb,
+    format: SwitchValueFormat(),
+    ...props,
+  };
+  return {
+    ...format,
+    toIcon: (b: Buffer) =>
+      b.equals(format.fromDisplay("ON")) ? (
+        <FontAwesomeIcon
+          className="anticon"
+          icon={icon}
+          style={{
+            fontSize: "180%",
+            color: "yellow",
+            stroke: "darkgray",
+            strokeWidth: "16px",
+          }}
+        />
+      ) : (
+        <FontAwesomeIcon
+          className="anticon"
+          icon={icon}
+          style={{
+            fontSize: "180%",
+            color: "#dcdcdc",
+            stroke: "darkgray",
+            strokeWidth: "16px",
+          }}
+        />
+      ),
+  };
+};
+export const BulbIconValueFormat = SwitchIconValueFormat;
+export const ThuderboltIconValueFormat = () =>
+  SwitchIconValueFormat({ icon: faBolt });
+export const StarIconValueFormat = () =>
+  SwitchIconValueFormat({ icon: faStar });
 
 export const StringIconValueFormat = (): IconValueFormat =>
   ToIconValueFormat(StringValueFormat());
