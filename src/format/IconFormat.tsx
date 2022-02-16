@@ -20,7 +20,13 @@ import React from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLightbulb, faStar, faBolt } from "@fortawesome/free-solid-svg-icons";
-import { IconFormat, ValueFormat, ToIconFormat } from "./FormatTypes";
+import {
+  IconFormat,
+  ValueFormat,
+  ToIconFormat,
+  ONOFF,
+  onoffnum,
+} from "./FormatTypes";
 import { NumberValueFormat, StringValueFormat } from "./ValueFormat";
 
 import "./FormatTypes.css";
@@ -61,13 +67,14 @@ export const DimIconFormat = (icon: IconProp = faLightbulb): IconFormat => ({
 
 export type SwitchIconFormatProps = {
   icon?: IconProp;
+  onoff?: ONOFF;
 };
 
-export const SwitchIconFormat = (props: SwitchIconFormatProps): IconFormat => {
-  const { icon } = { icon: faLightbulb, ...props };
+export const SwitchIconFormat = (props?: SwitchIconFormatProps): IconFormat => {
+  const { icon, onoff } = { icon: faLightbulb, onoff: onoffnum, ...props };
   return {
     toIcon: (b: Buffer) =>
-      b.toString() === "1" ? (
+      onoff.on.equals(b) ? (
         <FontAwesomeIcon
           className="anticon"
           icon={icon}

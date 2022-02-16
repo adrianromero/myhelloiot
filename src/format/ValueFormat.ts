@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { ValueFormat, NumberValidation } from "./FormatTypes";
+import { ValueFormat, NumberValidation, ONOFF, onoffnum } from "./FormatTypes";
 import { padsegment } from "../gauge/svgdraw";
 
 export const StringValueFormat = (): ValueFormat => ({
@@ -50,20 +50,22 @@ export const Base64ValueFormat = (): ValueFormat => ({
   prev: (b: Buffer) => b,
 });
 
-export type ONOFF = {
-  on: string;
-  off: string;
+export type SwitchValueFormatProps = {
+  onoff?: ONOFF;
 };
 
 export const SwitchValueFormat = (
-  { on, off }: ONOFF = { on: "1", off: "0" }
-): ValueFormat => ({
-  toDisplay: (b: Buffer) => (b.toString() === on ? "ON" : "OFF"),
-  fromDisplay: (s: string) => Buffer.from(s === "ON" ? on : off),
-  next: (b: Buffer) => Buffer.from(b.toString() === on ? off : on),
-  prev: (b: Buffer) => Buffer.from(b.toString() === on ? off : on),
-  className: () => "",
-});
+  props?: SwitchValueFormatProps
+): ValueFormat => {
+  const { onoff } = { onoff: onoffnum, ...props };
+  return {
+    toDisplay: (b: Buffer) => (onoff.on.equals(b) ? "ON" : "OFF"),
+    fromDisplay: (s: string) => (s === "ON" ? onoff.on : onoff.off),
+    next: (b: Buffer) => (onoff.on.equals(b) ? onoff.off : onoff.on),
+    prev: (b: Buffer) => (onoff.on.equals(b) ? onoff.off : onoff.on),
+    className: () => "",
+  };
+};
 
 const getCharClass: (s?: string) => string = (s) =>
   s ? "[" + s.split("").join("][") + "]" : "";

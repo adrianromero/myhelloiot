@@ -15,55 +15,21 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
-
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLightbulb, faStar, faBolt } from "@fortawesome/free-solid-svg-icons";
-import { IconValueFormat, ValueFormat, ToIconValueFormat } from "./FormatTypes";
+
+import { faStar, faBolt } from "@fortawesome/free-solid-svg-icons";
+import { IconValueFormat, ToIconValueFormat, ONOFF } from "./FormatTypes";
+import { SwitchIconFormat } from "./IconFormat";
 import { SwitchValueFormat, StringValueFormat } from "./ValueFormat";
 
 export type SwitchIconValueFormatProps = {
   icon?: IconProp;
-  format?: ValueFormat;
+  onoff?: ONOFF;
 };
-
 export const SwitchIconValueFormat = (
-  props: SwitchIconValueFormatProps = {}
-): IconValueFormat => {
-  const { icon, format } = {
-    icon: faLightbulb,
-    format: SwitchValueFormat(),
-    ...props,
-  };
-  return {
-    ...format,
-    toIcon: (b: Buffer) =>
-      b.equals(format.fromDisplay("ON")) ? (
-        <FontAwesomeIcon
-          className="anticon"
-          icon={icon}
-          style={{
-            fontSize: "180%",
-            color: "yellow",
-            stroke: "darkgray",
-            strokeWidth: "16px",
-          }}
-        />
-      ) : (
-        <FontAwesomeIcon
-          className="anticon"
-          icon={icon}
-          style={{
-            fontSize: "180%",
-            color: "#dcdcdc",
-            stroke: "darkgray",
-            strokeWidth: "16px",
-          }}
-        />
-      ),
-  };
-};
+  props?: SwitchIconValueFormatProps
+): IconValueFormat =>
+  ToIconValueFormat(SwitchValueFormat(props), SwitchIconFormat(props));
 export const BulbIconValueFormat = SwitchIconValueFormat;
 export const ThuderboltIconValueFormat = () =>
   SwitchIconValueFormat({ icon: faBolt });

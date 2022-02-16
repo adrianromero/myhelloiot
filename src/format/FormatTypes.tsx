@@ -39,6 +39,21 @@ export type NumberValidation = {
 
 export type IconValueFormat = IconFormat & ValueFormat;
 
+export type ONOFF = {
+  on: Buffer;
+  off: Buffer;
+};
+
+export const onoffnum: ONOFF = {
+  on: Buffer.from("1"),
+  off: Buffer.from("0"),
+};
+
+export const onoffst: ONOFF = {
+  on: Buffer.from("on"),
+  off: Buffer.from("off"),
+};
+
 export const ToIconFormat = (format: ValueFormat): IconFormat => ({
   toIcon: (b: Buffer) => (
     <div className={`myhToIconFormat ${format.className()}`}>
