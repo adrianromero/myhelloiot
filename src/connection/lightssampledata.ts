@@ -80,7 +80,7 @@ const lightssampledata = `{/* Light switches example. */}
       pubtopic="myhelloiot/testswitch2"
       puboptions={{ retain: true }}
       subtopic="myhelloiot/testswitch2"
-      format={SwitchIconValueFormat()}
+      format={SwitchIconValueFormat({icon:faStar})}
     />
   </CCard>
   <CCard title="Light test 3">
