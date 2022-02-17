@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -19,15 +19,14 @@ import React from "react";
 import { IClientSubscribeOptions } from "mqtt";
 import { Modal } from "antd";
 import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { ValueFormat } from "../format/FormatTypes";
-import { StringValueFormat } from "../format/ValueFormat";
+import { ONOFF, onoffnum } from "../format/FormatTypes";
 import { useAppStoreProperty } from "../AppStoreProvider";
 
 type ModalUnitProps = {
   instancekey: string;
   subtopic: string;
   suboptions?: IClientSubscribeOptions;
-  format?: ValueFormat;
+  onoff?: ONOFF;
   title?: string;
   cancelable?: boolean;
   className?: string;
@@ -38,7 +37,7 @@ const ModalUnit: React.FC<ModalUnitProps> = ({
   instancekey,
   subtopic,
   suboptions,
-  format = StringValueFormat(),
+  onoff = onoffnum,
   title,
   cancelable = true,
   className = "",
@@ -50,16 +49,16 @@ const ModalUnit: React.FC<ModalUnitProps> = ({
 
   useMQTTSubscribe(
     subtopic,
-    ({ message }: MQTTMessage) => setIsModalVisible(format.toDisplay(message)),
+    ({ message }: MQTTMessage) => setIsModalVisible(message.toString()),
     suboptions
   );
 
   // const handleOk = () => {
-  //   setIsModalVisible("0");
+  //   setIsModalVisible(onoff.off.toString());
   // };
 
   const handleCancel = () => {
-    setIsModalVisible("0");
+    setIsModalVisible(onoff.off.toString());
   };
 
   return (
@@ -68,7 +67,9 @@ const ModalUnit: React.FC<ModalUnitProps> = ({
       maskClosable={cancelable}
       closable={cancelable}
       keyboard={cancelable}
-      visible={isModalVisible === "1"}
+      visible={
+        isModalVisible ? onoff.on.equals(Buffer.from(isModalVisible)) : false
+      }
       onCancel={handleCancel}
       footer={
         null

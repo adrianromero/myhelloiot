@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -24,15 +24,14 @@ import {
   useMQTTContext,
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
-import { ValueFormat } from "../format/FormatTypes";
-import { SwitchValueFormat } from "../format/ValueFormat";
+import { ONOFF, onoffnum } from "../format/FormatTypes";
 
 type SwitchUnitProps = {
   pubtopic?: string;
   subtopic?: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
-  format?: ValueFormat;
+  onoff?: ONOFF;
   className?: string;
 };
 
@@ -41,7 +40,7 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   subtopic = "",
   puboptions,
   suboptions,
-  format = SwitchValueFormat(),
+  onoff = onoffnum,
   className,
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
@@ -54,14 +53,14 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
-      setChecked(format.toDisplay(message) === "ON");
+      setChecked(onoff.on.equals(message));
     },
     suboptions
   );
 
   const onChange = (value: boolean) => {
     setChecked(value);
-    publish(pubtopic, format.fromDisplay(value ? "ON" : "OFF"), puboptions);
+    publish(pubtopic, value ? onoff.on : onoff.off, puboptions);
   };
 
   return (
