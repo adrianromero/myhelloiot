@@ -28,7 +28,7 @@ const sampledata = `{/* Gauges example. */}
     <SliderUnit
       pubtopic="myhelloiot/temperature"
       subtopic="myhelloiot/temperature"
-      numberValidation={{ min: -10, max: 60, step: 1 }}
+      limits={{ min: -10, max: 60, step: 1 }}
     />
   </CCard>
   <CCard title="Liquid gauge card">

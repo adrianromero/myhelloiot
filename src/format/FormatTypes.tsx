@@ -31,11 +31,13 @@ export type ValueFormat = {
   prev: (b: Buffer) => Buffer;
 };
 
-export type NumberValidation = {
-  min?: number;
-  max?: number;
-  step?: number;
+export type LIMITS = {
+  min: number;
+  max: number;
+  step: number;
 };
+
+export const limits100 = { min: 0, max: 100, step: 1 };
 
 export type IconValueFormat = IconFormat & ValueFormat;
 

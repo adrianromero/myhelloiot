@@ -40,7 +40,7 @@ const pubsubsampledata = `{/* Basic units example. */}
       pubtopic="myhelloiot/temperature"
       puboptions={{ retain: true }}
       subtopic="myhelloiot/temperature"
-      numberValidation={{ min: -10, max: 60, step: 1 }}
+      limits={{ min: -10, max: 60, step: 1 }}
     />
   </CCard>
   <CCard title="Temperature buttons">

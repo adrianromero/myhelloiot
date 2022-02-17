@@ -23,7 +23,7 @@ import {
   useMQTTContext,
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
-import { NumberValidation } from "../format/FormatTypes";
+import { LIMITS } from "../format/FormatTypes";
 import "./SliderUnit.css";
 
 type SliderUnitProps = {
@@ -31,7 +31,7 @@ type SliderUnitProps = {
   subtopic: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
-  numberValidation: NumberValidation;
+  limits: LIMITS;
   className?: string;
 };
 
@@ -40,7 +40,7 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
   subtopic,
   puboptions,
   suboptions,
-  numberValidation,
+  limits,
   className = "",
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
@@ -70,9 +70,9 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
   return (
     <Slider
       value={Number(buffer.toString())}
-      min={numberValidation.min}
-      max={numberValidation.max}
-      step={numberValidation.step}
+      min={limits.min}
+      max={limits.max}
+      step={limits.step}
       onChange={onChange}
       onAfterChange={onAfterChange}
       disabled={!connected}

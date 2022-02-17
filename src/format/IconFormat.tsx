@@ -27,7 +27,11 @@ import {
   ONOFF,
   onoffnum,
 } from "./FormatTypes";
-import { NumberValueFormat, StringValueFormat } from "./ValueFormat";
+import {
+  NumberValueFormat,
+  NumberValueFormatOptions,
+  StringValueFormat,
+} from "./ValueFormat";
 
 import "./FormatTypes.css";
 
@@ -108,5 +112,5 @@ export const StringIconFormat = (
 ): IconFormat => ToIconFormat(valueformat);
 
 export const NumberIconFormat = (
-  options?: Intl.NumberFormatOptions
+  options?: NumberValueFormatOptions
 ): IconFormat => ToIconFormat(NumberValueFormat(options));
