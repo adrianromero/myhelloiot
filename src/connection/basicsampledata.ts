@@ -48,20 +48,25 @@ const pubsubsampledata = `{/* Basic units example. */}
       pubtopic="myhelloiot/temperature"
       puboptions={{ retain: true }}
       subtopic="myhelloiot/temperature"
-      format={LabelIconValueFormat("+", NumberValueFormat({
+      format={NumberIconValueFormat({
         style: "unit",
         unit: "celsius",
-      }))}
+        min: -10,
+        max: 60,
+        step: 1
+      })}
     />
     <ButtonUnit
       pubtopic="myhelloiot/temperature"
       puboptions={{ retain: true }}
       subtopic="myhelloiot/temperature"
-      format={LabelIconValueFormat("-", NumberValueFormat({
+      format={NumberIconValueFormat({
         style: "unit",
         unit: "celsius",
+        min: -10,
+        max: 60,
         step: -1
-      }))}
+      })}
     />
   </CCard>
   <CCard title="Dashboard gauge card">

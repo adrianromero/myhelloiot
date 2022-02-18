@@ -20,7 +20,12 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faStar, faBolt } from "@fortawesome/free-solid-svg-icons";
 import { IconValueFormat, ToIconValueFormat, ONOFF } from "./FormatTypes";
 import { SwitchIconFormat } from "./IconFormat";
-import { SwitchValueFormat, StringValueFormat } from "./ValueFormat";
+import {
+  SwitchValueFormat,
+  StringValueFormat,
+  NumberValueFormat,
+  NumberValueFormatOptions,
+} from "./ValueFormat";
 
 export type SwitchIconValueFormatProps = {
   icon?: IconProp;
@@ -38,3 +43,7 @@ export const StarIconValueFormat = () =>
 
 export const StringIconValueFormat = (): IconValueFormat =>
   ToIconValueFormat(StringValueFormat());
+
+export const NumberIconValueFormat = (
+  options?: NumberValueFormatOptions
+): IconValueFormat => ToIconValueFormat(NumberValueFormat(options));

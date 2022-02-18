@@ -99,6 +99,7 @@ import {
   ThuderboltIconValueFormat,
   StarIconValueFormat,
   StringIconValueFormat,
+  NumberIconValueFormat,
 } from "./format/IconValueFormat";
 import {
   DashboardIconFormat,
@@ -168,6 +169,7 @@ const bindings = {
   ThuderboltIconValueFormat,
   StarIconValueFormat,
   StringIconValueFormat,
+  NumberIconValueFormat,
 
   DashboardIconFormat,
   LinearIconFormat,
