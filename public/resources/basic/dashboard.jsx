@@ -33,26 +33,25 @@
       pubtopic="myhelloiot/temperature"
       puboptions={{ retain: true }}
       subtopic="myhelloiot/temperature"
-      format={LabelIconValueFormat(
-        "+",
-        NumberValueFormat({
-          style: "unit",
-          unit: "celsius",
-        })
-      )}
+      format={NumberIconValueFormat({
+        style: "unit",
+        unit: "celsius",
+        min: -10,
+        max: 60,
+        step: -1,
+      })}
     />
     <ButtonUnit
       pubtopic="myhelloiot/temperature"
       puboptions={{ retain: true }}
       subtopic="myhelloiot/temperature"
-      format={LabelIconValueFormat(
-        "-",
-        NumberValueFormat({
-          style: "unit",
-          unit: "celsius",
-          step: -1,
-        })
-      )}
+      format={NumberIconValueFormat({
+        style: "unit",
+        unit: "celsius",
+        min: -10,
+        max: 60,
+        step: -1,
+      })}
     />
   </CCard>
   <CCard title="Dashboard gauge card">
