@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { Row, Col } from "antd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SVGIcon from "./format/SVGIcon";
 import {
   faUpload,
   faDownload,
@@ -186,7 +186,7 @@ const bindings = {
 };
 
 const components: Record<string, React.ComponentType<any>> = {
-  FontAwesomeIcon,
+  SVGIcon,
   Row,
   Col,
   Dashboard,

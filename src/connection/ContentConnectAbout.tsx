@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SVGIcon from "../format/SVGIcon";
 import {
   faCodeBranch,
   faPencil,
@@ -26,6 +26,7 @@ import { Typography, Tag, Button, Image, message } from "antd";
 import { FormInstance } from "antd/lib/form";
 import myhelloiot from "../assets/myhelloiot.png";
 import basicsampledata from "./basicsampledata";
+import publishingsampledata from "./publishingsampledata";
 import pubsubsampledata from "./pubsubsampledata";
 import lightssampledata from "./lightssampledata";
 import gaugessampledata from "./gaugessampledata";
@@ -60,10 +61,7 @@ const ContentConnectAbout: React.FC<{
       <Typography>
         <Title level={2}>
           MYHELLOIOT{" "}
-          <Tag
-            icon={<FontAwesomeIcon className="anticon" icon={faCodeBranch} />}
-            color="geekblue"
-          >
+          <Tag icon={<SVGIcon icon={faCodeBranch} />} color="geekblue">
             1.0.0-2
           </Tag>
         </Title>
@@ -99,7 +97,7 @@ const ContentConnectAbout: React.FC<{
           <Button
             type="link"
             size="small"
-            icon={<FontAwesomeIcon className="anticon" icon={faPencil} />}
+            icon={<SVGIcon icon={faPencil} />}
             onClick={() => {
               message.info("url: wss://broker.emqx.io:8084/mqtt");
               form.setFieldsValue({
@@ -115,7 +113,7 @@ const ContentConnectAbout: React.FC<{
           <Button
             type="link"
             size="small"
-            icon={<FontAwesomeIcon className="anticon" icon={faPencil} />}
+            icon={<SVGIcon icon={faPencil} />}
             onClick={() => {
               message.info("url: wss://test.mosquitto.org:8081");
               form.setFieldsValue({
@@ -145,7 +143,7 @@ const ContentConnectAbout: React.FC<{
               <Button
                 type="link"
                 size="small"
-                icon={<FontAwesomeIcon className="anticon" icon={faPencil} />}
+                icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
                   message.info("dashboard: basic.jsx");
                   form.setFieldsValue({
@@ -166,7 +164,7 @@ const ContentConnectAbout: React.FC<{
               <Button
                 type="link"
                 size="small"
-                icon={<FontAwesomeIcon className="anticon" icon={faPencil} />}
+                icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
                   message.info("dashboard: pubsub.jsx");
                   form.setFieldsValue({
@@ -187,7 +185,7 @@ const ContentConnectAbout: React.FC<{
               <Button
                 type="link"
                 size="small"
-                icon={<FontAwesomeIcon className="anticon" icon={faPencil} />}
+                icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
                   message.info("dashboard: lights.jsx");
                   form.setFieldsValue({
@@ -208,7 +206,7 @@ const ContentConnectAbout: React.FC<{
               <Button
                 type="link"
                 size="small"
-                icon={<FontAwesomeIcon className="anticon" icon={faPencil} />}
+                icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
                   message.info("dashboard: gauges.jsx");
                   form.setFieldsValue({
@@ -225,11 +223,32 @@ const ContentConnectAbout: React.FC<{
               .
             </li>
             <li>
+              Publishing example
+              <Button
+                type="link"
+                size="small"
+                icon={<SVGIcon icon={faPencil} />}
+                onClick={() => {
+                  message.info("dashboard: publishing.jsx");
+                  form.setFieldsValue({
+                    dashboard: {
+                      name: "publishing.jsx",
+                      type: "text/jsx",
+                      data: publishingsampledata,
+                    },
+                  });
+                }}
+              >
+                Sets publishing.jsx dashboard
+              </Button>
+              .
+            </li>
+            <li>
               Mosquitto SYS topics example
               <Button
                 type="link"
                 size="small"
-                icon={<FontAwesomeIcon className="anticon" icon={faPencil} />}
+                icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
                   message.info("dashboard: mosquitto.jsx");
                   form.setFieldsValue({
@@ -252,7 +271,7 @@ const ContentConnectAbout: React.FC<{
           And now you are ready to press the{" "}
           <Button
             size="small"
-            icon={<FontAwesomeIcon className="anticon" icon={faPowerOff} />}
+            icon={<SVGIcon icon={faPowerOff} />}
             type="primary"
             htmlType="submit"
           >

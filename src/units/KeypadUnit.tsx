@@ -30,7 +30,7 @@ import { ValueFormat } from "../format/FormatTypes";
 import { StringValueFormat } from "../format/ValueFormat";
 
 import "./KeypadUnit.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SVGIcon from "../format/SVGIcon";
 import { faTurnDown, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 export type KeypadUnitProps = {
@@ -85,7 +85,7 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
             type="text"
             onClick={onClickClear}
             disabled={!connected}
-            icon={<FontAwesomeIcon className="anticon" icon={faCircleXmark} />}
+            icon={<SVGIcon icon={faCircleXmark} />}
           />
         }
       />
@@ -175,11 +175,7 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
         onClick={onClickOK}
         disabled={!connected}
         icon={
-          <FontAwesomeIcon
-            className="anticon"
-            icon={faTurnDown}
-            style={{ transform: "rotate(90deg)" }}
-          />
+          <SVGIcon icon={faTurnDown} style={{ transform: "rotate(90deg)" }} />
         }
         className="btn btn-ok"
       />

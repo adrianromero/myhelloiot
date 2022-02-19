@@ -26,7 +26,7 @@ import {
 } from "../format/ValueFormat";
 import LogView from "./LogView";
 import { Button, CheckboxOptionType, Col, Radio, Row } from "antd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SVGIcon from "../format/SVGIcon";
 import { faPlay, faPause, faBan } from "@fortawesome/free-solid-svg-icons";
 import Title from "antd/lib/typography/Title";
 
@@ -80,17 +80,12 @@ const LogTool: React.FC<LogToolProps> = ({
             <div className="myhLogTool-toolbar">
               <Button
                 type="primary"
-                icon={
-                  <FontAwesomeIcon
-                    className="anticon"
-                    icon={paused ? faPause : faPlay}
-                  />
-                }
+                icon={<SVGIcon icon={paused ? faPause : faPlay} />}
                 disabled={!connected}
                 onClick={() => setTool(([p, msgs]) => [!p, msgs])}
               />
               <Button
-                icon={<FontAwesomeIcon className="anticon" icon={faBan} />}
+                icon={<SVGIcon icon={faBan} />}
                 disabled={!connected}
                 onClick={() => setTool(([p]) => [p, []])}
               />

@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { Button, Modal } from "antd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SVGIcon from "./format/SVGIcon";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import "./ModalError.css";
 
@@ -30,9 +30,9 @@ const ModalError: React.FC<{
   return (
     <Modal footer={null} closable={false} visible={visible}>
       <div className="myhModalError-container">
-        <FontAwesomeIcon
+        <SVGIcon
           icon={faCircleExclamation}
-          className="anticon myhModalError-icon"
+          className="myhModalError-icon"
           style={{ color: "red" }}
         />
         <div>

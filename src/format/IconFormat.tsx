@@ -17,8 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import SVGIcon from "./SVGIcon";
 import { faLightbulb, faStar, faBolt } from "@fortawesome/free-solid-svg-icons";
 import {
   IconFormat,
@@ -35,15 +35,16 @@ import {
 
 import "./FormatTypes.css";
 
-export const DimIconFormat = (icon: IconProp = faLightbulb): IconFormat => ({
+export const DimIconFormat = (
+  icon: IconDefinition = faLightbulb
+): IconFormat => ({
   toIcon: (b: Buffer) => {
     const value = parseInt(b.toString());
 
     return (
       <div className="myhToIconFormat myhToIconFormat_aligncenter">
         {value ? (
-          <FontAwesomeIcon
-            className="anticon"
+          <SVGIcon
             icon={icon}
             style={{
               fontSize: "280%",
@@ -53,8 +54,7 @@ export const DimIconFormat = (icon: IconProp = faLightbulb): IconFormat => ({
             }}
           />
         ) : (
-          <FontAwesomeIcon
-            className="anticon"
+          <SVGIcon
             icon={icon}
             style={{
               fontSize: "280%",
@@ -70,7 +70,7 @@ export const DimIconFormat = (icon: IconProp = faLightbulb): IconFormat => ({
 });
 
 export type SwitchIconFormatProps = {
-  icon?: IconProp;
+  icon?: IconDefinition;
   onoff?: ONOFF;
 };
 
@@ -79,8 +79,7 @@ export const SwitchIconFormat = (props?: SwitchIconFormatProps): IconFormat => {
   return {
     toIcon: (b: Buffer) =>
       onoff.on.equals(b) ? (
-        <FontAwesomeIcon
-          className="anticon"
+        <SVGIcon
           icon={icon}
           style={{
             fontSize: "180%",
@@ -90,8 +89,7 @@ export const SwitchIconFormat = (props?: SwitchIconFormatProps): IconFormat => {
           }}
         />
       ) : (
-        <FontAwesomeIcon
-          className="anticon"
+        <SVGIcon
           icon={icon}
           style={{
             fontSize: "180%",

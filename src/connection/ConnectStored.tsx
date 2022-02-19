@@ -36,7 +36,7 @@ import AppHeader from "../AppHeader";
 import UploadRaw from "./UploadRaw";
 import ContentConnectAbout from "./ContentConnectAbout";
 import "./ContentConnect.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SVGIcon from "../format/SVGIcon";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 
 type ModalErrorInfo = {
@@ -115,7 +115,7 @@ const ConnectStored: React.FC<{
         <Layout className="myhLayout">
           <AppHeader>
             <Button
-              icon={<FontAwesomeIcon icon={faPowerOff} className="anticon" />}
+              icon={<SVGIcon icon={faPowerOff} />}
               type="primary"
               htmlType="submit"
             >

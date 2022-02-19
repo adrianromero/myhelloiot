@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SVGIcon from "../format/SVGIcon";
 import { faUpload, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { Upload, Button, Input, Col, Row } from "antd";
 import { RcFile } from "antd/lib/upload/interface";
@@ -112,14 +112,12 @@ const UploadRaw: React.FC<UploadRawProps> = ({
                 beforeUpload={handleUpload}
                 maxCount={1}
               >
-                <Button
-                  icon={<FontAwesomeIcon className="anticon" icon={faUpload} />}
-                />
+                <Button icon={<SVGIcon icon={faUpload} />} />
               </Upload>
             </Col>
             <Col flex="0 1 auto">
               <Button
-                icon={<FontAwesomeIcon className="anticon" icon={faDownload} />}
+                icon={<SVGIcon icon={faDownload} />}
                 onClick={download}
                 disabled={!value?.name}
               />

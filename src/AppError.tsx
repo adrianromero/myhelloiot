@@ -21,7 +21,7 @@ import { Layout } from "antd";
 import { DispatchDisconnect } from "./AppStoreProvider";
 import AppHeader from "./AppHeader";
 import ModalError from "./ModalError";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SVGIcon from "./format/SVGIcon";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import "./AppError.css";
 import ConnectionStatus from "./dashboard/ConnectionStatus";
@@ -46,11 +46,7 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
           <ConnectionStatus
             label="Error"
             icon={
-              <FontAwesomeIcon
-                icon={faCircleExclamation}
-                className="anticon"
-                style={{ color: "red" }}
-              />
+              <SVGIcon icon={faCircleExclamation} style={{ color: "red" }} />
             }
           />
         </AppHeader>

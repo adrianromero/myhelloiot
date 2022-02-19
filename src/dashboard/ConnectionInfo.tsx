@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SVGIcon from "../format/SVGIcon";
 import { faPowerOff, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 import { Row, Col, Typography, Button, Divider, Popover, Space } from "antd";
@@ -54,13 +54,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
       <Space>
         <ConnectionStatus
           label={options.hostname ?? ""}
-          icon={
-            <FontAwesomeIcon
-              icon={faCircleCheck}
-              className="anticon"
-              style={{ color: "#52c41a" }}
-            />
-          }
+          icon={<SVGIcon icon={faCircleCheck} style={{ color: "#52c41a" }} />}
         />
       </Space>
     );
@@ -70,9 +64,8 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
         <ConnectionStatus
           label={status}
           icon={
-            <FontAwesomeIcon
+            <SVGIcon
               icon={faSpinner}
-              className="anticon"
               style={{
                 color: "#ffffff",
                 animation: "loadingCircle 1s infinite linear",
@@ -162,7 +155,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
           <Divider />
           <Button
             type="primary"
-            icon={<FontAwesomeIcon icon={faPowerOff} className="anticon" />}
+            icon={<SVGIcon icon={faPowerOff} />}
             onClick={() => dispatch({ type: "disconnect" })}
           >
             Disconnect

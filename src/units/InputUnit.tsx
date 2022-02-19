@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect } from "react";
 import { Button, Input, Form, Row, Col } from "antd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SVGIcon from "../format/SVGIcon";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
 
@@ -111,9 +111,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
           <Col flex="none">
             <Form.Item>
               <Button
-                icon={
-                  <FontAwesomeIcon className="anticon" icon={faPaperPlane} />
-                }
+                icon={<SVGIcon icon={faPaperPlane} />}
                 type="primary"
                 disabled={!connected}
                 htmlType="submit"

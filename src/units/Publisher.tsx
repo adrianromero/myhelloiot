@@ -27,7 +27,7 @@ import {
   RadioChangeEvent,
   notification,
 } from "antd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SVGIcon from "../format/SVGIcon";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { QoS } from "mqtt";
 
@@ -155,9 +155,7 @@ const Publisher: React.FC<PublisherProps> = ({
             <div>
               <Form.Item>
                 <Button
-                  icon={
-                    <FontAwesomeIcon className="anticon" icon={faPaperPlane} />
-                  }
+                  icon={<SVGIcon icon={faPaperPlane} />}
                   type="primary"
                   disabled={!connected}
                   htmlType="submit"
