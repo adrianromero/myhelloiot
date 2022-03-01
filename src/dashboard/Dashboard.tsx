@@ -52,7 +52,7 @@ const Dashboard: React.FC<DashboardProps> = ({
     instancekey + "-dashboard-panelkey"
   );
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
-  const [, { publish }] = useMQTTContext();
+  const [{ connected }, { publish }] = useMQTTContext();
   useMQTTSubscribe(topic, (mqttmessage: MQTTMessage) => {
     const key = mqttmessage.message.toString();
     if (key !== panelkey) {
@@ -119,7 +119,12 @@ const Dashboard: React.FC<DashboardProps> = ({
       <AppHeader title={title}>
         {menus.length > 0 && (
           <div className="myhDashboard-buttonmenu">
-            <Button onClick={showDrawer} ghost hidden={menDisabled}>
+            <Button
+              onClick={showDrawer}
+              ghost
+              hidden={menDisabled}
+              disabled={!connected}
+            >
               <SVGIcon icon={faBars} />
             </Button>
           </div>
@@ -140,6 +145,7 @@ const Dashboard: React.FC<DashboardProps> = ({
             <Menu
               theme="light"
               mode="inline"
+              disabled={!connected}
               selectedKeys={keyvisible ? [keyvisible] : []}
               onSelect={handleSelect}
             >
