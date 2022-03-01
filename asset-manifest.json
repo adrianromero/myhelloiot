@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/myhelloiot/static/css/main.7eee505c.chunk.css",
-    "main.js": "/myhelloiot/static/js/main.f7433fb8.chunk.js",
-    "runtime-main.js": "/myhelloiot/static/js/runtime-main.0c1d3606.js",
-    "static/css/2.211cb4c2.chunk.css": "/myhelloiot/static/css/2.211cb4c2.chunk.css",
-    "static/js/2.707d9e33.chunk.js": "/myhelloiot/static/js/2.707d9e33.chunk.js",
-    "static/js/3.821952f1.chunk.js": "/myhelloiot/static/js/3.821952f1.chunk.js",
+    "main.css": "/myhelloiot/static/css/main.2fe7d35f.chunk.css",
+    "main.js": "/myhelloiot/static/js/main.b04ebeb7.chunk.js",
+    "runtime-main.js": "/myhelloiot/static/js/runtime-main.87a772a3.js",
+    "static/css/2.c01a1509.chunk.css": "/myhelloiot/static/css/2.c01a1509.chunk.css",
+    "static/js/2.3c9ecf74.chunk.js": "/myhelloiot/static/js/2.3c9ecf74.chunk.js",
+    "static/js/3.e50310e6.chunk.js": "/myhelloiot/static/js/3.e50310e6.chunk.js",
     "index.html": "/myhelloiot/index.html",
     "service-worker.js": "/myhelloiot/service-worker.js",
-    "static/js/2.707d9e33.chunk.js.LICENSE.txt": "/myhelloiot/static/js/2.707d9e33.chunk.js.LICENSE.txt",
+    "static/js/2.3c9ecf74.chunk.js.LICENSE.txt": "/myhelloiot/static/js/2.3c9ecf74.chunk.js.LICENSE.txt",
     "static/media/128138_1542160-lq.mp3": "/myhelloiot/static/media/128138_1542160-lq.d15febc7.mp3",
     "static/media/162467_311243-lq.mp3": "/myhelloiot/static/media/162467_311243-lq.7d1d05b8.mp3",
     "static/media/249703_3930831-lq.mp3": "/myhelloiot/static/media/249703_3930831-lq.cadb50cc.mp3",
@@ -18,16 +18,16 @@
     "static/media/405548_6436863-lq.mp3": "/myhelloiot/static/media/405548_6436863-lq.3d9361ec.mp3",
     "static/media/486952_6657415-lq.mp3": "/myhelloiot/static/media/486952_6657415-lq.bff58fd1.mp3",
     "static/media/537061_7117640-lq.mp3": "/myhelloiot/static/media/537061_7117640-lq.5b915627.mp3",
-    "static/media/github.88218d22.svg": "/myhelloiot/static/media/github.88218d22.svg",
+    "static/media/github.6e526f25.svg": "/myhelloiot/static/media/github.6e526f25.svg",
     "static/media/myhelloiot.1389b49d.png": "/myhelloiot/static/media/myhelloiot.1389b49d.png",
     "static/media/ControlGauge.css": "/myhelloiot/static/media/roboto-condensed-v19-latin-regular.fd55075a.woff2",
     "static/media/themes.svg": "/myhelloiot/static/media/themes.8b0983ed.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.0c1d3606.js",
-    "static/css/2.211cb4c2.chunk.css",
-    "static/js/2.707d9e33.chunk.js",
-    "static/css/main.7eee505c.chunk.css",
-    "static/js/main.f7433fb8.chunk.js"
+    "static/js/runtime-main.87a772a3.js",
+    "static/css/2.c01a1509.chunk.css",
+    "static/js/2.3c9ecf74.chunk.js",
+    "static/css/main.2fe7d35f.chunk.css",
+    "static/js/main.b04ebeb7.chunk.js"
   ]
 }

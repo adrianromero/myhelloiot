@@ -1,0 +1,16 @@
+{
+  "url": "ws://localhost:9001",
+  "keepalive": 60,
+  "connectTimeout": 30000,
+  "reconnectPeriod": 1000,
+  "onlinetopic": "",
+  "onlineqos": 0,
+  "dashboard": {
+    "name": "dashboard.jsx",
+    "type": "text/jsx"
+  },
+  "dashboardcss": {
+    "name": "dashboard.css",
+    "type": "text/css"
+  }
+}
