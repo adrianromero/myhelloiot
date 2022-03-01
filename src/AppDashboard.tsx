@@ -61,6 +61,7 @@ import Publisher from "./units/Publisher";
 import ButtonMessage from "./units/ButtonMessage";
 import Publishing from "./units/Publishing";
 import ButtonUnit from "./units/ButtonUnit";
+import ButtonTopic from "./units/ButtonTopic";
 import SwitchUnit from "./units/SwitchUnit";
 import ViewUnit from "./units/ViewUnit";
 import SliderUnit from "./units/SliderUnit";
@@ -203,6 +204,7 @@ const components: Record<string, React.ComponentType<any>> = {
   ButtonMessage,
   Publishing,
   ButtonUnit,
+  ButtonTopic,
   SwitchUnit,
   ViewUnit,
   SliderUnit,

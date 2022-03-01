@@ -15,26 +15,21 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { useEffect, useState, MouseEvent } from "react";
-import { Button } from "antd";
+import React from "react";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
-import {
-  MQTTMessage,
-  useMQTTContext,
-  useMQTTSubscribe,
-} from "../mqtt/MQTTProvider";
 import { IconValueFormat } from "../format/FormatTypes";
 import { SwitchIconValueFormat } from "../format/IconValueFormat";
-
-import "./ButtonUnit.css";
+import ButtonTopic from "./ButtonTopic";
 
 export type ButtonUnitProps = {
   pubtopic: string;
   subtopic?: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
+  icon?: React.ReactNode;
   format?: IconValueFormat;
   className?: string;
+  children?: React.ReactNode;
 };
 
 const ButtonUnit: React.FC<ButtonUnitProps> = ({
@@ -43,38 +38,23 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
   puboptions,
   suboptions,
   format = SwitchIconValueFormat(),
+  icon,
   className = "",
+  children,
 }) => {
-  const [{ connected, ready }, { publish }] = useMQTTContext();
-  const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
-
-  useEffect(() => {
-    setBuffer(Buffer.from([]));
-  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useMQTTSubscribe(
-    subtopic,
-    ({ message }: MQTTMessage) => {
-      setBuffer(message);
-    },
-    suboptions
-  );
-
-  const onClick = (ev: MouseEvent<HTMLElement>) => {
-    const next: Buffer = format.next(buffer);
-    setBuffer(next);
-    publish(pubtopic, next, puboptions);
-  };
-
   return (
-    <Button
-      className={`myhButtonUnit ${className}`}
-      type="primary"
-      onClick={onClick}
-      disabled={!connected}
+    <ButtonTopic
+      pubtopic={pubtopic}
+      subtopic={subtopic}
+      puboptions={puboptions}
+      suboptions={suboptions}
+      format={format}
+      className={className}
+      icon={icon}
+      iconlabel={format.toIcon}
     >
-      {format.toIcon(buffer)}
-    </Button>
+      {children}
+    </ButtonTopic>
   );
 };
 export default ButtonUnit;

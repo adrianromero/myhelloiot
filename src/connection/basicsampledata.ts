@@ -44,7 +44,7 @@ const pubsubsampledata = `{/* Basic units example. */}
     />
   </CCard>
   <CCard title="Temperature buttons">
-    <ButtonUnit
+    <ButtonTopic
       pubtopic="myhelloiot/temperature"
       puboptions={{ retain: true }}
       subtopic="myhelloiot/temperature"
@@ -55,8 +55,9 @@ const pubsubsampledata = `{/* Basic units example. */}
         max: 60,
         step: 1
       })}
+      icon="+"
     />
-    <ButtonUnit
+    <ButtonTopic
       pubtopic="myhelloiot/temperature"
       puboptions={{ retain: true }}
       subtopic="myhelloiot/temperature"
@@ -67,6 +68,7 @@ const pubsubsampledata = `{/* Basic units example. */}
         max: 60,
         step: -1
       })}
+      icon="-"
     />
   </CCard>
   <CCard title="Dashboard gauge card">

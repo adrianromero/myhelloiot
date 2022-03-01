@@ -30,11 +30,10 @@ export type ButtonMessageProps = {
   puboptions?: IClientPublishOptions;
   format?: ValueFormat;
   value: string;
-  label?: string;
   icon?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 const ButtonMessage: React.FC<ButtonMessageProps> = ({
@@ -42,7 +41,6 @@ const ButtonMessage: React.FC<ButtonMessageProps> = ({
   puboptions,
   format = StringValueFormat(),
   value,
-  label,
   icon,
   children,
   className = "",
@@ -61,7 +59,6 @@ const ButtonMessage: React.FC<ButtonMessageProps> = ({
       className={`myhButtonMessage ${className}`}
       style={style}
     >
-      {label}
       {children}
     </Button>
   );

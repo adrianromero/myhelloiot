@@ -6,7 +6,7 @@
   "onlinetopic": "",
   "onlineqos": 0,
   "dashboard": {
-    "name": "mosquitto.jsx",
+    "name": "dashboard.jsx",
     "type": "text/jsx"
   },
   "dashboardcss": {

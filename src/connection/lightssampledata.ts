@@ -19,7 +19,7 @@ const lightssampledata = `{/* Light switches example. */}
 <DashboardGrid>
   <CCard title="Light switches">
     <Row>
-      <Col flex="0 1 auto">
+      <Col flex="0 1 40px" style={{textAlign: "center"}}>
         <ViewUnit
           subtopic="myhelloiot/testswitch1"
           format={BulbIconFormat()}
@@ -35,10 +35,10 @@ const lightssampledata = `{/* Light switches example. */}
       </Col>
     </Row>
     <Row>
-      <Col flex="0 1 auto">
+      <Col flex="0 1 40px" style={{textAlign: "center"}}>
         <ViewUnit
           subtopic="myhelloiot/testswitch2"
-          format={BulbIconFormat()}
+          format={SwitchIconFormat({icon:faStar})}
         />
       </Col>
       <Col flex="1 1 auto">Light test 2: </Col>
@@ -51,10 +51,10 @@ const lightssampledata = `{/* Light switches example. */}
       </Col>
     </Row>
     <Row>
-      <Col flex="0 1 auto">
+      <Col flex="0 1 40px" style={{textAlign: "center"}}>
         <ViewUnit
           subtopic="myhelloiot/testswitch3"
-          format={BulbIconFormat()}
+          format={SwitchIconFormat({icon:faBolt})}
         />
       </Col>
       <Col flex="1 1 auto">Light test 3: </Col>
