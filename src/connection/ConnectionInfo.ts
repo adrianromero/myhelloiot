@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { FileInfo } from "./UploadRaw";
 import basicsampledata from "./basicsampledata";
+import { cyrb53str } from "../CryptFunctions";
 
 export type ConnectInfo = {
   url: string;
@@ -48,7 +49,7 @@ export const defaultConnectInfo = {
   },
 };
 
-const STORECONNECTINFO = "myhelloiot-connectinfo-" + window.location.href;
+const STORECONNECTINFO = "myh-in-" + cyrb53str(window.location.href);
 
 export const loadConnectInfo = (): ConnectInfo => {
   try {

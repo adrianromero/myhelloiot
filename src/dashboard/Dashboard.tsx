@@ -41,7 +41,7 @@ export type DashboardProps = {
 };
 
 const Dashboard: React.FC<DashboardProps> = ({
-  instancekey,
+  instancekey = "",
   title,
   topic = "",
   disconnectDisabled = false,

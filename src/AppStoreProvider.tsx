@@ -28,7 +28,7 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { ConnectInfo } from "./connection/ConnectionInfo";
 import { cyrb53str } from "./CryptFunctions";
 
-const STORERUNTIME = "myhelloiot-runtime-" + window.location.href;
+const STORERUNTIME = "myh-rt-" + cyrb53str(window.location.href);
 
 export type AppStoreValue = {
   connectInfo?: ConnectInfo;
