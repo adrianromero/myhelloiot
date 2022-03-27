@@ -27,6 +27,7 @@ If you prefer to run MYHELLOIOT from sources clone the repository and start. You
 ```
 git clone https://github.com/adrianromero/myhelloiot
 cd ./myhelloiot
+yarn install
 yarn start
 ```
 
