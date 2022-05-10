@@ -102,35 +102,33 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
       >
         {title}
       </text>
+      <g clipPath="url(#cut-off-bottom)">
+        <circle
+          cx={centerx}
+          cy={centery}
+          r={r2}
+          className="liquidgauge-background"
+        />
 
-      <circle
-        cx={centerx}
-        cy={centery}
-        r={r2}
-        className="liquidgauge-background"
-        clipPath="url(#cut-off-bottom)"
-      />
-
-      <text
-        id="value2"
-        x={100}
-        y={65}
-        textAnchor="middle"
-        className="liquidgauge-value liquidgauge-value_2"
-        clipPath="url(#cut-off-bottom)"
-      >
-        {formatvalue}
-      </text>
-      <text
-        id="title2"
-        x={100}
-        y={85}
-        textAnchor="middle"
-        className="liquidgauge-title liquidgauge-title_2"
-        clipPath="url(#cut-off-bottom)"
-      >
-        {title}
-      </text>
+        <text
+          id="value2"
+          x={100}
+          y={65}
+          textAnchor="middle"
+          className="liquidgauge-value liquidgauge-value_2"
+        >
+          {formatvalue}
+        </text>
+        <text
+          id="title2"
+          x={100}
+          y={85}
+          textAnchor="middle"
+          className="liquidgauge-title liquidgauge-title_2"
+        >
+          {title}
+        </text>
+      </g>
     </svg>
   );
 };
