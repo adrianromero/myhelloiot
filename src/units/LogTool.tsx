@@ -70,46 +70,40 @@ const LogTool: React.FC<LogToolProps> = ({
 
   return (
     <div className={`myhLogTool ${className}`}>
-      <Row gutter={8}>
-        <Col xs={0} sm={0} md={0} lg={4} />
-        <Col xs={24} sm={24} md={24} lg={16}>
-          <div className="myhLogTool-header">
-            <div className="myhLogTool-title">
-              <Title level={5}>{subtopic}</Title>
-            </div>
-            <div className="myhLogTool-toolbar">
-              <Button
-                type="primary"
-                icon={<SVGIcon icon={paused ? faPause : faPlay} />}
-                disabled={!connected}
-                onClick={() => setTool(([p, msgs]) => [!p, msgs])}
-              />
-              <Button
-                icon={<SVGIcon icon={faBan} />}
-                disabled={!connected}
-                onClick={() => setTool(([p]) => [p, []])}
-              />
-              <Radio.Group
-                options={OPTIONS}
-                onChange={(e) => setStrformat(e.target.value)}
-                value={strformat}
-                optionType="button"
-              />
-            </div>
-          </div>
-          <LogView
-            subtopic={subtopic}
-            suboptions={suboptions}
-            messages={messages}
-            onMessage={(mqttmessage: MQTTMessage) =>
-              setTool(([p, msgs]) => [p, p ? msgs : [mqttmessage, ...msgs]])
-            }
-            format={format}
-            className={!ready ? "myhDisabled" : ""}
+      <div className="myhLogTool-header">
+        <div className="myhLogTool-title">
+          <Title level={5}>{subtopic}</Title>
+        </div>
+        <div className="myhLogTool-toolbar">
+          <Button
+            type="primary"
+            icon={<SVGIcon icon={paused ? faPause : faPlay} />}
+            disabled={!connected}
+            onClick={() => setTool(([p, msgs]) => [!p, msgs])}
           />
-        </Col>
-        <Col xs={0} sm={0} md={0} lg={4} />
-      </Row>
+          <Button
+            icon={<SVGIcon icon={faBan} />}
+            disabled={!connected}
+            onClick={() => setTool(([p]) => [p, []])}
+          />
+          <Radio.Group
+            options={OPTIONS}
+            onChange={(e) => setStrformat(e.target.value)}
+            value={strformat}
+            optionType="button"
+          />
+        </div>
+      </div>
+      <LogView
+        subtopic={subtopic}
+        suboptions={suboptions}
+        messages={messages}
+        onMessage={(mqttmessage: MQTTMessage) =>
+          setTool(([p, msgs]) => [p, p ? msgs : [mqttmessage, ...msgs]])
+        }
+        format={format}
+        className={!ready ? "myhDisabled" : ""}
+      />
     </div>
   );
 };
