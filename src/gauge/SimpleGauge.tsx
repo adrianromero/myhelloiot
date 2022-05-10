@@ -32,7 +32,8 @@ export const arcsSimpleGauge = (
     r: 40,
     className: "simplegauge-section",
     style: {
-      filter: `brightness(${1 + 1.2 * i})`,
+      stroke: `hsl(240deg 75% ${40 + (40 * i) / arcs}%)`,
+      fill: "transparent",
     },
   }));
 
