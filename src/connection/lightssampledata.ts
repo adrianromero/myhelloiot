@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 const lightssampledata = `{/* Light switches example. */}
-<DashboardGrid>
+<DashboardGrid title="Light switches">
   <CCard title="Light switches">
     <Row>
       <Col flex="0 1 40px" style={{textAlign: "center"}}>

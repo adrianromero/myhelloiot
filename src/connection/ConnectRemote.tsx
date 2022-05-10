@@ -87,7 +87,7 @@ const ConnectRemote: React.FC<{
         className="myhConnectionForm"
       >
         <Layout className="myhLayout">
-          <AppHeader subtitle={appname}>
+          <AppHeader title="Dashboard connection" subtitle={appname}>
             <Button
               icon={<SVGIcon icon={faPowerOff} />}
               type="primary"

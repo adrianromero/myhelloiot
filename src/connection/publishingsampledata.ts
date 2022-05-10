@@ -15,8 +15,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const pubsampledata = `{/* Publication example. */}
-<Dashboard>
+const pubsampledata = `{/* Publishing example. */}
+<Dashboard title="Publishing">
   <DashboardContent >
     <PanelGrid>
       <CCard title="myhelloiot/testing/topic1">

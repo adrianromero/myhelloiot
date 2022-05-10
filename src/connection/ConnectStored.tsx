@@ -113,7 +113,7 @@ const ConnectStored: React.FC<{
         className="myhConnectionForm"
       >
         <Layout className="myhLayout">
-          <AppHeader>
+          <AppHeader title="Dashboard properties">
             <Button
               icon={<SVGIcon icon={faPowerOff} />}
               type="primary"

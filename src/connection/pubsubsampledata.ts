@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 const pubsubsampledata = `{/* Publication and subscription example. */}
-<DashboardGrid>
+<DashboardGrid title="Publication and subscription">
   <CCard title="Testing topic subscription">
     <InputUnit subtopic="myhelloiot/testingtopic" />
   </CCard>
