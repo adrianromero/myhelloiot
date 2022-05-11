@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, { useState } from "react";
 import { padvalue } from "./svgdraw";
 import "./LiquidGauge.css";
 
@@ -39,6 +39,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
 }) => {
   const locale = navigator.language;
   const intlvalue = new Intl.NumberFormat(locale, valueformat);
+  const [componentId] = useState<number>(() => Math.random());
 
   const r1 = 55;
   const r2 = 52;
@@ -64,7 +65,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
       className={className}
     >
       <defs>
-        <clipPath id="cut-off-bottom">
+        <clipPath id={`cut-off-bottom-${componentId}`}>
           {!isNaN(yvalue) && (
             <rect
               className="liquidgauge-bar"
@@ -83,9 +84,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         className="liquidgauge-border"
         style={{ fill: "#00000000" }}
       />
-
       <text
-        id="value1"
         x={100}
         y={65}
         textAnchor="middle"
@@ -94,24 +93,22 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         {formatvalue}
       </text>
       <text
-        id="title1"
         x={100}
-        y={85}
+        y={75}
         textAnchor="middle"
+        dominant-baseline="hanging"
         className="liquidgauge-title liquidgauge-title_1"
       >
         {title}
       </text>
-      <g clipPath="url(#cut-off-bottom)">
+      <g clipPath={`url(#cut-off-bottom-${componentId})`}>
         <circle
           cx={centerx}
           cy={centery}
           r={r2}
           className="liquidgauge-background"
         />
-
         <text
-          id="value2"
           x={100}
           y={65}
           textAnchor="middle"
@@ -120,10 +117,10 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
           {formatvalue}
         </text>
         <text
-          id="title2"
           x={100}
-          y={85}
+          y={75}
           textAnchor="middle"
+          dominant-baseline="hanging"
           className="liquidgauge-title liquidgauge-title_2"
         >
           {title}
