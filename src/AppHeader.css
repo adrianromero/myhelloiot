@@ -36,4 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   font-size: 150%;
   margin: 0px 8px;
   flex-grow: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

@@ -47,8 +47,7 @@ const emptyAppStoreValue: AppStoreValue = {
   connected: "",
   username: "Anonymous",
   password: "",
-  clientId:
-    "myhelloiot_" + Math.random().toString(16).substr(2).padEnd(13, "0"),
+  clientId: "myh_" + Math.random().toString(16).substring(2).padEnd(13, "0"),
   properties: { hash: "", attrs: {} },
 };
 
