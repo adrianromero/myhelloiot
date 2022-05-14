@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -26,8 +26,9 @@ import { Typography, Tag, Button, Image, message } from "antd";
 import { FormInstance } from "antd/lib/form";
 import myhelloiot from "../assets/myhelloiot.png";
 import basicsampledata from "./basicsampledata";
-import publishingsampledata from "./publishingsampledata";
+import loggingsampledata from "./loggingsampledata";
 import pubsubsampledata from "./pubsubsampledata";
+import inputtextsampledata from "./inputtextsampledata";
 import lightssampledata from "./lightssampledata";
 import gaugessampledata from "./gaugessampledata";
 import mosquittosampledata from "./mosquittosampledata";
@@ -160,23 +161,23 @@ const ContentConnectAbout: React.FC<{
               .
             </li>
             <li>
-              Publication and subscription example
+              Input text example
               <Button
                 type="link"
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  message.info("dashboard: pubsub.jsx");
+                  message.info("dashboard: inputtext.jsx");
                   form.setFieldsValue({
                     dashboard: {
-                      name: "pubsub.jsx",
+                      name: "inputtext.jsx",
                       type: "text/jsx",
-                      data: pubsubsampledata,
+                      data: inputtextsampledata,
                     },
                   });
                 }}
               >
-                Sets pubsub.jsx dashboard
+                Sets inputtext.jsx dashboard
               </Button>
               .
             </li>
@@ -223,23 +224,44 @@ const ContentConnectAbout: React.FC<{
               .
             </li>
             <li>
-              Publishing example
+              Logging example
               <Button
                 type="link"
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  message.info("dashboard: publishing.jsx");
+                  message.info("dashboard: logging.jsx");
                   form.setFieldsValue({
                     dashboard: {
-                      name: "publishing.jsx",
+                      name: "logging.jsx",
                       type: "text/jsx",
-                      data: publishingsampledata,
+                      data: loggingsampledata,
                     },
                   });
                 }}
               >
-                Sets publishing.jsx dashboard
+                Sets logging.jsx dashboard
+              </Button>
+              .
+            </li>
+            <li>
+              Publish / subscribe example
+              <Button
+                type="link"
+                size="small"
+                icon={<SVGIcon icon={faPencil} />}
+                onClick={() => {
+                  message.info("dashboard: pubsub.jsx");
+                  form.setFieldsValue({
+                    dashboard: {
+                      name: "pubsub.jsx",
+                      type: "text/jsx",
+                      data: pubsubsampledata,
+                    },
+                  });
+                }}
+              >
+                Sets pubsub.jsx dashboard
               </Button>
               .
             </li>

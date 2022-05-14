@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -15,8 +15,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const pubsampledata = `{/* Publishing example. */}
-<Dashboard title="Publishing">
+const loggingsampledata = `{/* Logging example. */}
+<Dashboard title="Logging">
   <DashboardContent >
     <PanelGrid>
       <CCard title="myhelloiot/testing/topic1">
@@ -42,4 +42,4 @@ const pubsampledata = `{/* Publishing example. */}
 </Dashboard>
 `;
 
-export default pubsampledata;
+export default loggingsampledata;
