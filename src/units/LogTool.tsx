@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -25,7 +25,7 @@ import {
   StringValueFormat,
 } from "../format/ValueFormat";
 import LogView from "./LogView";
-import { Button, CheckboxOptionType, Col, Radio, Row } from "antd";
+import { Button, CheckboxOptionType, Radio } from "antd";
 import SVGIcon from "../format/SVGIcon";
 import { faPlay, faPause, faBan } from "@fortawesome/free-solid-svg-icons";
 import Title from "antd/lib/typography/Title";

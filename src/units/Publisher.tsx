@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -39,6 +39,9 @@ import {
   HEXValueFormat,
   Base64ValueFormat,
 } from "../format/ValueFormat";
+import Title from "antd/lib/typography/Title";
+
+import "./Publisher.css";
 
 type PublisherProps = {
   prefixtopic?: string;
@@ -120,9 +123,11 @@ const Publisher: React.FC<PublisherProps> = ({
       retain: values.retain,
     });
     notification.success({
-      message: values.topic ? values.topic : "<EMPTY>",
+      message:
+        prefixtopic + values.topic ? prefixtopic + values.topic : "<EMPTY>",
       description: values.value ? values.value : "<EMPTY>",
       duration: 2.5,
+      placement: "bottomRight",
     });
   };
 
@@ -131,109 +136,98 @@ const Publisher: React.FC<PublisherProps> = ({
   };
 
   return (
-    <Form
-      className={`myhPublisher ${className}`}
-      form={form}
-      name={`publisher_${Math.random().toString(16).substr(2).padEnd(13, "0")}`}
-      onFinish={onFinish}
-    >
-      <Row gutter={8}>
-        <Col xs={0} sm={0} md={0} lg={4} />
-        <Col xs={24} sm={24} md={24} lg={16}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr min-content",
-              columnGap: 8,
-            }}
-          >
-            <div>
-              <Form.Item name="topic">
-                <Input autoComplete="off" disabled={!connected} />
-              </Form.Item>
-            </div>
-            <div>
-              <Form.Item>
-                <Button
-                  icon={<SVGIcon icon={faPaperPlane} />}
-                  type="primary"
-                  disabled={!connected}
-                  htmlType="submit"
-                >
-                  Send
-                </Button>
-              </Form.Item>
-            </div>
+    <div className={`myhPublisher ${className}`}>
+      <Form
+        form={form}
+        name={`publisher_${Math.random()
+          .toString(16)
+          .substring(2)
+          .padEnd(13, "0")}`}
+        onFinish={onFinish}
+      >
+        <div className="myhPublisher-header">
+          <div>
+            <Title level={5}>{prefixtopic}</Title>
           </div>
-        </Col>
-        <Col xs={0} sm={0} md={0} lg={4} />
-      </Row>
+          <div>
+            <Form.Item name="topic">
+              <Input autoComplete="off" disabled={!connected} />
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item>
+              <Button
+                icon={<SVGIcon icon={faPaperPlane} />}
+                type="primary"
+                disabled={!connected}
+                htmlType="submit"
+              >
+                Send
+              </Button>
+            </Form.Item>
+          </div>
+        </div>
 
-      <Row gutter={8}>
-        <Col xs={0} sm={0} md={0} lg={4} />
-        <Col xs={24} sm={6} md={6} lg={4}>
-          <Form.Item name="retain" valuePropName="checked">
-            <Checkbox>Retain</Checkbox>
-          </Form.Item>
-        </Col>
-        <Col xs={24} sm={18} md={18} lg={12}>
-          <Form.Item name="qos">
-            <Radio.Group>
-              <Radio value={0}>QoS 0</Radio>
-              <Radio value={1}>QoS 1</Radio>
-              <Radio value={2}>QoS 2</Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Col>
-        <Col xs={0} sm={0} md={0} lg={4} />
-      </Row>
+        <Row gutter={8}>
+          <Col xs={24} sm={6} md={6} lg={6}>
+            <Form.Item name="retain" valuePropName="checked">
+              <Checkbox>Retain</Checkbox>
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={18} md={18} lg={18}>
+            <Form.Item name="qos">
+              <Radio.Group>
+                <Radio value={0}>QoS 0</Radio>
+                <Radio value={1}>QoS 1</Radio>
+                <Radio value={2}>QoS 2</Radio>
+              </Radio.Group>
+            </Form.Item>
+          </Col>
+        </Row>
 
-      <Row gutter={8}>
-        <Col xs={0} sm={0} md={0} lg={4} />
-        <Col xs={24} sm={24} md={24} lg={16}>
-          <Form.Item name="fmt">
-            <Radio.Group onChange={onFMTChange}>
-              <Radio value={FMT.PLAIN}>Plain</Radio>
-              <Radio value={FMT.JSON}>JSON</Radio>
-              <Radio value={FMT.HEX}>HEX</Radio>
-              <Radio value={FMT.BASE64}>Base64</Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Col>
-        <Col xs={0} sm={0} md={0} lg={4} />
-      </Row>
+        <Form.Item name="fmt">
+          <Radio.Group onChange={onFMTChange}>
+            <Radio value={FMT.PLAIN}>Plain</Radio>
+            <Radio value={FMT.JSON}>JSON</Radio>
+            <Radio value={FMT.HEX}>HEX</Radio>
+            <Radio value={FMT.BASE64}>Base64</Radio>
+          </Radio.Group>
+        </Form.Item>
 
-      <Row gutter={8} wrap={false}>
-        <Col xs={0} sm={0} md={0} lg={4} />
-        <Col xs={24} sm={24} md={24} lg={16}>
-          <Form.Item
-            name="value"
-            rules={[
-              {
-                validator: (r, value) => {
-                  try {
-                    const format: ValueFormat =
-                      FMTValueFormat.get(fmt)?.format ?? StringValueFormat();
-                    format.fromDisplay(value);
-                    return Promise.resolve();
-                  } catch {
-                    return Promise.reject(
-                      new Error(
-                        FMTValueFormat.get(fmt)?.message ??
-                          "Value cannot be formatted."
-                      )
-                    );
-                  }
+        <Row gutter={8}>
+          <Col xs={24} sm={24} md={24} lg={24}>
+            <Form.Item
+              name="value"
+              rules={[
+                {
+                  validator: (r, value) => {
+                    try {
+                      const format: ValueFormat =
+                        FMTValueFormat.get(fmt)?.format ?? StringValueFormat();
+                      format.fromDisplay(value);
+                      return Promise.resolve();
+                    } catch {
+                      return Promise.reject(
+                        new Error(
+                          FMTValueFormat.get(fmt)?.message ??
+                            "Value cannot be formatted."
+                        )
+                      );
+                    }
+                  },
                 },
-              },
-            ]}
-          >
-            <Input.TextArea rows={6} autoComplete="off" disabled={!connected} />
-          </Form.Item>
-        </Col>
-        <Col xs={0} sm={0} md={0} lg={4} />
-      </Row>
-    </Form>
+              ]}
+            >
+              <Input.TextArea
+                rows={6}
+                autoComplete="off"
+                disabled={!connected}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
+    </div>
   );
 };
 export default Publisher;
