@@ -34,6 +34,7 @@ import gaugessampledata from "./gaugessampledata";
 import mosquittosampledata from "./mosquittosampledata";
 import { ReactComponent as GitHubRibbon } from "../assets/svg/github.svg";
 import { ConnectInfoForm } from "./ConnectInfoForm";
+import { VERSION } from "../version";
 
 const { Title, Paragraph, Link } = Typography;
 
@@ -63,7 +64,7 @@ const ContentConnectAbout: React.FC<{
         <Title level={2}>
           MYHELLOIOT{" "}
           <Tag icon={<SVGIcon icon={faCodeBranch} />} color="geekblue">
-            1.0.0-2
+            {VERSION}
           </Tag>
         </Title>
         <Paragraph>
