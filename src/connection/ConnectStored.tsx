@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -125,7 +125,10 @@ const ConnectStored: React.FC<{
           <Layout.Content className="myhLayoutContent">
             <div className="myhLayoutContent-panel">
               <Tabs defaultActiveKey="1">
-                <TabPane tab="Credentials" key="1" forceRender>
+                <TabPane tab="About" key="1">
+                  <ContentConnectAbout form={form} />
+                </TabPane>
+                <TabPane tab="Credentials" key="2" forceRender>
                   <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
                     <Col xs={0} sm={0} md={0} lg={4} />
                     <Col
@@ -166,7 +169,7 @@ const ConnectStored: React.FC<{
                     <Col xs={0} sm={0} md={0} lg={4} />
                   </Row>
                 </TabPane>
-                <TabPane tab="MQTT Connection" key="2" forceRender>
+                <TabPane tab="MQTT Connection" key="3" forceRender>
                   <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
                     <Col xs={0} sm={0} md={0} lg={4} />
                     <Col
@@ -352,7 +355,7 @@ const ConnectStored: React.FC<{
                     <Col xs={0} sm={0} md={0} lg={4} />
                   </Row>
                 </TabPane>
-                <TabPane tab="Dashboard" key="3" forceRender>
+                <TabPane tab="Dashboard" key="4" forceRender>
                   <Tabs
                     defaultActiveKey="1"
                     type="card"
@@ -402,9 +405,6 @@ const ConnectStored: React.FC<{
                       </Row>
                     </TabPane>
                   </Tabs>
-                </TabPane>
-                <TabPane tab="About" key="4">
-                  <ContentConnectAbout form={form} />
                 </TabPane>
               </Tabs>
             </div>
