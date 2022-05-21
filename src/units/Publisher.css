@@ -16,8 +16,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .myhPublisher-header {
-  display: grid;
-  grid-template-columns: min-content 1fr min-content;
+  display: flex;
+  flex-wrap: wrap;
   column-gap: 8px;
   align-items: baseline;
+}
+
+.myhPublisher-send {
+  flex-grow: 1;
+  display: flex;
+  column-gap: 8px;
+  align-items: baseline;
+}
+
+.myhPublisher-sendinput {
+  flex-grow: 1;
 }

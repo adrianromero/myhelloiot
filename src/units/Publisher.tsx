@@ -146,25 +146,27 @@ const Publisher: React.FC<PublisherProps> = ({
         onFinish={onFinish}
       >
         <div className="myhPublisher-header">
-          <div>
+          <div className="myhPublisher-title">
             <Title level={5}>{prefixtopic}</Title>
           </div>
-          <div>
-            <Form.Item name="topic">
-              <Input autoComplete="off" disabled={!connected} />
-            </Form.Item>
-          </div>
-          <div>
-            <Form.Item>
-              <Button
-                icon={<SVGIcon icon={faPaperPlane} />}
-                type="primary"
-                disabled={!connected}
-                htmlType="submit"
-              >
-                Send
-              </Button>
-            </Form.Item>
+          <div className="myhPublisher-send">
+            <div className="myhPublisher-sendinput">
+              <Form.Item name="topic">
+                <Input autoComplete="off" disabled={!connected} />
+              </Form.Item>
+            </div>
+            <div>
+              <Form.Item>
+                <Button
+                  icon={<SVGIcon icon={faPaperPlane} />}
+                  type="primary"
+                  disabled={!connected}
+                  htmlType="submit"
+                >
+                  Send
+                </Button>
+              </Form.Item>
+            </div>
           </div>
         </div>
 
