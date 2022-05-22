@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, { ComponentType, ExoticComponent } from "react";
 import { Row, Col } from "antd";
 import SVGIcon from "./format/SVGIcon";
 import {
@@ -41,7 +41,7 @@ import {
 
 import { ErrorBoundary } from "react-error-boundary";
 import { ReactComponent as Themes } from "./assets/svg/themes.svg";
-import JsxParser from "react-jsx-parser";
+import JsxParser from "jsx-parser-react";
 
 import {
   PanelGrid,
@@ -186,7 +186,7 @@ const bindings = {
   ChartIconFormat,
 };
 
-const components: Record<string, React.ComponentType<any>> = {
+const components: any = {
   SVGIcon,
   Row,
   Col,
