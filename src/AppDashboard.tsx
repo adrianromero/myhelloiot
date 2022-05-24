@@ -41,7 +41,7 @@ import {
 
 import { ErrorBoundary } from "react-error-boundary";
 import { ReactComponent as Themes } from "./assets/svg/themes.svg";
-import JsxParser from "jsx-parser-react";
+import JsxParser from "react-jsx-parser";
 
 import {
   PanelGrid,

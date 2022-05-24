@@ -3,6 +3,10 @@
   "version": "1.0.3",
   "private": true,
   "homepage": "https://adrianromero.github.io/myhelloiot/",
+  "resolutions": {
+    "@types/react": "17.0.14",
+    "@types/react-dom": "17.0.14"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
@@ -17,12 +21,12 @@
     "@types/react-dom": "^18.0.4",
     "antd": "^4.20.6",
     "gh-pages": "^4.0.0",
-    "jsx-parser-react": "^1.33.0",
     "mqtt": "^4.3.7",
     "mqtt-match": "^3.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-error-boundary": "^3.1.4",
+    "react-jsx-parser": "^1.29.0",
     "react-redux": "^8.0.1",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
