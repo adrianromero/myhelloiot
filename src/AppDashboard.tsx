@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -59,7 +59,6 @@ import LogUnit from "./units/LogUnit";
 import LogTool from "./units/LogTool";
 import Publisher from "./units/Publisher";
 import ButtonMessage from "./units/ButtonMessage";
-import Publishing from "./units/Publishing";
 import ButtonUnit from "./units/ButtonUnit";
 import ButtonTopic from "./units/ButtonTopic";
 import SwitchUnit from "./units/SwitchUnit";
@@ -116,6 +115,7 @@ import {
   ControlIconFormat,
 } from "./format/GaugeFormat";
 import { ChartIconFormat } from "./format/ChartFormat";
+import { ImageIconFormat } from "./format/ImageFormat";
 import AppError from "./AppError";
 
 const ErrorFallback: React.FC<{ error: Error }> = ({ error }) => (
@@ -184,6 +184,7 @@ const bindings = {
   FuelIconFormat,
   ControlIconFormat,
   ChartIconFormat,
+  ImageIconFormat,
 };
 
 const components: Record<string, React.ComponentType<any>> = {
@@ -202,7 +203,6 @@ const components: Record<string, React.ComponentType<any>> = {
   InputUnit,
   Publisher,
   ButtonMessage,
-  Publishing,
   ButtonUnit,
   ButtonTopic,
   SwitchUnit,
