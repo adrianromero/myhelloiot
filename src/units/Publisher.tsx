@@ -45,22 +45,31 @@ import "./Publisher.css";
 
 type PublisherProps = {
   prefixtopic?: string;
+  topic?: string;
+  value?: string;
+  retain?: boolean;
+  qos?: QoS;
+  fmt?: FMT;
+  optiontopic?: boolean;
+  optionretain?: boolean;
+  optionqos?: boolean;
+  optionfmt?: boolean;
   className?: string;
 };
 
 enum FMT {
-  PLAIN,
-  JSON,
-  HEX,
-  BASE64,
+  PLAIN = "plain",
+  JSON = "json",
+  HEX = "hex",
+  BASE64 = "base64",
 }
 
 type PublisherValues = {
-  topic: string;
+  topic?: string;
   value: string;
-  retain: boolean;
-  qos: QoS;
-  fmt: FMT;
+  retain?: boolean;
+  qos?: QoS;
+  fmt?: FMT;
 };
 
 const FMTValueFormat: Map<FMT, { format: ValueFormat; message: string }> =
@@ -94,30 +103,41 @@ const FMTValueFormat: Map<FMT, { format: ValueFormat; message: string }> =
 
 const Publisher: React.FC<PublisherProps> = ({
   prefixtopic = "",
+  topic = "",
+  value = "",
+  retain = false,
+  qos = 0,
+  fmt = FMT.PLAIN,
+  optiontopic = true,
+  optionretain = true,
+  optionqos = true,
+  optionfmt = true,
   className = "",
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
   const [form] = Form.useForm<PublisherValues>();
   useEffect(() => {
     form.setFieldsValue({
-      topic: "",
-      value: "",
-      retain: false,
-      qos: 0,
-      fmt: FMT.PLAIN,
+      topic,
+      value,
+      retain,
+      qos,
+      fmt,
     });
-  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready, topic, value, retain, qos, fmt]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const [fmt, setFmt] = useState<FMT>(FMT.PLAIN);
+  const [formFmt, setFormFmt] = useState<FMT>(FMT.PLAIN);
 
   useEffect(() => {
     form.validateFields(["value"]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fmt]);
+  }, [formFmt]);
 
-  const onFinish = (values: PublisherValues) => {
+  const onFinish = (formvalues: PublisherValues) => {
+    const values = { topic, retain, qos, fmt, ...formvalues };
+    console.log(JSON.stringify(values));
     const format: ValueFormat =
-      FMTValueFormat.get(values.fmt)?.format ?? StringValueFormat();
+      FMTValueFormat.get(values.fmt ?? fmt)?.format ?? StringValueFormat();
     publish(prefixtopic + values.topic, format.fromDisplay(values.value), {
       qos: values.qos,
       retain: values.retain,
@@ -132,7 +152,7 @@ const Publisher: React.FC<PublisherProps> = ({
   };
 
   const onFMTChange = (e: RadioChangeEvent) => {
-    setFmt(e.target.value);
+    setFormFmt(e.target.value);
   };
 
   return (
@@ -147,13 +167,15 @@ const Publisher: React.FC<PublisherProps> = ({
       >
         <div className="myhPublisher-header">
           <div className="myhPublisher-title">
-            <Title level={5}>{prefixtopic}</Title>
+            <Title level={5}>{prefixtopic + (optiontopic ? "" : topic)}</Title>
           </div>
           <div className="myhPublisher-send">
             <div className="myhPublisher-sendinput">
-              <Form.Item name="topic">
-                <Input autoComplete="off" disabled={!connected} />
-              </Form.Item>
+              {optiontopic && (
+                <Form.Item name="topic">
+                  <Input autoComplete="off" disabled={!connected} />
+                </Form.Item>
+              )}
             </div>
             <div>
               <Form.Item>
@@ -170,31 +192,39 @@ const Publisher: React.FC<PublisherProps> = ({
           </div>
         </div>
 
-        <Row gutter={8}>
-          <Col xs={24} sm={6} md={6} lg={6}>
-            <Form.Item name="retain" valuePropName="checked">
-              <Checkbox>Retain</Checkbox>
-            </Form.Item>
-          </Col>
-          <Col xs={24} sm={18} md={18} lg={18}>
-            <Form.Item name="qos">
-              <Radio.Group>
-                <Radio value={0}>QoS 0</Radio>
-                <Radio value={1}>QoS 1</Radio>
-                <Radio value={2}>QoS 2</Radio>
-              </Radio.Group>
-            </Form.Item>
-          </Col>
-        </Row>
+        {(optionretain || optionqos) && (
+          <Row gutter={8}>
+            {optionretain && (
+              <Col xs={24} sm={6} md={6} lg={6}>
+                <Form.Item name="retain" valuePropName="checked">
+                  <Checkbox>Retain</Checkbox>
+                </Form.Item>
+              </Col>
+            )}
+            {optionqos && (
+              <Col xs={24} sm={18} md={18} lg={18}>
+                <Form.Item name="qos">
+                  <Radio.Group>
+                    <Radio value={0}>QoS 0</Radio>
+                    <Radio value={1}>QoS 1</Radio>
+                    <Radio value={2}>QoS 2</Radio>
+                  </Radio.Group>
+                </Form.Item>
+              </Col>
+            )}
+          </Row>
+        )}
 
-        <Form.Item name="fmt">
-          <Radio.Group onChange={onFMTChange}>
-            <Radio value={FMT.PLAIN}>Plain</Radio>
-            <Radio value={FMT.JSON}>JSON</Radio>
-            <Radio value={FMT.HEX}>HEX</Radio>
-            <Radio value={FMT.BASE64}>Base64</Radio>
-          </Radio.Group>
-        </Form.Item>
+        {optionfmt && (
+          <Form.Item name="fmt">
+            <Radio.Group onChange={onFMTChange}>
+              <Radio value={FMT.PLAIN}>Plain</Radio>
+              <Radio value={FMT.JSON}>JSON</Radio>
+              <Radio value={FMT.HEX}>HEX</Radio>
+              <Radio value={FMT.BASE64}>Base64</Radio>
+            </Radio.Group>
+          </Form.Item>
+        )}
 
         <Row gutter={8}>
           <Col xs={24} sm={24} md={24} lg={24}>
@@ -205,13 +235,14 @@ const Publisher: React.FC<PublisherProps> = ({
                   validator: (r, value) => {
                     try {
                       const format: ValueFormat =
-                        FMTValueFormat.get(fmt)?.format ?? StringValueFormat();
+                        FMTValueFormat.get(formFmt)?.format ??
+                        StringValueFormat();
                       format.fromDisplay(value);
                       return Promise.resolve();
                     } catch {
                       return Promise.reject(
                         new Error(
-                          FMTValueFormat.get(fmt)?.message ??
+                          FMTValueFormat.get(formFmt)?.message ??
                             "Value cannot be formatted."
                         )
                       );
