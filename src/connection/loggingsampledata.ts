@@ -16,29 +16,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 const loggingsampledata = `{/* Logging example. */}
+
 <Dashboard title="Logging">
-  <DashboardContent >
-    <PanelGrid>
-      <CCard title="myhelloiot/testing/topic1">
-        <InputUnit pubtopic="myhelloiot/testing/topic1" />
-      </CCard>
-      <CCard title="myhelloiot/testing/topic2 (Retain)">
-        <InputUnit pubtopic="myhelloiot/testing/topic2" puboptions={{ retain: true }} />
-      </CCard>
-      <CCard title="myhelloiot/testing/topic3">
-        <ButtonMessage pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 0 }} value="QoS Zero">QoS Zero</ButtonMessage>
-        <ButtonMessage pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 1 }} value="QoS One">QoS One</ButtonMessage>
-        <ButtonMessage pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 2 }} value="QoS Two">QoS Two</ButtonMessage>
-      </CCard>
-      <CCard title="myhelloiot/testing/topic4">
-      <span>Switch on and off: </span>
-        <SwitchUnit
-          pubtopic="myhelloiot/testing/topic4"
-        />
-      </CCard>
-    </PanelGrid>
-    <LogTool className="myhLayoutContent-panel" subtopic="myhelloiot/testing/#" suboptions={{ qos: 2 }}/>
-  </DashboardContent >
+  <PanelFlex>
+    <Card title="myhelloiot/testing/topic1">
+      <InputUnit pubtopic="myhelloiot/testing/topic1" />
+    </Card>
+    <Card title="myhelloiot/testing/topic2 (Retain)">
+      <InputUnit pubtopic="myhelloiot/testing/topic2" puboptions={{ retain: true }} />
+    </Card>
+    <Card title="myhelloiot/testing/topic3">
+      <ButtonMessage pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 0 }} value="QoS Zero">QoS Zero</ButtonMessage>
+      <ButtonMessage pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 1 }} value="QoS One">QoS One</ButtonMessage>
+      <ButtonMessage pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 2 }} value="QoS Two">QoS Two</ButtonMessage>
+    </Card>
+    <Card title="myhelloiot/testing/topic4 (Retain)">
+      <div style={{display: "flex", margin: "4px"}}>
+        <div style={{flex: "1 1 auto"}}>Testing topic 4: </div>
+        <div style={{flex: "0 1 auto"}}>
+          <SwitchUnit
+            pubtopic="myhelloiot/testing/topic4"
+            puboptions={{ retain: true }}
+            subtopic="myhelloiot/testing/topic4"
+          />
+        </div>
+      </div>
+    </Card>
+    <Card className="myhPanelFlex-all">
+      <LogTool subtopic="myhelloiot/testing/#" suboptions={{ qos: 2 }}/>
+    </Card>
+  </PanelFlex>
 </Dashboard>
 `;
 

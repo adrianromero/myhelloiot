@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2022 Adrián Romero
+Copyright (C) 2022-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -15,21 +15,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const pubsubsampledata = `{
-  /* Publish / subscribe example. */
-}
+const pubsubsampledata = `{/* Publish / subscribe example. */}
+
 <Dashboard title="Publish / subscribe">
-  <DashboardContent>
-    <Publisher
-      className="myhLayoutContent-panel"
-      prefixtopic="myhelloiot/testing/"
-    />
-    <LogTool
-      className="myhLayoutContent-panel"
-      subtopic="myhelloiot/testing/#"
-      suboptions={{ qos: 2 }}
-    />
-  </DashboardContent>
+  <Publisher
+    className="myhLayoutContent-panel"
+    prefixtopic="myhelloiot/testing/"
+  />
+  <LogTool
+    className="myhLayoutContent-panel"
+    subtopic="myhelloiot/testing/#"
+    suboptions={{ qos: 2 }}
+  />
 </Dashboard>
 `;
 

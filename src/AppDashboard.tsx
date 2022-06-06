@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { Row, Col } from "antd";
+import { Card } from "antd";
 import SVGIcon from "./format/SVGIcon";
 import {
   faUpload,
@@ -43,16 +43,8 @@ import { ErrorBoundary } from "react-error-boundary";
 import { ReactComponent as Themes } from "./assets/svg/themes.svg";
 import JsxParser from "react-jsx-parser";
 
-import {
-  PanelGrid,
-  PanelContent,
-  C,
-  CCard,
-  L,
-  LSection,
-} from "./dashboard/PanelGrid";
+import { PanelFlex } from "./dashboard/PanelFlex";
 import Dashboard from "./dashboard/Dashboard";
-import DashboardGrid from "./dashboard/DashboardGrid";
 import DashboardContent from "./dashboard/DashboardContent";
 import InputUnit from "./units/InputUnit";
 import LogUnit from "./units/LogUnit";
@@ -189,17 +181,10 @@ const bindings = {
 
 const components: Record<string, React.ComponentType<any>> = {
   SVGIcon,
-  Row,
-  Col,
+  Card,
   Dashboard,
-  DashboardGrid,
   DashboardContent,
-  PanelGrid,
-  PanelContent,
-  C,
-  CCard,
-  L,
-  LSection,
+  PanelFlex,
   InputUnit,
   Publisher,
   ButtonMessage,
