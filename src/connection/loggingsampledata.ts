@@ -30,14 +30,12 @@ const loggingsampledata = `{/* Logging example. */}
       <ButtonMessage pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 1 }} value="QoS One">QoS One</ButtonMessage>
       <ButtonMessage pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 2 }} value="QoS Two">QoS Two</ButtonMessage>
     </Card>
-    <Card title="myhelloiot/testing/topic4 (Retain)">
+    <Card title="myhelloiot/testing/topic4">
       <div style={{display: "flex", margin: "4px"}}>
         <div style={{flex: "1 1 auto"}}>Testing topic 4: </div>
         <div style={{flex: "0 1 auto"}}>
           <SwitchUnit
             pubtopic="myhelloiot/testing/topic4"
-            puboptions={{ retain: true }}
-            subtopic="myhelloiot/testing/topic4"
           />
         </div>
       </div>
