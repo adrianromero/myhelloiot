@@ -135,7 +135,6 @@ const Publisher: React.FC<PublisherProps> = ({
 
   const onFinish = (formvalues: PublisherValues) => {
     const values = { topic, retain, qos, fmt, ...formvalues };
-    console.log(JSON.stringify(values));
     const format: ValueFormat =
       FMTValueFormat.get(values.fmt ?? fmt)?.format ?? StringValueFormat();
     publish(prefixtopic + values.topic, format.fromDisplay(values.value), {
