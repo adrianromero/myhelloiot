@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -14,8 +14,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-@import url("../assets/fonts.css");
 
 .fuelgauge-mark {
   stroke-width: 0.8px;
@@ -38,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .fuelgauge-marklabel {
   fill: #0000008c;
-  font: 6px "Roboto Condensed", sans-serif;
+  font: 6px sans-serif;
 }
 
 .fuelgauge-arrow {
@@ -56,10 +54,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .fuelgauge-value {
   fill: #000000d9;
-  font: bold 14px "Roboto Condensed", sans-serif;
+  font: bold 14px sans-serif;
 }
 
 .fuelgauge-title {
   fill: #0000008c;
-  font: 10px "Roboto Condensed", sans-serif;
+  font: 10px sans-serif;
 }
