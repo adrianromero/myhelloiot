@@ -25,7 +25,7 @@ import {
   StringValueFormat,
 } from "../format/ValueFormat";
 import LogView from "./LogView";
-import { Button, CheckboxOptionType, Radio } from "antd";
+import { Button, CheckboxOptionType, Radio, Tag } from "antd";
 import SVGIcon from "../format/SVGIcon";
 import { faPlay, faPause, faBan } from "@fortawesome/free-solid-svg-icons";
 import Title from "antd/lib/typography/Title";
@@ -71,8 +71,13 @@ const LogTool: React.FC<LogToolProps> = ({
   return (
     <div className={`myhLogTool ${className}`}>
       <div className="myhLogTool-header">
-        <div className="myhLogTool-title">
-          <Title level={5}>{subtopic}</Title>
+        <Title className="myhLogTool-title" level={5}>
+          {subtopic}
+        </Title>
+        <div className="myhLogTool-options">
+          {typeof suboptions?.qos === "number" && (
+            <Tag color="geekblue">QoS: {suboptions?.qos}</Tag>
+          )}
         </div>
         <div className="myhLogTool-toolbar">
           <Button
