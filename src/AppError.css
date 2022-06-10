@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -17,11 +17,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .myhAppError-jsx {
   font-family: monospace;
-  font-size: 10px;
-  padding: 5px;
+  font-size: 12px;
   background-color: #feffd6;
-  white-space: pre-wrap;
+  white-space: nowrap;
   height: 400px;
   overflow: auto;
   color: #505050;
+  counter-reset: line var(--line-num, 0);
+}
+
+.myhAppError-jsx > pre {
+  counter-increment: line;
+  margin: 0px;
+  overflow: visible;
+}
+
+.myhAppError-jsx > pre::before {
+  background-color: #dddddd;
+  color: #7f7f7f;
+  content: counter(line);
+  width: 35px;
+  display: inline-block;
+  margin-right: 5px;
+  padding-right: 5px;
+  text-align: right;
+  border-left: 25px;
+}
+
+.myhAppError-icon {
+  padding-right: 20px;
+  font-size: 140%;
+}
+
+.myhAppError-message {
+  font-family: monospace;
+  padding: 5px;
 }

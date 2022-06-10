@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -17,14 +17,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Layout } from "antd";
+import { Button, Layout } from "antd";
 import { DispatchDisconnect } from "./AppStoreProvider";
 import AppHeader from "./AppHeader";
-import ModalError from "./ModalError";
 import SVGIcon from "./format/SVGIcon";
-import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faCircleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
 import "./AppError.css";
-import ConnectionStatus from "./dashboard/ConnectionStatus";
 
 const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
   title,
@@ -35,24 +36,33 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
 
   return (
     <>
-      <ModalError
-        title={title}
-        error={error}
-        onOk={() => dispatch({ type: "disconnect" })}
-        visible
-      />
       <Layout className="myhLayout">
-        <AppHeader>
-          <ConnectionStatus
-            label="Error"
-            icon={
-              <SVGIcon icon={faCircleExclamation} style={{ color: "red" }} />
-            }
-          />
+        <AppHeader title={title}>
+          <Button
+            icon={<SVGIcon icon={faAngleLeft} />}
+            type="primary"
+            onClick={() => dispatch({ type: "disconnect" })}
+          >
+            Back
+          </Button>
         </AppHeader>
         <Layout.Content className="myhLayoutContent">
           <div className="myhLayoutContent-panel">
-            {jsx && <div className="myhAppError-jsx">{jsx}</div>}
+            {jsx && (
+              <div className="myhAppError-jsx">
+                {jsx.split(/\r?\n/).map((line, index) => (
+                  <pre key={index}>{line}</pre>
+                ))}
+              </div>
+            )}
+            <div className="myhAppError-message">
+              <SVGIcon
+                icon={faCircleExclamation}
+                className="myhAppError-icon"
+                style={{ color: "red" }}
+              />
+              <span>{error}</span>
+            </div>
           </div>
         </Layout.Content>
       </Layout>
