@@ -120,7 +120,7 @@ export const MapJSONBuffer =
   (b: Buffer) => {
     try {
       const json = JSON.parse(b.toString());
-      return Buffer.from(JSON.stringify(map(json)));
+      return Buffer.from(String(map(json)));
     } catch (e) {
       return Buffer.from("");
     }
