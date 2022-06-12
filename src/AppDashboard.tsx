@@ -84,6 +84,9 @@ import {
   StarIconFormat,
   StringIconFormat,
   NumberIconFormat,
+  MapIconFormat,
+  MapJSONBuffer,
+  MapJSONIconFormat,
 } from "./format/IconFormat";
 import {
   SwitchIconValueFormat,
@@ -156,6 +159,9 @@ const bindings = {
   StarIconFormat,
   StringIconFormat,
   NumberIconFormat,
+  MapIconFormat,
+  MapJSONBuffer,
+  MapJSONIconFormat,
 
   SwitchIconValueFormat,
   BulbIconValueFormat,

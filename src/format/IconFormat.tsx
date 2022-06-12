@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -112,3 +112,28 @@ export const StringIconFormat = (
 export const NumberIconFormat = (
   options?: NumberValueFormatOptions
 ): IconFormat => ToIconFormat(NumberValueFormat(options));
+
+export type MapBuffer = (b: Buffer) => Buffer;
+
+export const MapJSONBuffer =
+  (map: (m: any) => any): MapBuffer =>
+  (b: Buffer) => {
+    try {
+      const json = JSON.parse(b.toString());
+      return Buffer.from(JSON.stringify(map(json)));
+    } catch (e) {
+      return Buffer.from("");
+    }
+  };
+
+export const MapIconFormat = (
+  map: MapBuffer,
+  format: IconFormat = StringIconFormat()
+): IconFormat => ({
+  toIcon: (b: Buffer) => format.toIcon(map(b)),
+});
+
+export const MapJSONIconFormat = (
+  mapjson: (m: any) => any,
+  format: IconFormat = StringIconFormat()
+): IconFormat => MapIconFormat(MapJSONBuffer(mapjson), format);
