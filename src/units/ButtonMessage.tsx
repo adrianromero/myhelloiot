@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -26,10 +26,10 @@ import { StringValueFormat } from "../format/ValueFormat";
 import "./ButtonMessage.css";
 
 export type ButtonMessageProps = {
-  pubtopic: string;
+  pubtopic?: string;
   puboptions?: IClientPublishOptions;
   format?: ValueFormat;
-  value: string;
+  value?: string;
   icon?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
@@ -37,10 +37,10 @@ export type ButtonMessageProps = {
 };
 
 const ButtonMessage: React.FC<ButtonMessageProps> = ({
-  pubtopic,
+  pubtopic = "",
   puboptions,
   format = StringValueFormat(),
-  value,
+  value = "",
   icon,
   children,
   className = "",
@@ -54,7 +54,7 @@ const ButtonMessage: React.FC<ButtonMessageProps> = ({
     <Button
       type="primary"
       onClick={onClick}
-      disabled={!connected}
+      disabled={!connected || !pubtopic}
       icon={icon}
       className={`myhButtonMessage ${className}`}
       style={style}

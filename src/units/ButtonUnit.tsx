@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -22,7 +22,7 @@ import { SwitchIconValueFormat } from "../format/IconValueFormat";
 import ButtonTopic from "./ButtonTopic";
 
 export type ButtonUnitProps = {
-  pubtopic: string;
+  pubtopic?: string;
   subtopic?: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
@@ -33,7 +33,7 @@ export type ButtonUnitProps = {
 };
 
 const ButtonUnit: React.FC<ButtonUnitProps> = ({
-  pubtopic,
+  pubtopic = "",
   subtopic = "",
   puboptions,
   suboptions,

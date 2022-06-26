@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -24,7 +24,7 @@ import { ValueFormat } from "../format/FormatTypes";
 import { StringValueFormat } from "../format/ValueFormat";
 
 type NotifyUnitProps = {
-  subtopic: string;
+  subtopic?: string;
   suboptions?: IClientSubscribeOptions;
   type?: "success" | "error" | "info" | "warning" | "open";
   format?: ValueFormat;
@@ -33,7 +33,7 @@ type NotifyUnitProps = {
 };
 
 const NotifyUnit: React.FC<NotifyUnitProps> = ({
-  subtopic,
+  subtopic = "",
   suboptions,
   type = "info",
   format = StringValueFormat(),

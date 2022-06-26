@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -24,15 +24,15 @@ import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { StringValueFormat } from "../format/ValueFormat";
 
 type DisconnectUnitProps = {
-  subtopic: string;
+  subtopic?: string;
   suboptions?: IClientSubscribeOptions;
-  keyvalue: string;
+  keyvalue?: string;
 };
 
 const DisconnectUnit: React.FC<DisconnectUnitProps> = ({
-  subtopic,
+  subtopic = "",
   suboptions,
-  keyvalue,
+  keyvalue = "",
 }) => {
   const format = StringValueFormat();
   const dispatch = useDispatch<DispatchDisconnect>();

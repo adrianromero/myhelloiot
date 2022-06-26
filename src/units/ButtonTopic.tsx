@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -28,7 +28,7 @@ import { SwitchValueFormat } from "../format/ValueFormat";
 import "./ButtonTopic.css";
 
 export type ButtonTopicProps = {
-  pubtopic: string;
+  pubtopic?: string;
   subtopic?: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
@@ -40,7 +40,7 @@ export type ButtonTopicProps = {
 };
 
 const ButtonTopic: React.FC<ButtonTopicProps> = ({
-  pubtopic,
+  pubtopic = "",
   subtopic = "",
   puboptions,
   suboptions,
@@ -76,7 +76,7 @@ const ButtonTopic: React.FC<ButtonTopicProps> = ({
       className={`myhButtonTopic ${className}`}
       type="primary"
       onClick={onClick}
-      disabled={!connected}
+      disabled={!connected || !pubtopic}
       icon={icon}
     >
       {iconlabel(buffer)}

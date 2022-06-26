@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -27,20 +27,20 @@ import { LIMITS } from "../format/FormatTypes";
 import "./SliderUnit.css";
 
 type SliderUnitProps = {
-  pubtopic: string;
-  subtopic: string;
+  pubtopic?: string;
+  subtopic?: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
-  limits: LIMITS;
+  limits?: LIMITS;
   className?: string;
 };
 
 const SliderUnit: React.FC<SliderUnitProps> = ({
-  pubtopic,
-  subtopic,
+  pubtopic = "",
+  subtopic = "",
   puboptions,
   suboptions,
-  limits,
+  limits = { min: 0, max: 100, step: 1 },
   className = "",
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();

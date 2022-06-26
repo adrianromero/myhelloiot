@@ -23,19 +23,19 @@ import { ONOFF, onoffnum } from "../format/FormatTypes";
 import { useAppStoreProperty } from "../AppStoreProvider";
 
 type ModalUnitProps = {
-  instancekey: string;
-  subtopic: string;
+  instancekey?: string;
+  subtopic?: string;
   suboptions?: IClientSubscribeOptions;
   onoff?: ONOFF;
   title?: string;
   cancelable?: boolean;
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 const ModalUnit: React.FC<ModalUnitProps> = ({
-  instancekey,
-  subtopic,
+  instancekey = "",
+  subtopic = "",
   suboptions,
   onoff = onoffnum,
   title,

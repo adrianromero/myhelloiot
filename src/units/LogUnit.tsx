@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -23,14 +23,14 @@ import { StringValueFormat } from "../format/ValueFormat";
 import LogView from "./LogView";
 
 export type LogUnitProps = {
-  subtopic: string;
+  subtopic?: string;
   suboptions?: IClientSubscribeOptions;
   format?: ValueFormat;
   className?: string;
 };
 
 const LogUnit: React.FC<LogUnitProps> = ({
-  subtopic,
+  subtopic = "",
   suboptions,
   format = StringValueFormat(),
   className,

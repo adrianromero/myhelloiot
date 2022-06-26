@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -33,8 +33,8 @@ const harp = require("../assets/media/486952_6657415-lq.mp3").default;
 const messagepop = require("../assets/media/537061_7117640-lq.mp3").default;
 
 type SoundAlarmUnitProps = {
-  instancekey: string;
-  subtopic: string;
+  instancekey?: string;
+  subtopic?: string;
   suboptions?: IClientSubscribeOptions;
   sound?: string;
   volume?: number;
@@ -44,8 +44,8 @@ type SoundAlarmUnitProps = {
 const FORMAT: ValueFormat = StringValueFormat();
 
 const SoundAlarmUnit: React.FC<SoundAlarmUnitProps> = ({
-  instancekey,
-  subtopic,
+  instancekey = "",
+  subtopic = "",
   suboptions,
   sound = "gameitem",
   volume = 1.0,

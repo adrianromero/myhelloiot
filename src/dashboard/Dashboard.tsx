@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -32,12 +32,12 @@ import ConnectionInfo from "./ConnectionInfo";
 import "./Dashboard.css";
 
 export type DashboardProps = {
-  instancekey: string;
+  instancekey?: string;
   title?: string;
   topic?: string;
   disconnectDisabled?: boolean;
   className?: string;
-  children: React.ReactElement<DashboardContentProps, any>[];
+  children?: React.ReactElement<DashboardContentProps, any>[];
 };
 
 const Dashboard: React.FC<DashboardProps> = ({

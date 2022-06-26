@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -34,14 +34,14 @@ import SVGIcon from "../format/SVGIcon";
 import { faTurnDown, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 export type KeypadUnitProps = {
-  pubtopic: string;
+  pubtopic?: string;
   puboptions?: IClientPublishOptions;
   format?: ValueFormat;
   className?: string;
 };
 
 const KeypadUnit: React.FC<KeypadUnitProps> = ({
-  pubtopic,
+  pubtopic = "",
   puboptions,
   format = StringValueFormat(),
   className = "",

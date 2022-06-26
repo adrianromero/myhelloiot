@@ -33,7 +33,7 @@ import Title from "antd/lib/typography/Title";
 import "./LogTool.css";
 
 export type LogToolProps = {
-  subtopic: string;
+  subtopic?: string;
   suboptions?: IClientSubscribeOptions;
   className?: string;
 };
@@ -51,7 +51,7 @@ const OPTIONS: CheckboxOptionType[] = [
 ];
 
 const LogTool: React.FC<LogToolProps> = ({
-  subtopic,
+  subtopic = "",
   suboptions,
   className,
 }) => {

@@ -20,7 +20,7 @@ import "./PanelFlex.css";
 
 export type PanelFlexProps = {
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export const PanelFlex: React.FC<PanelFlexProps> = ({

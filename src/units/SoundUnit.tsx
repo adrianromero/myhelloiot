@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2022 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -32,7 +32,7 @@ const harp = require("../assets/media/486952_6657415-lq.mp3").default;
 const messagepop = require("../assets/media/537061_7117640-lq.mp3").default;
 
 type SoundUnitProps = {
-  subtopic: string;
+  subtopic?: string;
   suboptions?: IClientSubscribeOptions;
   volume?: number;
 };
@@ -40,7 +40,7 @@ type SoundUnitProps = {
 const FORMAT: ValueFormat = StringValueFormat();
 
 const SoundUnit: React.FC<SoundUnitProps> = ({
-  subtopic,
+  subtopic = "",
   suboptions,
   volume = 1.0,
 }) => {
