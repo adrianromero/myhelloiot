@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2022 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -79,9 +79,9 @@ const Dashboard: React.FC<DashboardProps> = ({
   }
 
   const menus: React.ReactElement<any, any>[] = [];
-  const dcchildren: React.ReactElement<DashboardContentProps, any>[] = [];
+  const dcchildren: React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>>[] = [];
   const remainingchildren: React.ReactElement<any, any>[] = [];
-  let cvisible: React.ReactElement<DashboardContentProps, any> | undefined;
+  let cvisible: React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | undefined;
   let keyvisible: string | undefined;
   let menDisabled: boolean = false;
   let disDisabled: boolean = false;

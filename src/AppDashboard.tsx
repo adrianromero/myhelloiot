@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2022 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { ComponentType, ExoticComponent } from "react";
+import React, { createElement, Fragment } from "react";
 import { Card } from "antd";
 import {
   faUpload,
@@ -38,10 +38,8 @@ import {
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { ErrorBoundary } from "react-error-boundary";
 import { ReactComponent as Themes } from "./assets/svg/themes.svg";
-import JsxParser from "react-jsx-parser";
-
+import * as Babel from '@babel/standalone';
 import { PanelFlex } from "./dashboard/PanelFlex";
 import Dashboard from "./dashboard/Dashboard";
 import DashboardContent from "./dashboard/DashboardContent";
@@ -112,80 +110,15 @@ import { ChartIconFormat } from "./format/ChartFormat";
 import { ImageIconFormat } from "./format/ImageFormat";
 import AppError from "./AppError";
 
-const ErrorFallback: React.FC<{ error: Error }> = ({ error }) => (
-  <AppError title="Failed to execute JSX code" error={error.message} />
-);
+const JSXCONTEXT = {
+  //React JSX
+  createElement,
+  Fragment,
 
-const bindings = {
-  faUpload,
-  faDownload,
-  faCodeBranch,
-  faBars,
-  faImage,
-  faBolt,
-  faLightbulb,
-  faStar,
-  faPaperPlane,
-  faTurnDown,
-  faCircleXmark,
-  faPlay,
-  faPause,
-  faBan,
-  faPencil,
-  faCircleExclamation,
-  faPowerOff,
-  faSpinner,
-
-  Themes,
+  //NodeObject
   Buffer,
 
-  ToIconFormat,
-  ToIconValueFormat,
-  onoffnum,
-  onoffst,
-
-  StringValueFormat,
-  JSONValueFormat,
-  HEXValueFormat,
-  Base64ValueFormat,
-  SwitchValueFormat,
-  NumberValueFormat,
-
-  DimIconFormat,
-  SwitchIconFormat,
-  BulbIconFormat,
-  ThuderboltIconFormat,
-  StarIconFormat,
-  StringIconFormat,
-  NumberIconFormat,
-  MapIconFormat,
-  MapJSONBuffer,
-  MapJSONIconFormat,
-
-  SwitchIconValueFormat,
-  BulbIconValueFormat,
-  ThuderboltIconValueFormat,
-  StarIconValueFormat,
-  StringIconValueFormat,
-  NumberIconValueFormat,
-
-  DashboardIconFormat,
-  LinearIconFormat,
-  SimpleIconFormat,
-  CircularIconFormat,
-  MetroIconFormat,
-  ProgressIconFormat,
-  SpaceIconFormat,
-  LiquidIconFormat,
-  DialIconFormat,
-  FuelIconFormat,
-  ControlIconFormat,
-  ChartIconFormat,
-  ImageIconFormat,
-};
-
-const components: Record<string, ComponentType<{}> | ExoticComponent<{}>> = {
-  Card,
+  // HelloIOT Components
   Dashboard,
   DashboardContent,
   PanelFlex,
@@ -205,6 +138,149 @@ const components: Record<string, ComponentType<{}> | ExoticComponent<{}>> = {
   DisconnectUnit,
   SoundAlarmUnit,
   ModalUnit,
+
+  // Antd Components
+  Card,
+
+  // Icons
+  faUpload,
+  faDownload,
+  faCodeBranch,
+  faBars,
+  faImage,
+  faBolt,
+  faLightbulb,
+  faStar,
+  faPaperPlane,
+  faTurnDown,
+  faCircleXmark,
+  faPlay,
+  faPause,
+  faBan,
+  faPencil,
+  faCircleExclamation,
+  faPowerOff,
+  faSpinner,
+  Themes,
+
+  // Format types
+  ToIconFormat,
+  ToIconValueFormat,
+  onoffnum,
+  onoffst,
+
+  // String Formats
+  StringValueFormat,
+  JSONValueFormat,
+  HEXValueFormat,
+  Base64ValueFormat,
+  SwitchValueFormat,
+  NumberValueFormat,
+
+  // Icon formats
+  DimIconFormat,
+  SwitchIconFormat,
+  BulbIconFormat,
+  ThuderboltIconFormat,
+  StarIconFormat,
+  StringIconFormat,
+  NumberIconFormat,
+  MapIconFormat,
+  MapJSONBuffer,
+  MapJSONIconFormat,
+
+  // Icon value formats
+  SwitchIconValueFormat,
+  BulbIconValueFormat,
+  ThuderboltIconValueFormat,
+  StarIconValueFormat,
+  StringIconValueFormat,
+  NumberIconValueFormat,
+
+  // Gauge Formats
+  DashboardIconFormat,
+  LinearIconFormat,
+  SimpleIconFormat,
+  CircularIconFormat,
+  MetroIconFormat,
+  ProgressIconFormat,
+  SpaceIconFormat,
+  LiquidIconFormat,
+  DialIconFormat,
+  FuelIconFormat,
+  ControlIconFormat,
+
+  // Chart Format
+  ChartIconFormat,
+
+  // Image Format
+  ImageIconFormat,
+};
+
+const JSXCONTEXTKEYS: string[] = [];
+const JSXCONTEXTVALUES: any[] = [];
+for (const [key, value] of Object.entries(JSXCONTEXT)) {
+  JSXCONTEXTKEYS.push(key);
+  JSXCONTEXTVALUES.push(value);
+}
+
+const getErrorMessage = (error: unknown, msg: string = "Unknown error") => {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return msg;
+}
+
+const JSXRender: React.FC<{ jsx: string }> = ({ jsx }) => {
+
+  let output;
+  try {
+    output = Babel.transform(jsx, {
+      presets: [[
+        "react",
+        {
+          pragma: "createElement",
+          pragmaFrag: "Fragment"
+        },
+      ]]
+    }).code;
+  } catch (error) {
+    return <AppError
+      title="Failed to compile JSX code"
+      error={getErrorMessage(error, "Unknown compilation error")}
+      jsx={jsx}
+    />;
+  }
+
+  if (!output) {
+    return <AppError
+      title="Failed to execute JSX code"
+      error="JSX compiled code is empty"
+      jsx={jsx}
+    />;
+  }
+
+  let fn;
+  try {
+    // eslint-disable-next-line no-new-func
+    fn = new Function(...JSXCONTEXTKEYS, "output", "return eval(output);");
+  } catch (error) {
+    return <AppError
+      title="Failed to execute JSX code"
+      error={getErrorMessage(error, "Unknown JSX evaluation error")}
+      jsx={jsx}
+    />;
+  }
+
+  try {
+    return fn(...JSXCONTEXTVALUES, output);
+  } catch (error) {
+    return <AppError
+      title="Failed to execute JSX code"
+      error={getErrorMessage(error, "Unknown JSX execution error")}
+      jsx={jsx}
+    />;
+  }
 };
 
 const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
@@ -217,29 +293,9 @@ const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
           href={`data:text/css;base64,${btoa(css)}`}
         ></link>
       )}
-      <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => {}}>
-        <JsxParser
-          renderInWrapper={false}
-          bindings={bindings}
-          components={components}
-          jsx={jsx}
-          renderError={({ error }) => (
-            <AppError
-              title="Failed to compile JSX code"
-              error={error}
-              jsx={jsx}
-            />
-          )}
-          renderUnrecognized={(tagname) => (
-            <AppError
-              title="Failed to execute JSX code"
-              error={`Unrecognized tag: ${tagname}`}
-            />
-          )}
-        />
-      </ErrorBoundary>
+      <JSXRender jsx={jsx} />
     </>
   )
 );
-
 export default AppDashboard;
+

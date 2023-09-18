@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2022 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -374,10 +374,10 @@ const ConnectStored: React.FC<{
                                   value?.data?.trim()
                                     ? Promise.resolve()
                                     : Promise.reject(
-                                        new Error(
-                                          "Please upload a dashboard definition file."
-                                        )
-                                      ),
+                                      new Error(
+                                        "Please upload a dashboard definition file."
+                                      )
+                                    ),
                               },
                             ]}
                           >
