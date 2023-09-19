@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { FileInfo } from "./UploadRaw";
 import basicsampledata from "./basicsampledata";
 import { cyrb53str } from "../CryptFunctions";
+import type { QoS } from "mqtt-packet";
 
 export type ConnectInfo = {
   url: string;
@@ -25,12 +26,12 @@ export type ConnectInfo = {
   connectTimeout: number;
   reconnectPeriod: number;
   onlinetopic: string;
-  onlineqos: number;
+  onlineqos: QoS;
   dashboard: FileInfo;
   dashboardcss: FileInfo;
 };
 
-export const defaultConnectInfo = {
+export const defaultConnectInfo: ConnectInfo = {
   url: "wss://mymqttbroker",
   keepalive: 60,
   connectTimeout: 30000,

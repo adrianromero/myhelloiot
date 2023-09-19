@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect, useState } from "react";
 import { Switch } from "antd";
-import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
+import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt/dist/mqtt";
 
 import {
   MQTTMessage,

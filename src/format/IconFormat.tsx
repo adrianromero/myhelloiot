@@ -15,9 +15,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
-
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { Buffer } from "buffer";
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import SVGIcon from "./SVGIcon";
 import { faLightbulb, faStar, faBolt } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -117,14 +116,14 @@ export type MapBuffer = (b: Buffer) => Buffer;
 
 export const MapJSONBuffer =
   (map: (m: any) => any): MapBuffer =>
-  (b: Buffer) => {
-    try {
-      const json = JSON.parse(b.toString());
-      return Buffer.from(String(map(json)));
-    } catch (e) {
-      return Buffer.from("");
-    }
-  };
+    (b: Buffer) => {
+      try {
+        const json = JSON.parse(b.toString());
+        return Buffer.from(String(map(json)));
+      } catch (e) {
+        return Buffer.from("");
+      }
+    };
 
 export const MapIconFormat = (
   map: MapBuffer,

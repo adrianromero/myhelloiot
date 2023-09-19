@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -23,14 +23,16 @@ import React, {
   Context,
   useContext,
 } from "react";
-import mqtt, {
+import { Buffer } from "buffer";
+import * as mqtt from "mqtt/dist/mqtt";
+import {
   MqttClient,
   IClientOptions,
   IClientSubscribeOptions,
   IClientPublishOptions,
-  QoS,
-  IPublishPacket,
-} from "mqtt";
+  IPublishPacket
+} from "mqtt/dist/mqtt";
+import type { QoS } from "mqtt-packet";
 import match from "mqtt-match";
 
 export type MQTTStatus =
@@ -109,11 +111,11 @@ const MQTTContext: Context<MQTTContextValue> = createContext<MQTTContextValue>([
     options: {},
   },
   {
-    connect: () => {},
-    disconnect: () => {},
+    connect: () => { },
+    disconnect: () => { },
     subscribe: () => null,
-    unsubscribe: () => {},
-    publish: () => {},
+    unsubscribe: () => { },
+    publish: () => { },
   },
 ]);
 
@@ -157,7 +159,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       state.client.publish(state.online.topic, "offline", {
         qos: state.online.qos,
         retain: state.online.retain,
-      });
+      }, () => { });
     }
     state.client?.end();
     state.client?.removeAllListeners();
@@ -176,7 +178,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         ...connectoptions,
         will: {
           ...online,
-          payload: "offline",
+          payload: Buffer.from("offline"),
         },
       };
     }

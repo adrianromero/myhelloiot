@@ -19,7 +19,7 @@ import React, { useEffect } from "react";
 import { Button, Input, Form, Row, Col } from "antd";
 import SVGIcon from "../format/SVGIcon";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
+import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt/dist/mqtt";
 
 import {
   MQTTMessage,

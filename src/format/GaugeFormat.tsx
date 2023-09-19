@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
+import { Buffer } from "buffer";
 import { IconFormat } from "./FormatTypes";
 import LinearGauge from "../gauge/LinearGauge";
 import ProgressGauge from "../gauge/ProgressGauge";
@@ -35,14 +36,14 @@ export type GaugeIconFormat<GaugeProps> = (
 ) => IconFormat;
 
 const CreateGaugesIconFormat =
-  <GaugeProps extends unknown>(
+  <GaugeProps extends {}>(
     Component: React.FC<GaugeProps>
   ): GaugeIconFormat<GaugeProps> =>
-  (gaugeprops: GaugeProps): IconFormat => ({
-    toIcon: (buffer) => (
-      <Component value={readNumber(buffer)} {...gaugeprops} />
-    ),
-  });
+    (gaugeprops: GaugeProps): IconFormat => ({
+      toIcon: (buffer) => (
+        <Component value={readNumber(buffer)} {...gaugeprops} />
+      ),
+    });
 
 function readNumber(buffer: Buffer): number | undefined {
   const s: string = buffer.toString();

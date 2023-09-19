@@ -40,6 +40,7 @@ import {
 
 import { ReactComponent as Themes } from "./assets/svg/themes.svg";
 import * as Babel from '@babel/standalone';
+import { Buffer } from "buffer";
 import { PanelFlex } from "./dashboard/PanelFlex";
 import Dashboard from "./dashboard/Dashboard";
 import DashboardContent from "./dashboard/DashboardContent";

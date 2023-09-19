@@ -23,7 +23,7 @@ import React, {
   useState,
 } from "react";
 import { Button, Input } from "antd";
-import { IClientPublishOptions } from "mqtt";
+import { IClientPublishOptions } from "mqtt/dist/mqtt";
 
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";

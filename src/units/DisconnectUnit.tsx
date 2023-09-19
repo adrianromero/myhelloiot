@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React from "react";
 import { useDispatch } from "react-redux";
 import { notification } from "antd";
-import { IClientSubscribeOptions } from "mqtt";
+import { IClientSubscribeOptions } from "mqtt/dist/mqtt";
 import { DispatchDisconnect } from "../AppStoreProvider";
 import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { StringValueFormat } from "../format/ValueFormat";

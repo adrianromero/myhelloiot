@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { MouseEvent } from "react";
 import { Button } from "antd";
-import { IClientPublishOptions } from "mqtt";
+import { IClientPublishOptions } from "mqtt/dist/mqtt";
 
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";

@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faStar, faBolt } from "@fortawesome/free-solid-svg-icons";
 import { IconValueFormat, ToIconValueFormat, ONOFF } from "./FormatTypes";
 import { SwitchIconFormat } from "./IconFormat";

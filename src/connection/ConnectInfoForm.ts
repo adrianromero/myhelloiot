@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { FileInfo } from "./UploadRaw";
+import type { QoS } from "mqtt-packet";
 
 export type ConnectInfoForm = {
   url: string;
@@ -26,7 +27,7 @@ export type ConnectInfoForm = {
   connectTimeout: number;
   reconnectPeriod: number;
   onlinetopic: string;
-  onlineqos: number;
+  onlineqos: QoS;
   dashboard: FileInfo;
   dashboardcss: FileInfo;
 };

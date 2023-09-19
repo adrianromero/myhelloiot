@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect, useState } from "react";
+import { Buffer } from "buffer";
 import { Drawer, Button, Layout, Menu } from "antd";
 import SVGIcon from "../format/SVGIcon";
 import { faBars, faImage } from "@fortawesome/free-solid-svg-icons";

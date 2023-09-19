@@ -16,7 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect } from "react";
-import { QoS } from "mqtt";
 import { useSelector, useDispatch } from "react-redux";
 import AppStoreProvider, {
   AppStoreValue,
@@ -67,10 +66,10 @@ const MQTTApp: React.FC<{}> = () => {
         } = connectInfo;
         const online: OnlineInfo | undefined = onlinetopic
           ? {
-              topic: onlinetopic,
-              qos: onlineqos as QoS,
-              retain: true,
-            }
+            topic: onlinetopic,
+            qos: onlineqos,
+            retain: true,
+          }
           : undefined;
         connect({
           url,

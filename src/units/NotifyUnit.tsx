@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { notification } from "antd";
-import { IClientSubscribeOptions } from "mqtt";
+import { IClientSubscribeOptions } from "mqtt/dist/mqtt";
 
 import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
 import { ValueFormat } from "../format/FormatTypes";

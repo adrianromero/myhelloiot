@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
+import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt/dist/mqtt";
 import { IconValueFormat } from "../format/FormatTypes";
 import { SwitchIconValueFormat } from "../format/IconValueFormat";
 import ButtonTopic from "./ButtonTopic";

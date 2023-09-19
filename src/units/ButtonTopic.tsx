@@ -16,8 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect, useState, MouseEvent, ReactNode } from "react";
+import { Buffer } from "buffer";
 import { Button } from "antd";
-import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
+import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt/dist/mqtt";
 import {
   MQTTMessage,
   useMQTTContext,
