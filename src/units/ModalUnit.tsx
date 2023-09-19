@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2022 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -68,7 +68,7 @@ const ModalUnit: React.FC<ModalUnitProps> = ({
       maskClosable={cancelable}
       closable={cancelable}
       keyboard={cancelable}
-      visible={
+      open={
         isModalVisible ? onoff.on.equals(Buffer.from(isModalVisible)) : false
       }
       onCancel={handleCancel}

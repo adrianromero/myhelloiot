@@ -28,7 +28,7 @@ const ModalError: React.FC<{
   visible: boolean;
 }> = ({ title, error, onOk, visible }) => {
   return (
-    <Modal footer={null} closable={false} visible={visible}>
+    <Modal footer={null} closable={false} open={visible}>
       <div className="myhModalError-container">
         <SVGIcon
           icon={faCircleExclamation}
