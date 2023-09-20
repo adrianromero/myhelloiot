@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -43,8 +43,6 @@ const ConnectRemote: React.FC<{
   const dispatchConnect = useDispatch<DispatchConnect>();
   const HIDDEN: ModalErrorInfo = { visible: false, title: "", error: "" };
   const [errorinf, showError] = useState<ModalErrorInfo>(HIDDEN);
-
-  const { TabPane } = Tabs;
 
   useEffect(() => {
     const connectInfoForm: ConnectInfoForm = {
@@ -98,113 +96,116 @@ const ConnectRemote: React.FC<{
           </AppHeader>
           <Layout.Content className="myhLayoutContent">
             <div className="myhLayoutContent-panel">
-              <Tabs defaultActiveKey="1">
-                <TabPane tab="Credentials" key="1" forceRender>
-                  <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
-                    <Col xs={0} sm={0} md={0} lg={4} />
-                    <Col
-                      xs={24}
-                      sm={6}
-                      md={6}
-                      lg={4}
-                      className="ant-form-item-label"
-                    >
-                      <label htmlFor="username" title="User">
-                        User
-                      </label>
-                    </Col>
-                    <Col xs={24} sm={18} md={18} lg={12}>
-                      <Form.Item name="username">
-                        <Input autoComplete="off" />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={0} sm={0} md={0} lg={4} />
+              <Tabs defaultActiveKey="1" items={[{
+                label: "Credentials",
+                key: "1",
+                forceRender: true,
+                children: <Row className="ant-form-item" gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                  <Col
+                    xs={24}
+                    sm={6}
+                    md={6}
+                    lg={4}
+                    className="ant-form-item-label"
+                  >
+                    <label htmlFor="username" title="User">
+                      User
+                    </label>
+                  </Col>
+                  <Col xs={24} sm={18} md={18} lg={12}>
+                    <Form.Item name="username">
+                      <Input autoComplete="off" />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={0} sm={0} md={0} lg={4} />
 
-                    <Col xs={0} sm={0} md={0} lg={4} />
-                    <Col
-                      xs={24}
-                      sm={6}
-                      md={6}
-                      lg={4}
-                      className="ant-form-item-label"
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                  <Col
+                    xs={24}
+                    sm={6}
+                    md={6}
+                    lg={4}
+                    className="ant-form-item-label"
+                  >
+                    <label htmlFor="password" title="Password">
+                      Password
+                    </label>
+                  </Col>
+                  <Col xs={24} sm={18} md={18} lg={12}>
+                    <Form.Item name="password">
+                      <Input.Password />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                </Row>
+              }, {
+                label: "MQTT Connection",
+                key: "2",
+                forceRender: true,
+                children: <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                  <Col
+                    xs={24}
+                    sm={6}
+                    md={6}
+                    lg={4}
+                    className="ant-form-item-label"
+                  >
+                    <label
+                      htmlFor="url"
+                      className="ant-form-item-required"
+                      title="URL"
                     >
-                      <label htmlFor="password" title="Password">
-                        Password
-                      </label>
-                    </Col>
-                    <Col xs={24} sm={18} md={18} lg={12}>
-                      <Form.Item name="password">
-                        <Input.Password />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={0} sm={0} md={0} lg={4} />
-                  </Row>
-                </TabPane>
-                <TabPane tab="MQTT Connection" key="2" forceRender>
-                  <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
-                    <Col xs={0} sm={0} md={0} lg={4} />
-                    <Col
-                      xs={24}
-                      sm={6}
-                      md={6}
-                      lg={4}
-                      className="ant-form-item-label"
+                      URL
+                    </label>
+                  </Col>
+                  <Col xs={24} sm={18} md={18} lg={12}>
+                    <Form.Item
+                      name="url"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input the url of the MQTT broker.",
+                        },
+                      ]}
                     >
-                      <label
-                        htmlFor="url"
-                        className="ant-form-item-required"
-                        title="URL"
-                      >
-                        URL
-                      </label>
-                    </Col>
-                    <Col xs={24} sm={18} md={18} lg={12}>
-                      <Form.Item
-                        name="url"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please input the url of the MQTT broker.",
-                          },
-                        ]}
-                      >
-                        <Input autoComplete="off" disabled />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={0} sm={0} md={0} lg={4} />
-                    <Col xs={0} sm={0} md={0} lg={4} />
-                    <Col
-                      xs={24}
-                      sm={6}
-                      md={6}
-                      lg={4}
-                      className="ant-form-item-label"
+                      <Input autoComplete="off" disabled />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                  <Col
+                    xs={24}
+                    sm={6}
+                    md={6}
+                    lg={4}
+                    className="ant-form-item-label"
+                  >
+                    <label
+                      htmlFor="clientId"
+                      className="ant-form-item-required"
+                      title="Client ID"
                     >
-                      <label
-                        htmlFor="clientId"
-                        className="ant-form-item-required"
-                        title="Client ID"
-                      >
-                        Client ID
-                      </label>
-                    </Col>
-                    <Col xs={24} sm={18} md={6} lg={4}>
-                      <Form.Item
-                        name="clientId"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please define a Client ID.",
-                          },
-                        ]}
-                      >
-                        <Input autoComplete="off" disabled />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={0} sm={0} md={12} lg={12} />{" "}
-                  </Row>
-                </TabPane>
-              </Tabs>
+                      Client ID
+                    </label>
+                  </Col>
+                  <Col xs={24} sm={18} md={6} lg={4}>
+                    <Form.Item
+                      name="clientId"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please define a Client ID.",
+                        },
+                      ]}
+                    >
+                      <Input autoComplete="off" disabled />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={0} sm={0} md={12} lg={12} />{" "}
+                </Row>
+              }]} />
             </div>
           </Layout.Content>{" "}
         </Layout>

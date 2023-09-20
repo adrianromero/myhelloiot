@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect } from "react";
-import { QoS } from "mqtt";
+import { ConfigProvider } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import AppStoreProvider, {
   AppStoreValue,
@@ -28,15 +28,22 @@ import AppDashboard from "./AppDashboard";
 import { ConnectInfo, loadConnectInfo } from "./connection/ConnectionInfo";
 import MQTTProvider, { OnlineInfo, useMQTTContext } from "./mqtt/MQTTProvider";
 import AppError from "./AppError";
-import "antd/dist/antd.css";
+import "antd/dist/reset.css";
 import "./assets/main.css";
 
 const App: React.FC<{}> = () => (
-  <MQTTProvider>
-    <AppStoreProvider>
-      <MQTTApp />
-    </AppStoreProvider>
-  </MQTTProvider>
+  <ConfigProvider
+    theme={{
+      // algorithm: theme.darkAlgorithm,
+      // algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
+    }}
+  >
+    <MQTTProvider>
+      <AppStoreProvider>
+        <MQTTApp />
+      </AppStoreProvider>
+    </MQTTProvider>
+  </ConfigProvider>
 );
 
 const MQTTApp: React.FC<{}> = () => {
@@ -67,10 +74,10 @@ const MQTTApp: React.FC<{}> = () => {
         } = connectInfo;
         const online: OnlineInfo | undefined = onlinetopic
           ? {
-              topic: onlinetopic,
-              qos: onlineqos as QoS,
-              retain: true,
-            }
+            topic: onlinetopic,
+            qos: onlineqos,
+            retain: true,
+          }
           : undefined;
         connect({
           url,

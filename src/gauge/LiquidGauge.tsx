@@ -96,7 +96,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         x={100}
         y={75}
         textAnchor="middle"
-        dominant-baseline="hanging"
+        dominan-baseline="hanging"
         className="liquidgauge-title liquidgauge-title_1"
       >
         {title}

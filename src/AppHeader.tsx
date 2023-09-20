@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -27,12 +27,10 @@ const AppHeader: React.FC<{
 }> = ({ title = "MYHELLOIOT", subtitle, children }) => {
   return (
     <Layout.Header className="myhAppHeader">
-      <div className="myhAppHeader-container">
-        <span className="myhAppHeader-title">
-          {title + (subtitle ? " - " + subtitle : "")}
-        </span>
-        {children}
-      </div>
+      <span className="myhAppHeader-title">
+        {title + (subtitle ? " - " + subtitle : "")}
+      </span>
+      {children}
     </Layout.Header>
   );
 };

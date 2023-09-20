@@ -51,7 +51,7 @@ const emptyAppStoreValue: AppStoreValue = {
   properties: { hash: "", attrs: {} },
 };
 
-export interface ActionDisconnect extends Action<"disconnect"> {}
+export interface ActionDisconnect extends Action<"disconnect"> { }
 export type DispatchDisconnect = Dispatch<ActionDisconnect>;
 
 export interface ActionConnect extends Action<"connect"> {
@@ -117,7 +117,7 @@ const saveRUNTIME = (state: AppStoreValue) => {
         state.clientId,
       ])
     );
-  } catch (e) {}
+  } catch (e) { }
 };
 
 const reducer: Reducer<AppStoreValue, AnyAction> = (

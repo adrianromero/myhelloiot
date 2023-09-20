@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2022 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -16,8 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect, useState, MouseEvent, ReactNode } from "react";
+import { Buffer } from "buffer";
 import { Button } from "antd";
-import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
+import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt/dist/mqtt";
 import {
   MQTTMessage,
   useMQTTContext,
