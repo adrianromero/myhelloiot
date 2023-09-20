@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect } from "react";
+import { ConfigProvider } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import AppStoreProvider, {
   AppStoreValue,
@@ -27,15 +28,22 @@ import AppDashboard from "./AppDashboard";
 import { ConnectInfo, loadConnectInfo } from "./connection/ConnectionInfo";
 import MQTTProvider, { OnlineInfo, useMQTTContext } from "./mqtt/MQTTProvider";
 import AppError from "./AppError";
-import "antd/dist/antd.css";
+import "antd/dist/reset.css";
 import "./assets/main.css";
 
 const App: React.FC<{}> = () => (
-  <MQTTProvider>
-    <AppStoreProvider>
-      <MQTTApp />
-    </AppStoreProvider>
-  </MQTTProvider>
+  <ConfigProvider
+    theme={{
+      // algorithm: theme.darkAlgorithm,
+      // algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
+    }}
+  >
+    <MQTTProvider>
+      <AppStoreProvider>
+        <MQTTApp />
+      </AppStoreProvider>
+    </MQTTProvider>
+  </ConfigProvider>
 );
 
 const MQTTApp: React.FC<{}> = () => {

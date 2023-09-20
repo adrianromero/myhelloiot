@@ -100,7 +100,7 @@ const ConnectRemote: React.FC<{
                 label: "Credentials",
                 key: "1",
                 forceRender: true,
-                children: <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+                children: <Row className="ant-form-item" gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
                   <Col xs={0} sm={0} md={0} lg={4} />
                   <Col
                     xs={24}

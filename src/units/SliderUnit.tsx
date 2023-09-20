@@ -25,7 +25,6 @@ import {
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
 import { LIMITS } from "../format/FormatTypes";
-import "./SliderUnit.css";
 
 type SliderUnitProps = {
   pubtopic?: string;

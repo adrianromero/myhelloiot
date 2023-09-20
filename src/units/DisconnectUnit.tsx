@@ -42,7 +42,7 @@ const DisconnectUnit: React.FC<DisconnectUnitProps> = ({
       if (keyvalue === format.toDisplay(message)) {
         dispatch({ type: "disconnect" });
       } else {
-        notification.warn({
+        notification.warning({
           message: "Disconnection key not valid.",
         });
       }
