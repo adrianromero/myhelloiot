@@ -17,84 +17,82 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 const lightssampledata = `{/* Light switches example. */}
 
-<Dashboard title="Light switches">
-  <PanelFlex>
-    <Card title="Light test 1">
-      <ButtonUnit
-        pubtopic="myhelloiot/testswitch1"
-        puboptions={{ retain: true }}
-        subtopic="myhelloiot/testswitch1"
-        format={SwitchIconValueFormat()}
-      />
-    </Card>
-    <Card title="Light test 2">
-      <ButtonUnit
-        pubtopic="myhelloiot/testswitch2"
-        puboptions={{ retain: true }}
-        subtopic="myhelloiot/testswitch2"
-        format={SwitchIconValueFormat({icon:faStar})}
-      />
-    </Card>
-    <Card title="Light test 3">
-      <ButtonUnit
-        pubtopic="myhelloiot/testswitch3"
-        puboptions={{ retain: true }}
-        subtopic="myhelloiot/testswitch3"
-        format={SwitchIconValueFormat({icon:faBolt})}
-      />
-    </Card>
-    <Card title="Light switches">
-      <div style={{display: "flex", margin: "4px"}}>
-        <div style={{flex: "0 1 40px", textAlign: "center"}}>
-          <ViewUnit
-            subtopic="myhelloiot/testswitch1"
-            format={BulbIconFormat()}
-          />
-        </div>
-        <div style={{flex: "1 1 auto"}}>Light test 1: </div>
-        <div style={{flex: "0 1 auto"}}>
-          <SwitchUnit
-            pubtopic="myhelloiot/testswitch1"
-            puboptions={{ retain: true }}
-            subtopic="myhelloiot/testswitch1"
-          />
-        </div>
+<DashboardPage title="Light switches">
+  <Card title="Light test 1">
+    <ButtonUnit
+      pubtopic="myhelloiot/testswitch1"
+      puboptions={{ retain: true }}
+      subtopic="myhelloiot/testswitch1"
+      format={SwitchIconValueFormat()}
+    />
+  </Card>
+  <Card title="Light test 2">
+    <ButtonUnit
+      pubtopic="myhelloiot/testswitch2"
+      puboptions={{ retain: true }}
+      subtopic="myhelloiot/testswitch2"
+      format={SwitchIconValueFormat({icon:faStar})}
+    />
+  </Card>
+  <Card title="Light test 3">
+    <ButtonUnit
+      pubtopic="myhelloiot/testswitch3"
+      puboptions={{ retain: true }}
+      subtopic="myhelloiot/testswitch3"
+      format={SwitchIconValueFormat({icon:faBolt})}
+    />
+  </Card>
+  <Card title="Light switches">
+    <div style={{display: "flex", margin: "4px"}}>
+      <div style={{flex: "0 1 40px", textAlign: "center"}}>
+        <ViewUnit
+          subtopic="myhelloiot/testswitch1"
+          format={BulbIconFormat()}
+        />
       </div>
-      <div style={{display: "flex", margin: "4px"}}>
-        <div style={{flex: "0 1 40px", textAlign: "center"}}>
-          <ViewUnit
-            subtopic="myhelloiot/testswitch2"
-            format={SwitchIconFormat({icon:faStar})}
-          />
-        </div>
-        <div style={{flex: "1 1 auto"}}>Light test 2: </div>
-        <div style={{flex: "0 1 auto"}}>
-          <SwitchUnit
-            pubtopic="myhelloiot/testswitch2"
-            puboptions={{ retain: true }}
-            subtopic="myhelloiot/testswitch2"
-          />
-        </div>
+      <div style={{flex: "1 1 auto"}}>Light test 1: </div>
+      <div style={{flex: "0 1 auto"}}>
+        <SwitchUnit
+          pubtopic="myhelloiot/testswitch1"
+          puboptions={{ retain: true }}
+          subtopic="myhelloiot/testswitch1"
+        />
       </div>
-      <div style={{display: "flex", margin: "4px"}}>
-        <div style={{flex: "0 1 40px", textAlign: "center"}}>
-          <ViewUnit
-            subtopic="myhelloiot/testswitch3"
-            format={SwitchIconFormat({icon:faBolt})}
-          />
-        </div>
-        <div style={{flex: "1 1 auto"}}>Light test 3: </div>
-        <div style={{flex: "0 1 auto"}}>
-          <SwitchUnit
-            pubtopic="myhelloiot/testswitch3"
-            puboptions={{ retain: true }}
-            subtopic="myhelloiot/testswitch3"
-          />
-        </div>
-      </div>      
-    </Card>
-  </PanelFlex>
-</Dashboard>
+    </div>
+    <div style={{display: "flex", margin: "4px"}}>
+      <div style={{flex: "0 1 40px", textAlign: "center"}}>
+        <ViewUnit
+          subtopic="myhelloiot/testswitch2"
+          format={SwitchIconFormat({icon:faStar})}
+        />
+      </div>
+      <div style={{flex: "1 1 auto"}}>Light test 2: </div>
+      <div style={{flex: "0 1 auto"}}>
+        <SwitchUnit
+          pubtopic="myhelloiot/testswitch2"
+          puboptions={{ retain: true }}
+          subtopic="myhelloiot/testswitch2"
+        />
+      </div>
+    </div>
+    <div style={{display: "flex", margin: "4px"}}>
+      <div style={{flex: "0 1 40px", textAlign: "center"}}>
+        <ViewUnit
+          subtopic="myhelloiot/testswitch3"
+          format={SwitchIconFormat({icon:faBolt})}
+        />
+      </div>
+      <div style={{flex: "1 1 auto"}}>Light test 3: </div>
+      <div style={{flex: "0 1 auto"}}>
+        <SwitchUnit
+          pubtopic="myhelloiot/testswitch3"
+          puboptions={{ retain: true }}
+          subtopic="myhelloiot/testswitch3"
+        />
+      </div>
+    </div>      
+  </Card>
+</DashboardPage>
 `;
 
 export default lightssampledata;

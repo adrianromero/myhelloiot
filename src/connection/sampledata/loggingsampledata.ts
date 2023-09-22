@@ -40,7 +40,7 @@ const loggingsampledata = `{/* Logging example. */}
         </div>
       </div>
     </Card>
-    <Card className="myhPanelFlex-all">
+    <Card className="myhDashboardPage-all">
       <LogTool subtopic="myhelloiot/testing/#" suboptions={{ qos: 2 }}/>
     </Card>
   </PanelFlex>

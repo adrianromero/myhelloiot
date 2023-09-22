@@ -40,7 +40,7 @@ import {
 
 import * as Babel from '@babel/standalone';
 import { Buffer } from "buffer";
-import { PanelFlex } from "./dashboard/PanelFlex";
+import DashboardPage from "./dashboard/DashboardPage";
 import Dashboard from "./dashboard/Dashboard";
 import DashboardContent from "./dashboard/DashboardContent";
 import InputUnit from "./units/InputUnit";
@@ -124,7 +124,7 @@ const JSXCONTEXT = {
   // HelloIOT Components
   Dashboard,
   DashboardContent,
-  PanelFlex,
+  DashboardPage,
   InputUnit,
   Publisher,
   ButtonMessage,

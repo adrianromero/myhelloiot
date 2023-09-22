@@ -17,29 +17,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 const inputtextsampledata = `{/* Input text example. */}
 
-<Dashboard title="Input text">
-  <PanelFlex>
-    <Card title="Testing topic publication">
-      <InputUnit pubtopic="myhelloiot/testingtopic" />
-    </Card>
-    <Card title="Testing topic pub/sub">
-      <InputUnit
-        pubtopic="myhelloiot/testingtopic"
-        subtopic="myhelloiot/testingtopic"
-      />
-    </Card>
-    <Card title="Testing topic Hexadecimal">
-      <InputUnit
-        pubtopic="myhelloiot/testingtopic"
-        subtopic="myhelloiot/testingtopic"
-        format={HEXValueFormat()}
-      />
-    </Card>
-    <Card title="Testing topic subscription">
-      <InputUnit subtopic="myhelloiot/testingtopic" />
-    </Card>
-  </PanelFlex>
-</Dashboard>
+<DashboardPage title="Input text">
+  <Card title="Testing topic publication">
+    <InputUnit pubtopic="myhelloiot/testingtopic" />
+  </Card>
+  <Card title="Testing topic pub/sub">
+    <InputUnit
+      pubtopic="myhelloiot/testingtopic"
+      subtopic="myhelloiot/testingtopic"
+    />
+  </Card>
+  <Card title="Testing topic Hexadecimal">
+    <InputUnit
+      pubtopic="myhelloiot/testingtopic"
+      subtopic="myhelloiot/testingtopic"
+      format={HEXValueFormat()}
+    />
+  </Card>
+  <Card title="Testing topic subscription">
+    <InputUnit subtopic="myhelloiot/testingtopic" />
+  </Card>
+</DashboardPage>
 `;
 
 export default inputtextsampledata;

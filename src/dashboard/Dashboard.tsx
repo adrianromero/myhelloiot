@@ -27,7 +27,7 @@ import {
   useMQTTContext,
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
-import DashboardContent, { DashboardContentProps } from "./DashboardContent";
+import DashboardContent from "./DashboardContent";
 import ConnectionInfo from "./ConnectionInfo";
 
 import "./Dashboard.css";
@@ -38,7 +38,7 @@ export type DashboardProps = {
   topic?: string;
   disconnectDisabled?: boolean;
   className?: string;
-  children?: React.ReactElement<DashboardContentProps, any>[];
+  children?: React.ReactNode;
 };
 
 const Dashboard: React.FC<DashboardProps> = ({
