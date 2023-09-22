@@ -1,33 +1,25 @@
 {
   "files": {
-    "main.css": "/myhelloiot/static/css/main.fc2057ad.chunk.css",
-    "main.js": "/myhelloiot/static/js/main.cc8e4e06.chunk.js",
-    "runtime-main.js": "/myhelloiot/static/js/runtime-main.e9f18e42.js",
-    "static/css/2.c01a1509.chunk.css": "/myhelloiot/static/css/2.c01a1509.chunk.css",
-    "static/js/2.a6340d73.chunk.js": "/myhelloiot/static/js/2.a6340d73.chunk.js",
-    "static/js/3.b154a4d6.chunk.js": "/myhelloiot/static/js/3.b154a4d6.chunk.js",
-    "index.html": "/myhelloiot/index.html",
+    "main.css": "/myhelloiot/static/css/main.386b7b8c.css",
+    "main.js": "/myhelloiot/static/js/main.4262462d.js",
+    "static/js/522.9d940cee.chunk.js": "/myhelloiot/static/js/522.9d940cee.chunk.js",
+    "static/media/322378_4397472-lq.mp3": "/myhelloiot/static/media/322378_4397472-lq.7f4b7a6d0ebe390dc0b4.mp3",
+    "static/media/myhelloiot.png": "/myhelloiot/static/media/myhelloiot.1389b49d00fae64d956f.png",
+    "static/media/369848_1480854-lq.mp3": "/myhelloiot/static/media/369848_1480854-lq.e1ba820817b1a4ef99aa.mp3",
+    "static/media/128138_1542160-lq.mp3": "/myhelloiot/static/media/128138_1542160-lq.d15febc7540e879c824b.mp3",
     "service-worker.js": "/myhelloiot/service-worker.js",
-    "static/js/2.a6340d73.chunk.js.LICENSE.txt": "/myhelloiot/static/js/2.a6340d73.chunk.js.LICENSE.txt",
-    "static/media/128138_1542160-lq.mp3": "/myhelloiot/static/media/128138_1542160-lq.d15febc7.mp3",
-    "static/media/162467_311243-lq.mp3": "/myhelloiot/static/media/162467_311243-lq.7d1d05b8.mp3",
-    "static/media/249703_3930831-lq.mp3": "/myhelloiot/static/media/249703_3930831-lq.cadb50cc.mp3",
-    "static/media/322378_4397472-lq.mp3": "/myhelloiot/static/media/322378_4397472-lq.7f4b7a6d.mp3",
-    "static/media/333695_1187042-lq.mp3": "/myhelloiot/static/media/333695_1187042-lq.bd5e409d.mp3",
-    "static/media/369848_1480854-lq.mp3": "/myhelloiot/static/media/369848_1480854-lq.e1ba8208.mp3",
-    "static/media/405548_6436863-lq.mp3": "/myhelloiot/static/media/405548_6436863-lq.3d9361ec.mp3",
-    "static/media/486952_6657415-lq.mp3": "/myhelloiot/static/media/486952_6657415-lq.bff58fd1.mp3",
-    "static/media/537061_7117640-lq.mp3": "/myhelloiot/static/media/537061_7117640-lq.5b915627.mp3",
-    "static/media/github.6e526f25.svg": "/myhelloiot/static/media/github.6e526f25.svg",
-    "static/media/myhelloiot.1389b49d.png": "/myhelloiot/static/media/myhelloiot.1389b49d.png",
-    "static/media/ControlGauge.css": "/myhelloiot/static/media/roboto-condensed-v19-latin-regular.fd55075a.woff2",
-    "static/media/themes.svg": "/myhelloiot/static/media/themes.8b0983ed.svg"
+    "static/media/249703_3930831-lq.mp3": "/myhelloiot/static/media/249703_3930831-lq.cadb50cc4753dbf457a6.mp3",
+    "static/media/162467_311243-lq.mp3": "/myhelloiot/static/media/162467_311243-lq.7d1d05b83006dfe22f9c.mp3",
+    "static/media/486952_6657415-lq.mp3": "/myhelloiot/static/media/486952_6657415-lq.bff58fd1c9e55b97441e.mp3",
+    "static/media/333695_1187042-lq.mp3": "/myhelloiot/static/media/333695_1187042-lq.bd5e409d731b3641e3d3.mp3",
+    "static/media/github.svg": "/myhelloiot/static/media/github.6e526f25eb1316c6448fb9b29174a447.svg",
+    "static/media/themes.svg": "/myhelloiot/static/media/themes.8b0983ed3b1bb4457b17b634b89e3aa0.svg",
+    "static/media/405548_6436863-lq.mp3": "/myhelloiot/static/media/405548_6436863-lq.3d9361ec524899c36ef9.mp3",
+    "static/media/537061_7117640-lq.mp3": "/myhelloiot/static/media/537061_7117640-lq.5b915627d7a1acb35f44.mp3",
+    "index.html": "/myhelloiot/index.html"
   },
   "entrypoints": [
-    "static/js/runtime-main.e9f18e42.js",
-    "static/css/2.c01a1509.chunk.css",
-    "static/js/2.a6340d73.chunk.js",
-    "static/css/main.fc2057ad.chunk.css",
-    "static/js/main.cc8e4e06.chunk.js"
+    "static/css/main.386b7b8c.css",
+    "static/js/main.4262462d.js"
   ]
 }
