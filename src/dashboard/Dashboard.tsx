@@ -141,7 +141,7 @@ const Dashboard: React.FC<DashboardProps> = ({
             placement="left"
             closable={false}
             onClose={hideDrawer}
-            visible={visibleDrawer}
+            open={visibleDrawer}
           >
             <Menu
               theme="light"
