@@ -38,7 +38,6 @@ import {
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { ReactComponent as Themes } from "./assets/svg/themes.svg";
 import * as Babel from '@babel/standalone';
 import { Buffer } from "buffer";
 import { PanelFlex } from "./dashboard/PanelFlex";
@@ -119,6 +118,9 @@ const JSXCONTEXT = {
   //NodeObject
   Buffer,
 
+  // Antd Components
+  Card,
+
   // HelloIOT Components
   Dashboard,
   DashboardContent,
@@ -140,9 +142,6 @@ const JSXCONTEXT = {
   SoundAlarmUnit,
   ModalUnit,
 
-  // Antd Components
-  Card,
-
   // Icons
   faUpload,
   faDownload,
@@ -162,7 +161,6 @@ const JSXCONTEXT = {
   faCircleExclamation,
   faPowerOff,
   faSpinner,
-  Themes,
 
   // Format types
   ToIconFormat,
@@ -170,7 +168,7 @@ const JSXCONTEXT = {
   onoffnum,
   onoffst,
 
-  // String Formats
+  // ValueFormats
   StringValueFormat,
   JSONValueFormat,
   HEXValueFormat,
@@ -178,7 +176,7 @@ const JSXCONTEXT = {
   SwitchValueFormat,
   NumberValueFormat,
 
-  // Icon formats
+  // IconFormats
   DimIconFormat,
   SwitchIconFormat,
   BulbIconFormat,
@@ -190,15 +188,7 @@ const JSXCONTEXT = {
   MapJSONBuffer,
   MapJSONIconFormat,
 
-  // Icon value formats
-  SwitchIconValueFormat,
-  BulbIconValueFormat,
-  ThuderboltIconValueFormat,
-  StarIconValueFormat,
-  StringIconValueFormat,
-  NumberIconValueFormat,
-
-  // Gauge Formats
+  // IconFormats Gauges
   DashboardIconFormat,
   LinearIconFormat,
   SimpleIconFormat,
@@ -211,11 +201,19 @@ const JSXCONTEXT = {
   FuelIconFormat,
   ControlIconFormat,
 
-  // Chart Format
+  // IconFormats Chart
   ChartIconFormat,
 
-  // Image Format
+  // IconFormats Image
   ImageIconFormat,
+
+  // IconValueFormats
+  SwitchIconValueFormat,
+  BulbIconValueFormat,
+  ThuderboltIconValueFormat,
+  StarIconValueFormat,
+  StringIconValueFormat,
+  NumberIconValueFormat,
 };
 
 const JSXCONTEXTKEYS: string[] = [];

@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { FileInfo } from "./UploadRaw";
-import basicsampledata from "./basicsampledata";
+import basicsampledata from "./sampledata/basicsampledata";
 import { cyrb53str } from "../CryptFunctions";
 import type { QoS } from "mqtt-packet";
 
