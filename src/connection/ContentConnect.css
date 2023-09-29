@@ -17,12 +17,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .myhConnectionForm-dashboardcss textarea.ant-input.myhUploadRaw-data {
   position: relative;
-  height: calc(100vh - 290px);
+  height: calc(100vh - 238px);
   resize: none;
 }
 
 .myhConnectionForm-dashboard textarea.ant-input.myhUploadRaw-data {
   position: relative;
-  height: calc(100vh - 290px);
+  height: calc(100vh - 238px);
   resize: none;
 }

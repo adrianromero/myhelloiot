@@ -361,59 +361,48 @@ const ConnectStored: React.FC<{
                 label: "Dashboard",
                 key: "4",
                 forceRender: true,
-                children: <Tabs
-                  defaultActiveKey="1"
-                  type="card"
-                  tabPosition="bottom"
-                  size="small"
-                  items={[{
-                    label: "JSX",
-                    key: "3-1",
-                    forceRender: true,
-                    children: <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
-                      <Col xs={0} sm={0} md={0} lg={4} />
-                      <Col xs={24} sm={24} md={24} lg={16}>
-                        <Form.Item
-                          name="dashboard"
-                          rules={[
-                            {
-                              validator: (_, value) =>
-                                value?.data?.trim()
-                                  ? Promise.resolve()
-                                  : Promise.reject(
-                                    new Error(
-                                      "Please upload a dashboard definition file."
-                                    )
-                                  ),
-                            },
-                          ]}
-                        >
-                          <UploadRaw
-                            accept=".jsx"
-                            className="myhConnectionForm-dashboard"
-                          />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={0} sm={0} md={0} lg={4} />
-                    </Row>
-                  }, {
-                    label: "CSS",
-                    key: "3-2",
-                    forceRender: true,
-                    children: <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
-                      <Col xs={0} sm={0} md={0} lg={4} />
-                      <Col xs={24} sm={24} md={24} lg={16}>
-                        <Form.Item name="dashboardcss">
-                          <UploadRaw
-                            accept=".css"
-                            className="myhConnectionForm-dashboardcss"
-                          />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={0} sm={0} md={0} lg={4} />
-                    </Row>
-                  }]}
-                />
+                children: <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                  <Col xs={24} sm={24} md={24} lg={16}>
+                    <Form.Item
+                      name="dashboard"
+                      rules={[
+                        {
+                          validator: (_, value) =>
+                            value?.data?.trim()
+                              ? Promise.resolve()
+                              : Promise.reject(
+                                new Error(
+                                  "Please upload a dashboard definition file."
+                                )
+                              ),
+                        },
+                      ]}
+                    >
+                      <UploadRaw
+                        accept=".jsx"
+                        className="myhConnectionForm-dashboard"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                </Row>
+              }, {
+                label: "Styles",
+                key: "5",
+                forceRender: true,
+                children: <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                  <Col xs={24} sm={24} md={24} lg={16}>
+                    <Form.Item name="dashboardcss">
+                      <UploadRaw
+                        accept=".css"
+                        className="myhConnectionForm-dashboardcss"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                </Row>
               }]} />
             </div>
           </Layout.Content>
