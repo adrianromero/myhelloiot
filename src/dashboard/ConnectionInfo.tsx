@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -20,10 +20,11 @@ import { useDispatch } from "react-redux";
 import SVGIcon from "../format/SVGIcon";
 import { faPowerOff, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
-import { Row, Col, Typography, Button, Divider, Popover, Space } from "antd";
+import { Row, Col, Typography, Button, Divider, Popover } from "antd";
 import { useMQTTContext } from "../mqtt/MQTTProvider";
 import { DispatchDisconnect } from "../AppStoreProvider";
-import ConnectionStatus from "./ConnectionStatus";
+
+import "./ConnectionInfo.css";
 
 const { Text } = Typography;
 
@@ -48,34 +49,22 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
     clientId,
   } = options;
 
-  let toolbar;
-  if (status === "Connected") {
-    toolbar = (
-      <Space>
-        <ConnectionStatus
-          label={options.hostname ?? ""}
-          icon={<SVGIcon icon={faCircleCheck} style={{ color: "#52c41a" }} />}
-        />
-      </Space>
-    );
-  } else {
-    toolbar = (
-      <Space>
-        <ConnectionStatus
-          label={status}
-          icon={
-            <SVGIcon
-              icon={faSpinner}
-              style={{
-                color: "#ffffff",
-                animation: "loadingCircle 1s infinite linear",
-              }}
-            />
-          }
-        />
-      </Space>
-    );
-  }
+  const { label, icon } = (status === "Connected")
+    ? {
+      label: options.hostname ?? "",
+      icon: <SVGIcon icon={faCircleCheck} style={{ color: "#52c41a" }} />
+    }
+    : {
+      label: status,
+      icon: <SVGIcon
+        icon={faSpinner}
+        style={{
+          color: "#ffffff",
+          animation: "loadingCircle 1s infinite linear",
+        }}
+      />
+    };
+
   const popover = (
     <>
       <div style={{ width: 280 }}>
@@ -167,7 +156,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
 
   return (
     <Popover placement="bottomRight" content={popover} trigger="click">
-      <Button type="text">{toolbar}</Button>
+      <Button type="text" ghost><span style={{ color: "darkgray" }}>{label}</span><span className="connectioninfo-buttonicon">{icon}</span></Button>
     </Popover>
   );
 };
