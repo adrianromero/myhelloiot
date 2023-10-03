@@ -15,26 +15,35 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, { useEffect, useState, MouseEvent } from "react";
+import { Buffer } from "buffer";
+import { Button } from "antd";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt/dist/mqtt";
-import { IconValueFormat } from "../format/FormatTypes";
+import {
+  MQTTMessage,
+  useMQTTContext,
+  useMQTTSubscribe,
+} from "../mqtt/MQTTProvider";
+import { ValueFormat, IconValueFormat } from "../format/FormatTypes";
+import "./ButtonUnit.css";
 import { SwitchIconValueFormat } from "../format/IconValueFormat";
-import ButtonTopic from "./ButtonTopic";
 
 export type ButtonUnitProps = {
+  topic?: string;
   pubtopic?: string;
   subtopic?: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
+  format?: ValueFormat | IconValueFormat;
   icon?: React.ReactNode;
-  format?: IconValueFormat;
   className?: string;
   children?: React.ReactNode;
 };
 
 const ButtonUnit: React.FC<ButtonUnitProps> = ({
-  pubtopic = "",
-  subtopic = "",
+  topic = "",
+  pubtopic = topic,
+  subtopic = topic,
   puboptions,
   suboptions,
   format = SwitchIconValueFormat(),
@@ -42,19 +51,45 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
   className = "",
   children,
 }) => {
+  const [{ connected, ready }, { publish }] = useMQTTContext();
+  const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
+
+  useEffect(() => {
+    setBuffer(Buffer.from([]));
+  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  let theicon;
+  if (icon) {
+    theicon = icon;
+  } else if ("toIcon" in format) {
+    let f = format as IconValueFormat;
+    theicon = f.toIcon(buffer);
+  }
+
+  useMQTTSubscribe(
+    subtopic,
+    ({ message }: MQTTMessage) => {
+      setBuffer(message);
+    },
+    suboptions
+  );
+
+  const onClick = (ev: MouseEvent<HTMLElement>) => {
+    const next: Buffer = format.next(buffer);
+    setBuffer(next);
+    publish(pubtopic, next, puboptions);
+  };
+
   return (
-    <ButtonTopic
-      pubtopic={pubtopic}
-      subtopic={subtopic}
-      puboptions={puboptions}
-      suboptions={suboptions}
-      format={format}
-      className={className}
-      icon={icon}
-      iconlabel={format.toIcon}
+    <Button
+      className={`myhButtonUnit ${className}`}
+      type="primary"
+      onClick={onClick}
+      disabled={!connected || !pubtopic}
+      icon={theicon}
     >
       {children}
-    </ButtonTopic>
+    </Button>
   );
 };
 export default ButtonUnit;

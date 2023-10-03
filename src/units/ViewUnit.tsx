@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-20232 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -27,6 +27,7 @@ import { IconFormat } from "../format/FormatTypes";
 import { StringIconFormat } from "../format/IconFormat";
 
 type ViewUnitProps = {
+  topic?: string;
   subtopic?: string;
   suboptions?: IClientSubscribeOptions;
   format?: IconFormat;
@@ -34,7 +35,8 @@ type ViewUnitProps = {
 };
 
 const ViewUnit: React.FC<ViewUnitProps> = ({
-  subtopic = "",
+  topic = "",
+  subtopic = topic,
   suboptions,
   format = StringIconFormat(),
   className = "",

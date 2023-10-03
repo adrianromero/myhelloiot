@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2022 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -18,72 +18,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const pubsubsampledata = `{/* Basic units example. */}
 
 <DashboardPage title="Basic units">
-  <Card title="Temperature pub/sub">
-    <InputUnit 
-      pubtopic="myhelloiot/temperature"
-      puboptions={{ retain: true }}
-      subtopic="myhelloiot/temperature"
-      format={NumberValueFormat({
-        style: "unit",
-        unit: "celsius",
-      })}
-    />
-  </Card>
+  <InputCard
+    title="Temperature pub/sub"
+    topic="myhelloiot/temperature"
+    puboptions={{ retain: true }}
+    format={Celsius()}
+  />
   <Card title="Select temperature">
     <ViewUnit
-      subtopic="myhelloiot/temperature"
-      format={NumberIconFormat({
-        style: "unit",
-        unit: "celsius",
-      })}
+      topic="myhelloiot/temperature"
+      format={Celsius()}
     />
     <SliderUnit
-      pubtopic="myhelloiot/temperature"
+      topic="myhelloiot/temperature"
       puboptions={{ retain: true }}
-      subtopic="myhelloiot/temperature"
-      limits={{ min: -10, max: 60, step: 1 }}
+      format={Celsius()}
     />
   </Card>
   <Card title="Temperature buttons">
-    <ButtonTopic
-      pubtopic="myhelloiot/temperature"
+    <ButtonUnit
+      topic="myhelloiot/temperature"
       puboptions={{ retain: true }}
-      subtopic="myhelloiot/temperature"
-      format={NumberIconValueFormat({
-        style: "unit",
-        unit: "celsius",
-        min: -10,
-        max: 60,
-        step: 1
-      })}
+      format={Celsius()}
       icon="+"
     />
-    <ButtonTopic
-      pubtopic="myhelloiot/temperature"
+    <ButtonUnit
+      topic="myhelloiot/temperature"
       puboptions={{ retain: true }}
-      subtopic="myhelloiot/temperature"
-      format={NumberIconValueFormat({
-        style: "unit",
-        unit: "celsius",
-        min: -10,
-        max: 60,
-        step: -1
-      })}
+      format={Celsius({ step: -1 })}
       icon="-"
     />
   </Card>
-  <Card title="Dashboard gauge card">
-    <ViewUnit
-      subtopic="myhelloiot/temperature"
-      format={DashboardIconFormat(
-        { title: "Dashboard gauge", min: -10, max: 60 },
-        {
-          style: "unit",
-          unit: "celsius",
-        }
-      )}
-    />
-  </Card>
+  <ViewCard 
+    title="Dashboard gauge card"
+    topic="myhelloiot/temperature"
+    format={DashboardIconFormat({
+      title: "Dashboard gauge", 
+      ...Celsius()
+    })}
+  />
 </DashboardPage>
 `;
 

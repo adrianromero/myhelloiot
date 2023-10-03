@@ -17,7 +17,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faStar, faBolt } from "@fortawesome/free-solid-svg-icons";
-import { IconValueFormat, ToIconValueFormat, ONOFF } from "./FormatTypes";
+import {
+  IconValueFormat,
+  ToIconValueFormat,
+  ONOFF,
+  LimitsFormat,
+  NumberFormat,
+  ToIconFormat,
+} from "./FormatTypes";
 import { SwitchIconFormat } from "./IconFormat";
 import {
   SwitchValueFormat,
@@ -45,4 +52,41 @@ export const StringIconValueFormat = (): IconValueFormat =>
 
 export const NumberIconValueFormat = (
   options?: NumberValueFormatOptions
-): IconValueFormat => ToIconValueFormat(NumberValueFormat(options));
+): IconValueFormat & LimitsFormat & NumberFormat => {
+  const valueformat = NumberValueFormat(options);
+  const iconformat = ToIconFormat(valueformat);
+  return {
+    ...valueformat,
+    ...iconformat,
+  };
+};
+
+export const Celsius = (limits: Partial<LimitsFormat>) =>
+  NumberIconValueFormat({
+    style: "unit",
+    unit: "celsius",
+    min: -10,
+    max: 60,
+    step: 1,
+    ...limits,
+  });
+
+export const Fahrenheit = (limits: Partial<LimitsFormat>) =>
+  NumberIconValueFormat({
+    style: "unit",
+    unit: "fahrenheit",
+    min: 14,
+    max: 140,
+    step: 1,
+    ...limits,
+  });
+
+export const KilometerPerHour = (limits: Partial<LimitsFormat>) =>
+  NumberIconValueFormat({
+    style: "unit",
+    unit: "kilometer-per-hour",
+    min: 0,
+    max: 180,
+    step: 10,
+    ...limits,
+  });

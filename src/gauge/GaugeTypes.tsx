@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2022 Adrián Romero
+Copyright (C) 2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -15,10 +15,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-.myhButtonTopic.ant-btn {
-  font-size: 200%;
-  font-weight: 800;
-  width: 100%;
-  height: unset;
-  margin-bottom: 4px;
+export type RequiredGaugeProps = {
+  min: number;
+  max: number;
+  step: number;
+  format: (x: number) => string;
 }
+
+export type GaugeProps = Partial<RequiredGaugeProps>;
+
+export const GaugeFormat = (options?: Intl.NumberFormatOptions) => {
+  const locale = navigator.language;
+  const intlvalue = new Intl.NumberFormat(locale, options);
+  return (x: number) => intlvalue.format(x);
+}
+
+export const defaultGaugeFormat = GaugeFormat({});

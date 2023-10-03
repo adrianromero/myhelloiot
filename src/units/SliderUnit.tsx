@@ -24,23 +24,25 @@ import {
   useMQTTContext,
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
-import { LIMITS } from "../format/FormatTypes";
+import { DefaultLimits, LimitsFormat } from "../format/FormatTypes";
 
 type SliderUnitProps = {
+  topic?: string
   pubtopic?: string;
   subtopic?: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
-  limits?: LIMITS;
+  format?: LimitsFormat;
   className?: string;
 };
 
 const SliderUnit: React.FC<SliderUnitProps> = ({
-  pubtopic = "",
-  subtopic = "",
+  topic = "",
+  pubtopic = topic,
+  subtopic = topic,
   puboptions,
   suboptions,
-  limits = { min: 0, max: 100, step: 1 },
+  format = DefaultLimits,
   className = "",
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();
@@ -70,9 +72,9 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
   return (
     <Slider
       value={Number(buffer.toString())}
-      min={limits.min}
-      max={limits.max}
-      step={limits.step}
+      min={format.min}
+      max={format.max}
+      step={format.step}
       onChange={onChange}
       onAfterChange={onAfterChange}
       disabled={!connected}

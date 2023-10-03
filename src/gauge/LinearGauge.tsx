@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { padvalue } from "./svgdraw";
+import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
 import Sections, { Section } from "./Sections";
 import "./LinearGauge.css";
 
@@ -47,30 +48,25 @@ import "./LinearGauge.css";
 
 export type LinearGaugeProps = {
   value?: number;
-  valueformat?: Intl.NumberFormatOptions;
   title?: string;
   className?: string;
-  min?: number;
-  max?: number;
-  step?: number;
   labelstep?: number;
   sections?: Section[];
-};
+} & GaugeProps;
 
 const LinearGauge: React.FC<LinearGaugeProps> = ({
   value,
-  valueformat,
   title = "",
   className = "",
+  sections = [],
   min = 0,
   max = 100,
-  step = 5,
+  step = 1,
   labelstep = 10,
-  sections = [],
+  format = defaultGaugeFormat
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
-  const intlvalue = new Intl.NumberFormat(locale, valueformat);
 
   let width: number;
   let formatvalue: string;
@@ -79,7 +75,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
     formatvalue = "";
   } else {
     width = padvalue(min, max, 160)(value);
-    formatvalue = intlvalue.format(value);
+    formatvalue = format(value);
   }
 
   const lines = [];

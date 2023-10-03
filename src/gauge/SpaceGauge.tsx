@@ -17,29 +17,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { padvalue, arcpath, radians } from "./svgdraw";
+import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
+
 import "./SpaceGauge.css";
 
 export type SpaceGaugeProps = {
   value?: number;
-  valueformat?: Intl.NumberFormatOptions;
   title?: string;
   className?: string;
-  min?: number;
-  max?: number;
-  step?: number;
-};
+} & GaugeProps;
 
 const SpaceGauge: React.FC<SpaceGaugeProps> = ({
   value,
-  valueformat,
   title = "",
   className = "",
   min = 0,
   max = 100,
+  format = defaultGaugeFormat
 }) => {
-  const locale = navigator.language;
-  const intlvalue = new Intl.NumberFormat(locale, valueformat);
-
   const startangle = 90;
   const endangle = 360;
 
@@ -57,7 +52,7 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
     formatvalue = "";
   } else {
     arcvaluerad = padvalue(min, max, arctotalrad)(value);
-    formatvalue = intlvalue.format(value);
+    formatvalue = format(value);
   }
 
   return (

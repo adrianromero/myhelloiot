@@ -44,12 +44,11 @@ import DashboardPage from "./dashboard/DashboardPage";
 import Dashboard from "./dashboard/Dashboard";
 import DashboardContent from "./dashboard/DashboardContent";
 import InputUnit from "./units/InputUnit";
+import { createComponentCard } from "./units/ComponentCard";
 import LogUnit from "./units/LogUnit";
 import LogTool from "./units/LogTool";
 import Publisher from "./units/Publisher";
-import ButtonMessage from "./units/ButtonMessage";
 import ButtonUnit from "./units/ButtonUnit";
-import ButtonTopic from "./units/ButtonTopic";
 import SwitchUnit from "./units/SwitchUnit";
 import ViewUnit from "./units/ViewUnit";
 import SliderUnit from "./units/SliderUnit";
@@ -66,6 +65,7 @@ import {
   onoffst,
 } from "./format/FormatTypes";
 import {
+  MessageValueFormat,
   StringValueFormat,
   JSONValueFormat,
   HEXValueFormat,
@@ -92,6 +92,9 @@ import {
   StarIconValueFormat,
   StringIconValueFormat,
   NumberIconValueFormat,
+  Celsius,
+  Fahrenheit,
+  KilometerPerHour
 } from "./format/IconValueFormat";
 import {
   DashboardIconFormat,
@@ -126,13 +129,16 @@ const JSXCONTEXT = {
   DashboardContent,
   DashboardPage,
   InputUnit,
+  InputCard: createComponentCard(InputUnit),
   Publisher,
-  ButtonMessage,
   ButtonUnit,
-  ButtonTopic,
+  ButtonCard: createComponentCard(ButtonUnit),
   SwitchUnit,
+  SwitchCard: createComponentCard(SwitchUnit),
   ViewUnit,
+  ViewCard: createComponentCard(ViewUnit),
   SliderUnit,
+  SliderCard: createComponentCard(SliderUnit),
   SoundUnit,
   LogUnit,
   LogTool,
@@ -169,12 +175,18 @@ const JSXCONTEXT = {
   onoffst,
 
   // ValueFormats
+  MessageValueFormat,
   StringValueFormat,
   JSONValueFormat,
   HEXValueFormat,
   Base64ValueFormat,
   SwitchValueFormat,
   NumberValueFormat,
+
+  // Units
+  Celsius,
+  Fahrenheit,
+  KilometerPerHour,
 
   // IconFormats
   DimIconFormat,

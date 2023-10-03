@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2022 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -17,28 +17,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useState } from "react";
 import { padvalue } from "./svgdraw";
+import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
 import "./LiquidGauge.css";
 
 export type LiquidGaugeProps = {
   value?: number;
-  valueformat?: Intl.NumberFormatOptions;
   title?: string;
   className?: string;
-  min?: number;
-  max?: number;
-  step?: number;
-};
+} & GaugeProps;
 
 const LiquidGauge: React.FC<LiquidGaugeProps> = ({
   value,
-  valueformat,
   title = "",
   className = "",
   min = 0,
   max = 100,
+  format = defaultGaugeFormat
 }) => {
-  const locale = navigator.language;
-  const intlvalue = new Intl.NumberFormat(locale, valueformat);
   const [componentId] = useState<number>(() => Math.random());
 
   const r1 = 55;
@@ -54,7 +49,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
   } else {
     yvalue = padvalue(min, max, r2 * 2)(value);
     yvalue = centery + r2 - yvalue;
-    formatvalue = intlvalue.format(value);
+    formatvalue = format(value);
   }
 
   return (
@@ -96,7 +91,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
         x={100}
         y={75}
         textAnchor="middle"
-        dominan-baseline="hanging"
+        dominant-baseline="hanging"
         className="liquidgauge-title liquidgauge-title_1"
       >
         {title}

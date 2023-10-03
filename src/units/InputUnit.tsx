@@ -31,7 +31,8 @@ import { StringValueFormat } from "../format/ValueFormat";
 
 import "./InputUnit.css";
 
-type InputUnitProps = {
+export type InputUnitProps = {
+  topic?: string;
   pubtopic?: string;
   subtopic?: string;
   puboptions?: IClientPublishOptions;
@@ -43,8 +44,9 @@ type InputUnitProps = {
 type MQTTValue = { mqttValue: string };
 
 const InputUnit: React.FC<InputUnitProps> = ({
-  pubtopic = "",
-  subtopic = "",
+  topic = "",
+  pubtopic = topic,
+  subtopic = topic,
   puboptions,
   suboptions,
   format = StringValueFormat(),

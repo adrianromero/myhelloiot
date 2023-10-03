@@ -16,8 +16,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { Buffer } from "buffer";
-import { ValueFormat, ONOFF, onoffnum, LIMITS, limits100 } from "./FormatTypes";
+import {
+  ValueFormat,
+  ONOFF,
+  onoffnum,
+  LimitsFormat,
+  NumberFormat,
+  DefaultLimits,
+} from "./FormatTypes";
 import { padsegment } from "../gauge/svgdraw";
+
+export const MessageValueFormat = (msg: string): ValueFormat => ({
+  toDisplay: (b: Buffer) => msg,
+  fromDisplay: (s: string) => Buffer.from(msg),
+  className: () => "",
+  next: (b: Buffer) => Buffer.from(msg),
+  prev: (b: Buffer) => Buffer.from(msg),
+});
 
 export const StringValueFormat = (): ValueFormat => ({
   toDisplay: (b: Buffer) => b.toString(),
@@ -71,12 +86,13 @@ export const SwitchValueFormat = (
 const getCharClass: (s?: string) => string = (s) =>
   s ? "[" + s.split("").join("][") + "]" : "";
 
-export type NumberValueFormatOptions = Intl.NumberFormatOptions & LIMITS;
+export type NumberValueFormatOptions = Intl.NumberFormatOptions &
+  Partial<LimitsFormat>;
 
 export const NumberValueFormat = (
   options?: NumberValueFormatOptions
-): ValueFormat => {
-  const { min, max, step } = { ...limits100, ...options };
+): ValueFormat & LimitsFormat & NumberFormat => {
+  const { min, max, step }: LimitsFormat = { ...DefaultLimits, ...options };
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale, options);
 
@@ -109,6 +125,10 @@ export const NumberValueFormat = (
   const pad = padsegment(min, max);
 
   return {
+    min,
+    max,
+    step,
+    format: intl.format,
     toDisplay: (b: Buffer) => {
       const s = b.toString();
       return s ? intl.format(Number(s)) : "";

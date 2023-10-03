@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React from "react";
 import { arcpath, padvalue, radians } from "./svgdraw";
 import Arcs, { Arc } from "./Arcs";
+import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
 import "./MetroGauge.css";
 
 // const arcstest: Arc[] = [
@@ -47,34 +48,29 @@ import "./MetroGauge.css";
 
 export type MetroGaugeProps = {
   value?: number;
-  valueformat?: Intl.NumberFormatOptions;
   title?: string;
   className?: string;
-  min?: number;
-  max?: number;
-  step?: number;
   labelstep?: number;
   startangle?: number;
   endangle?: number;
   arcs?: Arc[];
-};
+} & GaugeProps;
 
 const MetroGauge: React.FC<MetroGaugeProps> = ({
   value,
-  valueformat,
   title = "",
   className = "",
-  min = 0,
-  max = 100,
-  step = 2,
   labelstep = 5,
   startangle = 135,
   endangle = 405,
   arcs = [],
+  min = 0,
+  max = 100,
+  step = 1,
+  format = defaultGaugeFormat
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
-  const intlvalue = new Intl.NumberFormat(locale, valueformat);
 
   const r1 = 55;
   const centerx = 100;
@@ -90,7 +86,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
   } else {
     arcvalue = padvalue(min, max, arctotal)(value);
     arcvalue += startangle - 270;
-    formatvalue = intlvalue.format(value);
+    formatvalue = format(value);
   }
 
   const lines = [];

@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { arcpath, padvalue, radians } from "./svgdraw";
+import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
 import Arcs, { Arc } from "./Arcs";
 import "./DashboardGauge.css";
 
@@ -47,30 +48,26 @@ import "./DashboardGauge.css";
 
 export type DashboardGaugeProps = {
   value?: number;
-  valueformat?: Intl.NumberFormatOptions;
   title?: string;
   className?: string;
-  min?: number;
-  max?: number;
   startangle?: number;
   endangle?: number;
   arcs?: Arc[];
-};
+} & GaugeProps;
 
 const DashboardGauge: React.FC<DashboardGaugeProps> = ({
   value,
-  valueformat,
   title = "",
   className = "",
-  min = 0,
-  max = 100,
   startangle = 180,
   endangle = 360,
   arcs = [],
+  min = 0,
+  max = 100,
+  format = defaultGaugeFormat
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
-  const intlvalue = new Intl.NumberFormat(locale, valueformat);
 
   const r1 = 60;
   const centerx = 100;
@@ -86,7 +83,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
     formatvalue = "";
   } else {
     arcvaluerad = padvalue(min, max, arctotalrad)(value);
-    formatvalue = intlvalue.format(value);
+    formatvalue = format(value);
   }
 
   return (
