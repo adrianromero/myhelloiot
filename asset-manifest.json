@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/myhelloiot/static/css/main.386b7b8c.css",
-    "main.js": "/myhelloiot/static/js/main.4262462d.js",
+    "main.css": "/myhelloiot/static/css/main.e90a2e55.css",
+    "main.js": "/myhelloiot/static/js/main.55f40bcb.js",
     "static/js/522.9d940cee.chunk.js": "/myhelloiot/static/js/522.9d940cee.chunk.js",
     "static/media/322378_4397472-lq.mp3": "/myhelloiot/static/media/322378_4397472-lq.7f4b7a6d0ebe390dc0b4.mp3",
     "static/media/myhelloiot.png": "/myhelloiot/static/media/myhelloiot.1389b49d00fae64d956f.png",
@@ -13,13 +13,12 @@
     "static/media/486952_6657415-lq.mp3": "/myhelloiot/static/media/486952_6657415-lq.bff58fd1c9e55b97441e.mp3",
     "static/media/333695_1187042-lq.mp3": "/myhelloiot/static/media/333695_1187042-lq.bd5e409d731b3641e3d3.mp3",
     "static/media/github.svg": "/myhelloiot/static/media/github.6e526f25eb1316c6448fb9b29174a447.svg",
-    "static/media/themes.svg": "/myhelloiot/static/media/themes.8b0983ed3b1bb4457b17b634b89e3aa0.svg",
     "static/media/405548_6436863-lq.mp3": "/myhelloiot/static/media/405548_6436863-lq.3d9361ec524899c36ef9.mp3",
     "static/media/537061_7117640-lq.mp3": "/myhelloiot/static/media/537061_7117640-lq.5b915627d7a1acb35f44.mp3",
     "index.html": "/myhelloiot/index.html"
   },
   "entrypoints": [
-    "static/css/main.386b7b8c.css",
-    "static/js/main.4262462d.js"
+    "static/css/main.e90a2e55.css",
+    "static/js/main.55f40bcb.js"
   ]
 }
