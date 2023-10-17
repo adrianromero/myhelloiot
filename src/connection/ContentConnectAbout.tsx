@@ -88,7 +88,7 @@ const ContentConnectAbout: React.FC<{
           application and it can run on your favorite browser or installed on
           Windows, MacOS, Linux or, and even in mobile devices iOS or Android.
         </Paragraph>
-        <Paragraph>
+        <Paragraph style={{ display: "flex", justifyContent: "center" }}>
           <Image src={myhelloiot} width={480} />
         </Paragraph>
         <Title level={2}>Getting started</Title>
