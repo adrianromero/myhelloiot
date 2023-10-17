@@ -90,3 +90,13 @@ export const KilometerPerHour = (limits: Partial<LimitsFormat>) =>
     step: 10,
     ...limits,
   });
+
+export const Percent = (limits: Partial<LimitsFormat>) =>
+  NumberIconValueFormat({
+    style: "unit",
+    unit: "percent",
+    min: 0,
+    max: 100,
+    step: 1,
+    ...limits,
+  });

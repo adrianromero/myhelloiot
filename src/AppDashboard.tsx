@@ -94,7 +94,8 @@ import {
   NumberIconValueFormat,
   Celsius,
   Fahrenheit,
-  KilometerPerHour
+  KilometerPerHour,
+  Percent
 } from "./format/IconValueFormat";
 import {
   DashboardIconFormat,
@@ -187,6 +188,7 @@ const JSXCONTEXT = {
   Celsius,
   Fahrenheit,
   KilometerPerHour,
+  Percent,
 
   // IconFormats
   DimIconFormat,
