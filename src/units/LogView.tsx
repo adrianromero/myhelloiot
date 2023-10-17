@@ -56,7 +56,7 @@ const LogView: React.FC<LogViewProps> = ({
       dataSource={messages}
       renderItem={(item) => (
         <List.Item>
-          <Paragraph className="myhLogView-message" copyable>
+          <Paragraph className="myhLogView-message" copyable ellipsis>
             {format.toDisplay(item.message)}
           </Paragraph>
           <div className="myhLogView-tags">

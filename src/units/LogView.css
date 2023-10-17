@@ -33,7 +33,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   font-size: 85%;
   font-family: monospace;
   max-width: 350px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
 }
