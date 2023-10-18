@@ -41,8 +41,10 @@ const { Title, Paragraph, Link } = Typography;
 const ContentConnectAbout: React.FC<{
   form: FormInstance<ConnectInfoForm>;
 }> = ({ form }) => {
+  const [messageApi, contextHolder] = message.useMessage();
   return (
     <>
+      {contextHolder}
       <Link
         href="https://github.com/adrianromero/myhelloiot"
         target="_blank"
@@ -101,7 +103,7 @@ const ContentConnectAbout: React.FC<{
             size="small"
             icon={<SVGIcon icon={faPencil} />}
             onClick={() => {
-              message.info("url: wss://broker.emqx.io:8084/mqtt");
+              messageApi.info("url: wss://broker.emqx.io:8084/mqtt");
               form.setFieldsValue({
                 url: "wss://broker.emqx.io:8084/mqtt",
                 username: "",
@@ -117,7 +119,7 @@ const ContentConnectAbout: React.FC<{
             size="small"
             icon={<SVGIcon icon={faPencil} />}
             onClick={() => {
-              message.info("url: wss://test.mosquitto.org:8081");
+              messageApi.info("url: wss://test.mosquitto.org:8081");
               form.setFieldsValue({
                 url: "wss://test.mosquitto.org:8081",
                 username: "",
@@ -147,7 +149,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  message.info("dashboard: basic.jsx");
+                  messageApi.info("dashboard: basic.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "basic.jsx",
@@ -168,7 +170,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  message.info("dashboard: inputtext.jsx");
+                  messageApi.info("dashboard: inputtext.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "inputtext.jsx",
@@ -189,7 +191,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  message.info("dashboard: lights.jsx");
+                  messageApi.info("dashboard: lights.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "lights.jsx",
@@ -210,7 +212,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  message.info("dashboard: gauges.jsx");
+                  messageApi.info("dashboard: gauges.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "gauges.jsx",
@@ -231,7 +233,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  message.info("dashboard: logging.jsx");
+                  messageApi.info("dashboard: logging.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "logging.jsx",
@@ -252,7 +254,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  message.info("dashboard: pubsub.jsx");
+                  messageApi.info("dashboard: pubsub.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "pubsub.jsx",
@@ -273,7 +275,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  message.info("dashboard: mosquitto.jsx");
+                  messageApi.info("dashboard: mosquitto.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "mosquitto.jsx",
