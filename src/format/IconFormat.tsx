@@ -24,7 +24,7 @@ import {
   ValueFormat,
   ToIconFormat,
   ONOFF,
-  onoffnum,
+  ONOFFNumber,
 } from "./FormatTypes";
 import {
   NumberValueFormat,
@@ -74,7 +74,7 @@ export type SwitchIconFormatProps = {
 };
 
 export const SwitchIconFormat = (props?: SwitchIconFormatProps): IconFormat => {
-  const { icon, onoff } = { icon: faLightbulb, onoff: onoffnum, ...props };
+  const { icon, onoff } = { icon: faLightbulb, onoff: ONOFFNumber, ...props };
   return {
     toIcon: (b: Buffer) =>
       onoff.on.equals(b) ? (

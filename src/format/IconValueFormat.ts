@@ -40,7 +40,7 @@ export type SwitchIconValueFormatProps = {
 export const SwitchIconValueFormat = (
   props?: SwitchIconValueFormatProps
 ): IconValueFormat =>
-  ToIconValueFormat(SwitchValueFormat(props), SwitchIconFormat(props));
+  ToIconValueFormat(SwitchValueFormat(props?.onoff), SwitchIconFormat(props));
 export const BulbIconValueFormat = SwitchIconValueFormat;
 export const ThuderboltIconValueFormat = () =>
   SwitchIconValueFormat({ icon: faBolt });

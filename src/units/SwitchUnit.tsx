@@ -24,7 +24,7 @@ import {
   useMQTTContext,
   useMQTTSubscribe,
 } from "../mqtt/MQTTProvider";
-import { ONOFF, onoffnum } from "../format/FormatTypes";
+import { ONOFF, ONOFFNumber } from "../format/FormatTypes";
 
 type SwitchUnitProps = {
   pubtopic?: string;
@@ -40,7 +40,7 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   subtopic = "",
   puboptions,
   suboptions,
-  onoff = onoffnum,
+  onoff = ONOFFNumber,
   className,
 }) => {
   const [{ connected, ready }, { publish }] = useMQTTContext();

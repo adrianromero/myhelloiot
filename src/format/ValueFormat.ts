@@ -19,7 +19,7 @@ import { Buffer } from "buffer";
 import {
   ValueFormat,
   ONOFF,
-  onoffnum,
+  ONOFFNumber,
   LimitsFormat,
   NumberFormat,
   DefaultLimits,
@@ -66,14 +66,7 @@ export const Base64ValueFormat = (): ValueFormat => ({
   prev: (b: Buffer) => b,
 });
 
-export type SwitchValueFormatProps = {
-  onoff?: ONOFF;
-};
-
-export const SwitchValueFormat = (
-  props?: SwitchValueFormatProps
-): ValueFormat => {
-  const { onoff } = { onoff: onoffnum, ...props };
+export const SwitchValueFormat = (onoff: ONOFF = ONOFFNumber): ValueFormat => {
   return {
     toDisplay: (b: Buffer) => (onoff.on.equals(b) ? "ON" : "OFF"),
     fromDisplay: (s: string) => (s === "ON" ? onoff.on : onoff.off),

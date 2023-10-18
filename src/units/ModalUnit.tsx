@@ -20,7 +20,7 @@ import { Buffer } from "buffer";
 import { IClientSubscribeOptions } from "mqtt/dist/mqtt";
 import { Modal } from "antd";
 import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { ONOFF, onoffnum } from "../format/FormatTypes";
+import { ONOFF, ONOFFNumber } from "../format/FormatTypes";
 import { useAppStoreProperty } from "../AppStoreProvider";
 
 type ModalUnitProps = {
@@ -38,7 +38,7 @@ const ModalUnit: React.FC<ModalUnitProps> = ({
   instancekey = "",
   subtopic = "",
   suboptions,
-  onoff = onoffnum,
+  onoff = ONOFFNumber,
   title,
   cancelable = true,
   className = "",

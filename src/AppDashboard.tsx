@@ -61,8 +61,8 @@ import ModalUnit from "./units/ModalUnit";
 import {
   ToIconFormat,
   ToIconValueFormat,
-  onoffnum,
-  onoffst,
+  ONOFFNumber,
+  ONOFFStr,
 } from "./format/FormatTypes";
 import {
   MessageValueFormat,
@@ -172,8 +172,8 @@ const JSXCONTEXT = {
   // Format types
   ToIconFormat,
   ToIconValueFormat,
-  onoffnum,
-  onoffst,
+  ONOFFNumber,
+  ONOFFStr,
 
   // ValueFormats
   MessageValueFormat,

@@ -50,12 +50,12 @@ export type ONOFF = {
   off: Buffer;
 };
 
-export const onoffnum: ONOFF = {
+export const ONOFFNumber: ONOFF = {
   on: Buffer.from("1"),
   off: Buffer.from("0"),
 };
 
-export const onoffst: ONOFF = {
+export const ONOFFStr: ONOFF = {
   on: Buffer.from("on"),
   off: Buffer.from("off"),
 };
