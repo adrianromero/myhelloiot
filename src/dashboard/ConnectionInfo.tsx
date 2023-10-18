@@ -156,7 +156,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
 
   return (
     <Popover placement="bottomRight" content={popover} trigger="click">
-      <Button type="text" ghost><span style={{ color: "darkgray" }}>{label}</span><span className="connectioninfo-buttonicon">{icon}</span></Button>
+      <Button type="text"><span style={{ color: "darkgray" }}>{label}</span><span className="connectioninfo-buttonicon">{icon}</span></Button>
     </Popover>
   );
 };
