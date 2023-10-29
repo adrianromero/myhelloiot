@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/myhelloiot/static/css/main.e90a2e55.css",
-    "main.js": "/myhelloiot/static/js/main.55f40bcb.js",
+    "main.css": "/myhelloiot/static/css/main.11cb52d3.css",
+    "main.js": "/myhelloiot/static/js/main.217c150f.js",
     "static/js/522.9d940cee.chunk.js": "/myhelloiot/static/js/522.9d940cee.chunk.js",
     "static/media/322378_4397472-lq.mp3": "/myhelloiot/static/media/322378_4397472-lq.7f4b7a6d0ebe390dc0b4.mp3",
     "static/media/myhelloiot.png": "/myhelloiot/static/media/myhelloiot.1389b49d00fae64d956f.png",
@@ -18,7 +18,7 @@
     "index.html": "/myhelloiot/index.html"
   },
   "entrypoints": [
-    "static/css/main.e90a2e55.css",
-    "static/js/main.55f40bcb.js"
+    "static/css/main.11cb52d3.css",
+    "static/js/main.217c150f.js"
   ]
 }
