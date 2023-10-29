@@ -92,6 +92,7 @@ import {
   StarIconValueFormat,
   StringIconValueFormat,
   NumberIconValueFormat,
+  Numeric,
   Celsius,
   Fahrenheit,
   KilometerPerHour,
@@ -185,6 +186,7 @@ const JSXCONTEXT = {
   NumberValueFormat,
 
   // Units
+  Numeric,
   Celsius,
   Fahrenheit,
   KilometerPerHour,
