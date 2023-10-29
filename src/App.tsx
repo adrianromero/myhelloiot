@@ -67,6 +67,8 @@ const MQTTApp: React.FC<{}> = () => {
         const {
           url,
           keepalive,
+          protocolVersion,
+          clean,
           connectTimeout,
           reconnectPeriod,
           onlinetopic,
@@ -87,6 +89,9 @@ const MQTTApp: React.FC<{}> = () => {
             password,
             clientId,
             keepalive,
+            protocolId: protocolVersion === 3 ? "MQIsdp" : "MQTT",
+            protocolVersion,
+            clean,
             connectTimeout,
             reconnectPeriod,
           },

@@ -203,11 +203,11 @@ const ConnectRemote: React.FC<{
                       <Input autoComplete="off" disabled />
                     </Form.Item>
                   </Col>
-                  <Col xs={0} sm={0} md={12} lg={12} />{" "}
+                  <Col xs={0} sm={0} md={12} lg={12} />
                 </Row>
               }]} />
             </div>
-          </Layout.Content>{" "}
+          </Layout.Content>
         </Layout>
       </Form>
     </>

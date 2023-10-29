@@ -65,6 +65,17 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
       />
     };
 
+  let protocolVersionLabel;
+  if (protocolVersion === 3) {
+    protocolVersionLabel = "3.1";
+  } else if (protocolVersion === 4) {
+    protocolVersionLabel = "3.1.1";
+  } else if (protocolVersion === 5) {
+    protocolVersionLabel = "5.0";
+  } else {
+    protocolVersionLabel = "Unknonw";
+  }
+
   const popover = (
     <>
       <div style={{ width: 280 }}>
@@ -124,7 +135,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
           </Col>
           <Col flex="auto">
             <Text type="secondary" strong>
-              {protocolId} {protocolVersion}
+              {protocolId} {protocolVersionLabel}
             </Text>
           </Col>
         </Row>

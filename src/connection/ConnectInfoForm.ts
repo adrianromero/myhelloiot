@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { FileInfo } from "./UploadRaw";
-import type { QoS } from "mqtt-packet";
+import type { QoS, IConnectPacket } from "mqtt-packet";
 
 export type ConnectInfoForm = {
   url: string;
@@ -24,6 +24,8 @@ export type ConnectInfoForm = {
   password: string;
   clientId: string;
   keepalive: number;
+  protocolVersion: IConnectPacket["protocolVersion"];
+  clean: boolean;
   connectTimeout: number;
   reconnectPeriod: number;
   onlinetopic: string;

@@ -26,6 +26,8 @@ import {
   Radio,
   Layout,
   Tabs,
+  Checkbox,
+  Select,
 } from "antd";
 import { useDispatch } from "react-redux";
 import { DispatchConnect, DispatchLoadConnectInfo } from "../AppStoreProvider";
@@ -86,6 +88,8 @@ const ConnectStored: React.FC<{
           const connectInfo: ConnectInfo = {
             url: connectInfoForm.url,
             keepalive: connectInfoForm.keepalive,
+            protocolVersion: connectInfoForm.protocolVersion,
+            clean: connectInfoForm.clean,
             connectTimeout: connectInfoForm.connectTimeout,
             reconnectPeriod: connectInfoForm.reconnectPeriod,
             onlinetopic: connectInfoForm.onlinetopic,
@@ -260,6 +264,67 @@ const ConnectStored: React.FC<{
                       ]}
                     >
                       <InputNumber autoComplete="off" />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={0} sm={0} md={0} lg={4} />
+
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                  <Col
+                    xs={24}
+                    sm={6}
+                    md={6}
+                    lg={4}
+                    className="ant-form-item-label"
+                  >
+                    <label
+                      htmlFor="protocolVersion"
+                      className="ant-form-item-required"
+                      title="Protocol version"
+                    >
+                      Protocol version
+                    </label>
+                  </Col>
+                  <Col xs={24} sm={18} md={6} lg={4}>
+                    <Form.Item
+                      name="protocolVersion"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please define a Protocol version.",
+                        },
+                      ]}
+                    >
+                      <Select<number> defaultValue={4}
+                        style={{ width: 120 }}
+                        options={[
+                          { value: 3, label: 'MQIsdp 3.1' },
+                          { value: 4, label: 'MQTT 3.1.1' },
+                          { value: 5, label: 'MQTT 5.0' }
+                        ]}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col
+                    xs={24}
+                    sm={6}
+                    md={6}
+                    lg={4}
+                    className="ant-form-item-label"
+                  >
+                    <label
+                      htmlFor="clean"
+                      className="ant-form-item-required"
+                      title="Clean session"
+                    >
+                      Clean session
+                    </label>
+                  </Col>
+                  <Col xs={24} sm={18} md={6} lg={4}>
+                    <Form.Item
+                      name="clean"
+                      valuePropName="checked"
+                    >
+                      <Checkbox />
                     </Form.Item>
                   </Col>
                   <Col xs={0} sm={0} md={0} lg={4} />
