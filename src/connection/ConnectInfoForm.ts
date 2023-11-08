@@ -28,8 +28,11 @@ export type ConnectInfoForm = {
   clean: boolean;
   connectTimeout: number;
   reconnectPeriod: number;
-  onlinetopic: string;
-  onlineqos: QoS;
+  will: boolean;
+  willtopic: string;
+  willqos: QoS;
+  willretain: boolean;
+  willpayload: string;
   dashboard: FileInfo;
   dashboardcss: FileInfo;
 };

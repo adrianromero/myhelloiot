@@ -27,8 +27,11 @@ export type ConnectInfo = {
   clean: boolean;
   connectTimeout: number;
   reconnectPeriod: number;
-  onlinetopic: string;
-  onlineqos: QoS;
+  will: boolean;
+  willtopic: string;
+  willqos: QoS;
+  willretain: boolean;
+  willpayload: string;
   dashboard: FileInfo;
   dashboardcss: FileInfo;
 };
@@ -40,8 +43,11 @@ export const defaultConnectInfo: ConnectInfo = {
   clean: true,
   connectTimeout: 30000,
   reconnectPeriod: 1000,
-  onlinetopic: "",
-  onlineqos: 0,
+  will: false,
+  willtopic: "",
+  willqos: 0,
+  willretain: false,
+  willpayload: "",
   dashboard: {
     name: "basic.jsx",
     type: "text/jsx",

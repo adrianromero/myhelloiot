@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useEffect } from "react";
 import { ConfigProvider } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
+import { Buffer } from "buffer";
 import AppStoreProvider, {
   AppStoreValue,
   DispatchLoadConnectInfo,
@@ -26,7 +27,7 @@ import ConnectStored from "./connection/ConnectStored";
 import ConnectRemote from "./connection/ConnectRemote";
 import AppDashboard from "./AppDashboard";
 import { ConnectInfo, loadConnectInfo } from "./connection/ConnectionInfo";
-import MQTTProvider, { OnlineInfo, useMQTTContext } from "./mqtt/MQTTProvider";
+import MQTTProvider, { useMQTTContext } from "./mqtt/MQTTProvider";
 import AppError from "./AppError";
 import "antd/dist/reset.css";
 import "./assets/main.css";
@@ -71,19 +72,14 @@ const MQTTApp: React.FC<{}> = () => {
           clean,
           connectTimeout,
           reconnectPeriod,
-          onlinetopic,
-          onlineqos,
+          will,
+          willtopic,
+          willqos,
+          willretain,
+          willpayload
         } = connectInfo;
-        const online: OnlineInfo | undefined = onlinetopic
-          ? {
-            topic: onlinetopic,
-            qos: onlineqos,
-            retain: true,
-          }
-          : undefined;
         connect({
           url,
-          online,
           options: {
             username,
             password,
@@ -94,6 +90,12 @@ const MQTTApp: React.FC<{}> = () => {
             clean,
             connectTimeout,
             reconnectPeriod,
+            will: will ? {
+              topic: willtopic,
+              qos: willqos,
+              retain: willretain,
+              payload: Buffer.from(willpayload || '')
+            } : undefined
           },
         });
       } else {

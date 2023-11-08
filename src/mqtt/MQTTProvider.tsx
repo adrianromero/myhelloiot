@@ -45,11 +45,9 @@ export type MQTTStatus =
   | "Reconnecting"
   | "Disconnecting";
 
-export type OnlineInfo = { topic: string; qos: QoS; retain: boolean };
 
 export type MQTTConnectInfo = {
   url: string;
-  online?: OnlineInfo;
   options?: IClientOptions;
 };
 
@@ -73,7 +71,7 @@ export type MQTTContextValue = [
     options: MQTTConnectionOptions;
   },
   {
-    connect: ({ url, online, options }: MQTTConnectInfo) => void;
+    connect: ({ url, options }: MQTTConnectInfo) => void;
     disconnect: () => void;
     subscribe: (
       topic: string,
@@ -140,7 +138,6 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     status: MQTTStatus;
     error?: any;
     client?: MqttClient;
-    online?: OnlineInfo;
     _subscriptions: SubscribeHandler[];
   }>({
     status: "Disconnected",
@@ -155,12 +152,6 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const disconnect = () => {
-    if (state.client && state.online) {
-      state.client.publish(state.online.topic, "offline", {
-        qos: state.online.qos,
-        retain: state.online.retain,
-      }, () => { });
-    }
     state.client?.end();
     state.client?.removeAllListeners();
     setState((s) => ({
@@ -169,35 +160,16 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
-  const connect = ({ url, online, options }: MQTTConnectInfo) => {
+  const connect = ({ url, options }: MQTTConnectInfo) => {
     disconnect();
 
-    let connectoptions: IClientOptions = { ...options };
-    if (online) {
-      connectoptions = {
-        ...connectoptions,
-        will: {
-          ...online,
-          payload: Buffer.from("offline"),
-        },
-      };
-    }
-
     try {
-      const client: MqttClient = mqtt.connect(url, connectoptions);
+      const client: MqttClient = mqtt.connect(url, options);
       client.on("connect", () => {
         setState((s) => {
-          if (s.client && s.online) {
-            s.client.publish(s.online.topic, "online", {
-              qos: s.online.qos,
-              retain: s.online.retain,
-            });
-          }
-
           return {
             status: "Connected",
             client: s.client,
-            online: s.online,
             _subscriptions: s._subscriptions,
           };
         });
@@ -207,7 +179,6 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           status: "Error",
           error,
           client: s.client,
-          online: s.online,
           _subscriptions: s._subscriptions,
         }));
       });
@@ -215,7 +186,6 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setState((s) => ({
           status: "Reconnecting",
           client: s.client,
-          online: s.online,
           _subscriptions: s._subscriptions,
         }));
       });
@@ -223,7 +193,6 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setState((s) => ({
           status: "Closed",
           client: s.client,
-          online: s.online,
           _subscriptions: s._subscriptions,
         }));
       });
@@ -231,7 +200,6 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setState((s) => ({
           status: "Offline",
           client: s.client,
-          online: s.online,
           _subscriptions: s._subscriptions,
         }));
       });
@@ -239,7 +207,6 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setState((s) => ({
           status: "Disconnecting",
           client: s.client,
-          online: s.online,
           _subscriptions: s._subscriptions,
         }));
       });
@@ -266,7 +233,6 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         return {
           status: "Connecting",
           client,
-          online,
           _subscriptions: s._subscriptions,
         };
       });
@@ -275,7 +241,6 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         status: "Error",
         error,
         client: s.client,
-        online: s.online,
         _subscriptions: s._subscriptions,
       }));
     }

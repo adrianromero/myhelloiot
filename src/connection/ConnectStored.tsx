@@ -23,13 +23,14 @@ import {
   Button,
   Row,
   Col,
-  Radio,
   Layout,
   Tabs,
   Checkbox,
   Select,
+  Switch,
 } from "antd";
 import { useDispatch } from "react-redux";
+import type { QoS } from "mqtt-packet";
 import { DispatchConnect, DispatchLoadConnectInfo } from "../AppStoreProvider";
 import { ConnectInfo, saveConnectInfo } from "./ConnectionInfo";
 import { ConnectInfoForm } from "./ConnectInfoForm";
@@ -54,6 +55,7 @@ const ConnectStored: React.FC<{
   clientId: string;
 }> = ({ connectInfo, username, password, clientId }) => {
   const [form] = Form.useForm<ConnectInfoForm>();
+  const will = Form.useWatch("will", form);
   const dispatchLoad = useDispatch<DispatchLoadConnectInfo>();
   const dispatchConnect = useDispatch<DispatchConnect>();
   const HIDDEN: ModalErrorInfo = { visible: false, title: "", error: "" };
@@ -70,6 +72,10 @@ const ConnectStored: React.FC<{
     window.scrollTo(0, 0);
   }, [connectInfo, username, password, clientId, form]);
 
+  React.useEffect(() => {
+    form.validateFields(["willtopic", "willqos", "willretain"]);
+  }, [form, will]);
+
   const handleFail = (): void => {
     showError({
       visible: true,
@@ -77,7 +83,7 @@ const ConnectStored: React.FC<{
       error: "Please fix the values with validation messages",
     });
   };
-
+  console.log(form.getFieldValue('will'));
   return (
     <>
       <ModalError {...errorinf} onOk={() => showError(HIDDEN)} />
@@ -92,8 +98,11 @@ const ConnectStored: React.FC<{
             clean: connectInfoForm.clean,
             connectTimeout: connectInfoForm.connectTimeout,
             reconnectPeriod: connectInfoForm.reconnectPeriod,
-            onlinetopic: connectInfoForm.onlinetopic,
-            onlineqos: connectInfoForm.onlineqos,
+            will: connectInfoForm.will,
+            willtopic: connectInfoForm.willtopic,
+            willqos: connectInfoForm.willqos,
+            willretain: connectInfoForm.willretain,
+            willpayload: connectInfoForm.willpayload,
             dashboard: connectInfoForm.dashboard,
             dashboardcss: connectInfoForm.dashboardcss,
           };
@@ -294,7 +303,7 @@ const ConnectStored: React.FC<{
                         },
                       ]}
                     >
-                      <Select<number> defaultValue={4}
+                      <Select<number>
                         style={{ width: 120 }}
                         options={[
                           { value: 3, label: 'MQIsdp 3.1' },
@@ -324,7 +333,7 @@ const ConnectStored: React.FC<{
                       name="clean"
                       valuePropName="checked"
                     >
-                      <Checkbox />
+                      <Switch />
                     </Form.Item>
                   </Col>
                   <Col xs={0} sm={0} md={0} lg={4} />
@@ -389,38 +398,135 @@ const ConnectStored: React.FC<{
                   </Col>
                   <Col xs={0} sm={0} md={0} lg={4} />
 
-                  <Col xs={0} sm={0} md={0} lg={4} />
                   <Col
                     xs={24}
                     sm={6}
                     md={6}
-                    lg={4}
-                    className="ant-form-item-label"
+                    lg={8}
                   >
-                    <label htmlFor="onlinetopic" title="Online topic">
-                      Online topic
-                    </label>
                   </Col>
-                  <Col xs={24} sm={18} md={6} lg={4}>
-                    <Form.Item name="onlinetopic">
-                      <Input autoComplete="off" />
-                    </Form.Item>
-                  </Col>
-                  <Col
-                    xs={{ offset: 0, span: 24 }}
-                    sm={{ offset: 6, span: 18 }}
-                    md={{ offset: 0, span: 12 }}
-                    lg={{ offset: 0, span: 8 }}
-                  >
-                    <Form.Item name="onlineqos">
-                      <Radio.Group>
-                        <Radio value={0}>QoS 0</Radio>
-                        <Radio value={1}>QoS 1</Radio>
-                        <Radio value={2}>QoS 2</Radio>
-                      </Radio.Group>
+                  <Col xs={24} sm={18} md={18} lg={12}>
+                    <Form.Item
+                      name="will"
+                      valuePropName="checked"
+                    >
+                      <Checkbox>Last will message</Checkbox>
                     </Form.Item>
                   </Col>
                   <Col xs={0} sm={0} md={0} lg={4} />
+
+                  <Form.Item noStyle shouldUpdate>
+                    {({ getFieldValue }) => {
+                      const disabled = !getFieldValue("will");
+
+                      return (<><Col xs={0} sm={0} md={0} lg={4} />
+                        <Col
+                          xs={24}
+                          sm={6}
+                          md={6}
+                          lg={4}
+                          className="ant-form-item-label"
+                        >
+                          <label htmlFor="willtopic" className="ant-form-item-required" title="Topic">
+                            Topic
+                          </label>
+                        </Col>
+                        <Col xs={24} sm={18} md={18} lg={12}>
+                          <Form.Item name="willtopic" rules={[
+                            {
+                              required: !disabled,
+                              message: "Please input the url of the topic for the last will message.",
+                            },
+                          ]}>
+                            <Input disabled={disabled} autoComplete="off" />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={0} sm={0} md={0} lg={4} />
+
+                        <Col xs={0} sm={0} md={0} lg={4} />
+                        <Col
+                          xs={24}
+                          sm={6}
+                          md={6}
+                          lg={4}
+                          className="ant-form-item-label"
+                        >
+                          <label htmlFor="willpayload" title="Payload">
+                            Payload
+                          </label>
+                        </Col>
+                        <Col xs={24} sm={18} md={18} lg={12}>
+                          <Form.Item name="willpayload">
+                            <Input disabled={disabled} autoComplete="off" />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={0} sm={0} md={0} lg={4} />
+
+                        <Col xs={0} sm={0} md={0} lg={4} />
+                        <Col
+                          xs={24}
+                          sm={6}
+                          md={6}
+                          lg={4}
+                          className="ant-form-item-label"
+                        >
+                          <label
+                            htmlFor="willqos"
+                            className="ant-form-item-required"
+                            title="QoS"
+                          >
+                            QoS
+                          </label>
+                        </Col>
+                        <Col xs={24} sm={18} md={6} lg={4}>
+                          <Form.Item name="willqos" rules={[
+                            {
+                              required: !disabled,
+                              message: "Please input the QoS for the last will message.",
+                            },
+                          ]}>
+                            <Select<QoS>
+                              disabled={disabled}
+                              style={{ width: 120 }}
+                              options={[
+                                { value: 0, label: 'QoS 0' },
+                                { value: 1, label: 'QoS 1' },
+                                { value: 2, label: 'QoS 2' }
+                              ]}
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col
+                          xs={24}
+                          sm={6}
+                          md={6}
+                          lg={4}
+                          className="ant-form-item-label"
+                        >
+                          <label
+                            htmlFor="willretail"
+                            className="ant-form-item-required"
+                            title="Retain"
+                          >
+                            Retain
+                          </label>
+                        </Col>
+                        <Col xs={24} sm={18} md={6} lg={4}>
+                          <Form.Item
+                            name="willretain"
+                            valuePropName="checked" rules={[
+                              {
+                                required: !disabled,
+                                message: "Please input the retain value for the last will message.",
+                              },
+                            ]}
+                          >
+                            <Switch disabled={disabled} />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={0} sm={0} md={0} lg={4} /></>);
+                    }}
+                  </Form.Item>
                 </Row>
               }, {
                 label: "Dashboard",
@@ -472,7 +578,7 @@ const ConnectStored: React.FC<{
             </div>
           </Layout.Content>
         </Layout>
-      </Form>
+      </Form >
     </>
   );
 };

@@ -5,8 +5,11 @@
   "clean": true,
   "connectTimeout": 30000,
   "reconnectPeriod": 1000,
-  "onlinetopic": "",
-  "onlineqos": 0,
+  "will": false,
+  "willtopic": "",
+  "willqos": 0,
+  "willretain": false,
+  "willpayload": "",
   "dashboard": {
     "name": "dashboard.jsx",
     "type": "text/jsx"
