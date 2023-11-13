@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useState } from "react";
 import { padvalue } from "./svgdraw";
-import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
+import type { GaugeProps } from "./GaugeTypes";
+import { DefaultGaugeFormat } from "./GaugeConstants";
 import "./LiquidGauge.css";
 
 export type LiquidGaugeProps = {
@@ -32,7 +33,7 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
   className = "",
   min = 0,
   max = 100,
-  format = defaultGaugeFormat
+  format = DefaultGaugeFormat
 }) => {
   const [componentId] = useState<number>(() => Math.random());
 
@@ -57,57 +58,33 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0 0 200 130"
-      className={className}
     >
-      <defs>
-        <clipPath id={`cut-off-bottom-${componentId}`}>
-          {!isNaN(yvalue) && (
-            <rect
-              className="liquidgauge-bar"
-              x={0}
-              y={yvalue}
-              width={200}
-              height={130}
-            />
-          )}
-        </clipPath>
-      </defs>
-      <circle
-        cx={centerx}
-        cy={centery}
-        r={r1}
-        className="liquidgauge-border"
-        style={{ fill: "#00000000" }}
-      />
-      <text
-        x={100}
-        y={65}
-        textAnchor="middle"
-        className="liquidgauge-value liquidgauge-value_1"
-      >
-        {formatvalue}
-      </text>
-      <text
-        x={100}
-        y={75}
-        textAnchor="middle"
-        dominant-baseline="hanging"
-        className="liquidgauge-title liquidgauge-title_1"
-      >
-        {title}
-      </text>
-      <g clipPath={`url(#cut-off-bottom-${componentId})`}>
+      <g className={className}>
+        <defs>
+          <clipPath id={`cut-off-bottom-${componentId}`}>
+            {!isNaN(yvalue) && (
+              <rect
+                className="liquidgauge-bar"
+                x={0}
+                y={yvalue}
+                width={200}
+                height={130}
+              />
+            )}
+          </clipPath>
+        </defs>
         <circle
           cx={centerx}
           cy={centery}
-          r={r2}
-          className="liquidgauge-background"
+          r={r1}
+          className="liquidgauge-border"
+          style={{ fill: "#00000000" }}
         />
         <text
           x={100}
           y={65}
           textAnchor="middle"
-          className="liquidgauge-value liquidgauge-value_2"
+          className="liquidgauge-value liquidgauge-value_1"
         >
           {formatvalue}
         </text>
@@ -115,11 +92,36 @@ const LiquidGauge: React.FC<LiquidGaugeProps> = ({
           x={100}
           y={75}
           textAnchor="middle"
-          dominant-baseline="hanging"
-          className="liquidgauge-title liquidgauge-title_2"
+          dominantBaseline="hanging"
+          className="liquidgauge-title liquidgauge-title_1"
         >
           {title}
         </text>
+        <g clipPath={`url(#cut-off-bottom-${componentId})`}>
+          <circle
+            cx={centerx}
+            cy={centery}
+            r={r2}
+            className="liquidgauge-background"
+          />
+          <text
+            x={100}
+            y={65}
+            textAnchor="middle"
+            className="liquidgauge-value liquidgauge-value_2"
+          >
+            {formatvalue}
+          </text>
+          <text
+            x={100}
+            y={75}
+            textAnchor="middle"
+            dominantBaseline="hanging"
+            className="liquidgauge-title liquidgauge-title_2"
+          >
+            {title}
+          </text>
+        </g>
       </g>
     </svg>
   );

@@ -61,9 +61,8 @@ import ModalUnit from "./units/ModalUnit";
 import {
   ToIconFormat,
   ToIconValueFormat,
-  ONOFFNumber,
-  ONOFFStr,
 } from "./format/FormatTypes";
+import { ONOFFNumber, ONOFFStr } from "./format/FormatConstants";
 import {
   MessageValueFormat,
   StringValueFormat,
@@ -233,7 +232,7 @@ const JSXCONTEXT = {
 };
 
 const JSXCONTEXTKEYS: string[] = [];
-const JSXCONTEXTVALUES: any[] = [];
+const JSXCONTEXTVALUES: object[] = [];
 for (const [key, value] of Object.entries(JSXCONTEXT)) {
   JSXCONTEXTKEYS.push(key);
   JSXCONTEXTVALUES.push(value);
@@ -262,7 +261,7 @@ const JSXRender: React.FC<{ jsx: string }> = ({ jsx }) => {
   } catch (error) {
     return <AppError
       title="Failed to compile JSX code"
-      error={getErrorMessage(error, "Unknown compilation error")}
+      errorMessage={getErrorMessage(error, "Unknown compilation error")}
       jsx={jsx}
     />;
   }
@@ -270,19 +269,18 @@ const JSXRender: React.FC<{ jsx: string }> = ({ jsx }) => {
   if (!output) {
     return <AppError
       title="Failed to execute JSX code"
-      error="JSX compiled code is empty"
+      errorMessage="JSX compiled code is empty"
       jsx={jsx}
     />;
   }
 
   let fn;
   try {
-    // eslint-disable-next-line no-new-func
     fn = new Function(...JSXCONTEXTKEYS, "output", "return eval(output);");
   } catch (error) {
     return <AppError
       title="Failed to execute JSX code"
-      error={getErrorMessage(error, "Unknown JSX evaluation error")}
+      errorMessage={getErrorMessage(error, "Unknown JSX evaluation error")}
       jsx={jsx}
     />;
   }
@@ -292,7 +290,7 @@ const JSXRender: React.FC<{ jsx: string }> = ({ jsx }) => {
   } catch (error) {
     return <AppError
       title="Failed to execute JSX code"
-      error={getErrorMessage(error, "Unknown JSX execution error")}
+      errorMessage={getErrorMessage(error, "Unknown JSX execution error")}
       jsx={jsx}
     />;
   }

@@ -16,35 +16,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { Buffer } from "buffer";
-import {
+import type {
   ValueFormat,
   ONOFF,
-  ONOFFNumber,
   LimitsFormat,
   NumberFormat,
-  DefaultLimits,
 } from "./FormatTypes";
+import { DefaultLimits, ONOFFNumber } from "./FormatConstants";
 import { padsegment } from "../gauge/svgdraw";
 
 export const MessageValueFormat = (msg: string): ValueFormat => ({
-  toDisplay: (b: Buffer) => msg,
-  fromDisplay: (s: string) => Buffer.from(msg),
-  className: () => "",
-  next: (b: Buffer) => Buffer.from(msg),
-  prev: (b: Buffer) => Buffer.from(msg),
+  toDisplay: () => msg,
+  fromDisplay: () => Buffer.from(msg),
+  getClassName: () => "",
+  next: () => Buffer.from(msg),
+  prev: () => Buffer.from(msg),
 });
 
 export const StringValueFormat = (): ValueFormat => ({
   toDisplay: (b: Buffer) => b.toString(),
   fromDisplay: (s: string) => Buffer.from(s),
-  className: () => "",
+  getClassName: () => "",
   next: (b: Buffer) => b,
   prev: (b: Buffer) => b,
 });
 
 export const JSONValueFormat = (): ValueFormat => ({
   toDisplay: (b: Buffer) => JSON.stringify(JSON.parse(b.toString()), null, 2),
-  className: () => "",
+  getClassName: () => "",
   fromDisplay: (s: string) => Buffer.from(JSON.stringify(JSON.parse(s))),
   next: (b: Buffer) => b,
   prev: (b: Buffer) => b,
@@ -52,7 +51,7 @@ export const JSONValueFormat = (): ValueFormat => ({
 
 export const HEXValueFormat = (): ValueFormat => ({
   toDisplay: (b: Buffer) => b.toString("hex"),
-  className: () => "",
+  getClassName: () => "",
   fromDisplay: (s: string) => Buffer.from(s, "hex"),
   next: (b: Buffer) => b,
   prev: (b: Buffer) => b,
@@ -60,7 +59,7 @@ export const HEXValueFormat = (): ValueFormat => ({
 
 export const Base64ValueFormat = (): ValueFormat => ({
   toDisplay: (b: Buffer) => b.toString("base64"),
-  className: () => "",
+  getClassName: () => "",
   fromDisplay: (s: string) => Buffer.from(s, "base64"),
   next: (b: Buffer) => b,
   prev: (b: Buffer) => b,
@@ -72,7 +71,7 @@ export const SwitchValueFormat = (onoff: ONOFF = ONOFFNumber): ValueFormat => {
     fromDisplay: (s: string) => (s === "ON" ? onoff.on : onoff.off),
     next: (b: Buffer) => (onoff.on.equals(b) ? onoff.off : onoff.on),
     prev: (b: Buffer) => (onoff.on.equals(b) ? onoff.off : onoff.on),
-    className: () => "",
+    getClassName: () => "",
   };
 };
 
@@ -142,6 +141,6 @@ export const NumberValueFormat = (
       Buffer.from(pad(Number(b.toString()) + step).toString()),
     prev: (b: Buffer) =>
       Buffer.from(pad(Number(b.toString()) - step).toString()),
-    className: () => "myhToIconFormat_alignright",
+    getClassName: () => "myhToIconFormat_alignright",
   };
 };

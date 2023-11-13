@@ -21,7 +21,7 @@ import SVGIcon from "../format/SVGIcon";
 import { faPowerOff, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 import { Row, Col, Typography, Button, Divider, Popover } from "antd";
-import { useMQTTContext } from "../mqtt/MQTTProvider";
+import { useMQTTContext } from "../mqtt/MQTTHooks";
 import { DispatchDisconnect } from "../AppStoreProvider";
 
 import "./ConnectionInfo.css";

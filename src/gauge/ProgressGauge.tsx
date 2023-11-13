@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { padvalue } from "./svgdraw";
-import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
+import type { GaugeProps } from "./GaugeTypes";
+import { DefaultGaugeFormat } from "./GaugeConstants";
 import Sections, { Section } from "./Sections";
 import "./ProgressGauge.css";
 
@@ -60,7 +61,7 @@ const ProgressGauge: React.FC<ProgressGaugeProps> = ({
   sections = [],
   min = 0,
   max = 100,
-  format = defaultGaugeFormat
+  format = DefaultGaugeFormat
 }) => {
   let width: number;
   let formatvalue: string;
@@ -77,37 +78,38 @@ const ProgressGauge: React.FC<ProgressGaugeProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0 0 200 30"
-      className={className}
     >
-      <line
-        x1={20}
-        y1={20}
-        x2={180}
-        y2={20}
-        className="progressgauge-background"
-      />
-      <Sections sections={sections} min={min} max={max} start={20} len={160} />
-      {!isNaN(width) && (
+      <g className={className}>
         <line
           x1={20}
           y1={20}
           x2={180}
           y2={20}
-          className="progressgauge-bar"
-          style={{
-            fill: "#00000000",
-            strokeMiterlimit: 0,
-            strokeDasharray: `${width} 400`,
-          }}
+          className="progressgauge-background"
         />
-      )}
+        <Sections sections={sections} min={min} max={max} start={20} len={160} />
+        {!isNaN(width) && (
+          <line
+            x1={20}
+            y1={20}
+            x2={180}
+            y2={20}
+            className="progressgauge-bar"
+            style={{
+              fill: "#00000000",
+              strokeMiterlimit: 0,
+              strokeDasharray: `${width} 400`,
+            }}
+          />
+        )}
 
-      <text x={180} y={12} textAnchor="end" className="progressgauge-value">
-        {formatvalue}
-      </text>
-      <text x={20} y={10} textAnchor="start" className="progressgauge-title">
-        {title}
-      </text>
+        <text x={180} y={12} textAnchor="end" className="progressgauge-value">
+          {formatvalue}
+        </text>
+        <text x={20} y={10} textAnchor="start" className="progressgauge-title">
+          {title}
+        </text>
+      </g>
     </svg>
   );
 };

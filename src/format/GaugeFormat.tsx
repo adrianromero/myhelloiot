@@ -36,7 +36,7 @@ export type GaugeIconFormat<GaugeProps> = (
 ) => IconFormat;
 
 const CreateGaugesIconFormat =
-  <GaugeProps extends {}>(
+  <GaugeProps extends object>(
     Component: React.FC<GaugeProps>
   ): GaugeIconFormat<GaugeProps> =>
     (gaugeprops: GaugeProps): IconFormat => ({

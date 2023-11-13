@@ -16,8 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect, useState } from "react";
-import { IClientSubscribeOptions } from "mqtt/dist/mqtt";
-import { MQTTMessage, useMQTTContext } from "../mqtt/MQTTProvider";
+import { IClientSubscribeOptions } from "mqtt";
+import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import { useMQTTContext } from "../mqtt/MQTTHooks";
 import { ValueFormat } from "../format/FormatTypes";
 import { StringValueFormat } from "../format/ValueFormat";
 import LogView from "./LogView";
@@ -40,7 +41,7 @@ const LogUnit: React.FC<LogUnitProps> = ({
 
   useEffect(() => {
     setMessages([]);
-  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready]);
 
   return (
     <div className={`myhLogUnit ${className}`}>

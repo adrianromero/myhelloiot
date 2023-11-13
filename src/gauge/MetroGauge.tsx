@@ -18,7 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React from "react";
 import { arcpath, padvalue, radians } from "./svgdraw";
 import Arcs, { Arc } from "./Arcs";
-import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
+import type { GaugeProps } from "./GaugeTypes";
+import { DefaultGaugeFormat } from "./GaugeConstants";
 import "./MetroGauge.css";
 
 // const arcstest: Arc[] = [
@@ -67,7 +68,7 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
   min = 0,
   max = 100,
   step = 1,
-  format = defaultGaugeFormat
+  format = DefaultGaugeFormat
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -141,53 +142,54 @@ const MetroGauge: React.FC<MetroGaugeProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0 0 200 130"
-      className={className}
     >
-      <Arcs
-        arcs={arcs}
-        min={min}
-        max={max}
-        centerx={centerx}
-        centery={centery}
-        startangle={startangle}
-        endangle={endangle}
-      />
-      {lines}
-      <path
-        id="arc"
-        d={arcpath({
-          cx: centerx,
-          cy: centery,
-          r: r1 + 2,
-          start: radians(startangle),
-          end: radians(endangle),
-          orientation: arctotal > 180 ? 1 : 0,
-          sweep: 1,
-        })}
-        className="metrogauge-mark"
-        style={{ fill: "#00000000" }}
-      />
-      <text x={100} y={85} textAnchor="middle" className="metrogauge-value">
-        {formatvalue}
-      </text>
-      <text x={centerx} y={55} textAnchor="middle" className="metrogauge-title">
-        {title}
-      </text>
-      {!isNaN(arcvalue) && (
-        <path
-          d="M 3 10 L -3 10 L 0 -50 Z"
-          className="metrogauge-arrow"
-          style={{
-            transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
-          }}
+      <g className={className}>
+        <Arcs
+          arcs={arcs}
+          min={min}
+          max={max}
+          centerx={centerx}
+          centery={centery}
+          startangle={startangle}
+          endangle={endangle}
         />
-      )}
-      <circle
-        cx={centerx}
-        cy={centery}
-        r={1.2}
-        className="metrogauge-arrowpin"
-      />
+        {lines}
+        <path
+          id="arc"
+          d={arcpath({
+            cx: centerx,
+            cy: centery,
+            r: r1 + 2,
+            start: radians(startangle),
+            end: radians(endangle),
+            orientation: arctotal > 180 ? 1 : 0,
+            sweep: 1,
+          })}
+          className="metrogauge-mark"
+          style={{ fill: "#00000000" }}
+        />
+        <text x={100} y={85} textAnchor="middle" className="metrogauge-value">
+          {formatvalue}
+        </text>
+        <text x={centerx} y={55} textAnchor="middle" className="metrogauge-title">
+          {title}
+        </text>
+        {!isNaN(arcvalue) && (
+          <path
+            d="M 3 10 L -3 10 L 0 -50 Z"
+            className="metrogauge-arrow"
+            style={{
+              transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
+            }}
+          />
+        )}
+        <circle
+          cx={centerx}
+          cy={centery}
+          r={1.2}
+          className="metrogauge-arrowpin"
+        />
+      </g>
     </svg>
   );
 };

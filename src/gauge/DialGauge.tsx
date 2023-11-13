@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { padvalue } from "./svgdraw";
-import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
+import type { GaugeProps } from "./GaugeTypes";
+import { DefaultGaugeFormat } from "./GaugeConstants";
 import Sections, { Section } from "./Sections";
 import "./DialGauge.css";
 
@@ -63,7 +64,7 @@ const DialGauge: React.FC<DialGaugeProps> = ({
   min = 0,
   max = 100,
   step = 5,
-  format = defaultGaugeFormat
+  format = DefaultGaugeFormat
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -123,31 +124,32 @@ const DialGauge: React.FC<DialGaugeProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0 0 200 90"
-      className={className}
     >
-      <line x1={20} y1={45} x2={180} y2={45} className="dialgauge-background" />
-      <Sections sections={sections} min={min} max={max} start={20} len={160} />
-      {lines}
-      {!isNaN(width) && (
-        <line
-          x1={20}
-          y1={45}
-          x2={180}
-          y2={45}
-          className="dialgauge-bar"
-          style={{
-            fill: "#00000000",
-            strokeMiterlimit: 0,
-            strokeDasharray: `${width} 400`,
-          }}
-        />
-      )}
-      <text x={180} y={20} textAnchor="end" className="dialgauge-value">
-        {formatvalue}
-      </text>
-      <text x={20} y={20} textAnchor="start" className="dialgauge-title">
-        {title}
-      </text>
+      <g className={className}>
+        <line x1={20} y1={45} x2={180} y2={45} className="dialgauge-background" />
+        <Sections sections={sections} min={min} max={max} start={20} len={160} />
+        {lines}
+        {!isNaN(width) && (
+          <line
+            x1={20}
+            y1={45}
+            x2={180}
+            y2={45}
+            className="dialgauge-bar"
+            style={{
+              fill: "#00000000",
+              strokeMiterlimit: 0,
+              strokeDasharray: `${width} 400`,
+            }}
+          />
+        )}
+        <text x={180} y={20} textAnchor="end" className="dialgauge-value">
+          {formatvalue}
+        </text>
+        <text x={20} y={20} textAnchor="start" className="dialgauge-title">
+          {title}
+        </text>
+      </g>
     </svg>
   );
 };

@@ -18,7 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React from "react";
 import { arcpath, padvalue, radians } from "./svgdraw";
 import Arcs, { Arc } from "./Arcs";
-import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
+import type { GaugeProps } from "./GaugeTypes";
+import { DefaultGaugeFormat } from "./GaugeConstants";
 import "./ControlGauge.css";
 
 export type ControlGaugeProps = {
@@ -39,7 +40,7 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
   arcs = [],
   min = 0,
   max = 100,
-  format = defaultGaugeFormat
+  format = DefaultGaugeFormat
 }) => {
   const r1 = 45;
   const centerx = 100;
@@ -67,38 +68,10 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0 0 200 130"
-      className={className}
     >
-      <path
-        id="arc"
-        d={arcpath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(startangle),
-          end: radians(endangle),
-          orientation: arctotal > 180 ? 1 : 0,
-          sweep: 1,
-        })}
-        className="controlgauge-background"
-        style={{
-          fill: "#00000000",
-          strokeMiterlimit: 0,
-          strokeDasharray: "none",
-        }}
-      />
-      <Arcs
-        arcs={arcs}
-        min={min}
-        max={max}
-        centerx={centerx}
-        centery={centery}
-        startangle={startangle}
-        endangle={endangle}
-      />
-      {!isNaN(arcvaluerad) && (
+      <g className={className}>
         <path
-          id="arc2"
+          id="arc"
           d={arcpath({
             cx: centerx,
             cy: centery,
@@ -108,35 +81,64 @@ const ControlGauge: React.FC<ControlGaugeProps> = ({
             orientation: arctotal > 180 ? 1 : 0,
             sweep: 1,
           })}
-          className="controlgauge-bar"
+          className="controlgauge-background"
           style={{
             fill: "#00000000",
             strokeMiterlimit: 0,
-            strokeDasharray: `${arcvaluerad} 400`,
+            strokeDasharray: "none",
           }}
         />
-      )}
-      <text x={100} y={105} textAnchor="middle" className="controlgauge-value">
-        {formatvalue}
-      </text>
-      <text
-        x={centerx}
-        y={15}
-        textAnchor="middle"
-        className="controlgauge-title"
-      >
-        {title}
-      </text>
-      {!isNaN(arcvalue) && (
-        <path
-          // d="M 1 10 L -1 10  L -1 -55 L 0 -60 L 1 -55 Z"
-          d="M 5 5 L 0 10 L -5 5 L 0 -65  Z"
-          className="controlgauge-arrow"
-          style={{
-            transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
-          }}
+        <Arcs
+          arcs={arcs}
+          min={min}
+          max={max}
+          centerx={centerx}
+          centery={centery}
+          startangle={startangle}
+          endangle={endangle}
         />
-      )}
+        {!isNaN(arcvaluerad) && (
+          <path
+            id="arc2"
+            d={arcpath({
+              cx: centerx,
+              cy: centery,
+              r: r1,
+              start: radians(startangle),
+              end: radians(endangle),
+              orientation: arctotal > 180 ? 1 : 0,
+              sweep: 1,
+            })}
+            className="controlgauge-bar"
+            style={{
+              fill: "#00000000",
+              strokeMiterlimit: 0,
+              strokeDasharray: `${arcvaluerad} 400`,
+            }}
+          />
+        )}
+        <text x={100} y={105} textAnchor="middle" className="controlgauge-value">
+          {formatvalue}
+        </text>
+        <text
+          x={centerx}
+          y={15}
+          textAnchor="middle"
+          className="controlgauge-title"
+        >
+          {title}
+        </text>
+        {!isNaN(arcvalue) && (
+          <path
+            // d="M 1 10 L -1 10  L -1 -55 L 0 -60 L 1 -55 Z"
+            d="M 5 5 L 0 10 L -5 5 L 0 -65  Z"
+            className="controlgauge-arrow"
+            style={{
+              transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
+            }}
+          />
+        )}
+      </g>
     </svg>
   );
 };

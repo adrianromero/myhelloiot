@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { padvalue, arcpath, radians } from "./svgdraw";
-import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
+import type { GaugeProps } from "./GaugeTypes";
+import { DefaultGaugeFormat } from "./GaugeConstants";
 
 import "./SpaceGauge.css";
 
@@ -33,7 +34,7 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
   className = "",
   min = 0,
   max = 100,
-  format = defaultGaugeFormat
+  format = DefaultGaugeFormat
 }) => {
   const startangle = 90;
   const endangle = 360;
@@ -60,29 +61,10 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0 0 200 130"
-      className={className}
     >
-      <path
-        id="path1"
-        d={arcpath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(startangle),
-          end: radians(endangle),
-          orientation: arctotal > 180 ? 1 : 0,
-          sweep: 1,
-        })}
-        className="spacegauge-background"
-        style={{
-          fill: "#00000000",
-          strokeMiterlimit: 0,
-          strokeDasharray: "none",
-        }}
-      />
-      {!isNaN(arcvaluerad) && (
+      <g className={className}>
         <path
-          id="path2"
+          id="path1"
           d={arcpath({
             cx: centerx,
             cy: centery,
@@ -92,21 +74,41 @@ const SpaceGauge: React.FC<SpaceGaugeProps> = ({
             orientation: arctotal > 180 ? 1 : 0,
             sweep: 1,
           })}
-          className="spacegauge-bar"
+          className="spacegauge-background"
           style={{
             fill: "#00000000",
             strokeMiterlimit: 0,
-            strokeDasharray: `${arcvaluerad} 400`,
+            strokeDasharray: "none",
           }}
         />
-      )}
+        {!isNaN(arcvaluerad) && (
+          <path
+            id="path2"
+            d={arcpath({
+              cx: centerx,
+              cy: centery,
+              r: r1,
+              start: radians(startangle),
+              end: radians(endangle),
+              orientation: arctotal > 180 ? 1 : 0,
+              sweep: 1,
+            })}
+            className="spacegauge-bar"
+            style={{
+              fill: "#00000000",
+              strokeMiterlimit: 0,
+              strokeDasharray: `${arcvaluerad} 400`,
+            }}
+          />
+        )}
 
-      <text x={105} y={105} textAnchor="start" className="spacegauge-value">
-        {formatvalue}
-      </text>
-      <text x={105} y={80} textAnchor="start" className="spacegauge-title">
-        {title}
-      </text>
+        <text x={105} y={105} textAnchor="start" className="spacegauge-value">
+          {formatvalue}
+        </text>
+        <text x={105} y={80} textAnchor="start" className="spacegauge-title">
+          {title}
+        </text>
+      </g>
     </svg>
   );
 };

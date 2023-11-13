@@ -16,16 +16,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, {
-  MouseEvent,
-  KeyboardEvent,
   ChangeEvent,
   useEffect,
   useState,
 } from "react";
 import { Button, Input } from "antd";
-import { IClientPublishOptions } from "mqtt/dist/mqtt";
-
-import { useMQTTContext } from "../mqtt/MQTTProvider";
+import { IClientPublishOptions } from "mqtt";
+import { useMQTTContext } from "../mqtt/MQTTHooks";
 import { ValueFormat } from "../format/FormatTypes";
 import { StringValueFormat } from "../format/ValueFormat";
 
@@ -50,24 +47,24 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
   const [value, setValue] = useState<string>("");
   useEffect(() => {
     setValue("");
-  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready]);
 
   const publishValue = () => {
     publish(pubtopic, format.fromDisplay(value), puboptions);
     setValue("");
   };
 
-  const onClickOK = (ev: MouseEvent<HTMLElement>) => {
+  const onClickOK = () => {
     publishValue();
   };
 
-  const onPressEnter = (ev: KeyboardEvent<HTMLInputElement>) => {
+  const onPressEnter = () => {
     publishValue();
   };
 
-  const onClickClear = (ev: MouseEvent<HTMLElement>) => setValue("");
+  const onClickClear = () => setValue("");
 
-  const onClickKey = (key: string) => (ev: MouseEvent<HTMLElement>) =>
+  const onClickKey = (key: string) => () =>
     setValue((prevValue) => prevValue + key);
 
   return (

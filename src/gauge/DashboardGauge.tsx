@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { arcpath, padvalue, radians } from "./svgdraw";
-import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
+import type { GaugeProps } from "./GaugeTypes";
+import { DefaultGaugeFormat } from "./GaugeConstants";
 import Arcs, { Arc } from "./Arcs";
 import "./DashboardGauge.css";
 
@@ -64,7 +65,7 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
   arcs = [],
   min = 0,
   max = 100,
-  format = defaultGaugeFormat
+  format = DefaultGaugeFormat
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -91,38 +92,10 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0 0 200 130"
-      className={className}
     >
-      <path
-        id="arc"
-        d={arcpath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(startangle),
-          end: radians(endangle),
-          orientation: arctotal > 180 ? 1 : 0,
-          sweep: 1,
-        })}
-        className="dashboardgauge-background"
-        style={{
-          fill: "#00000000",
-          strokeMiterlimit: 0,
-          strokeDasharray: "none",
-        }}
-      />
-      <Arcs
-        arcs={arcs}
-        min={min}
-        max={max}
-        centerx={centerx}
-        centery={centery}
-        startangle={startangle}
-        endangle={endangle}
-      />
-      {!isNaN(arcvaluerad) && (
+      <g className={className}>
         <path
-          id="arc2"
+          id="arc"
           d={arcpath({
             cx: centerx,
             cy: centery,
@@ -132,41 +105,70 @@ const DashboardGauge: React.FC<DashboardGaugeProps> = ({
             orientation: arctotal > 180 ? 1 : 0,
             sweep: 1,
           })}
-          className="dashboardgauge-bar"
+          className="dashboardgauge-background"
           style={{
             fill: "#00000000",
             strokeMiterlimit: 0,
-            strokeDasharray: `${arcvaluerad} 400`,
+            strokeDasharray: "none",
           }}
         />
-      )}
-      <text
-        x={centerx - 2 + r1 * Math.cos(radians(startangle))}
-        y={centery + 12 + r1 * Math.sin(radians(startangle))}
-        textAnchor="middle"
-        className="dashboardgauge-labels"
-      >
-        {intl.format(min)}
-      </text>
-      <text
-        x={centerx + 2 + r1 * Math.cos(radians(endangle))}
-        y={centery + 12 + r1 * Math.sin(radians(endangle))}
-        textAnchor="middle"
-        className="dashboardgauge-labels"
-      >
-        {intl.format(max)}
-      </text>
-      <text x={100} y={90} textAnchor="middle" className="dashboardgauge-value">
-        {formatvalue}
-      </text>
-      <text
-        x={100}
-        y={110}
-        textAnchor="middle"
-        className="dashboardgauge-title"
-      >
-        {title}
-      </text>
+        <Arcs
+          arcs={arcs}
+          min={min}
+          max={max}
+          centerx={centerx}
+          centery={centery}
+          startangle={startangle}
+          endangle={endangle}
+        />
+        {!isNaN(arcvaluerad) && (
+          <path
+            id="arc2"
+            d={arcpath({
+              cx: centerx,
+              cy: centery,
+              r: r1,
+              start: radians(startangle),
+              end: radians(endangle),
+              orientation: arctotal > 180 ? 1 : 0,
+              sweep: 1,
+            })}
+            className="dashboardgauge-bar"
+            style={{
+              fill: "#00000000",
+              strokeMiterlimit: 0,
+              strokeDasharray: `${arcvaluerad} 400`,
+            }}
+          />
+        )}
+        <text
+          x={centerx - 2 + r1 * Math.cos(radians(startangle))}
+          y={centery + 12 + r1 * Math.sin(radians(startangle))}
+          textAnchor="middle"
+          className="dashboardgauge-labels"
+        >
+          {intl.format(min)}
+        </text>
+        <text
+          x={centerx + 2 + r1 * Math.cos(radians(endangle))}
+          y={centery + 12 + r1 * Math.sin(radians(endangle))}
+          textAnchor="middle"
+          className="dashboardgauge-labels"
+        >
+          {intl.format(max)}
+        </text>
+        <text x={100} y={90} textAnchor="middle" className="dashboardgauge-value">
+          {formatvalue}
+        </text>
+        <text
+          x={100}
+          y={110}
+          textAnchor="middle"
+          className="dashboardgauge-title"
+        >
+          {title}
+        </text>
+      </g>
     </svg>
   );
 };

@@ -17,8 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { List, Tag } from "antd";
-import { IClientSubscribeOptions } from "mqtt/dist/mqtt";
-import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
+import { IClientSubscribeOptions } from "mqtt";
+import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import { ValueFormat } from "../format/FormatTypes";
 import { StringValueFormat } from "../format/ValueFormat";
 import Paragraph from "antd/lib/typography/Paragraph";

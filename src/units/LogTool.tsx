@@ -16,8 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect, useState } from "react";
-import { IClientSubscribeOptions } from "mqtt/dist/mqtt";
-import { MQTTMessage, useMQTTContext } from "../mqtt/MQTTProvider";
+import { IClientSubscribeOptions } from "mqtt";
+import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import { useMQTTContext } from "../mqtt/MQTTHooks";
 import { ValueFormat } from "../format/FormatTypes";
 import {
   Base64ValueFormat,
@@ -38,7 +39,7 @@ export type LogToolProps = {
   className?: string;
 };
 
-const FMTOPTIONS: Map<String, ValueFormat> = new Map([
+const FMTOPTIONS: Map<string, ValueFormat> = new Map([
   ["StringValueFormat", StringValueFormat()],
   ["HEXValueFormat", HEXValueFormat()],
   ["Base64ValueFormat", Base64ValueFormat()],
@@ -64,7 +65,7 @@ const LogTool: React.FC<LogToolProps> = ({
 
   useEffect(() => {
     setTool([false, []]);
-  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready]);
 
   const format: ValueFormat = FMTOPTIONS.get(strformat) ?? StringValueFormat();
 

@@ -16,20 +16,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect } from "react";
-import { IClientSubscribeOptions } from "mqtt/dist/mqtt";
-import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
+import { IClientSubscribeOptions } from "mqtt";
+import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import useAudio from "./useAudio";
 import { StringValueFormat } from "../format/ValueFormat";
 import { ValueFormat } from "../format/FormatTypes";
-const clockalarm = require("../assets/media/128138_1542160-lq.mp3").default;
-const gameitem = require("../assets/media/162467_311243-lq.mp3").default;
-const bottlewhoo = require("../assets/media/249703_3930831-lq.mp3").default;
-const greek = require("../assets/media/322378_4397472-lq.mp3").default;
-const bell = require("../assets/media/333695_1187042-lq.mp3").default;
-const smokealarm = require("../assets/media/369848_1480854-lq.mp3").default;
-const chimes = require("../assets/media/405548_6436863-lq.mp3").default;
-const harp = require("../assets/media/486952_6657415-lq.mp3").default;
-const messagepop = require("../assets/media/537061_7117640-lq.mp3").default;
+const clockalarm = new URL("../assets/media/128138_1542160-lq.mp3?url", import.meta.url).href;
+const gameitem = new URL("../assets/media/162467_311243-lq.mp3", import.meta.url).href;
+const bottlewhoo = new URL("../assets/media/249703_3930831-lq.mp3", import.meta.url).href;
+const greek = new URL("../assets/media/322378_4397472-lq.mp3", import.meta.url).href;
+const bell = new URL("../assets/media/333695_1187042-lq.mp3", import.meta.url).href;
+const smokealarm = new URL("../assets/media/369848_1480854-lq.mp3", import.meta.url).href;
+const chimes = new URL("../assets/media/405548_6436863-lq.mp3", import.meta.url).href;
+const harp = new URL("../assets/media/486952_6657415-lq.mp3", import.meta.url).href;
+const messagepop = new URL("../assets/media/537061_7117640-lq.mp3", import.meta.url).href;
 
 type SoundUnitProps = {
   subtopic?: string;

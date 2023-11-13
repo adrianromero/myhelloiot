@@ -23,10 +23,10 @@ import "./ModalError.css";
 
 const ModalError: React.FC<{
   title: string;
-  error: string;
+  errorMessage: string;
   onOk: React.MouseEventHandler<HTMLElement>;
   visible: boolean;
-}> = ({ title, error, onOk, visible }) => {
+}> = ({ title, errorMessage, onOk, visible }) => {
   return (
     <Modal footer={null} closable={false} open={visible}>
       <div className="myhModalError-container">
@@ -37,7 +37,7 @@ const ModalError: React.FC<{
         />
         <div>
           <div className="myhModalError-title">{title}</div>
-          <div className="myhModalError-message">{error}</div>
+          <div className="myhModalError-message">{errorMessage}</div>
         </div>
       </div>
       <div className="myhModalError-ok">

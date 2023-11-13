@@ -17,14 +17,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect, useState } from "react";
 import { Switch } from "antd";
-import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt/dist/mqtt";
-
-import {
-  MQTTMessage,
-  useMQTTContext,
-  useMQTTSubscribe,
-} from "../mqtt/MQTTProvider";
-import { ONOFF, ONOFFNumber } from "../format/FormatTypes";
+import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
+import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
+import type { ONOFF } from "../format/FormatTypes";
+import { ONOFFNumber } from "../format/FormatConstants";
 
 type SwitchUnitProps = {
   pubtopic?: string;
@@ -48,7 +45,7 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
 
   useEffect(() => {
     setChecked(false);
-  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready]);
 
   useMQTTSubscribe(
     subtopic,

@@ -44,7 +44,7 @@ import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 
 type ModalErrorInfo = {
   title: string;
-  error: string;
+  errorMessage: string;
   visible: boolean;
 };
 
@@ -58,7 +58,7 @@ const ConnectStored: React.FC<{
   const will = Form.useWatch("will", form);
   const dispatchLoad = useDispatch<DispatchLoadConnectInfo>();
   const dispatchConnect = useDispatch<DispatchConnect>();
-  const HIDDEN: ModalErrorInfo = { visible: false, title: "", error: "" };
+  const HIDDEN: ModalErrorInfo = { visible: false, title: "", errorMessage: "" };
   const [errorinf, showError] = useState<ModalErrorInfo>(HIDDEN);
 
   useEffect(() => {
@@ -80,10 +80,9 @@ const ConnectStored: React.FC<{
     showError({
       visible: true,
       title: "Connection values error",
-      error: "Please fix the values with validation messages",
+      errorMessage: "Please fix the values with validation messages",
     });
   };
-  console.log(form.getFieldValue('will'));
   return (
     <>
       <ModalError {...errorinf} onOk={() => showError(HIDDEN)} />
@@ -107,18 +106,27 @@ const ConnectStored: React.FC<{
             dashboardcss: connectInfoForm.dashboardcss,
           };
 
-          saveConnectInfo(connectInfo);
-          dispatchLoad({
-            type: "loadconnectinfo",
-            connectInfo,
-            connectInfoType: "STORED",
-          });
-          dispatchConnect({
-            type: "connect",
-            username: connectInfoForm.username,
-            password: connectInfoForm.password,
-            clientId: connectInfoForm.clientId,
-          });
+          try {
+            saveConnectInfo(connectInfo);
+
+            dispatchLoad({
+              type: "loadconnectinfo",
+              connectInfo,
+              connectInfoType: "STORED",
+            });
+            dispatchConnect({
+              type: "connect",
+              username: connectInfoForm.username,
+              password: connectInfoForm.password,
+              clientId: connectInfoForm.clientId,
+            });
+          } catch (error) {
+            showError({
+              visible: true,
+              title: "Connection error",
+              errorMessage: "Connection values cannot be stored locally. Please review the application permissions.",
+            });
+          }
         }}
         onFinishFailed={handleFail}
         className="myhConnectionForm"

@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { padvalue, radians } from "./svgdraw";
-import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
+import type { GaugeProps } from "./GaugeTypes";
+import { DefaultGaugeFormat } from "./GaugeConstants";
 import "./CircularGauge.css";
 
 export type CircularGaugeProps = {
@@ -32,7 +33,7 @@ const CircularGauge: React.FC<CircularGaugeProps> = ({
   className = "",
   min = 0,
   max = 100,
-  format = defaultGaugeFormat
+  format = DefaultGaugeFormat
 }) => {
   const r1 = 55;
   const centerx = 100;
@@ -53,38 +54,39 @@ const CircularGauge: React.FC<CircularGaugeProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0 0 200 130"
-      className={className}
     >
-      <circle
-        cx={centerx}
-        cy={centery}
-        r={r1}
-        className="circulargauge-background"
-        style={{
-          fill: "#00000000",
-          strokeMiterlimit: 0,
-        }}
-      />
-      {!isNaN(arcvalue) && (
+      <g className={className}>
         <circle
           cx={centerx}
           cy={centery}
           r={r1}
-          className="circulargauge-bar"
+          className="circulargauge-background"
           style={{
             fill: "#00000000",
             strokeMiterlimit: 0,
-            strokeDasharray: `${arcvalue} 400`,
-            transform: `translate(${centerx}px, ${centery}px) rotate(-90deg) translate(${-centerx}px, ${-centery}px)`,
           }}
         />
-      )}
-      <text x={100} y={65} textAnchor="middle" className="circulargauge-value">
-        {formatvalue}
-      </text>
-      <text x={100} y={85} textAnchor="middle" className="circulargauge-title">
-        {title}
-      </text>
+        {!isNaN(arcvalue) && (
+          <circle
+            cx={centerx}
+            cy={centery}
+            r={r1}
+            className="circulargauge-bar"
+            style={{
+              fill: "#00000000",
+              strokeMiterlimit: 0,
+              strokeDasharray: `${arcvalue} 400`,
+              transform: `translate(${centerx}px, ${centery}px) rotate(-90deg) translate(${-centerx}px, ${-centery}px)`,
+            }}
+          />
+        )}
+        <text x={100} y={65} textAnchor="middle" className="circulargauge-value">
+          {formatvalue}
+        </text>
+        <text x={100} y={85} textAnchor="middle" className="circulargauge-title">
+          {title}
+        </text>
+      </g>
     </svg>
   );
 };

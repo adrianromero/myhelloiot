@@ -20,13 +20,10 @@ import { Buffer } from "buffer";
 import { Drawer, Button, Layout, Menu } from "antd";
 import SVGIcon from "../format/SVGIcon";
 import { faBars, faImage } from "@fortawesome/free-solid-svg-icons";
-import { useAppStoreProperty } from "../AppStoreProvider";
+import { useAppStoreProperty } from "../AppStoreHooks";
 import AppHeader from "../AppHeader";
-import {
-  MQTTMessage,
-  useMQTTContext,
-  useMQTTSubscribe,
-} from "../mqtt/MQTTProvider";
+import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import DashboardContent from "./DashboardContent";
 import ConnectionInfo from "./ConnectionInfo";
 
@@ -79,10 +76,10 @@ const Dashboard: React.FC<DashboardProps> = ({
     setVisibleDrawer(false);
   }
 
-  const menus: React.ReactElement<any, any>[] = [];
-  const dcchildren: React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>>[] = [];
-  const remainingchildren: React.ReactElement<any, any>[] = [];
-  let cvisible: React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | undefined;
+  const menus: React.ReactElement[] = [];
+  const dcchildren: React.ReactPortal | React.ReactElement[] = [];
+  const remainingchildren: React.ReactElement[] = [];
+  let cvisible: React.ReactPortal | React.ReactElement | undefined;
   let keyvisible: string | undefined;
   let menDisabled: boolean = false;
   let disDisabled: boolean = false;

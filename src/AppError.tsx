@@ -27,9 +27,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./AppError.css";
 
-const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
+const AppError: React.FC<{ title: string; errorMessage: string; jsx?: string }> = ({
   title,
-  error,
+  errorMessage,
   jsx,
 }) => {
   const dispatch = useDispatch<DispatchDisconnect>();
@@ -61,7 +61,7 @@ const AppError: React.FC<{ title: string; error: string; jsx?: string }> = ({
                 className="myhAppError-icon"
                 style={{ color: "red" }}
               />
-              <span>{error}</span>
+              <span>{errorMessage}</span>
             </div>
           </div>
         </Layout.Content>

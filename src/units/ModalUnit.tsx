@@ -17,11 +17,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { Buffer } from "buffer";
-import { IClientSubscribeOptions } from "mqtt/dist/mqtt";
+import { IClientSubscribeOptions } from "mqtt";
 import { Modal } from "antd";
-import { MQTTMessage, useMQTTSubscribe } from "../mqtt/MQTTProvider";
-import { ONOFF, ONOFFNumber } from "../format/FormatTypes";
-import { useAppStoreProperty } from "../AppStoreProvider";
+import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
+import type { ONOFF } from "../format/FormatTypes";
+import { ONOFFNumber } from "../format/FormatConstants";
+import { useAppStoreProperty } from "../AppStoreHooks";
 
 type ModalUnitProps = {
   instancekey?: string;

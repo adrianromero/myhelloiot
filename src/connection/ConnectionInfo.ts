@@ -75,7 +75,5 @@ export const loadConnectInfo = (): ConnectInfo => {
 };
 
 export const saveConnectInfo = (connectInfo: ConnectInfo): void => {
-  try {
-    localStorage.setItem(STORECONNECTINFO, JSON.stringify(connectInfo));
-  } catch (e) {}
+  localStorage.setItem(STORECONNECTINFO, JSON.stringify(connectInfo));
 };

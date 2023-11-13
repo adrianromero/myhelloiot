@@ -26,7 +26,7 @@ export type IconFormat = {
 export type ValueFormat = {
   toDisplay: (b: Buffer) => string;
   fromDisplay: (s: string) => Buffer;
-  className: () => string;
+  getClassName: () => string;
   next: (b: Buffer) => Buffer;
   prev: (b: Buffer) => Buffer;
 };
@@ -41,8 +41,6 @@ export type NumberFormat = {
   format: (x: number) => string;
 };
 
-export const DefaultLimits = { min: 0, max: 100, step: 1 };
-
 export type IconValueFormat = IconFormat & ValueFormat;
 
 export type ONOFF = {
@@ -50,19 +48,9 @@ export type ONOFF = {
   off: Buffer;
 };
 
-export const ONOFFNumber: ONOFF = {
-  on: Buffer.from("1"),
-  off: Buffer.from("0"),
-};
-
-export const ONOFFStr: ONOFF = {
-  on: Buffer.from("on"),
-  off: Buffer.from("off"),
-};
-
 export const ToIconFormat = (format: ValueFormat): IconFormat => ({
   toIcon: (b: Buffer) => (
-    <div className={`myhToIconFormat ${format.className()}`}>
+    <div className={`myhToIconFormat ${format.getClassName()}`}>
       {format.toDisplay(b) || "\u00A0"}
     </div>
   ),

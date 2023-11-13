@@ -15,15 +15,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { useEffect, useState, MouseEvent } from "react";
+import React, { useEffect, useState } from "react";
 import { Buffer } from "buffer";
 import { Button } from "antd";
-import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt/dist/mqtt";
-import {
-  MQTTMessage,
-  useMQTTContext,
-  useMQTTSubscribe,
-} from "../mqtt/MQTTProvider";
+import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
+import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import { ValueFormat, IconValueFormat } from "../format/FormatTypes";
 import "./ButtonUnit.css";
 import { SwitchIconValueFormat } from "../format/IconValueFormat";
@@ -56,13 +53,13 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
 
   useEffect(() => {
     setBuffer(Buffer.from([]));
-  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready]);
 
   let theicon;
   if (icon) {
     theicon = icon;
   } else if ("toIcon" in format) {
-    let f = format as IconValueFormat;
+    const f = format as IconValueFormat;
     theicon = f.toIcon(buffer);
   }
 
@@ -74,7 +71,7 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
     suboptions
   );
 
-  const onClick = (ev: MouseEvent<HTMLElement>) => {
+  const onClick = () => {
     const next: Buffer = format.next(buffer);
     setBuffer(next);
     publish(pubtopic, next, puboptions);

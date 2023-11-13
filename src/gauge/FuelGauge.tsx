@@ -18,7 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React from "react";
 import { arcpath, padvalue, radians } from "./svgdraw";
 import Arcs, { Arc } from "./Arcs";
-import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
+import type { GaugeProps } from "./GaugeTypes";
+import { DefaultGaugeFormat } from "./GaugeConstants";
 import "./FuelGauge.css";
 
 // arcs:  [{
@@ -54,7 +55,7 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
   max = 100,
   step = 2,
   labelstep = 10,
-  format = defaultGaugeFormat
+  format = DefaultGaugeFormat
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -129,62 +130,63 @@ const FuelGauge: React.FC<FuelGaugeProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0 0 200 130"
-      className={className}
     >
-      <Arcs
-        arcs={arcs}
-        min={min}
-        max={max}
-        centerx={centerx}
-        centery={centery}
-        startangle={startangle}
-        endangle={endangle}
-      />
-      {lines}
-      <path
-        id="arc"
-        d={arcpath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(startangle),
-          end: radians(endangle),
-          orientation: arctotal > 180 ? 1 : 0,
-          sweep: 1,
-        })}
-        className="fuelgauge-mark fuelgauge-mark_ext"
-        style={{ fill: "#00000000" }}
-      />
-      <path
-        id="arc"
-        d={arcpath({
-          cx: centerx,
-          cy: centery,
-          r: r2,
-          start: radians(startangle),
-          end: radians(endangle),
-          orientation: arctotal > 180 ? 1 : 0,
-          sweep: 1,
-        })}
-        className="fuelgauge-mark fuelgauge-mark_int"
-        style={{ fill: "#00000000" }}
-      />
-      <text x={100} y={105} textAnchor="middle" className="fuelgauge-value">
-        {formatvalue}
-      </text>
-      <text x={centerx} y={15} textAnchor="middle" className="fuelgauge-title">
-        {title}
-      </text>
-      {!isNaN(arcvalue) && (
-        <path
-          d="M 2 10  L -2 10 L -1.5 -49 L 0 -50 L 1.5 -49 Z"
-          className="fuelgauge-arrow"
-          style={{
-            transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
-          }}
+      <g className={className}>
+        <Arcs
+          arcs={arcs}
+          min={min}
+          max={max}
+          centerx={centerx}
+          centery={centery}
+          startangle={startangle}
+          endangle={endangle}
         />
-      )}
-      <circle cx={centerx} cy={centery} r={6} className="fuelgauge-arrowpin" />
+        {lines}
+        <path
+          id="arc"
+          d={arcpath({
+            cx: centerx,
+            cy: centery,
+            r: r1,
+            start: radians(startangle),
+            end: radians(endangle),
+            orientation: arctotal > 180 ? 1 : 0,
+            sweep: 1,
+          })}
+          className="fuelgauge-mark fuelgauge-mark_ext"
+          style={{ fill: "#00000000" }}
+        />
+        <path
+          id="arc"
+          d={arcpath({
+            cx: centerx,
+            cy: centery,
+            r: r2,
+            start: radians(startangle),
+            end: radians(endangle),
+            orientation: arctotal > 180 ? 1 : 0,
+            sweep: 1,
+          })}
+          className="fuelgauge-mark fuelgauge-mark_int"
+          style={{ fill: "#00000000" }}
+        />
+        <text x={100} y={105} textAnchor="middle" className="fuelgauge-value">
+          {formatvalue}
+        </text>
+        <text x={centerx} y={15} textAnchor="middle" className="fuelgauge-title">
+          {title}
+        </text>
+        {!isNaN(arcvalue) && (
+          <path
+            d="M 2 10  L -2 10 L -1.5 -49 L 0 -50 L 1.5 -49 Z"
+            className="fuelgauge-arrow"
+            style={{
+              transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
+            }}
+          />
+        )}
+        <circle cx={centerx} cy={centery} r={6} className="fuelgauge-arrowpin" />
+      </g>
     </svg>
   );
 };

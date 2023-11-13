@@ -27,12 +27,13 @@ import ConnectStored from "./connection/ConnectStored";
 import ConnectRemote from "./connection/ConnectRemote";
 import AppDashboard from "./AppDashboard";
 import { ConnectInfo, loadConnectInfo } from "./connection/ConnectionInfo";
-import MQTTProvider, { useMQTTContext } from "./mqtt/MQTTProvider";
+import { useMQTTContext } from "./mqtt/MQTTHooks";
+import MQTTProvider from "./mqtt/MQTTProvider";
 import AppError from "./AppError";
 import "antd/dist/reset.css";
 import "./assets/main.css";
 
-const App: React.FC<{}> = () => (
+const App: React.FC = () => (
   <ConfigProvider
     theme={{
       // algorithm: theme.darkAlgorithm,
@@ -47,7 +48,7 @@ const App: React.FC<{}> = () => (
   </ConfigProvider>
 );
 
-const MQTTApp: React.FC<{}> = () => {
+const MQTTApp: React.FC = () => {
   const [{ error }, { connect, disconnect }] = useMQTTContext();
   const connected = useSelector<AppStoreValue, string>((s) => s.connected);
   const username = useSelector<AppStoreValue, string>((s) => s.username);
@@ -170,7 +171,7 @@ const MQTTApp: React.FC<{}> = () => {
     return (
       <AppError
         title="Failed to connect to MQTT broker"
-        error={error.message}
+        errorMessage={error.message}
       />
     );
   }
@@ -178,7 +179,7 @@ const MQTTApp: React.FC<{}> = () => {
   const jsx = connectInfo.dashboard.data;
   const css = connectInfo.dashboardcss.data;
   if (!jsx) {
-    return <AppError title="Failed to load JSX code" error="Storage empty" />;
+    return <AppError title="Failed to load JSX code" errorMessage="Application storage is empty." />;
   }
 
   // Application connected!!!

@@ -14,6 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/// <reference types="vite-plugin-svgr/client" />
 
 import React from "react";
 import SVGIcon from "../format/SVGIcon";
@@ -24,7 +25,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Typography, Tag, Button, Image, message } from "antd";
 import { FormInstance } from "antd/lib/form";
-import myhelloiot from "../assets/myhelloiot.png";
 import basicsampledata from "./sampledata/basicsampledata";
 import loggingsampledata from "./sampledata/loggingsampledata";
 import pubsubsampledata from "./sampledata/pubsubsampledata";
@@ -32,7 +32,7 @@ import inputtextsampledata from "./sampledata/inputtextsampledata";
 import lightssampledata from "./sampledata/lightssampledata";
 import gaugessampledata from "./sampledata/gaugessampledata";
 import mosquittosampledata from "./sampledata/mosquittosampledata";
-import { ReactComponent as GitHubRibbon } from "../assets/svg/github.svg";
+import GitHubRibbon from "../assets/svg/github.svg?react";
 import { ConnectInfoForm } from "./ConnectInfoForm";
 import { VERSION } from "../version";
 
@@ -91,7 +91,7 @@ const ContentConnectAbout: React.FC<{
           Windows, MacOS, Linux or, and even in mobile devices iOS or Android.
         </Paragraph>
         <Paragraph style={{ display: "flex", justifyContent: "center" }}>
-          <Image src={myhelloiot} width={480} />
+          <Image src={new URL("../assets/myhelloiot.png", import.meta.url).href} width={480} />
         </Paragraph>
         <Title level={2}>Getting started</Title>
         <Title level={4}>MQTT connection options</Title>

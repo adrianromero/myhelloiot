@@ -17,12 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect, useState } from "react";
 import { Buffer } from "buffer";
-import { IClientSubscribeOptions } from "mqtt/dist/mqtt";
-import {
-  MQTTMessage,
-  useMQTTContext,
-  useMQTTSubscribe,
-} from "../mqtt/MQTTProvider";
+import { IClientSubscribeOptions } from "mqtt";
+import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import { IconFormat } from "../format/FormatTypes";
 import { StringIconFormat } from "../format/IconFormat";
 
@@ -46,7 +43,7 @@ const ViewUnit: React.FC<ViewUnitProps> = ({
 
   useEffect(() => {
     setBuffer(Buffer.from([]));
-  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready]);
 
   useMQTTSubscribe(
     subtopic,

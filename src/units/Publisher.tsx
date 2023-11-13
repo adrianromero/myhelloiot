@@ -30,8 +30,7 @@ import {
 import SVGIcon from "../format/SVGIcon";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import type { QoS } from "mqtt-packet";
-
-import { useMQTTContext } from "../mqtt/MQTTProvider";
+import { useMQTTContext } from "../mqtt/MQTTHooks";
 import { ValueFormat } from "../format/FormatTypes";
 import {
   StringValueFormat,
@@ -231,14 +230,14 @@ const Publisher: React.FC<PublisherProps> = ({
               name="value"
               rules={[
                 {
-                  validator: (r, value) => {
+                  validator: (_r, value) => {
                     try {
                       const format: ValueFormat =
                         FMTValueFormat.get(formFmt)?.format ??
                         StringValueFormat();
                       format.fromDisplay(value);
                       return Promise.resolve();
-                    } catch {
+                    } catch (error) {
                       return Promise.reject(
                         new Error(
                           FMTValueFormat.get(formFmt)?.message ??

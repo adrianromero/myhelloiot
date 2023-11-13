@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -24,7 +24,8 @@ import {
   AnyAction,
   Dispatch,
 } from "redux";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { Provider } from "react-redux";
+import { notification } from "antd";
 import { ConnectInfo } from "./connection/ConnectionInfo";
 import { cyrb53str } from "./CryptFunctions";
 
@@ -67,23 +68,11 @@ export interface ActionLoadConnectInfo extends Action<"loadconnectinfo"> {
 }
 export type DispatchLoadConnectInfo = Dispatch<ActionLoadConnectInfo>;
 
-interface ActionProperties extends Action<"properties"> {
+export interface ActionProperties extends Action<"properties"> {
   attrs: {
     [key: string]: string;
   };
 }
-type DispatchProperties = Dispatch<ActionProperties>;
-export const useAppStoreProperty = (
-  name: string
-): [string | undefined, (value: string) => void] => {
-  const property: string | undefined = useSelector<AppStoreValue, string>(
-    (s) => s.properties.attrs[name]
-  );
-  const dispatch = useDispatch<DispatchProperties>();
-  const setProperty = (value: string) =>
-    dispatch({ type: "properties", attrs: { [name]: value } });
-  return [property, setProperty];
-};
 
 const loadRUNTIME = (): AppStoreValue => {
   try {
@@ -100,7 +89,7 @@ const loadRUNTIME = (): AppStoreValue => {
       };
     }
     return emptyAppStoreValue;
-  } catch (e) {
+  } catch (error) {
     return emptyAppStoreValue;
   }
 };
@@ -117,7 +106,12 @@ const saveRUNTIME = (state: AppStoreValue) => {
         state.clientId,
       ])
     );
-  } catch (e) { }
+  } catch (error) {
+    notification.warning({
+      message: "Store state",
+      description: "Application state cannot stored locally. Please review the application permissions."
+    });
+  }
 };
 
 const reducer: Reducer<AppStoreValue, AnyAction> = (

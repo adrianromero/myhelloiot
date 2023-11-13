@@ -16,14 +16,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { useState, useEffect } from "react";
+import { notification } from "antd";
 
 const useAudio = (
   url: string,
   options: { loop?: boolean; volume?: number } = {}
 ): [
-  { playing: boolean },
-  { play: () => void; pause: () => void; resume: () => void }
-] => {
+    { playing: boolean },
+    { play: () => void; pause: () => void; resume: () => void }
+  ] => {
   const [audio] = useState<HTMLAudioElement>(new Audio(url));
   const [, setUpdate] = useState<boolean>(false);
   const forceUpdate = () => setUpdate((prevState) => !prevState);
@@ -47,8 +48,11 @@ const useAudio = (
     audio.currentTime = 0;
     try {
       audio.play();
-    } catch (ex) {
-      // Might fail if no user gesture since loading the page
+    } catch (error) {
+      notification.warning({
+        message: "Play audio",
+        description: "Audio cannot be played. Please review the application permissions."
+      });
     }
   };
   const pause = () => audio.pause();

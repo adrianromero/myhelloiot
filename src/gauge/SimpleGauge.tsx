@@ -17,11 +17,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { piepath, padvalue, radians } from "./svgdraw";
-import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
+import type { GaugeProps } from "./GaugeTypes";
+import { DefaultGaugeFormat } from "./GaugeConstants";
 import Arcs, { Arc } from "./Arcs";
 import "./SimpleGauge.css";
 
-export const arcsSimpleGauge = (
+const arcsSimpleGauge = (
   min: number,
   max: number,
   arcs: number = 6
@@ -56,7 +57,7 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
   arcs,
   min = 0,
   max = 100,
-  format = defaultGaugeFormat
+  format = DefaultGaugeFormat
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -87,94 +88,95 @@ const SimpleGauge: React.FC<SimpleGaugeProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0 0 200 130"
-      className={className}
     >
-      <path
-        id="arc"
-        d={piepath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(startangle),
-          end: radians(endangle),
-          orientation: arctotal > 180 ? 1 : 0,
-          sweep: 1,
-        })}
-        className="simplegauge-background"
-      />
-      <Arcs
-        arcs={arcs ?? arcsSimpleGauge(min, max, 8)}
-        min={min}
-        max={max}
-        centerx={centerx}
-        centery={centery}
-        startangle={startangle}
-        endangle={endangle}
-      />
-      <path
-        id="arc"
-        d={piepath({
-          cx: centerx,
-          cy: centery,
-          r: r1,
-          start: radians(startangle),
-          end: radians(endangle),
-          orientation: arctotal > 180 ? 1 : 0,
-          sweep: 1,
-        })}
-        className="simplegauge-mark"
-      />
-
-      <text
-        x={centerx + (r1 + 16) * Math.cos(radians(startangle))}
-        y={centery + (r1 + 16) * Math.sin(radians(startangle))}
-        textAnchor="middle"
-        className="simplegauge-labels"
-      >
-        {intl.format(min)}
-      </text>
-      <text
-        x={centerx + (r1 + 16) * Math.cos(radians(endangle))}
-        y={centery + (r1 + 16) * Math.sin(radians(endangle))}
-        textAnchor="middle"
-        className="simplegauge-labels"
-      >
-        {intl.format(max)}
-      </text>
-
-      {isNaN(arcvalue) ? (
-        <circle
-          id="arcindicatorempty"
-          cx={centerx}
-          cy={centery}
-          r={r2}
-          className="simplegauge-arrow"
-        />
-      ) : (
+      <g className={className}>
         <path
-          id="arcindicator"
-          d={`M${centerx - sinr2 * r2} ${centery - cosr2 * r2
-            } A ${r2} ${r2} 0 1 0 ${centerx + sinr2 * r2} ${centery - cosr2 * r2
-            } L ${centerx} ${centery - 45} Z`}
-          opacity="1"
-          className="simplegauge-arrow"
-          style={{
-            transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg) translate(${-centerx}px, ${-centery}px)`,
-          }}
+          id="arc"
+          d={piepath({
+            cx: centerx,
+            cy: centery,
+            r: r1,
+            start: radians(startangle),
+            end: radians(endangle),
+            orientation: arctotal > 180 ? 1 : 0,
+            sweep: 1,
+          })}
+          className="simplegauge-background"
         />
-      )}
+        <Arcs
+          arcs={arcs ?? arcsSimpleGauge(min, max, 8)}
+          min={min}
+          max={max}
+          centerx={centerx}
+          centery={centery}
+          startangle={startangle}
+          endangle={endangle}
+        />
+        <path
+          id="arc"
+          d={piepath({
+            cx: centerx,
+            cy: centery,
+            r: r1,
+            start: radians(startangle),
+            end: radians(endangle),
+            orientation: arctotal > 180 ? 1 : 0,
+            sweep: 1,
+          })}
+          className="simplegauge-mark"
+        />
 
-      <text
-        x={centerx}
-        y={centery + 5}
-        textAnchor="middle"
-        className="simplegauge-value"
-      >
-        {formatvalue}
-      </text>
-      <text x={100} y={110} textAnchor="middle" className="simplegauge-title">
-        {title}
-      </text>
+        <text
+          x={centerx + (r1 + 16) * Math.cos(radians(startangle))}
+          y={centery + (r1 + 16) * Math.sin(radians(startangle))}
+          textAnchor="middle"
+          className="simplegauge-labels"
+        >
+          {intl.format(min)}
+        </text>
+        <text
+          x={centerx + (r1 + 16) * Math.cos(radians(endangle))}
+          y={centery + (r1 + 16) * Math.sin(radians(endangle))}
+          textAnchor="middle"
+          className="simplegauge-labels"
+        >
+          {intl.format(max)}
+        </text>
+
+        {isNaN(arcvalue) ? (
+          <circle
+            id="arcindicatorempty"
+            cx={centerx}
+            cy={centery}
+            r={r2}
+            className="simplegauge-arrow"
+          />
+        ) : (
+          <path
+            id="arcindicator"
+            d={`M${centerx - sinr2 * r2} ${centery - cosr2 * r2
+              } A ${r2} ${r2} 0 1 0 ${centerx + sinr2 * r2} ${centery - cosr2 * r2
+              } L ${centerx} ${centery - 45} Z`}
+            opacity="1"
+            className="simplegauge-arrow"
+            style={{
+              transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg) translate(${-centerx}px, ${-centery}px)`,
+            }}
+          />
+        )}
+
+        <text
+          x={centerx}
+          y={centery + 5}
+          textAnchor="middle"
+          className="simplegauge-value"
+        >
+          {formatvalue}
+        </text>
+        <text x={100} y={110} textAnchor="middle" className="simplegauge-title">
+          {title}
+        </text>
+      </g>
     </svg>
   );
 };

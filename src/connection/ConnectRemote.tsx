@@ -29,7 +29,7 @@ import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 
 type ModalErrorInfo = {
   title: string;
-  error: string;
+  errorMessage: string;
   visible: boolean;
 };
 
@@ -41,7 +41,7 @@ const ConnectRemote: React.FC<{
 }> = ({ connectInfo, username, password, clientId }) => {
   const [form] = Form.useForm<ConnectInfoForm>();
   const dispatchConnect = useDispatch<DispatchConnect>();
-  const HIDDEN: ModalErrorInfo = { visible: false, title: "", error: "" };
+  const HIDDEN: ModalErrorInfo = { visible: false, title: "", errorMessage: "" };
   const [errorinf, showError] = useState<ModalErrorInfo>(HIDDEN);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const ConnectRemote: React.FC<{
     showError({
       visible: true,
       title: "Connection values error",
-      error: "Please fix the values with validation messages",
+      errorMessage: "Please fix the values with validation messages.",
     });
   };
 

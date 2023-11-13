@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -60,7 +60,7 @@ export const arcpath = ({
 export const padvalue =
   (min: number, max: number, length: number) =>
   (value: number): number => {
-    let lengthvalue = (length * (value - min)) / (max - min);
+    const lengthvalue = (length * (value - min)) / (max - min);
     if (lengthvalue < 0) {
       return 0;
     }

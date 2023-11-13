@@ -24,8 +24,8 @@ import {
   ValueFormat,
   ToIconFormat,
   ONOFF,
-  ONOFFNumber,
 } from "./FormatTypes";
+import { ONOFFNumber } from "./FormatConstants";
 import {
   NumberValueFormat,
   NumberValueFormatOptions,
@@ -115,12 +115,12 @@ export const NumberIconFormat = (
 export type MapBuffer = (b: Buffer) => Buffer;
 
 export const MapJSONBuffer =
-  (map: (m: any) => any): MapBuffer =>
+  (map: (m: unknown) => unknown): MapBuffer =>
     (b: Buffer) => {
       try {
         const json = JSON.parse(b.toString());
         return Buffer.from(String(map(json)));
-      } catch (e) {
+      } catch (error) {
         return Buffer.from("");
       }
     };
@@ -133,6 +133,6 @@ export const MapIconFormat = (
 });
 
 export const MapJSONIconFormat = (
-  mapjson: (m: any) => any,
+  mapjson: (m: unknown) => unknown,
   format: IconFormat = StringIconFormat()
 ): IconFormat => MapIconFormat(MapJSONBuffer(mapjson), format);

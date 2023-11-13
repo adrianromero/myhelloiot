@@ -18,13 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useEffect, useState } from "react";
 import { Buffer } from "buffer";
 import { Slider } from "antd";
-import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt/dist/mqtt";
-import {
-  MQTTMessage,
-  useMQTTContext,
-  useMQTTSubscribe,
-} from "../mqtt/MQTTProvider";
-import { DefaultLimits, LimitsFormat } from "../format/FormatTypes";
+import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
+import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
+import type { LimitsFormat } from "../format/FormatTypes";
+import { DefaultLimits } from "../format/FormatConstants";
 
 type SliderUnitProps = {
   topic?: string
@@ -50,7 +48,7 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
 
   useEffect(() => {
     setBuffer(Buffer.from([]));
-  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready]);
 
   useMQTTSubscribe(
     subtopic,

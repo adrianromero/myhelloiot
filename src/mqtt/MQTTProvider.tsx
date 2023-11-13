@@ -18,20 +18,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React, {
   createContext,
   useState,
-  useEffect,
   ReactNode,
   Context,
-  useContext,
 } from "react";
 import { Buffer } from "buffer";
-import * as mqtt from "mqtt/dist/mqtt";
+import mqtt from "mqtt";
 import {
   MqttClient,
   IClientOptions,
   IClientSubscribeOptions,
   IClientPublishOptions,
   IPublishPacket
-} from "mqtt/dist/mqtt";
+} from "mqtt";
 import type { QoS } from "mqtt-packet";
 import match from "mqtt-match";
 
@@ -65,7 +63,7 @@ export type MQTTConnectionOptions = {
 export type MQTTContextValue = [
   {
     status: MQTTStatus;
-    error?: any;
+    error?: Error;
     ready: boolean;
     connected: boolean;
     options: MQTTConnectionOptions;
@@ -101,7 +99,7 @@ export type SubscribeHandler = {
   listener: (mqttmessage: MQTTMessage) => void;
 };
 
-const MQTTContext: Context<MQTTContextValue> = createContext<MQTTContextValue>([
+export const MQTTContext: Context<MQTTContextValue> = createContext<MQTTContextValue>([
   {
     status: "Disconnected",
     ready: false,
@@ -117,26 +115,10 @@ const MQTTContext: Context<MQTTContextValue> = createContext<MQTTContextValue>([
   },
 ]);
 
-export const useMQTTContext = () => useContext(MQTTContext);
-
-export const useMQTTSubscribe = (
-  topic: string,
-  callback: (mqttmessage: MQTTMessage) => void,
-  options?: IClientSubscribeOptions
-): void => {
-  const [{ ready }, { subscribe, unsubscribe }] = useMQTTContext();
-  useEffect(() => {
-    const handler = subscribe(topic, callback, options);
-    return () => {
-      unsubscribe(handler);
-    };
-  }, [ready, topic]); // eslint-disable-line react-hooks/exhaustive-deps
-};
-
 const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, setState] = useState<{
     status: MQTTStatus;
-    error?: any;
+    error?: Error;
     client?: MqttClient;
     _subscriptions: SubscribeHandler[];
   }>({
@@ -239,7 +221,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     } catch (error) {
       setState((s) => ({
         status: "Error",
-        error,
+        error: (error instanceof Error) ? error : new Error("Unknown MQTT connection error."),
         client: s.client,
         _subscriptions: s._subscriptions,
       }));

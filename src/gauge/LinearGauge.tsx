@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import { padvalue } from "./svgdraw";
-import { GaugeProps, defaultGaugeFormat } from "./GaugeTypes";
+import type { GaugeProps } from "./GaugeTypes";
+import { DefaultGaugeFormat } from "./GaugeConstants";
 import Sections, { Section } from "./Sections";
 import "./LinearGauge.css";
 
@@ -63,7 +64,7 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
   max = 100,
   step = 1,
   labelstep = 10,
-  format = defaultGaugeFormat
+  format = DefaultGaugeFormat
 }) => {
   const locale = navigator.language;
   const intl = new Intl.NumberFormat(locale);
@@ -123,68 +124,69 @@ const LinearGauge: React.FC<LinearGaugeProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0 0 200 90"
-      className={className}
     >
-      <line
-        key="background"
-        x1={20}
-        y1={45}
-        x2={180}
-        y2={45}
-        className="lineargauge-background"
-      />
-      <Sections sections={sections} min={min} max={max} start={20} len={160} />
-      <line
-        key="markstep"
-        x1={20}
-        y1={30}
-        x2={180}
-        y2={30}
-        className="lineargauge-markstep"
-      />
-      {!isNaN(width) && (
+      <g className={className}>
         <line
-          key="bar"
+          key="background"
           x1={20}
           y1={45}
           x2={180}
           y2={45}
-          className="lineargauge-bar"
-          style={{
-            fill: "#00000000",
-            strokeMiterlimit: 0,
-            strokeDasharray: `${width} 400`,
-          }}
+          className="lineargauge-background"
         />
-      )}
+        <Sections sections={sections} min={min} max={max} start={20} len={160} />
+        <line
+          key="markstep"
+          x1={20}
+          y1={30}
+          x2={180}
+          y2={30}
+          className="lineargauge-markstep"
+        />
+        {!isNaN(width) && (
+          <line
+            key="bar"
+            x1={20}
+            y1={45}
+            x2={180}
+            y2={45}
+            className="lineargauge-bar"
+            style={{
+              fill: "#00000000",
+              strokeMiterlimit: 0,
+              strokeDasharray: `${width} 400`,
+            }}
+          />
+        )}
 
-      <line
-        key="markstep2"
-        x1={20}
-        y1={60}
-        x2={180}
-        y2={60}
-        className="lineargauge-markstep"
-      />
-      {lines}
-      <text
-        key="textvalue"
-        x={180}
-        y={20}
-        textAnchor="end"
-        className="lineargauge-value"
-      >
-        {formatvalue}
-      </text>
-      <text
-        key="texttitle"
-        x={20}
-        y={20}
-        textAnchor="start"
-        className="lineargauge-title"
-      >
-        {title}
-      </text>
+        <line
+          key="markstep2"
+          x1={20}
+          y1={60}
+          x2={180}
+          y2={60}
+          className="lineargauge-markstep"
+        />
+        {lines}
+        <text
+          key="textvalue"
+          x={180}
+          y={20}
+          textAnchor="end"
+          className="lineargauge-value"
+        >
+          {formatvalue}
+        </text>
+        <text
+          key="texttitle"
+          x={20}
+          y={20}
+          textAnchor="start"
+          className="lineargauge-title"
+        >
+          {title}
+        </text>
+      </g>
     </svg>
   );
 };
