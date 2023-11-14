@@ -256,7 +256,7 @@ const ConnectStored: React.FC<{
                     </Form.Item>
                   </Col>
                   <Col
-                    xs={24}
+                    xs={12}
                     sm={6}
                     md={6}
                     lg={4}
@@ -270,7 +270,7 @@ const ConnectStored: React.FC<{
                       Keep alive
                     </label>
                   </Col>
-                  <Col xs={24} sm={18} md={6} lg={4}>
+                  <Col xs={12} sm={18} md={6} lg={4}>
                     <Form.Item
                       name="keepalive"
                       rules={[
@@ -287,7 +287,7 @@ const ConnectStored: React.FC<{
 
                   <Col xs={0} sm={0} md={0} lg={4} />
                   <Col
-                    xs={24}
+                    xs={12}
                     sm={6}
                     md={6}
                     lg={4}
@@ -301,7 +301,7 @@ const ConnectStored: React.FC<{
                       Protocol version
                     </label>
                   </Col>
-                  <Col xs={24} sm={18} md={6} lg={4}>
+                  <Col xs={12} sm={18} md={6} lg={4}>
                     <Form.Item
                       name="protocolVersion"
                       rules={[
@@ -322,7 +322,7 @@ const ConnectStored: React.FC<{
                     </Form.Item>
                   </Col>
                   <Col
-                    xs={24}
+                    xs={12}
                     sm={6}
                     md={6}
                     lg={4}
@@ -336,7 +336,7 @@ const ConnectStored: React.FC<{
                       Clean session
                     </label>
                   </Col>
-                  <Col xs={24} sm={18} md={6} lg={4}>
+                  <Col xs={12} sm={18} md={6} lg={4}>
                     <Form.Item
                       name="clean"
                       valuePropName="checked"
@@ -348,7 +348,7 @@ const ConnectStored: React.FC<{
 
                   <Col xs={0} sm={0} md={0} lg={4} />
                   <Col
-                    xs={24}
+                    xs={12}
                     sm={6}
                     md={6}
                     lg={4}
@@ -362,7 +362,7 @@ const ConnectStored: React.FC<{
                       Connection timeout
                     </label>
                   </Col>
-                  <Col xs={24} sm={18} md={6} lg={4}>
+                  <Col xs={12} sm={18} md={6} lg={4}>
                     <Form.Item
                       name="connectTimeout"
                       rules={[
@@ -377,7 +377,7 @@ const ConnectStored: React.FC<{
                     </Form.Item>
                   </Col>
                   <Col
-                    xs={24}
+                    xs={12}
                     sm={6}
                     md={6}
                     lg={4}
@@ -391,7 +391,7 @@ const ConnectStored: React.FC<{
                       Reconnect period
                     </label>
                   </Col>
-                  <Col xs={24} sm={18} md={6} lg={4}>
+                  <Col xs={12} sm={18} md={6} lg={4}>
                     <Form.Item
                       name="reconnectPeriod"
                       rules={[
@@ -472,7 +472,7 @@ const ConnectStored: React.FC<{
 
                         <Col xs={0} sm={0} md={0} lg={4} />
                         <Col
-                          xs={24}
+                          xs={12}
                           sm={6}
                           md={6}
                           lg={4}
@@ -486,7 +486,7 @@ const ConnectStored: React.FC<{
                             QoS
                           </label>
                         </Col>
-                        <Col xs={24} sm={18} md={6} lg={4}>
+                        <Col xs={12} sm={18} md={6} lg={4}>
                           <Form.Item name="willqos" rules={[
                             {
                               required: !disabled,
@@ -497,15 +497,15 @@ const ConnectStored: React.FC<{
                               disabled={disabled}
                               style={{ width: 120 }}
                               options={[
-                                { value: 0, label: 'QoS 0' },
-                                { value: 1, label: 'QoS 1' },
-                                { value: 2, label: 'QoS 2' }
+                                { value: 0, label: "0" },
+                                { value: 1, label: "1" },
+                                { value: 2, label: "2" }
                               ]}
                             />
                           </Form.Item>
                         </Col>
                         <Col
-                          xs={24}
+                          xs={12}
                           sm={6}
                           md={6}
                           lg={4}
@@ -519,7 +519,7 @@ const ConnectStored: React.FC<{
                             Retain
                           </label>
                         </Col>
-                        <Col xs={24} sm={18} md={6} lg={4}>
+                        <Col xs={12} sm={18} md={6} lg={4}>
                           <Form.Item
                             name="willretain"
                             valuePropName="checked" rules={[

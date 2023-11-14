@@ -19,13 +19,14 @@ import React, { useEffect, useState } from "react";
 import {
   Button,
   Input,
-  Checkbox,
   Radio,
   Form,
   Row,
   Col,
   RadioChangeEvent,
   notification,
+  Switch,
+  Select,
 } from "antd";
 import SVGIcon from "../format/SVGIcon";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -149,10 +150,6 @@ const Publisher: React.FC<PublisherProps> = ({
     });
   };
 
-  const onFMTChange = (e: RadioChangeEvent) => {
-    setFormFmt(e.target.value);
-  };
-
   return (
     <div className={`myhPublisher ${className}`}>
       <Form
@@ -190,38 +187,24 @@ const Publisher: React.FC<PublisherProps> = ({
           </div>
         </div>
 
-        {(optionretain || optionqos) && (
-          <Row gutter={8}>
-            {optionretain && (
-              <Col xs={24} sm={6} md={6} lg={6}>
-                <Form.Item name="retain" valuePropName="checked">
-                  <Checkbox>Retain</Checkbox>
-                </Form.Item>
-              </Col>
-            )}
-            {optionqos && (
-              <Col xs={24} sm={18} md={18} lg={18}>
-                <Form.Item name="qos">
-                  <Radio.Group>
-                    <Radio value={0}>QoS 0</Radio>
-                    <Radio value={1}>QoS 1</Radio>
-                    <Radio value={2}>QoS 2</Radio>
-                  </Radio.Group>
-                </Form.Item>
-              </Col>
-            )}
-          </Row>
-        )}
-
         {optionfmt && (
-          <Form.Item name="fmt">
-            <Radio.Group onChange={onFMTChange}>
-              <Radio value={FMT.PLAIN}>Plain</Radio>
-              <Radio value={FMT.JSON}>JSON</Radio>
-              <Radio value={FMT.HEX}>HEX</Radio>
-              <Radio value={FMT.BASE64}>Base64</Radio>
-            </Radio.Group>
-          </Form.Item>
+          <div className="myhPublisher-header" >
+            <div className="myhPublisher-options">
+            </div>
+            <div className="myhPublisher-toolbar">
+              <Form.Item name="fmt" noStyle>
+                {/* margin-bottom: 12px;  and align  right */}
+                <Radio.Group
+                  options={[
+                    { label: "Plain", value: FMT.PLAIN },
+                    { label: "HEX", value: FMT.HEX },
+                    { label: "Base64", value: FMT.BASE64 }
+                  ]}
+                  onChange={(e: RadioChangeEvent) => setFormFmt(e.target.value)}
+                  optionType="button" />
+              </Form.Item>
+            </div>
+          </div>
         )}
 
         <Row gutter={8}>
@@ -257,6 +240,64 @@ const Publisher: React.FC<PublisherProps> = ({
             </Form.Item>
           </Col>
         </Row>
+        {(optionretain || optionqos) && (
+          <Row className="ant-form-item" gutter={8}>
+            <Col xs={0} sm={0} md={0} lg={4} />
+            {optionqos && (<>
+              <Col
+                xs={12}
+                sm={6}
+                md={6}
+                lg={4}
+                className="ant-form-item-label"
+              >
+                <label
+                  htmlFor="qos"
+                  className="ant-form-item-required"
+                  title="QoS"
+                >
+                  QoS
+                </label>
+              </Col>
+              <Col xs={12} sm={18} md={6} lg={4}>
+                <Form.Item name="qos">
+                  <Select<QoS>
+                    style={{ width: 120 }}
+                    options={[
+                      { value: 0, label: "0" },
+                      { value: 1, label: "1" },
+                      { value: 2, label: "2" }
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+            </>)}
+            {optionretain && (<>
+              <Col
+                xs={12}
+                sm={6}
+                md={6}
+                lg={4}
+                className="ant-form-item-label"
+              >
+                <label
+                  htmlFor="retail"
+                  className="ant-form-item-required"
+                  title="Retain"
+                >
+                  Retain
+                </label>
+              </Col>
+              <Col xs={12} sm={18} md={6} lg={4}>
+                <Form.Item name="retain" valuePropName="checked">
+                  <Switch />
+                </Form.Item>
+              </Col>
+            </>
+            )}
+            <Col xs={0} sm={0} md={0} lg={4} />
+          </Row>
+        )}
       </Form>
     </div>
   );

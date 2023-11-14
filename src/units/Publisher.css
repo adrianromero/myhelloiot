@@ -32,3 +32,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .myhPublisher-sendinput {
   flex-grow: 1;
 }
+
+.myhPublisher-options {
+  flex-grow: 1;
+}
+
+.myhPublisher-toolbar .ant-radio-group {
+  margin-bottom: 12px;
+}

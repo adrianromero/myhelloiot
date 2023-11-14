@@ -46,8 +46,8 @@ const FMTOPTIONS: Map<string, ValueFormat> = new Map([
 ]);
 
 const OPTIONS: CheckboxOptionType[] = [
-  { label: "String", value: "StringValueFormat" },
-  { label: "Hex", value: "HEXValueFormat" },
+  { label: "Plain", value: "StringValueFormat" },
+  { label: "HEX", value: "HEXValueFormat" },
   { label: "Base64", value: "Base64ValueFormat" },
 ];
 
