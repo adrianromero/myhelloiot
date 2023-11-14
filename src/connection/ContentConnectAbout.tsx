@@ -36,6 +36,8 @@ import GitHubRibbon from "../assets/svg/github.svg?react";
 import { ConnectInfoForm } from "./ConnectInfoForm";
 import { VERSION } from "../version";
 
+const myhelloiotimg = new URL("../assets/myhelloiot.png", import.meta.url).href;
+
 const { Title, Paragraph, Link } = Typography;
 
 const ContentConnectAbout: React.FC<{
@@ -91,13 +93,29 @@ const ContentConnectAbout: React.FC<{
           Windows, MacOS, Linux or, and even in mobile devices iOS or Android.
         </Paragraph>
         <Paragraph style={{ display: "flex", justifyContent: "center" }}>
-          <Image src={new URL("../assets/myhelloiot.png", import.meta.url).href} width={480} />
+          <Image src={myhelloiotimg} width={480} />
         </Paragraph>
         <Title level={2}>Getting started</Title>
         <Title level={4}>MQTT connection options</Title>
         <Paragraph>
           You can use any MQTT broker with WebSockets/SSL support. For example
-          select the EMQX test broker
+          select the free public HiveMQ broker
+          <Button
+            type="link"
+            size="small"
+            icon={<SVGIcon icon={faPencil} />}
+            onClick={() => {
+              messageApi.info("url: wss://broker.hivemq.com:8884/mqtt");
+              form.setFieldsValue({
+                url: "wss://broker.hivemq.com:8884/mqtt",
+                username: "",
+                password: "",
+              });
+            }}
+          >
+            Sets the free public HiveMQ broker url
+          </Button>
+          or the free public EMQX broker
           <Button
             type="link"
             size="small"
@@ -111,7 +129,7 @@ const ContentConnectAbout: React.FC<{
               });
             }}
           >
-            Sets EMQX.IO test broker url
+            Sets free public EMQX.IO broker url
           </Button>
           or the Mosquitto test broker
           <Button
