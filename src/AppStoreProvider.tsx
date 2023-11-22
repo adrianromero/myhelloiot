@@ -29,15 +29,11 @@ import { notification } from "antd";
 import { ConnectInfo } from "./connection/ConnectionInfo";
 import { cyrb53str } from "./CryptFunctions";
 
-const STORERUNTIME = "myh-rt-" + cyrb53str(window.location.href);
+const STORERUNTIME = "myh-runtime-" + cyrb53str(window.location.href);
 
 export type AppStoreValue = {
   connectInfo?: ConnectInfo;
-  connectInfoType?: "STORED" | "REMOTE";
   connected: string;
-  username: string;
-  password: string;
-  clientId: string;
   properties: {
     hash: string | undefined;
     attrs: { [key: string]: string };
@@ -46,9 +42,6 @@ export type AppStoreValue = {
 
 const emptyAppStoreValue: AppStoreValue = {
   connected: "",
-  username: "Anonymous",
-  password: "",
-  clientId: "myh_" + Math.random().toString(16).substring(2).padEnd(13, "0"),
   properties: { hash: "", attrs: {} },
 };
 
@@ -56,15 +49,11 @@ export interface ActionDisconnect extends Action<"disconnect"> { }
 export type DispatchDisconnect = Dispatch<ActionDisconnect>;
 
 export interface ActionConnect extends Action<"connect"> {
-  username: string;
-  password: string;
-  clientId: string;
 }
 export type DispatchConnect = Dispatch<ActionConnect>;
 
 export interface ActionLoadConnectInfo extends Action<"loadconnectinfo"> {
   connectInfo: ConnectInfo;
-  connectInfoType: "STORED" | "REMOTE";
 }
 export type DispatchLoadConnectInfo = Dispatch<ActionLoadConnectInfo>;
 
@@ -83,9 +72,6 @@ const loadRUNTIME = (): AppStoreValue => {
         ...emptyAppStoreValue,
         connected: runtime[0],
         properties: runtime[1],
-        username: runtime[2],
-        password: runtime[3],
-        clientId: runtime[4],
       };
     }
     return emptyAppStoreValue;
@@ -101,9 +87,6 @@ const saveRUNTIME = (state: AppStoreValue) => {
       JSON.stringify([
         state.connected,
         state.properties,
-        state.username,
-        state.password,
-        state.clientId,
       ])
     );
   } catch (error) {
@@ -139,9 +122,8 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
   }
 
   if (action.type === "connect") {
-    const { username, password, clientId } = action as ActionConnect;
     const prevHash = prevState?.properties.hash;
-    const hash = cyrb53str(prevState?.connectInfo?.dashboard.data ?? "");
+    const hash = cyrb53str(prevState?.connectInfo?.mqtt.dashboard.data ?? "");
     const properties = {
       hash,
       attrs: hash === prevHash ? prevState?.properties.attrs ?? {} : {},
@@ -150,20 +132,16 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
       ...emptyAppStoreValue,
       ...prevState,
       connected: "connected",
-      username,
-      password,
-      clientId,
       properties,
     };
   }
 
   if (action.type === "loadconnectinfo") {
-    const { connectInfo, connectInfoType } = action as ActionLoadConnectInfo;
+    const { connectInfo } = action as ActionLoadConnectInfo;
     return {
       ...emptyAppStoreValue,
       ...prevState,
       connectInfo,
-      connectInfoType,
     };
   }
 

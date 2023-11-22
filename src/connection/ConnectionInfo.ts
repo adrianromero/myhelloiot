@@ -21,46 +21,58 @@ import { cyrb53str } from "../CryptFunctions";
 import type { QoS, IConnectPacket } from "mqtt-packet";
 
 export type ConnectInfo = {
-  url: string;
-  keepalive: number;
-  protocolVersion: IConnectPacket["protocolVersion"];
-  clean: boolean;
-  connectTimeout: number;
-  reconnectPeriod: number;
-  will: boolean;
-  willtopic: string;
-  willqos: QoS;
-  willretain: boolean;
-  willpayload: string;
-  dashboard: FileInfo;
-  dashboardcss: FileInfo;
+  type: "REMOTE" | "STORED";
+  mqtt: {
+    username: string;
+    password: string;
+    clientId: string;
+    url: string;
+    keepalive: number;
+    protocolVersion: IConnectPacket["protocolVersion"];
+    clean: boolean;
+    connectTimeout: number;
+    reconnectPeriod: number;
+    will: boolean;
+    willtopic: string;
+    willqos: QoS;
+    willretain: boolean;
+    willpayload: string;
+    dashboard: FileInfo;
+    dashboardcss: FileInfo;
+  };
 };
 
 export const defaultConnectInfo: ConnectInfo = {
-  url: "wss://mymqttbroker",
-  keepalive: 60,
-  protocolVersion: 4,
-  clean: true,
-  connectTimeout: 30000,
-  reconnectPeriod: 1000,
-  will: false,
-  willtopic: "",
-  willqos: 0,
-  willretain: false,
-  willpayload: "",
-  dashboard: {
-    name: "basic.jsx",
-    type: "text/jsx",
-    data: basicsampledata,
-  },
-  dashboardcss: {
-    name: "dashboard.css",
-    type: "text/css",
-    data: "",
+  type: "STORED",
+  mqtt: {
+    username: "",
+    password: "",
+    clientId: "",
+    url: "wss://mymqttbroker",
+    keepalive: 60,
+    protocolVersion: 4,
+    clean: true,
+    connectTimeout: 30000,
+    reconnectPeriod: 1000,
+    will: false,
+    willtopic: "",
+    willqos: 0,
+    willretain: false,
+    willpayload: "",
+    dashboard: {
+      name: "basic.jsx",
+      type: "text/jsx",
+      data: basicsampledata,
+    },
+    dashboardcss: {
+      name: "dashboard.css",
+      type: "text/css",
+      data: "",
+    },
   },
 };
 
-const STORECONNECTINFO = "myh-in-" + cyrb53str(window.location.href);
+const STORECONNECTINFO = "myh-info-" + cyrb53str(window.location.href);
 
 export const loadConnectInfo = (): ConnectInfo => {
   try {

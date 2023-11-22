@@ -51,61 +51,59 @@ const App: React.FC = () => (
 const MQTTApp: React.FC = () => {
   const [{ error }, { connect, disconnect }] = useMQTTContext();
   const connected = useSelector<AppStoreValue, string>((s) => s.connected);
-  const username = useSelector<AppStoreValue, string>((s) => s.username);
-  const password = useSelector<AppStoreValue, string>((s) => s.password);
-  const clientId = useSelector<AppStoreValue, string>((s) => s.clientId);
   const connectInfo = useSelector<AppStoreValue, ConnectInfo | undefined>(
     (s) => s.connectInfo
   );
-  const connectInfoType = useSelector<
-    AppStoreValue,
-    "REMOTE" | "STORED" | undefined
-  >((s) => s.connectInfoType);
   const dispatchLoad = useDispatch<DispatchLoadConnectInfo>();
 
   useEffect(() => {
-    if (connectInfo) {
-      if (connected === "connected") {
-        const {
-          url,
+    if (connectInfo && connected === "connected") {
+      const {
+        username,
+        password,
+        clientId,
+        url,
+        keepalive,
+        protocolVersion,
+        clean,
+        connectTimeout,
+        reconnectPeriod,
+        will,
+        willtopic,
+        willqos,
+        willretain,
+        willpayload
+      } = connectInfo.mqtt;
+      connect({
+        url,
+        options: {
+          username,
+          password,
+          clientId,
           keepalive,
+          protocolId: protocolVersion === 3 ? "MQIsdp" : "MQTT",
           protocolVersion,
           clean,
           connectTimeout,
           reconnectPeriod,
-          will,
-          willtopic,
-          willqos,
-          willretain,
-          willpayload
-        } = connectInfo;
-        connect({
-          url,
-          options: {
-            username,
-            password,
-            clientId,
-            keepalive,
-            protocolId: protocolVersion === 3 ? "MQIsdp" : "MQTT",
-            protocolVersion,
-            clean,
-            connectTimeout,
-            reconnectPeriod,
-            will: will ? {
-              topic: willtopic,
-              qos: willqos,
-              retain: willretain,
-              payload: Buffer.from(willpayload || '')
-            } : undefined
-          },
-        });
-      } else {
-        disconnect();
-      }
+          will: will ? {
+            topic: willtopic,
+            qos: willqos,
+            retain: willretain,
+            payload: Buffer.from(willpayload || '')
+          } : undefined
+        },
+      });
     } else {
+      disconnect();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connected, connectInfo]);
+
+  useEffect(() => {
+    if (!connectInfo) {
       const fetchConnectInfo = async (): Promise<{
         connectInfo: ConnectInfo;
-        connectInfoType: "REMOTE" | "STORED";
       }> => {
         const app = new URLSearchParams(window.location.search).get(
           "connectinfo"
@@ -124,44 +122,37 @@ const MQTTApp: React.FC = () => {
             jsxbody.text(),
             cssbody.text(),
           ]);
-          infodata.dashboard.data = jsxdata;
-          infodata.dashboardcss.data = cssdata;
-          return { connectInfo: infodata, connectInfoType: "REMOTE" };
+          infodata.mqtt.dashboard.data = jsxdata;
+          infodata.mqtt.dashboardcss.data = cssdata;
+          return { connectInfo: infodata };
         }
         return Promise.resolve({
           connectInfo: loadConnectInfo(),
-          connectInfoType: "STORED",
         });
       };
-      fetchConnectInfo().then(({ connectInfo, connectInfoType }) =>
-        dispatchLoad({ type: "loadconnectinfo", connectInfo, connectInfoType })
+      fetchConnectInfo().then(({ connectInfo }) =>
+        dispatchLoad({ type: "loadconnectinfo", connectInfo })
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected, connectInfo]);
+  }, [connectInfo]);
 
-  if (!connectInfo || !connectInfoType) {
-    return null; // Loading
+  if (!connectInfo) {
+    return null; // Loading application
   }
 
   if (!connected) {
     // Connection Component
-    if (connectInfoType === "STORED") {
+    if (connectInfo.type === "STORED") {
       return (
         <ConnectStored
           connectInfo={connectInfo}
-          username={username}
-          password={password}
-          clientId={clientId}
         />
       );
     }
     return (
       <ConnectRemote
         connectInfo={connectInfo}
-        username={username}
-        password={password}
-        clientId={clientId}
       />
     );
   }
@@ -176,8 +167,8 @@ const MQTTApp: React.FC = () => {
     );
   }
 
-  const jsx = connectInfo.dashboard.data;
-  const css = connectInfo.dashboardcss.data;
+  const jsx = connectInfo.mqtt.dashboard.data;
+  const css = connectInfo.mqtt.dashboardcss.data;
   if (!jsx) {
     return <AppError title="Failed to load JSX code" errorMessage="Application storage is empty." />;
   }

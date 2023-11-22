@@ -50,10 +50,7 @@ type ModalErrorInfo = {
 
 const ConnectStored: React.FC<{
   connectInfo: ConnectInfo;
-  username: string;
-  password: string;
-  clientId: string;
-}> = ({ connectInfo, username, password, clientId }) => {
+}> = ({ connectInfo }) => {
   const [form] = Form.useForm<ConnectInfoForm>();
   const will = Form.useWatch("will", form);
   const dispatchLoad = useDispatch<DispatchLoadConnectInfo>();
@@ -63,16 +60,13 @@ const ConnectStored: React.FC<{
 
   useEffect(() => {
     const connectInfoForm: ConnectInfoForm = {
-      ...connectInfo,
-      username,
-      password,
-      clientId,
+      ...connectInfo.mqtt,
     };
     form.setFieldsValue(connectInfoForm);
     window.scrollTo(0, 0);
-  }, [connectInfo, username, password, clientId, form]);
+  }, [form, connectInfo]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     form.validateFields(["willtopic", "willqos", "willretain"]);
   }, [form, will]);
 
@@ -90,35 +84,23 @@ const ConnectStored: React.FC<{
         form={form}
         name="connection"
         onFinish={(connectInfoForm) => {
-          const connectInfo: ConnectInfo = {
-            url: connectInfoForm.url,
-            keepalive: connectInfoForm.keepalive,
-            protocolVersion: connectInfoForm.protocolVersion,
-            clean: connectInfoForm.clean,
-            connectTimeout: connectInfoForm.connectTimeout,
-            reconnectPeriod: connectInfoForm.reconnectPeriod,
-            will: connectInfoForm.will,
-            willtopic: connectInfoForm.willtopic,
-            willqos: connectInfoForm.willqos,
-            willretain: connectInfoForm.willretain,
-            willpayload: connectInfoForm.willpayload,
-            dashboard: connectInfoForm.dashboard,
-            dashboardcss: connectInfoForm.dashboardcss,
+          const connectInfoNew: ConnectInfo = {
+            type: "STORED",
+            mqtt: {
+              ...connectInfo.mqtt,
+              ...connectInfoForm
+            }
           };
 
           try {
-            saveConnectInfo(connectInfo);
+            saveConnectInfo(connectInfoNew);
 
             dispatchLoad({
               type: "loadconnectinfo",
-              connectInfo,
-              connectInfoType: "STORED",
+              connectInfo: connectInfoNew,
             });
             dispatchConnect({
-              type: "connect",
-              username: connectInfoForm.username,
-              password: connectInfoForm.password,
-              clientId: connectInfoForm.clientId,
+              type: "connect"
             });
           } catch (error) {
             showError({
@@ -147,49 +129,6 @@ const ConnectStored: React.FC<{
                 label: "About",
                 key: "1",
                 children: <ContentConnectAbout form={form} />
-              }, {
-                label: "Credentials",
-                key: "2",
-                forceRender: true,
-                children: <Row className="ant-form-item" gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col
-                    xs={24}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label htmlFor="username" title="User">
-                      User
-                    </label>
-                  </Col>
-                  <Col xs={24} sm={18} md={18} lg={12}>
-                    <Form.Item name="username">
-                      <Input autoComplete="off" />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col
-                    xs={24}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label htmlFor="password" title="Password">
-                      Password
-                    </label>
-                  </Col>
-                  <Col xs={24} sm={18} md={18} lg={12}>
-                    <Form.Item name="password">
-                      <Input.Password />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                </Row>
               }, {
                 label: "MQTT Connection",
                 key: "3",
@@ -234,24 +173,50 @@ const ConnectStored: React.FC<{
                     lg={4}
                     className="ant-form-item-label"
                   >
+                    <label htmlFor="username" title="User">
+                      User
+                    </label>
+                  </Col>
+                  <Col xs={24} sm={18} md={6} lg={4}>
+                    <Form.Item name="username">
+                      <Input autoComplete="off" />
+                    </Form.Item>
+                  </Col>
+                  <Col
+                    xs={24}
+                    sm={6}
+                    md={6}
+                    lg={4}
+                    className="ant-form-item-label"
+                  >
+                    <label htmlFor="password" title="Password">
+                      Password
+                    </label>
+                  </Col>
+                  <Col xs={24} sm={18} md={6} lg={4}>
+                    <Form.Item name="password">
+                      <Input.Password />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={0} sm={0} md={0} lg={4} />
+
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                  <Col
+                    xs={24}
+                    sm={6}
+                    md={6}
+                    lg={4}
+                    className="ant-form-item-label"
+                  >
                     <label
                       htmlFor="clientId"
-                      className="ant-form-item-required"
                       title="Client ID"
                     >
                       Client ID
                     </label>
                   </Col>
                   <Col xs={24} sm={18} md={6} lg={4}>
-                    <Form.Item
-                      name="clientId"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please define a Client ID.",
-                        },
-                      ]}
-                    >
+                    <Form.Item name="clientId"                    >
                       <Input autoComplete="off" />
                     </Form.Item>
                   </Col>

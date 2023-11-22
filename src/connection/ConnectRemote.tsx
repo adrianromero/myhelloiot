@@ -18,8 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Row, Col, Layout, Tabs } from "antd";
 import { useDispatch } from "react-redux";
-import { DispatchConnect } from "../AppStoreProvider";
-import { ConnectInfo } from "./ConnectionInfo";
+import { DispatchConnect, DispatchLoadConnectInfo } from "../AppStoreProvider";
+import { ConnectInfo, saveConnectInfo } from "./ConnectionInfo";
 import { ConnectInfoForm } from "./ConnectInfoForm";
 import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
@@ -35,25 +35,20 @@ type ModalErrorInfo = {
 
 const ConnectRemote: React.FC<{
   connectInfo: ConnectInfo;
-  username: string;
-  password: string;
-  clientId: string;
-}> = ({ connectInfo, username, password, clientId }) => {
+}> = ({ connectInfo }) => {
   const [form] = Form.useForm<ConnectInfoForm>();
+  const dispatchLoad = useDispatch<DispatchLoadConnectInfo>();
   const dispatchConnect = useDispatch<DispatchConnect>();
   const HIDDEN: ModalErrorInfo = { visible: false, title: "", errorMessage: "" };
   const [errorinf, showError] = useState<ModalErrorInfo>(HIDDEN);
 
   useEffect(() => {
     const connectInfoForm: ConnectInfoForm = {
-      ...connectInfo,
-      username,
-      password,
-      clientId,
+      ...connectInfo.mqtt,
     };
     form.setFieldsValue(connectInfoForm);
     window.scrollTo(0, 0);
-  }, [connectInfo, username, password, clientId, form]);
+  }, [form, connectInfo]);
 
   const handleFail = (): void => {
     showError({
@@ -74,12 +69,31 @@ const ConnectRemote: React.FC<{
         form={form}
         name="connection"
         onFinish={(connectInfoForm) => {
-          dispatchConnect({
-            type: "connect",
-            username: connectInfoForm.username,
-            password: connectInfoForm.password,
-            clientId: connectInfoForm.clientId,
-          });
+          const connectInfoNew: ConnectInfo = {
+            type: "REMOTE",
+            mqtt: {
+              ...connectInfo.mqtt,
+              ...connectInfoForm
+            }
+          };
+
+          try {
+            saveConnectInfo(connectInfoNew);
+
+            dispatchLoad({
+              type: "loadconnectinfo",
+              connectInfo: connectInfoNew,
+            });
+            dispatchConnect({
+              type: "connect"
+            });
+          } catch (error) {
+            showError({
+              visible: true,
+              title: "Connection error",
+              errorMessage: "Connection values cannot be stored locally. Please review the application permissions.",
+            });
+          }
         }}
         onFinishFailed={handleFail}
         className="myhConnectionForm"
@@ -97,53 +111,10 @@ const ConnectRemote: React.FC<{
           <Layout.Content className="myhLayoutContent">
             <div className="myhLayoutContent-panel">
               <Tabs defaultActiveKey="1" items={[{
-                label: "Credentials",
-                key: "1",
-                forceRender: true,
-                children: <Row className="ant-form-item" gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col
-                    xs={24}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label htmlFor="username" title="User">
-                      User
-                    </label>
-                  </Col>
-                  <Col xs={24} sm={18} md={18} lg={12}>
-                    <Form.Item name="username">
-                      <Input autoComplete="off" />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col
-                    xs={24}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label htmlFor="password" title="Password">
-                      Password
-                    </label>
-                  </Col>
-                  <Col xs={24} sm={18} md={18} lg={12}>
-                    <Form.Item name="password">
-                      <Input.Password />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                </Row>
-              }, {
                 label: "MQTT Connection",
                 key: "2",
                 forceRender: true,
-                children: <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+                children: <Row className="ant-form-item" gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
                   <Col xs={0} sm={0} md={0} lg={4} />
                   <Col
                     xs={24}
@@ -174,6 +145,42 @@ const ConnectRemote: React.FC<{
                     </Form.Item>
                   </Col>
                   <Col xs={0} sm={0} md={0} lg={4} />
+
+                  <Col xs={0} sm={0} md={0} lg={4} />
+                  <Col
+                    xs={24}
+                    sm={6}
+                    md={6}
+                    lg={4}
+                    className="ant-form-item-label"
+                  >
+                    <label htmlFor="username" title="User">
+                      User
+                    </label>
+                  </Col>
+                  <Col xs={24} sm={18} md={6} lg={4}>
+                    <Form.Item name="username">
+                      <Input autoComplete="off" />
+                    </Form.Item>
+                  </Col>
+                  <Col
+                    xs={24}
+                    sm={6}
+                    md={6}
+                    lg={4}
+                    className="ant-form-item-label"
+                  >
+                    <label htmlFor="password" title="Password">
+                      Password
+                    </label>
+                  </Col>
+                  <Col xs={24} sm={18} md={6} lg={4}>
+                    <Form.Item name="password">
+                      <Input.Password />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={0} sm={0} md={0} lg={4} />
+
                   <Col xs={0} sm={0} md={0} lg={4} />
                   <Col
                     xs={24}
@@ -184,7 +191,6 @@ const ConnectRemote: React.FC<{
                   >
                     <label
                       htmlFor="clientId"
-                      className="ant-form-item-required"
                       title="Client ID"
                     >
                       Client ID
@@ -193,12 +199,6 @@ const ConnectRemote: React.FC<{
                   <Col xs={24} sm={18} md={6} lg={4}>
                     <Form.Item
                       name="clientId"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please define a Client ID.",
-                        },
-                      ]}
                     >
                       <Input autoComplete="off" disabled />
                     </Form.Item>
