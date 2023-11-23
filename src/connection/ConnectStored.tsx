@@ -60,7 +60,7 @@ const ConnectStored: React.FC<{
 
   useEffect(() => {
     const connectInfoForm: ConnectInfoForm = {
-      ...connectInfo.mqtt,
+      ...connectInfo,
     };
     form.setFieldsValue(connectInfoForm);
     window.scrollTo(0, 0);
@@ -85,11 +85,8 @@ const ConnectStored: React.FC<{
         name="connection"
         onFinish={(connectInfoForm) => {
           const connectInfoNew: ConnectInfo = {
-            type: "STORED",
-            mqtt: {
-              ...connectInfo.mqtt,
-              ...connectInfoForm
-            }
+            ...connectInfo,
+            ...connectInfoForm
           };
 
           try {

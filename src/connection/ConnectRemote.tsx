@@ -44,7 +44,7 @@ const ConnectRemote: React.FC<{
 
   useEffect(() => {
     const connectInfoForm: ConnectInfoForm = {
-      ...connectInfo.mqtt,
+      ...connectInfo,
     };
     form.setFieldsValue(connectInfoForm);
     window.scrollTo(0, 0);
@@ -70,11 +70,8 @@ const ConnectRemote: React.FC<{
         name="connection"
         onFinish={(connectInfoForm) => {
           const connectInfoNew: ConnectInfo = {
-            type: "REMOTE",
-            mqtt: {
-              ...connectInfo.mqtt,
-              ...connectInfoForm
-            }
+            ...connectInfo,
+            ...connectInfoForm
           };
 
           try {

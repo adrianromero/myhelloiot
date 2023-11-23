@@ -21,54 +21,48 @@ import { cyrb53str } from "../CryptFunctions";
 import type { QoS, IConnectPacket } from "mqtt-packet";
 
 export type ConnectInfo = {
-  type: "REMOTE" | "STORED";
-  mqtt: {
-    username: string;
-    password: string;
-    clientId: string;
-    url: string;
-    keepalive: number;
-    protocolVersion: IConnectPacket["protocolVersion"];
-    clean: boolean;
-    connectTimeout: number;
-    reconnectPeriod: number;
-    will: boolean;
-    willtopic: string;
-    willqos: QoS;
-    willretain: boolean;
-    willpayload: string;
-    dashboard: FileInfo;
-    dashboardcss: FileInfo;
-  };
+  username: string;
+  password: string;
+  clientId: string;
+  url: string;
+  keepalive: number;
+  protocolVersion: IConnectPacket["protocolVersion"];
+  clean: boolean;
+  connectTimeout: number;
+  reconnectPeriod: number;
+  will: boolean;
+  willtopic: string;
+  willqos: QoS;
+  willretain: boolean;
+  willpayload: string;
+  dashboard: FileInfo;
+  dashboardcss: FileInfo;
 };
 
 export const defaultConnectInfo: ConnectInfo = {
-  type: "STORED",
-  mqtt: {
-    username: "",
-    password: "",
-    clientId: "",
-    url: "wss://mymqttbroker",
-    keepalive: 60,
-    protocolVersion: 4,
-    clean: true,
-    connectTimeout: 30000,
-    reconnectPeriod: 1000,
-    will: false,
-    willtopic: "",
-    willqos: 0,
-    willretain: false,
-    willpayload: "",
-    dashboard: {
-      name: "basic.jsx",
-      type: "text/jsx",
-      data: basicsampledata,
-    },
-    dashboardcss: {
-      name: "dashboard.css",
-      type: "text/css",
-      data: "",
-    },
+  username: "",
+  password: "",
+  clientId: "",
+  url: "wss://mymqttbroker",
+  keepalive: 60,
+  protocolVersion: 4,
+  clean: true,
+  connectTimeout: 30000,
+  reconnectPeriod: 1000,
+  will: false,
+  willtopic: "",
+  willqos: 0,
+  willretain: false,
+  willpayload: "",
+  dashboard: {
+    name: "basic.jsx",
+    type: "text/jsx",
+    data: basicsampledata,
+  },
+  dashboardcss: {
+    name: "dashboard.css",
+    type: "text/css",
+    data: "",
   },
 };
 

@@ -19,6 +19,7 @@ import React, { useEffect } from "react";
 import { ConfigProvider } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { Buffer } from "buffer";
+import { decompressFromEncodedURIComponent } from "lz-string";
 import AppStoreProvider, {
   AppStoreValue,
   DispatchLoadConnectInfo,
@@ -56,6 +57,11 @@ const MQTTApp: React.FC = () => {
   );
   const dispatchLoad = useDispatch<DispatchLoadConnectInfo>();
 
+  const search = new URLSearchParams(window.location.search);
+  const app = search.get("connectinfo");
+  const c = search.get("c");
+  const stored = !(app || c);
+
   useEffect(() => {
     if (connectInfo && connected === "connected") {
       const {
@@ -73,7 +79,7 @@ const MQTTApp: React.FC = () => {
         willqos,
         willretain,
         willpayload
-      } = connectInfo.mqtt;
+      } = connectInfo;
       connect({
         url,
         options: {
@@ -105,9 +111,6 @@ const MQTTApp: React.FC = () => {
       const fetchConnectInfo = async (): Promise<{
         connectInfo: ConnectInfo;
       }> => {
-        const app = new URLSearchParams(window.location.search).get(
-          "connectinfo"
-        );
         if (app) {
           const infofetch = fetch("./resources/" + app + "/connectinfo.json");
           const jsxfetch = fetch("./resources/" + app + "/dashboard.jsx");
@@ -122,9 +125,12 @@ const MQTTApp: React.FC = () => {
             jsxbody.text(),
             cssbody.text(),
           ]);
-          infodata.mqtt.dashboard.data = jsxdata;
-          infodata.mqtt.dashboardcss.data = cssdata;
+          infodata.dashboard.data = jsxdata;
+          infodata.dashboardcss.data = cssdata;
           return { connectInfo: infodata };
+        }
+        if (c) {
+          return { connectInfo: JSON.parse(decompressFromEncodedURIComponent(c)) };
         }
         return Promise.resolve({
           connectInfo: loadConnectInfo(),
@@ -143,7 +149,7 @@ const MQTTApp: React.FC = () => {
 
   if (!connected) {
     // Connection Component
-    if (connectInfo.type === "STORED") {
+    if (stored) {
       return (
         <ConnectStored
           connectInfo={connectInfo}
@@ -167,8 +173,8 @@ const MQTTApp: React.FC = () => {
     );
   }
 
-  const jsx = connectInfo.mqtt.dashboard.data;
-  const css = connectInfo.mqtt.dashboardcss.data;
+  const jsx = connectInfo.dashboard.data;
+  const css = connectInfo.dashboardcss.data;
   if (!jsx) {
     return <AppError title="Failed to load JSX code" errorMessage="Application storage is empty." />;
   }

@@ -123,7 +123,7 @@ const reducer: Reducer<AppStoreValue, AnyAction> = (
 
   if (action.type === "connect") {
     const prevHash = prevState?.properties.hash;
-    const hash = cyrb53str(prevState?.connectInfo?.mqtt.dashboard.data ?? "");
+    const hash = cyrb53str(prevState?.connectInfo?.dashboard.data ?? "");
     const properties = {
       hash,
       attrs: hash === prevHash ? prevState?.properties.attrs ?? {} : {},
