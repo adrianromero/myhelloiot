@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2023 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -16,7 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { useState, useEffect } from "react";
-import { notification } from "antd";
 
 const useAudio = (
   url: string,
@@ -46,14 +45,7 @@ const useAudio = (
 
   const play = () => {
     audio.currentTime = 0;
-    try {
-      audio.play();
-    } catch (error) {
-      notification.warning({
-        message: "Play audio",
-        description: "Audio cannot be played. Please review the application permissions."
-      });
-    }
+    audio.play();
   };
   const pause = () => audio.pause();
   const resume = () => audio.play();

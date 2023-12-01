@@ -28,7 +28,7 @@ import { StringValueFormat } from "../format/ValueFormat";
 
 import "./KeypadUnit.css";
 import SVGIcon from "../format/SVGIcon";
-import { faTurnDown, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faTurnDown } from "@fortawesome/free-solid-svg-icons";
 
 export type KeypadUnitProps = {
   pubtopic?: string;
@@ -62,8 +62,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
     publishValue();
   };
 
-  const onClickClear = () => setValue("");
-
   const onClickKey = (key: string) => () =>
     setValue((prevValue) => prevValue + key);
 
@@ -77,16 +75,8 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
         }
         onPressEnter={onPressEnter}
         className="myhInput"
-        addonAfter={
-          <Button
-            type="text"
-            onClick={onClickClear}
-            disabled={!connected}
-            icon={<SVGIcon icon={faCircleXmark} />}
-          />
-        }
+        allowClear
       />
-
       <Button
         type="primary"
         onClick={onClickKey("1")}

@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect } from "react";
-import { Button, Input, Form, Row, Col } from "antd";
+import { Button, Input, Form, Space } from "antd";
 import SVGIcon from "../format/SVGIcon";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
@@ -77,47 +77,44 @@ const InputUnit: React.FC<InputUnitProps> = ({
       onFinish={onFinish}
       className={className}
     >
-      <Row gutter={8} wrap={false}>
-        <Col flex="auto">
-          <Form.Item
-            name="mqttValue"
-            rules={[
-              {
-                validator: (_, value) => {
-                  try {
-                    format.fromDisplay(value);
-                    return Promise.resolve();
-                  } catch (error) {
-                    return Promise.reject(
-                      new Error("Value cannot be formatted.")
-                    );
-                  }
-                },
+      <Space.Compact>
+        <Form.Item
+          name="mqttValue"
+          rules={[
+            {
+              validator: (_, value) => {
+                try {
+                  format.fromDisplay(value);
+                  return Promise.resolve();
+                } catch (error) {
+                  return Promise.reject(
+                    new Error("Value cannot be formatted.")
+                  );
+                }
               },
-            ]}
-          >
-            <Input
-              className={`myhInputUnit-input ${format.getClassName()}`}
-              autoComplete="off"
-              readOnly={pubtopic === ""}
-              bordered={pubtopic !== ""}
-              disabled={!connected}
-            />
-          </Form.Item>
-        </Col>
+            },
+          ]}
+        >
+          <Input
+            className={`myhInputUnit-input ${format.getClassName()}`}
+            autoComplete="off"
+            readOnly={pubtopic === ""}
+            bordered={pubtopic !== ""}
+            disabled={!connected}
+          />
+        </Form.Item>
         {pubtopic !== "" && (
-          <Col flex="none">
-            <Form.Item>
-              <Button
-                icon={<SVGIcon icon={faPaperPlane} />}
-                type="primary"
-                disabled={!connected}
-                htmlType="submit"
-              />
-            </Form.Item>
-          </Col>
+          <Form.Item>
+            <Button
+              className="myhInputUnit-button"
+              icon={<SVGIcon icon={faPaperPlane} />}
+              type="primary"
+              disabled={!connected}
+              htmlType="submit"
+            ></Button>
+          </Form.Item>
         )}
-      </Row>
+      </Space.Compact>
     </Form>
   );
 };

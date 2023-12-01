@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect } from "react";
 import { IClientSubscribeOptions } from "mqtt";
+import { notification } from "antd";
 import type { MQTTMessage } from "../mqtt/MQTTProvider";
 import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import useAudio from "./useAudio";
@@ -72,37 +73,45 @@ const SoundUnit: React.FC<SoundUnitProps> = ({
     messagepop,
     { volume }
   );
+  const [notificationInstance, notificationContext] = notification.useNotification();
 
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
-      switch (FORMAT.toDisplay(message)) {
-        case "clockalarm":
-          playClockalarm();
-          break;
-        case "botlewhoo":
-          playBottlewhoo();
-          break;
-        case "greek":
-          playGreek();
-          break;
-        case "bell":
-          playBell();
-          break;
-        case "smokealarm":
-          playSmokealarm();
-          break;
-        case "chimes":
-          playChimes();
-          break;
-        case "harp":
-          playHarp();
-          break;
-        case "messagepop":
-          playMessagepop();
-          break;
-        default:
-          playGameitem();
+      try {
+        switch (FORMAT.toDisplay(message)) {
+          case "clockalarm":
+            playClockalarm();
+            break;
+          case "botlewhoo":
+            playBottlewhoo();
+            break;
+          case "greek":
+            playGreek();
+            break;
+          case "bell":
+            playBell();
+            break;
+          case "smokealarm":
+            playSmokealarm();
+            break;
+          case "chimes":
+            playChimes();
+            break;
+          case "harp":
+            playHarp();
+            break;
+          case "messagepop":
+            playMessagepop();
+            break;
+          default:
+            playGameitem();
+        }
+      } catch (error) {
+        notificationInstance.warning({
+          message: "Play audio",
+          description: "Audio cannot be played. Please review the application permissions."
+        });
       }
     },
     suboptions
@@ -123,7 +132,7 @@ const SoundUnit: React.FC<SoundUnitProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
-  return <></>;
+  return <>{notificationContext}</>;
 };
 
 export default SoundUnit;

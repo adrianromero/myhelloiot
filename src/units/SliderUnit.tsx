@@ -24,6 +24,8 @@ import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import type { LimitsFormat } from "../format/FormatTypes";
 import { DefaultLimits } from "../format/FormatConstants";
 
+import "./SliderUnit.css";
+
 type SliderUnitProps = {
   topic?: string
   pubtopic?: string;

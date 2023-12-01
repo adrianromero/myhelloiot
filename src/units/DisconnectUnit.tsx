@@ -37,13 +37,14 @@ const DisconnectUnit: React.FC<DisconnectUnitProps> = ({
 }) => {
   const format = StringValueFormat();
   const dispatch = useDispatch<DispatchDisconnect>();
+  const [notificationInstance, notificationContext] = notification.useNotification();
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
       if (keyvalue === format.toDisplay(message)) {
         dispatch({ type: "disconnect" });
       } else {
-        notification.warning({
+        notificationInstance.warning({
           message: "Disconnection key not valid.",
         });
       }
@@ -51,7 +52,7 @@ const DisconnectUnit: React.FC<DisconnectUnitProps> = ({
     suboptions
   );
 
-  return <></>;
+  return <>{notificationContext}</>;
 };
 
 export default DisconnectUnit;

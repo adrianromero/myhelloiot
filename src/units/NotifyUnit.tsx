@@ -40,10 +40,11 @@ const NotifyUnit: React.FC<NotifyUnitProps> = ({
   duration = 2.5,
   className,
 }) => {
+  const [notificationInstance, notificationContext] = notification.useNotification();
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
-      notification[type]({
+      notificationInstance[type]({
         message: format.toDisplay(message),
         duration,
         className,
@@ -52,7 +53,7 @@ const NotifyUnit: React.FC<NotifyUnitProps> = ({
     suboptions
   );
 
-  return <></>;
+  return <>{notificationContext}</>;
 };
 
 export default NotifyUnit;

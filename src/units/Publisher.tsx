@@ -127,6 +127,7 @@ const Publisher: React.FC<PublisherProps> = ({
   }, [ready, topic, value, retain, qos, fmt]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [formFmt, setFormFmt] = useState<FMT>(FMT.PLAIN);
+  const [notificationInstance, notificationContext] = notification.useNotification();
 
   useEffect(() => {
     form.validateFields(["value"]);
@@ -141,7 +142,7 @@ const Publisher: React.FC<PublisherProps> = ({
       qos: values.qos,
       retain: values.retain,
     });
-    notification.success({
+    notificationInstance.success({
       message:
         prefixtopic + values.topic ? prefixtopic + values.topic : "<EMPTY>",
       description: values.value ? values.value : "<EMPTY>",
@@ -299,6 +300,7 @@ const Publisher: React.FC<PublisherProps> = ({
           </Row>
         )}
       </Form>
+      {notificationContext}
     </div>
   );
 };

@@ -24,6 +24,7 @@ import {
   ValueFormat,
   ToIconFormat,
   ONOFF,
+  LimitsFormat,
 } from "./FormatTypes";
 import { ONOFFNumber } from "./FormatConstants";
 import {
@@ -34,11 +35,13 @@ import {
 
 import "./FormatTypes.css";
 
-export const DimIconFormat = (
-  icon: IconDefinition = faLightbulb
+export const DimIconFormat = (props:
+  { icon?: IconDefinition } & Partial<LimitsFormat>
+  = { icon: faLightbulb }
 ): IconFormat => ({
   toIcon: (b: Buffer) => {
     const value = parseInt(b.toString());
+    const { icon = faLightbulb, min = 0, max = 100 } = props;
 
     return (
       <div className="myhToIconFormat myhToIconFormat_aligncenter">
@@ -47,7 +50,7 @@ export const DimIconFormat = (
             icon={icon}
             style={{
               fontSize: "280%",
-              color: `hsl(60, ${value}%, 60%)`,
+              color: `hsl(60, ${100.0 * (value - min) / (max - min)}%, 60%)`,
               stroke: "darkgray",
               strokeWidth: "16px",
             }}

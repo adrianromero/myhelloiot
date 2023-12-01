@@ -87,5 +87,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .myhKeypad > .myhInput {
+  font-size: 200%;
+  font-weight: 800;
   grid-area: input;
+}
+
+.myhKeypad > .myhInput .ant-input-clear-icon {
+  font-size: 70%;
+}
+
+.myhKeypad > .btn-ok .anticon {
+  font-size: 70%;
 }

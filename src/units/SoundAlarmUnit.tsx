@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect } from "react";
 import { IClientSubscribeOptions } from "mqtt";
+import { notification } from "antd";
 import type { MQTTMessage } from "../mqtt/MQTTProvider";
 import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import useAudio from "./useAudio";
@@ -86,6 +87,7 @@ const SoundAlarmUnit: React.FC<SoundAlarmUnitProps> = ({
   );
 
   const [, { play, pause }] = useAudio(url, { volume, loop });
+  const [notificationInstance, notificationContext] = notification.useNotification();
 
   useMQTTSubscribe(
     subtopic,
@@ -94,13 +96,20 @@ const SoundAlarmUnit: React.FC<SoundAlarmUnitProps> = ({
   );
 
   useEffect(() => {
-    isPlaying === "1" ? play() : pause();
+    try {
+      isPlaying === "1" ? play() : pause();
+    } catch (error) {
+      notificationInstance.warning({
+        message: "Play audio",
+        description: "Audio cannot be played. Please review the application permissions."
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => pause, []);
-  return <></>;
+  return <>{notificationContext}</>;
 };
 
 export default SoundAlarmUnit;
