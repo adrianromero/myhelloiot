@@ -16,8 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import connectionReducer from "./sliceConnection";
-import { connectionSave } from "./sliceConnection";
+import connectionReducer, { connectionSave } from "./sliceConnection";
 
 export const store = configureStore({
   reducer: {
