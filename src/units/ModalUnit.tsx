@@ -23,7 +23,7 @@ import type { MQTTMessage } from "../mqtt/MQTTProvider";
 import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import type { ONOFF } from "../format/FormatTypes";
 import { ONOFFNumber } from "../format/FormatConstants";
-import { useAppStoreProperty } from "../AppStoreHooks";
+import { useConnectionProperty } from "../app/sliceConnectionHooks";
 
 type ModalUnitProps = {
   instancekey?: string;
@@ -46,7 +46,7 @@ const ModalUnit: React.FC<ModalUnitProps> = ({
   className = "",
   children,
 }) => {
-  const [isModalVisible, setIsModalVisible] = useAppStoreProperty(
+  const [isModalVisible, setIsModalVisible] = useConnectionProperty(
     instancekey + "-modal-visible"
   );
 

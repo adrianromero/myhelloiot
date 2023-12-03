@@ -16,10 +16,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { useDispatch } from "react-redux";
 import { notification } from "antd";
 import { IClientSubscribeOptions } from "mqtt";
-import { DispatchDisconnect } from "../AppStoreProvider";
+import { useAppDispatch } from "../app/hooks";
+import { disconnect } from "../app/sliceConnection";
 import { MQTTMessage } from "../mqtt/MQTTProvider";
 import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import { StringValueFormat } from "../format/ValueFormat";
@@ -36,13 +36,13 @@ const DisconnectUnit: React.FC<DisconnectUnitProps> = ({
   keyvalue = "",
 }) => {
   const format = StringValueFormat();
-  const dispatch = useDispatch<DispatchDisconnect>();
+  const dispatch = useAppDispatch();
   const [notificationInstance, notificationContext] = notification.useNotification();
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
       if (keyvalue === format.toDisplay(message)) {
-        dispatch({ type: "disconnect" });
+        dispatch(disconnect());
       } else {
         notificationInstance.warning({
           message: "Disconnection key not valid.",

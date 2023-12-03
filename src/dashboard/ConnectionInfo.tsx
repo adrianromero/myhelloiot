@@ -16,13 +16,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { useDispatch } from "react-redux";
 import SVGIcon from "../format/SVGIcon";
 import { faPowerOff, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 import { Row, Col, Typography, Button, Divider, Popover } from "antd";
 import { useMQTTContext } from "../mqtt/MQTTHooks";
-import { DispatchDisconnect } from "../AppStoreProvider";
+import { useAppDispatch } from "../app/hooks";
+import { disconnect } from "../app/sliceConnection";
 
 import "./ConnectionInfo.css";
 
@@ -36,7 +36,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
   disconnectDisabled = false,
 }) => {
   const [{ options, status }] = useMQTTContext();
-  const dispatch = useDispatch<DispatchDisconnect>();
+  const dispatch = useAppDispatch();
 
   const {
     protocol,
@@ -156,7 +156,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
           <Button
             type="primary"
             icon={<SVGIcon icon={faPowerOff} />}
-            onClick={() => dispatch({ type: "disconnect" })}
+            onClick={() => dispatch(disconnect())}
           >
             Disconnect
           </Button>

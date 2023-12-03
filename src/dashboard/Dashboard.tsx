@@ -20,7 +20,7 @@ import { Buffer } from "buffer";
 import { Drawer, Button, Layout, Menu } from "antd";
 import SVGIcon from "../format/SVGIcon";
 import { faBars, faImage } from "@fortawesome/free-solid-svg-icons";
-import { useAppStoreProperty } from "../AppStoreHooks";
+import { useConnectionProperty } from "../app/sliceConnectionHooks";
 import AppHeader from "../AppHeader";
 import type { MQTTMessage } from "../mqtt/MQTTProvider";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
@@ -46,7 +46,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   className = "",
   children,
 }) => {
-  const [panelkey, setPanelkey] = useAppStoreProperty(
+  const [panelkey, setPanelkey] = useConnectionProperty(
     instancekey + "-dashboard-panelkey"
   );
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);

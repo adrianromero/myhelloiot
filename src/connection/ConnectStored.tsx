@@ -29,9 +29,9 @@ import {
   Select,
   Switch,
 } from "antd";
-import { useDispatch } from "react-redux";
 import type { QoS } from "mqtt-packet";
-import { DispatchConnect, DispatchLoadConnectInfo } from "../AppStoreProvider";
+import { useAppDispatch } from "../app/hooks";
+import { connect } from "../app/sliceConnection";
 import { ConnectInfo, saveConnectInfo } from "./ConnectionInfo";
 import { ConnectInfoForm } from "./ConnectInfoForm";
 import ModalError from "../ModalError";
@@ -53,8 +53,7 @@ const ConnectStored: React.FC<{
 }> = ({ connectInfo }) => {
   const [form] = Form.useForm<ConnectInfoForm>();
   const will = Form.useWatch("will", form);
-  const dispatchLoad = useDispatch<DispatchLoadConnectInfo>();
-  const dispatchConnect = useDispatch<DispatchConnect>();
+  const dispatch = useAppDispatch();
   const HIDDEN: ModalErrorInfo = { visible: false, title: "", errorMessage: "" };
   const [errorinf, showError] = useState<ModalErrorInfo>(HIDDEN);
 
@@ -91,14 +90,9 @@ const ConnectStored: React.FC<{
 
           try {
             saveConnectInfo(connectInfoNew);
-
-            dispatchLoad({
-              type: "loadconnectinfo",
+            dispatch(connect({
               connectInfo: connectInfoNew,
-            });
-            dispatchConnect({
-              type: "connect"
-            });
+            }));
           } catch (error) {
             showError({
               visible: true,

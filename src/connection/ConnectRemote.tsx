@@ -17,8 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Row, Col, Layout, Tabs } from "antd";
-import { useDispatch } from "react-redux";
-import { DispatchConnect, DispatchLoadConnectInfo } from "../AppStoreProvider";
+import { useAppDispatch } from "../app/hooks";
+import { connect } from "../app/sliceConnection";
 import { ConnectInfo, saveConnectInfo } from "./ConnectionInfo";
 import { ConnectInfoForm } from "./ConnectInfoForm";
 import ModalError from "../ModalError";
@@ -37,8 +37,7 @@ const ConnectRemote: React.FC<{
   connectInfo: ConnectInfo;
 }> = ({ connectInfo }) => {
   const [form] = Form.useForm<ConnectInfoForm>();
-  const dispatchLoad = useDispatch<DispatchLoadConnectInfo>();
-  const dispatchConnect = useDispatch<DispatchConnect>();
+  const dispatch = useAppDispatch();
   const HIDDEN: ModalErrorInfo = { visible: false, title: "", errorMessage: "" };
   const [errorinf, showError] = useState<ModalErrorInfo>(HIDDEN);
 
@@ -76,14 +75,9 @@ const ConnectRemote: React.FC<{
 
           try {
             saveConnectInfo(connectInfoNew);
-
-            dispatchLoad({
-              type: "loadconnectinfo",
+            dispatch(connect({
               connectInfo: connectInfoNew,
-            });
-            dispatchConnect({
-              type: "connect"
-            });
+            }));
           } catch (error) {
             showError({
               visible: true,

@@ -16,9 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React from "react";
-import { useDispatch } from "react-redux";
 import { Button, Layout } from "antd";
-import { DispatchDisconnect } from "./AppStoreProvider";
+import { useAppDispatch } from "./app/hooks";
+import { disconnect } from "./app/sliceConnection";
 import AppHeader from "./AppHeader";
 import SVGIcon from "./format/SVGIcon";
 import {
@@ -32,7 +32,7 @@ const AppError: React.FC<{ title: string; errorMessage: string; jsx?: string }> 
   errorMessage,
   jsx,
 }) => {
-  const dispatch = useDispatch<DispatchDisconnect>();
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -41,7 +41,7 @@ const AppError: React.FC<{ title: string; errorMessage: string; jsx?: string }> 
           <Button
             icon={<SVGIcon icon={faAngleLeft} />}
             type="primary"
-            onClick={() => dispatch({ type: "disconnect" })}
+            onClick={() => dispatch(disconnect())}
           >
             Back
           </Button>

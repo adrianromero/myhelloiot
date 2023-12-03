@@ -17,19 +17,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect } from "react";
 import { ConfigProvider } from 'antd';
-import { useSelector, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { Buffer } from "buffer";
 import { decompressFromEncodedURIComponent } from "lz-string";
-import AppStoreProvider, {
-  AppStoreValue,
-  DispatchLoadConnectInfo,
-} from "./AppStoreProvider";
+import { store } from "./app/store";
 import ConnectStored from "./connection/ConnectStored";
 import ConnectRemote from "./connection/ConnectRemote";
 import AppDashboard from "./AppDashboard";
 import { ConnectInfo, loadConnectInfo } from "./connection/ConnectionInfo";
 import { useMQTTContext } from "./mqtt/MQTTHooks";
 import MQTTProvider from "./mqtt/MQTTProvider";
+import { useAppSelector, useAppDispatch } from "./app/hooks";
+import { selectConnected, selectConnectInfo, loadConnectionInfo } from "./app/sliceConnection";
 import AppError from "./AppError";
 import "antd/dist/reset.css";
 import "./assets/main.css";
@@ -42,20 +41,18 @@ const App: React.FC = () => (
     }}
   >
     <MQTTProvider>
-      <AppStoreProvider>
+      <Provider store={store}>
         <MQTTApp />
-      </AppStoreProvider>
+      </Provider>
     </MQTTProvider>
   </ConfigProvider>
 );
 
 const MQTTApp: React.FC = () => {
   const [{ error }, { connect, disconnect }] = useMQTTContext();
-  const connected = useSelector<AppStoreValue, string>((s) => s.connected);
-  const connectInfo = useSelector<AppStoreValue, ConnectInfo | undefined>(
-    (s) => s.connectInfo
-  );
-  const dispatchLoad = useDispatch<DispatchLoadConnectInfo>();
+  const dispatch = useAppDispatch();
+  const connected = useAppSelector(selectConnected);
+  const connectInfo = useAppSelector(selectConnectInfo);
 
   const search = new URLSearchParams(window.location.search);
   const app = search.get("connectinfo");
@@ -137,7 +134,7 @@ const MQTTApp: React.FC = () => {
         });
       };
       fetchConnectInfo().then(({ connectInfo }) =>
-        dispatchLoad({ type: "loadconnectinfo", connectInfo })
+        dispatch(loadConnectionInfo({ connectInfo }))
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

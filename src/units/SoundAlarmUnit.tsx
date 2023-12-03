@@ -23,7 +23,7 @@ import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import useAudio from "./useAudio";
 import { StringValueFormat } from "../format/ValueFormat";
 import { ValueFormat } from "../format/FormatTypes";
-import { useAppStoreProperty } from "../AppStoreHooks";
+import { useConnectionProperty } from "../app/sliceConnectionHooks";
 const clockalarm = new URL("../assets/media/128138_1542160-lq.mp3?url", import.meta.url).href;
 const gameitem = new URL("../assets/media/162467_311243-lq.mp3", import.meta.url).href;
 const bottlewhoo = new URL("../assets/media/249703_3930831-lq.mp3", import.meta.url).href;
@@ -82,7 +82,7 @@ const SoundAlarmUnit: React.FC<SoundAlarmUnitProps> = ({
     default:
       url = gameitem;
   }
-  const [isPlaying, setPlaying] = useAppStoreProperty(
+  const [isPlaying, setPlaying] = useConnectionProperty(
     instancekey + "-soundalarm-playing"
   );
 
