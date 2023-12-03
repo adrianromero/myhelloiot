@@ -15,8 +15,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, { useState } from "react";
 import { notification } from "antd";
+import { Buffer } from "buffer";
 import { IClientSubscribeOptions } from "mqtt";
 import type { MQTTMessage } from "../mqtt/MQTTProvider";
 import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
@@ -41,18 +42,24 @@ const NotifyUnit: React.FC<NotifyUnitProps> = ({
   className,
 }) => {
   const [notificationInstance, notificationContext] = notification.useNotification();
+  const [[bounceTime, bounceMessage], setBouncing] = useState([Number.MIN_SAFE_INTEGER, Buffer.from("")]);
+  const [[currentTime, currentMessage], setCurrent] = useState([Number.MIN_SAFE_INTEGER, Buffer.from("")]);
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
-      notificationInstance[type]({
-        message: format.toDisplay(message),
-        duration,
-        className,
-      });
+      setCurrent([new Date().getTime(), message]);
     },
     suboptions
   );
 
+  if (currentTime - bounceTime > 250 || !currentMessage.equals(bounceMessage)) {
+    notificationInstance[type]({
+      message: format.toDisplay(currentMessage) + " " + currentTime + " " + bounceTime,
+      duration,
+      className,
+    });
+    setBouncing([currentTime, currentMessage]);
+  }
   return <>{notificationContext}</>;
 };
 
