@@ -186,12 +186,7 @@ const Publisher: React.FC<PublisherProps> = ({
               </Form.Item>
             </div>
           </div>
-        </div>
-
-        {optionfmt && (
-          <div className="myhPublisher-header" >
-            <div className="myhPublisher-options">
-            </div>
+          {optionfmt && (
             <div className="myhPublisher-toolbar">
               <Form.Item name="fmt" noStyle>
                 {/* margin-bottom: 12px;  and align  right */}
@@ -205,8 +200,8 @@ const Publisher: React.FC<PublisherProps> = ({
                   optionType="button" />
               </Form.Item>
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
         <Row gutter={8}>
           <Col xs={24} sm={24} md={24} lg={24}>

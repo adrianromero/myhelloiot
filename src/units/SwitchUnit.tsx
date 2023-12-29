@@ -24,6 +24,7 @@ import type { ONOFF } from "../format/FormatTypes";
 import { ONOFFNumber } from "../format/FormatConstants";
 
 type SwitchUnitProps = {
+  topic?: string;
   pubtopic?: string;
   subtopic?: string;
   puboptions?: IClientPublishOptions;
@@ -33,8 +34,9 @@ type SwitchUnitProps = {
 };
 
 const SwitchUnit: React.FC<SwitchUnitProps> = ({
-  pubtopic = "",
-  subtopic = "",
+  topic = "",
+  pubtopic = topic,
+  subtopic = topic,
   puboptions,
   suboptions,
   onoff = ONOFFNumber,

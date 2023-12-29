@@ -101,7 +101,8 @@ const SoundAlarmUnit: React.FC<SoundAlarmUnitProps> = ({
     } catch (error) {
       notificationInstance.warning({
         message: "Play audio",
-        description: "Audio cannot be played. Please review the application permissions."
+        description: "Audio cannot be played. Please review the application permissions.",
+        placement: "bottomRight"
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -54,9 +54,10 @@ const NotifyUnit: React.FC<NotifyUnitProps> = ({
 
   if (currentTime - bounceTime > 250 || !currentMessage.equals(bounceMessage)) {
     notificationInstance[type]({
-      message: format.toDisplay(currentMessage) + " " + currentTime + " " + bounceTime,
+      message: format.toDisplay(currentMessage),
       duration,
       className,
+      placement: "bottomRight"
     });
     setBouncing([currentTime, currentMessage]);
   }

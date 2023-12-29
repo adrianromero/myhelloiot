@@ -16,12 +16,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .ant-input.myhInputUnit-input {
-  font-size: 200%;
+  font-size: 140%;
   font-weight: 800;
 }
 
 .myhInputUnit-button.ant-btn {
-  font-size: 200%;
+  font-size: 140%;
   width: 50px;
   height: unset;
 }

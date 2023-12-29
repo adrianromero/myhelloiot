@@ -49,7 +49,7 @@ export const DimIconFormat = (props:
           <SVGIcon
             icon={icon}
             style={{
-              fontSize: "280%",
+              fontSize: "200%",
               color: `hsl(60, ${100.0 * (value - min) / (max - min)}%, 60%)`,
               stroke: "darkgray",
               strokeWidth: "16px",
@@ -59,7 +59,7 @@ export const DimIconFormat = (props:
           <SVGIcon
             icon={icon}
             style={{
-              fontSize: "280%",
+              fontSize: "200%",
               color: "hsl(60, 0%, 60%)",
               stroke: "darkgray",
               strokeWidth: "16px",
@@ -84,7 +84,7 @@ export const SwitchIconFormat = (props?: SwitchIconFormatProps): IconFormat => {
         <SVGIcon
           icon={icon}
           style={{
-            fontSize: "180%",
+            fontSize: "120%",
             color: "yellow",
             stroke: "darkgray",
             strokeWidth: "16px",
@@ -94,7 +94,7 @@ export const SwitchIconFormat = (props?: SwitchIconFormatProps): IconFormat => {
         <SVGIcon
           icon={icon}
           style={{
-            fontSize: "180%",
+            fontSize: "120%",
             color: "#dcdcdc",
             stroke: "darkgray",
             strokeWidth: "16px",

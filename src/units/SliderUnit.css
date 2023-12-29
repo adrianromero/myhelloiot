@@ -16,6 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .ant-slider-horizontal.myhSliderUnit > .ant-slider-handle {
-  scale: 2;
-  translate: 50%;
+  scale: 1.5;
+  translate: 25%;
 }

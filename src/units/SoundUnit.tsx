@@ -110,7 +110,8 @@ const SoundUnit: React.FC<SoundUnitProps> = ({
       } catch (error) {
         notificationInstance.warning({
           message: "Play audio",
-          description: "Audio cannot be played. Please review the application permissions."
+          description: "Audio cannot be played. Please review the application permissions.",
+          placement: "bottomRight"
         });
       }
     },
