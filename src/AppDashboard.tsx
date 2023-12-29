@@ -113,6 +113,7 @@ import {
 import { ChartIconFormat } from "./format/ChartFormat";
 import { ImageIconFormat } from "./format/ImageFormat";
 import AppError from "./AppError";
+import { createComponentLabeled } from "./units/ComponentLabeled";
 
 const JSXCONTEXT = {
   //React JSX
@@ -131,15 +132,20 @@ const JSXCONTEXT = {
   DashboardPage,
   InputUnit,
   InputCard: createComponentCard(InputUnit),
+  InputLabel: createComponentLabeled(InputUnit, "baselined"),
   Publisher,
   ButtonUnit,
   ButtonCard: createComponentCard(ButtonUnit),
+  ButtonLabel: createComponentLabeled(ButtonUnit, "baselined"),
   SwitchUnit,
   SwitchCard: createComponentCard(SwitchUnit),
+  SwitchLabel: createComponentLabeled(SwitchUnit, "centeredunit"),
   ViewUnit,
   ViewCard: createComponentCard(ViewUnit),
+  ViewLabel: createComponentLabeled(ViewUnit, "baselined"),
   SliderUnit,
   SliderCard: createComponentCard(SliderUnit),
+  SliderLabel: createComponentLabeled(SliderUnit),
   SoundUnit,
   LogUnit,
   LogTool,
@@ -303,7 +309,7 @@ const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
         <link
           rel="stylesheet"
           type="text/css"
-          href={`data:text/css;base64,${btoa(css)}`}
+          href={`data:text/css;base64,${btoa(css)}`} //Buffer.from(data).toString('base64');
         ></link>
       )}
       <JSXRender jsx={jsx} />
