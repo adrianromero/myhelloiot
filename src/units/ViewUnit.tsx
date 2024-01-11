@@ -22,11 +22,14 @@ import type { MQTTMessage } from "../mqtt/MQTTProvider";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import { IconFormat } from "../format/FormatTypes";
 import { StringIconFormat } from "../format/IconFormat";
+import type { ConvertBuffer } from "../format/ConvertTypes";
+import { IdentityConvert } from "../format/ConvertTypes";
 
 type ViewUnitProps = {
   topic?: string;
   subtopic?: string;
   suboptions?: IClientSubscribeOptions;
+  subconvert?: ConvertBuffer;
   format?: IconFormat;
   className?: string;
 };
@@ -35,6 +38,7 @@ const ViewUnit: React.FC<ViewUnitProps> = ({
   topic = "",
   subtopic = topic,
   suboptions,
+  subconvert = IdentityConvert(),
   format = StringIconFormat(),
   className = "",
 }) => {
@@ -48,7 +52,7 @@ const ViewUnit: React.FC<ViewUnitProps> = ({
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
-      setBuffer(message);
+      setBuffer(subconvert(message));
     },
     suboptions
   );

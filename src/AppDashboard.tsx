@@ -112,6 +112,7 @@ import {
 } from "./format/GaugeFormat";
 import { ChartIconFormat } from "./format/ChartFormat";
 import { ImageIconFormat } from "./format/ImageFormat";
+import { JSONConvert } from "./format/ConvertTypes";
 import AppError from "./AppError";
 import { createComponentLabeled } from "./units/ComponentLabeled";
 
@@ -235,6 +236,9 @@ const JSXCONTEXT = {
   StarIconValueFormat,
   StringIconValueFormat,
   NumberIconValueFormat,
+
+  // Converters
+  JSONConvert,
 };
 
 const JSXCONTEXTKEYS: string[] = [];

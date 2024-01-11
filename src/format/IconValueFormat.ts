@@ -73,6 +73,8 @@ export const Celsius = (limits: Partial<LimitsFormat>) =>
   NumberIconValueFormat({
     style: "unit",
     unit: "celsius",
+    maximumFractionDigits: 1,
+    minimumFractionDigits: 1,
     min: -10,
     max: 60,
     step: 1,
@@ -83,6 +85,8 @@ export const Fahrenheit = (limits: Partial<LimitsFormat>) =>
   NumberIconValueFormat({
     style: "unit",
     unit: "fahrenheit",
+    maximumFractionDigits: 1,
+    minimumFractionDigits: 1,
     min: 14,
     max: 140,
     step: 1,
@@ -93,6 +97,8 @@ export const KilometerPerHour = (limits: Partial<LimitsFormat>) =>
   NumberIconValueFormat({
     style: "unit",
     unit: "kilometer-per-hour",
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
     min: 0,
     max: 180,
     step: 10,
@@ -103,6 +109,8 @@ export const Percent = (limits: Partial<LimitsFormat>) =>
   NumberIconValueFormat({
     style: "unit",
     unit: "percent",
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
     min: 0,
     max: 100,
     step: 1,
