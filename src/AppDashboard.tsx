@@ -62,7 +62,7 @@ import {
   ToIconFormat,
   ToIconValueFormat,
 } from "./format/FormatTypes";
-import { ONOFFNumber, ONOFFStr } from "./format/FormatConstants";
+import { ONOFFNumber, ONOFFStr, ONOFFShelly2 } from "./format/FormatConstants";
 import {
   MessageValueFormat,
   StringValueFormat,
@@ -181,6 +181,7 @@ const JSXCONTEXT = {
   ToIconValueFormat,
   ONOFFNumber,
   ONOFFStr,
+  ONOFFShelly2,
 
   // ValueFormats
   MessageValueFormat,

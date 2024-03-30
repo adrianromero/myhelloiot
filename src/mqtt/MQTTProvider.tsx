@@ -156,10 +156,9 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           };
         });
       });
-      client.on("error", (error) => {
+      client.on("error", () => {
         setState((s) => ({
           status: "Error",
-          error,
           client: s.client,
           _subscriptions: s._subscriptions,
         }));

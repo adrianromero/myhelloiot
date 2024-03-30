@@ -67,10 +67,10 @@ export const Base64ValueFormat = (): ValueFormat => ({
 
 export const SwitchValueFormat = (onoff: ONOFF = ONOFFNumber): ValueFormat => {
   return {
-    toDisplay: (b: Buffer) => (onoff.on.equals(b) ? "ON" : "OFF"),
-    fromDisplay: (s: string) => (s === "ON" ? onoff.on : onoff.off),
-    next: (b: Buffer) => (onoff.on.equals(b) ? onoff.off : onoff.on),
-    prev: (b: Buffer) => (onoff.on.equals(b) ? onoff.off : onoff.on),
+    toDisplay: (b: Buffer) => (onoff.status_on(b) ? "ON" : "OFF"),
+    fromDisplay: (s: string) => (s === "ON" ? onoff.cmd_on : onoff.cmd_off),
+    next: (b: Buffer) => (onoff.status_on(b) ? onoff.cmd_off : onoff.cmd_on),
+    prev: (b: Buffer) => (onoff.status_on(b) ? onoff.cmd_off : onoff.cmd_on),
     getClassName: () => "",
   };
 };

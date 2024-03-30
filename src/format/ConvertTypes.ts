@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2023 Adrián Romero
+Copyright (C) 2023-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -22,8 +22,12 @@ export type ConvertBuffer = (b: Buffer) => Buffer;
 export const IdentityConvert = () => (b: Buffer) => b;
 
 export const JSONConvert = (c: (json: unknown) => unknown) => (b: Buffer) => {
-  const json = JSON.parse(b.toString());
-  const conversion = c(json);
-  const convertedjson = JSON.stringify(conversion);
-  return Buffer.from(convertedjson);
+  try {
+    const json = JSON.parse(b.toString());
+    const conversion = c(json);
+    const convertedjson = JSON.stringify(conversion);
+    return Buffer.from(convertedjson);
+  } catch (exception) {
+    return "ERROR";
+  }
 };

@@ -80,7 +80,7 @@ export const SwitchIconFormat = (props?: SwitchIconFormatProps): IconFormat => {
   const { icon, onoff } = { icon: faLightbulb, onoff: ONOFFNumber, ...props };
   return {
     toIcon: (b: Buffer) =>
-      onoff.on.equals(b) ? (
+      onoff.status_on(b) ? (
         <SVGIcon
           icon={icon}
           style={{

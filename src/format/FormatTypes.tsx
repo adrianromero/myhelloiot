@@ -44,8 +44,9 @@ export type NumberFormat = {
 export type IconValueFormat = IconFormat & ValueFormat;
 
 export type ONOFF = {
-  on: Buffer;
-  off: Buffer;
+  status_on: (v: Buffer) => boolean;
+  cmd_on: Buffer;
+  cmd_off: Buffer;
 };
 
 export const ToIconFormat = (format: ValueFormat): IconFormat => ({
