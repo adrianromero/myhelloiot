@@ -61,7 +61,7 @@ const ModalUnit: React.FC<ModalUnitProps> = ({
   // };
 
   const handleCancel = () => {
-    setIsModalVisible(onoff.off.toString());
+    setIsModalVisible(onoff.cmd_off.toString());
   };
 
   return (
@@ -71,7 +71,7 @@ const ModalUnit: React.FC<ModalUnitProps> = ({
       closable={cancelable}
       keyboard={cancelable}
       open={
-        isModalVisible ? onoff.on.equals(Buffer.from(isModalVisible)) : false
+        isModalVisible ? onoff.status_on(Buffer.from(isModalVisible)) : false
       }
       onCancel={handleCancel}
       footer={

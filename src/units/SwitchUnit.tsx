@@ -52,14 +52,14 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
-      setChecked(onoff.on.equals(message));
+      setChecked(onoff.status_on(message));
     },
     suboptions
   );
 
   const onChange = (value: boolean) => {
     setChecked(value);
-    publish(pubtopic, value ? onoff.on : onoff.off, puboptions);
+    publish(pubtopic, value ? onoff.cmd_on : onoff.cmd_off, puboptions);
   };
 
   return (
