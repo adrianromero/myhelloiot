@@ -57,10 +57,6 @@ const ConnectRemote: React.FC<{
     });
   };
 
-  const search = new URLSearchParams(window.location.search);
-  const appname =
-    search.get("connectinfoname") ?? search.get("connectinfo") ?? undefined;
-
   return (
     <>
       <ModalError {...errorinf} onOk={() => showError(HIDDEN)} />
@@ -90,7 +86,7 @@ const ConnectRemote: React.FC<{
         className="myhConnectionForm"
       >
         <Layout className="myhLayout">
-          <AppHeader title="Dashboard connection" subtitle={appname}>
+          <AppHeader title="Dashboard connection">
             <Button
               icon={<SVGIcon icon={faPowerOff} />}
               type="primary"
