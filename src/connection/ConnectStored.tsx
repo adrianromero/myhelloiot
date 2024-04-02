@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2023 Adrián Romero
+Copyright (C) 2021-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -31,8 +31,8 @@ import {
 } from "antd";
 import type { QoS } from "mqtt-packet";
 import { useAppDispatch } from "../app/hooks";
-import { connect } from "../app/sliceConnection";
-import { ConnectInfo, saveConnectInfo } from "./ConnectionInfo";
+import { connect, loadConnectionCredentials, loadConnectionInfo } from "../app/sliceConnection";
+import { ConnectCredentials, ConnectInfo, saveStoreConnectConnected, saveStoreConnectCredentials, saveStoreConnectInfo } from "./ConnectionInfo";
 import { ConnectInfoForm } from "./ConnectInfoForm";
 import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
@@ -50,7 +50,8 @@ type ModalErrorInfo = {
 
 const ConnectStored: React.FC<{
   connectInfo: ConnectInfo;
-}> = ({ connectInfo }) => {
+  connectCredentials: ConnectCredentials;
+}> = ({ connectInfo, connectCredentials }) => {
   const [form] = Form.useForm<ConnectInfoForm>();
   const will = Form.useWatch("will", form);
   const dispatch = useAppDispatch();
@@ -60,10 +61,11 @@ const ConnectStored: React.FC<{
   useEffect(() => {
     const connectInfoForm: ConnectInfoForm = {
       ...connectInfo,
+      ...connectCredentials,
     };
     form.setFieldsValue(connectInfoForm);
     window.scrollTo(0, 0);
-  }, [form, connectInfo]);
+  }, [form, connectInfo, connectCredentials]);
 
   useEffect(() => {
     form.validateFields(["willtopic", "willqos", "willretain"]);
@@ -84,15 +86,33 @@ const ConnectStored: React.FC<{
         name="connection"
         onFinish={(connectInfoForm) => {
           const connectInfoNew: ConnectInfo = {
-            ...connectInfo,
-            ...connectInfoForm
+            clientId: connectInfoForm.clientId,
+            url: connectInfoForm.url,
+            keepalive: connectInfoForm.keepalive,
+            protocolVersion: connectInfoForm.protocolVersion,
+            clean: connectInfoForm.clean,
+            connectTimeout: connectInfoForm.connectTimeout,
+            reconnectPeriod: connectInfoForm.reconnectPeriod,
+            will: connectInfoForm.will,
+            willtopic: connectInfoForm.willtopic,
+            willqos: connectInfoForm.willqos,
+            willretain: connectInfoForm.willretain,
+            willpayload: connectInfoForm.willpayload,
+            dashboard: connectInfoForm.dashboard,
+            dashboardcss: connectInfoForm.dashboardcss,
+          };
+          const connectCredentialsNew: ConnectCredentials = {
+            username: connectInfoForm.username,
+            password: connectInfoForm.password
           };
 
           try {
-            saveConnectInfo(connectInfoNew);
-            dispatch(connect({
-              connectInfo: connectInfoNew,
-            }));
+            saveStoreConnectInfo(connectInfoNew);
+            saveStoreConnectCredentials(connectCredentialsNew);
+            saveStoreConnectConnected("connected")
+            dispatch(loadConnectionInfo({ connectInfo: connectInfoNew }));
+            dispatch(loadConnectionCredentials({ connectCredentials: connectCredentialsNew }));
+            dispatch(connect());
           } catch (error) {
             showError({
               visible: true,

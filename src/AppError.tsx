@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2022 Adrián Romero
+Copyright (C) 2021-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -26,6 +26,7 @@ import {
   faCircleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import "./AppError.css";
+import { saveStoreConnectConnected } from "./connection/ConnectionInfo";
 
 const AppError: React.FC<{ title: string; errorMessage: string; jsx?: string }> = ({
   title,
@@ -41,7 +42,10 @@ const AppError: React.FC<{ title: string; errorMessage: string; jsx?: string }> 
           <Button
             icon={<SVGIcon icon={faAngleLeft} />}
             type="primary"
-            onClick={() => dispatch(disconnect())}
+            onClick={() => {
+              saveStoreConnectConnected("disconnected")
+              dispatch(disconnect());
+            }}
           >
             Back
           </Button>

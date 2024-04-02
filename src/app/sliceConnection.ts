@@ -17,15 +17,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { ConnectInfo } from "../connection/ConnectionInfo";
-import { cyrb53str } from "../CryptFunctions";
+import { ConnectCredentials, ConnectInfo } from "../connection/ConnectionInfo";
+//import { cyrb53str } from "../CryptFunctions";
 
-export interface ConnectionState {
-  connectInfo?: ConnectInfo;
-  connected: string;
+export type ApplicationMode = "STANDARD" | "DASHBOARD";
+export type ApplicationConnected = "connected" | "disconnected";
+
+export type StatusInitial = { name: "INITIAL" };
+export type StatusLoading = { name: "LOADING" };
+export type StatusReady = {
+  name: "READY";
+  mode: ApplicationMode;
+  connectInfo: ConnectInfo;
+  connectCredentials: ConnectCredentials;
+  connected: ApplicationConnected;
   attrshash?: string;
   attrs: { [key: string]: string };
+};
+export type StatusError = { name: "ERROR"; message: string; error: unknown };
+
+export type ApplicationStatus =
+  | StatusInitial
+  | StatusLoading
+  | StatusReady
+  | StatusError;
+
+export interface ConnectionState {
+  status: ApplicationStatus;
 }
+
+export type StatusReadyAction = {
+  mode: ApplicationMode;
+  connectInfo: ConnectInfo;
+  connectCredentials: ConnectCredentials;
+  connected: ApplicationConnected;
+};
+
+export type StatusErrorAction = {
+  message: string;
+  error: unknown;
+};
 
 export type PropertiesAction = {
   attrs: {
@@ -37,89 +68,138 @@ export type LoadConnectionInfoAction = {
   connectInfo: ConnectInfo;
 };
 
-const STORERUNTIME = "myh-runtime-" + cyrb53str(window.location.href);
-
-const emptyConnectionState: ConnectionState = {
-  connected: "",
-  attrs: {},
+export type LoadConnectionCredentialsAction = {
+  connectCredentials: ConnectCredentials;
 };
 
-export const connectionSave = (state: ConnectionState) => {
-  try {
-    localStorage.setItem(
-      STORERUNTIME,
-      JSON.stringify([state.connected, state.attrshash, state.attrs])
-    );
-  } catch (error) {
-    // notification.warning({
-    //   message: "Store state",
-    //   description: "Application state cannot stored locally. Please review the application permissions."
-    // });
-    console.error(
-      "Application cannot stored state locally. Please review the application permissions."
-    );
-  }
+const INITIALCONNECTIONSTATE: ConnectionState = {
+  status: { name: "INITIAL" },
 };
 
-const connectionLoad = (): ConnectionState => {
-  try {
-    const lsvalue = localStorage.getItem(STORERUNTIME);
-    if (lsvalue) {
-      const runtime = JSON.parse(lsvalue);
-      return {
-        ...emptyConnectionState,
-        connected: runtime[0],
-        attrshash: runtime[1],
-        attrs: runtime[2],
-      };
-    }
-    return emptyConnectionState;
-  } catch (error) {
-    return emptyConnectionState;
-  }
-};
 export const connectionSlice = createSlice({
   name: "connection",
-  initialState: connectionLoad(),
+  initialState: INITIALCONNECTIONSTATE,
   reducers: {
-    connect: (state, action: PayloadAction<LoadConnectionInfoAction>) => {
-      const { connectInfo } = action.payload;
-      state.connectInfo = connectInfo;
-      state.connected = "connected";
-      const prevHash = state.attrshash;
-      const hash = cyrb53str(state?.connectInfo?.dashboard.data ?? "");
-      if (hash !== prevHash) {
-        state.attrshash = hash;
-        state.attrs = {};
+    statusLoading: (state) => {
+      state.status = { name: "LOADING" };
+    },
+    statusReady: (state, action: PayloadAction<StatusReadyAction>) => {
+      state.status = {
+        name: "READY",
+        mode: action.payload.mode,
+        connected: action.payload.connected,
+        connectCredentials: action.payload.connectCredentials,
+        connectInfo: action.payload.connectInfo,
+        attrs: {},
+      };
+    },
+    statusError: (state, action: PayloadAction<StatusErrorAction>) => {
+      const { message, error } = action.payload;
+      state.status = {
+        name: "ERROR",
+        message,
+        error,
+      };
+    },
+    connect: (state) => {
+      if (state.status.name === "READY") {
+        state.status.connected = "connected";
+      } else {
+        state.status = {
+          name: "ERROR",
+          message: "Reducer connect cannot be executed if status is not READY.",
+          error: null,
+        };
       }
+      //TODO: Load ands save attributes.
+      // const prevHash = state.attrshash;
+      // const hash = cyrb53str(state?.connectInfo?.dashboard.data ?? "");
+      // if (hash !== prevHash) {
+      //   state.attrshash = hash;
+      //   state.attrs = {};
+      // }
     },
     disconnect: (state) => {
-      state.connected = "";
+      if (state.status.name === "READY") {
+        state.status.connected = "disconnected";
+      } else {
+        state.status = {
+          name: "ERROR",
+          message:
+            "Reducer disconnect cannot be executed if status is not READY.",
+          error: null,
+        };
+      }
     },
     putProperties: (state, action: PayloadAction<PropertiesAction>) => {
-      const { attrs } = action.payload;
-      state.attrs = {
-        ...state.attrs,
-        ...attrs,
-      };
+      if (state.status.name === "READY") {
+        const { attrs } = action.payload;
+        state.status.attrs = {
+          ...state.status.attrs,
+          ...attrs,
+        };
+      } else {
+        state.status = {
+          name: "ERROR",
+          message:
+            "Reducer putProperties cannot be executed if status is not READY.",
+          error: null,
+        };
+      }
     },
     loadConnectionInfo: (
       state,
       action: PayloadAction<LoadConnectionInfoAction>
     ) => {
-      const { connectInfo } = action.payload;
-      state.connectInfo = connectInfo;
+      if (state.status.name === "READY") {
+        const { connectInfo } = action.payload;
+        state.status.connectInfo = connectInfo;
+      } else {
+        state.status = {
+          name: "ERROR",
+          message:
+            "Reducer loadConnectionInfo cannot be executed if status is not READY.",
+          error: null,
+        };
+      }
+    },
+    loadConnectionCredentials: (
+      state,
+      action: PayloadAction<LoadConnectionCredentialsAction>
+    ) => {
+      if (state.status.name === "READY") {
+        const { connectCredentials } = action.payload;
+        state.status.connectCredentials = connectCredentials;
+      } else {
+        state.status = {
+          name: "ERROR",
+          message:
+            "Reducer loadConnectionCredentials cannot be executed if status is not READY.",
+          error: null,
+        };
+      }
     },
   },
 });
 
-export const { connect, disconnect, putProperties, loadConnectionInfo } =
-  connectionSlice.actions;
+export const {
+  statusLoading,
+  statusReady,
+  statusError,
+  connect,
+  disconnect,
+  putProperties,
+  loadConnectionInfo,
+  loadConnectionCredentials,
+} = connectionSlice.actions;
 
-export const selectConnected = (state: RootState) => state.connection.connected;
-export const selectConnectInfo = (state: RootState) =>
-  state.connection.connectInfo;
-export const selectProperty = (name: string) => (state: RootState) =>
-  state.connection.attrs[name];
+export const selectStatus = (state: RootState) => state.connection.status;
+
+export const selectProperty = (name: string) => (state: RootState) => {
+  if (state.connection.status.name === "READY") {
+    return state.connection.status.attrs[name];
+  }
+  return;
+};
 
 export default connectionSlice.reducer;

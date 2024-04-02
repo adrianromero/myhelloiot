@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2023 Adrián Romero
+Copyright (C) 2021-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -18,8 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Row, Col, Layout, Tabs } from "antd";
 import { useAppDispatch } from "../app/hooks";
-import { connect } from "../app/sliceConnection";
-import { ConnectInfo, saveConnectInfo } from "./ConnectionInfo";
+import { connect, loadConnectionCredentials } from "../app/sliceConnection";
+import { ConnectCredentials, ConnectInfo, saveStoreConnectConnected, saveStoreConnectCredentials } from "./ConnectionInfo";
 import { ConnectInfoForm } from "./ConnectInfoForm";
 import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
@@ -35,7 +35,8 @@ type ModalErrorInfo = {
 
 const ConnectRemote: React.FC<{
   connectInfo: ConnectInfo;
-}> = ({ connectInfo }) => {
+  connectCredentials: ConnectCredentials;
+}> = ({ connectInfo, connectCredentials }) => {
   const [form] = Form.useForm<ConnectInfoForm>();
   const dispatch = useAppDispatch();
   const HIDDEN: ModalErrorInfo = { visible: false, title: "", errorMessage: "" };
@@ -44,10 +45,11 @@ const ConnectRemote: React.FC<{
   useEffect(() => {
     const connectInfoForm: ConnectInfoForm = {
       ...connectInfo,
+      ...connectCredentials,
     };
     form.setFieldsValue(connectInfoForm);
     window.scrollTo(0, 0);
-  }, [form, connectInfo]);
+  }, [form, connectInfo, connectCredentials]);
 
   const handleFail = (): void => {
     showError({
@@ -64,16 +66,16 @@ const ConnectRemote: React.FC<{
         form={form}
         name="connection"
         onFinish={(connectInfoForm) => {
-          const connectInfoNew: ConnectInfo = {
-            ...connectInfo,
-            ...connectInfoForm
+          const connectCredentialsNew: ConnectCredentials = {
+            username: connectInfoForm.username,
+            password: connectInfoForm.password
           };
 
           try {
-            saveConnectInfo(connectInfoNew);
-            dispatch(connect({
-              connectInfo: connectInfoNew,
-            }));
+            saveStoreConnectCredentials(connectCredentialsNew);
+            saveStoreConnectConnected("connected")
+            dispatch(loadConnectionCredentials({ connectCredentials: connectCredentialsNew }));
+            dispatch(connect());
           } catch (error) {
             showError({
               visible: true,

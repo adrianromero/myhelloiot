@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2023 Adrián Romero
+Copyright (C) 2021-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -19,19 +19,23 @@ import React, { useEffect } from "react";
 import { ConfigProvider } from 'antd';
 import { Provider } from "react-redux";
 import { Buffer } from "buffer";
-import { decompressFromEncodedURIComponent } from "lz-string";
 import { store } from "./app/store";
 import ConnectStored from "./connection/ConnectStored";
 import ConnectRemote from "./connection/ConnectRemote";
 import AppDashboard from "./AppDashboard";
-import { ConnectInfo, loadConnectInfo } from "./connection/ConnectionInfo";
+import { ConnectInfo, loadStoreConnectInfo, loadStoreConnectCredentials, loadStoreConnected, loadResourceConnectInfo, ConnectCredentials, defaultConnectInfo, defaultConnectCredentials } from "./connection/ConnectionInfo";
 import { useMQTTContext } from "./mqtt/MQTTHooks";
 import MQTTProvider from "./mqtt/MQTTProvider";
 import { useAppSelector, useAppDispatch } from "./app/hooks";
-import { selectConnected, selectConnectInfo, loadConnectionInfo } from "./app/sliceConnection";
+import { selectStatus, ApplicationMode, statusError } from "./app/sliceConnection";
+import { statusLoading, statusReady } from "./app/sliceConnection";
 import AppError from "./AppError";
 import "antd/dist/reset.css";
 import "./assets/main.css";
+
+type Configuration = {
+  mode: ApplicationMode
+}
 
 const App: React.FC = () => (
   <ConfigProvider
@@ -49,118 +53,123 @@ const App: React.FC = () => (
 );
 
 const MQTTApp: React.FC = () => {
-  const [{ error }, { connect, disconnect }] = useMQTTContext();
+  const [{ error }, { brokerconnect, brokerdisconnect }] = useMQTTContext();
   const dispatch = useAppDispatch();
-  const connected = useAppSelector(selectConnected);
-  const connectInfo = useAppSelector(selectConnectInfo);
-
-  const search = new URLSearchParams(window.location.search);
-  const app = search.get("connectinfo");
-  const c = search.get("c");
-  const stored = !(app || c);
+  const status = useAppSelector(selectStatus);
 
   useEffect(() => {
-    if (connectInfo && connected === "connected") {
-      const {
-        username,
-        password,
-        clientId,
-        url,
-        keepalive,
-        protocolVersion,
-        clean,
-        connectTimeout,
-        reconnectPeriod,
-        will,
-        willtopic,
-        willqos,
-        willretain,
-        willpayload
-      } = connectInfo;
-      connect({
-        url,
-        options: {
-          username,
-          password,
+    if (status.name === "READY") {
+      if (status.connected === "connected") {
+        const {
           clientId,
+          url,
           keepalive,
-          protocolId: protocolVersion === 3 ? "MQIsdp" : "MQTT",
           protocolVersion,
           clean,
           connectTimeout,
           reconnectPeriod,
-          will: will ? {
-            topic: willtopic,
-            qos: willqos,
-            retain: willretain,
-            payload: Buffer.from(willpayload || '')
-          } : undefined
-        },
-      });
-    } else {
-      disconnect();
+          will,
+          willtopic,
+          willqos,
+          willretain,
+          willpayload
+        } = status.connectInfo;
+        const {
+          username, password
+        } = status.connectCredentials;
+        brokerconnect({
+          url,
+          options: {
+            username,
+            password,
+            clientId,
+            keepalive,
+            protocolId: protocolVersion === 3 ? "MQIsdp" : "MQTT",
+            protocolVersion,
+            clean,
+            connectTimeout,
+            reconnectPeriod,
+            will: will ? {
+              topic: willtopic,
+              qos: willqos,
+              retain: willretain,
+              payload: Buffer.from(willpayload || '')
+            } : undefined
+          },
+        });
+      } else {
+        // "disconnected";
+        brokerdisconnect();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected, connectInfo]);
+  }, [status.name, status.name === "READY" ? status.connected : null]);
 
   useEffect(() => {
-    if (!connectInfo) {
-      const fetchConnectInfo = async (): Promise<{
-        connectInfo: ConnectInfo;
-      }> => {
-        if (app) {
-          const infofetch = fetch("./resources/" + app + "/connectinfo.json");
-          const jsxfetch = fetch("./resources/" + app + "/dashboard.jsx");
-          const cssfetch = fetch("./resources/" + app + "/dashboard.css");
-          const [infobody, jsxbody, cssbody] = await Promise.all([
-            infofetch,
-            jsxfetch,
-            cssfetch,
-          ]);
-          const [infodata, jsxdata, cssdata] = await Promise.all([
-            infobody.json(),
-            jsxbody.text(),
-            cssbody.text(),
-          ]);
-          infodata.dashboard.data = jsxdata;
-          infodata.dashboardcss.data = cssdata;
-          return { connectInfo: infodata };
+    if (status.name === "INITIAL") {
+      dispatch(statusLoading());
+      const loadConfiguration = async (): Promise<void> => {
+        let connectInfo: ConnectInfo;
+        let connectCredentials: ConnectCredentials;
+        let connected: "connected" | "disconnected";
+        const configfetch = await fetch("./resources/configuration.json")
+        const config: Configuration = await configfetch.json();
+        if (config.mode === "DASHBOARD") {
+          connectInfo = await loadResourceConnectInfo("dashboard");
+          connectCredentials = loadStoreConnectCredentials();
+          connected = loadStoreConnected();
+        } else if (config.mode === "STANDARD") {
+          connectInfo = loadStoreConnectInfo();
+          connectCredentials = loadStoreConnectCredentials();
+          connected = loadStoreConnected();
+        } else {
+          connectInfo = defaultConnectInfo;
+          connectCredentials = defaultConnectCredentials;
+          connected = "disconnected";
         }
-        if (c) {
-          return { connectInfo: JSON.parse(decompressFromEncodedURIComponent(c)) };
-        }
-        return Promise.resolve({
-          connectInfo: loadConnectInfo(),
-        });
+
+        dispatch(statusReady({ mode: config.mode, connectInfo, connectCredentials, connected }));
       };
-      fetchConnectInfo().then(({ connectInfo }) =>
-        dispatch(loadConnectionInfo({ connectInfo }))
-      );
+      loadConfiguration().catch((error) => {
+        dispatch(statusError({ message: "Cannot load the application configuration", error }));
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connectInfo]);
+  }, [status]);
 
-  if (!connectInfo) {
-    return null; // Loading application
+  if (status.name === "INITIAL" || status.name === "LOADING") {
+    // TODO: improve loading component
+    return "Loading application..."; // Loading application
   }
 
-  if (!connected) {
+  if (status.name === "ERROR") {
+    // TODO: Improve error component and   in general improve error management
+    return "Error loading application..." + status.error;
+  }
+
+  // Now status === "READY"
+
+  if (status.connected === "disconnected") {
     // Connection Component
-    if (stored) {
+    if (status.mode === "STANDARD") {
       return (
         <ConnectStored
-          connectInfo={connectInfo}
+          connectInfo={status.connectInfo}
+          connectCredentials={status.connectCredentials}
         />
       );
     }
+    // mode === "DASHBOARD"
     return (
       <ConnectRemote
-        connectInfo={connectInfo}
+        connectInfo={status.connectInfo}
+        connectCredentials={status.connectCredentials}
       />
     );
   }
 
-  // Connectiiiing
+  // Application connected!!!
+
   if (error) {
     return (
       <AppError
@@ -169,14 +178,8 @@ const MQTTApp: React.FC = () => {
       />
     );
   }
-
-  const jsx = connectInfo.dashboard.data;
-  const css = connectInfo.dashboardcss.data;
-  if (!jsx) {
-    return <AppError title="Failed to load JSX code" errorMessage="Application storage is empty." />;
-  }
-
-  // Application connected!!!
+  const jsx = status.connectInfo.dashboard.data;
+  const css = status.connectInfo.dashboardcss.data;
   return <AppDashboard jsx={jsx} css={css} />;
 };
 

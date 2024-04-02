@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2023 Adrián Romero
+Copyright (C) 2021-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -257,6 +257,10 @@ const getErrorMessage = (error: unknown, msg: string = "Unknown error") => {
 }
 
 const JSXRender: React.FC<{ jsx: string }> = ({ jsx }) => {
+
+  if (!jsx || !jsx.trim()) {
+    return <AppError title="Failed to compile JSX code" errorMessage="JSX code is empty." />;
+  }
 
   let output;
   try {

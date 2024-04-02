@@ -23,5 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 
-# Resources
-public/resources/*
+# Private resources
+.private/*

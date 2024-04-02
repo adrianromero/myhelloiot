@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2023 Adrián Romero
+Copyright (C) 2021-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -21,8 +21,6 @@ import { cyrb53str } from "../CryptFunctions";
 import type { QoS, IConnectPacket } from "mqtt-packet";
 
 export type ConnectInfo = {
-  username: string;
-  password: string;
   clientId: string;
   url: string;
   keepalive: number;
@@ -40,8 +38,6 @@ export type ConnectInfo = {
 };
 
 export const defaultConnectInfo: ConnectInfo = {
-  username: "",
-  password: "",
   clientId: "",
   url: "wss://mymqttbroker",
   keepalive: 60,
@@ -68,18 +64,81 @@ export const defaultConnectInfo: ConnectInfo = {
 
 const STORECONNECTINFO = "myh-info-" + cyrb53str(window.location.href);
 
-export const loadConnectInfo = (): ConnectInfo => {
+export const loadResourceConnectInfo = async (
+  res: string
+): Promise<ConnectInfo> => {
+  const infofetch = fetch("./resources/" + res + "/connectinfo.json");
+  const jsxfetch = fetch("./resources/" + res + "/dashboard.jsx");
+  const cssfetch = fetch("./resources/" + res + "/dashboard.css");
+  const [infobody, jsxbody, cssbody] = await Promise.all([
+    infofetch,
+    jsxfetch,
+    cssfetch,
+  ]);
+  const [infodata, jsxdata, cssdata] = await Promise.all([
+    infobody.json(),
+    jsxbody.text(),
+    cssbody.text(),
+  ]);
+  infodata.dashboard.data = jsxdata;
+  infodata.dashboardcss.data = cssdata;
+  return infodata;
+};
+
+export const loadStoreConnectInfo = (): ConnectInfo => {
   try {
-    const lsvalue = localStorage.getItem(STORECONNECTINFO);
-    if (lsvalue) {
-      return JSON.parse(lsvalue);
-    }
-    return defaultConnectInfo;
+    return JSON.parse(localStorage.getItem(STORECONNECTINFO) ?? "");
   } catch (e) {
     return defaultConnectInfo;
   }
 };
 
-export const saveConnectInfo = (connectInfo: ConnectInfo): void => {
+export const saveStoreConnectInfo = (connectInfo: ConnectInfo): void => {
   localStorage.setItem(STORECONNECTINFO, JSON.stringify(connectInfo));
+};
+
+export type ConnectCredentials = {
+  username: string;
+  password: string;
+};
+
+export const defaultConnectCredentials: ConnectCredentials = {
+  username: "",
+  password: "",
+};
+
+const STORECONNECTCREDENTIALS =
+  "myh-credentials-" + cyrb53str(window.location.href);
+
+export const loadStoreConnectCredentials = (): ConnectCredentials => {
+  try {
+    return JSON.parse(localStorage.getItem(STORECONNECTCREDENTIALS) ?? "");
+  } catch (e) {
+    return defaultConnectCredentials;
+  }
+};
+
+export const saveStoreConnectCredentials = (
+  connectCredentials: ConnectCredentials
+): void => {
+  localStorage.setItem(
+    STORECONNECTCREDENTIALS,
+    JSON.stringify(connectCredentials)
+  );
+};
+
+const STORECONNECTED = "myh-connected-" + cyrb53str(window.location.href);
+
+export const loadStoreConnected = (): "connected" | "disconnected" => {
+  try {
+    return JSON.parse(localStorage.getItem(STORECONNECTED) ?? "");
+  } catch (e) {
+    return "disconnected";
+  }
+};
+
+export const saveStoreConnectConnected = (
+  connected: "connected" | "disconnected"
+): void => {
+  localStorage.setItem(STORECONNECTED, JSON.stringify(connected));
 };

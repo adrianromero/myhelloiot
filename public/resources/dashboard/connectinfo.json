@@ -1,6 +1,4 @@
 {
-  "username": "",
-  "password": "",
   "clientId": "",
   "url": "ws://localhost:9001",
   "keepalive": 60,

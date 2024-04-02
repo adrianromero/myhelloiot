@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2023 Adrián Romero
+Copyright (C) 2021-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -69,8 +69,8 @@ export type MQTTContextValue = [
     options: MQTTConnectionOptions;
   },
   {
-    connect: ({ url, options }: MQTTConnectInfo) => void;
-    disconnect: () => void;
+    brokerconnect: ({ url, options }: MQTTConnectInfo) => void;
+    brokerdisconnect: () => void;
     subscribe: (
       topic: string,
       callback: (mqttmessage: MQTTMessage) => void,
@@ -107,8 +107,8 @@ export const MQTTContext: Context<MQTTContextValue> = createContext<MQTTContextV
     options: {},
   },
   {
-    connect: () => { },
-    disconnect: () => { },
+    brokerconnect: () => { },
+    brokerdisconnect: () => { },
     subscribe: () => null,
     unsubscribe: () => { },
     publish: () => { },
@@ -292,7 +292,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         clientId: clientoptions?.clientId,
       },
     },
-    { connect, disconnect, subscribe, unsubscribe, publish },
+    { brokerconnect: connect, brokerdisconnect: disconnect, subscribe, unsubscribe, publish },
   ];
   return <MQTTContext.Provider value={value}>{children}</MQTTContext.Provider>;
 };

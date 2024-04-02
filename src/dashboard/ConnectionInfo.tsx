@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2023 Adrián Romero
+Copyright (C) 2021-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -25,6 +25,7 @@ import { useAppDispatch } from "../app/hooks";
 import { disconnect } from "../app/sliceConnection";
 
 import "./ConnectionInfo.css";
+import { saveStoreConnectConnected } from "../connection/ConnectionInfo";
 
 const { Text } = Typography;
 
@@ -156,7 +157,10 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
           <Button
             type="primary"
             icon={<SVGIcon icon={faPowerOff} />}
-            onClick={() => dispatch(disconnect())}
+            onClick={() => {
+              saveStoreConnectConnected("disconnected")
+              dispatch(disconnect());
+            }}
           >
             Disconnect
           </Button>
