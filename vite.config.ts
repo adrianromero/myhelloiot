@@ -17,14 +17,7 @@ export default defineConfig({
         ],
         maximumFileSizeToCacheInBytes: 25097152,
       },
-      includeAssets: [
-        "logo.svg",
-        "logo192.png",
-        "resources/configuration.json",
-        "resources/dashboard/connectioninfo.json",
-        "resources/dashboard/dashboard.jsx",
-        "resources/dashboard/dashboard.css",
-      ],
+      includeAssets: ["**/*"],
       manifest: {
         name: "MYHELLOIOT",
         short_name: "MYHELLOIOT",

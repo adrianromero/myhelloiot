@@ -17,9 +17,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { createRoot } from 'react-dom/client';
 import App from "./App";
+import { registerSW } from "virtual:pwa-register";
+
+
+const updateSW = registerSW({
+  onNeedRefresh() {
+    if (confirm("New content available. Reload?")) {
+      updateSW(true);
+    }
+  },
+  onOfflineReady() { },
+});
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
+// Now antd App manages as a hook global notifications, 
+// const { message, notification, modal } = App.useApp();
 root.render(
   <App />
 );
