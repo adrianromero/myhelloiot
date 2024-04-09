@@ -10,7 +10,6 @@ export default defineConfig({
     react(),
     svgr(),
     VitePWA({
-      registerType: "autoUpdate",
       workbox: {
         globPatterns: [
           "**/*.{js,css,html,ico,png,jpg,jpeg,svg,webp,wav,mp3,gltf,bin,eot,ttf,woff,woff2}",
