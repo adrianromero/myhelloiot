@@ -24,6 +24,7 @@ import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import { ValueFormat, IconValueFormat } from "../format/FormatTypes";
 import "./ButtonUnit.css";
 import { SwitchIconValueFormat } from "../format/IconValueFormat";
+import { ConvertBuffer, IdentityConvert } from "../format/ConvertTypes";
 
 export type ButtonUnitProps = {
   topic?: string;
@@ -31,6 +32,7 @@ export type ButtonUnitProps = {
   subtopic?: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
+  subconvert?: ConvertBuffer;
   format?: ValueFormat | IconValueFormat;
   icon?: React.ReactNode;
   className?: string;
@@ -43,6 +45,7 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
   subtopic = topic,
   puboptions,
   suboptions,
+  subconvert = IdentityConvert(),
   format = SwitchIconValueFormat(),
   icon,
   className = "",
@@ -66,7 +69,10 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
-      setBuffer(message);
+      const b = subconvert(message);
+      if (b) {
+        setBuffer(b);
+      }
     },
     suboptions
   );

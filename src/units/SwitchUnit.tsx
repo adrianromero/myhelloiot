@@ -22,11 +22,13 @@ import type { MQTTMessage } from "../mqtt/MQTTProvider";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import type { ONOFF } from "../format/FormatTypes";
 import { ONOFFNumber } from "../format/FormatConstants";
+import { ConvertBuffer, IdentityConvert } from "../format/ConvertTypes";
 
 type SwitchUnitProps = {
   topic?: string;
   pubtopic?: string;
   subtopic?: string;
+  subconvert?: ConvertBuffer;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
   onoff?: ONOFF;
@@ -39,6 +41,7 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   subtopic = topic,
   puboptions,
   suboptions,
+  subconvert = IdentityConvert(),
   onoff = ONOFFNumber,
   className,
 }) => {
@@ -52,7 +55,10 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
-      setChecked(onoff.status_on(message));
+      const b = subconvert(message);
+      if (b) {
+        setChecked(onoff.status_on(message));
+      }
     },
     suboptions
   );

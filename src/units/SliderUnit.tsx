@@ -25,6 +25,7 @@ import type { LimitsFormat } from "../format/FormatTypes";
 import { DefaultLimits } from "../format/FormatConstants";
 
 import "./SliderUnit.css";
+import { ConvertBuffer, IdentityConvert } from "../format/ConvertTypes";
 
 type SliderUnitProps = {
   topic?: string
@@ -32,6 +33,7 @@ type SliderUnitProps = {
   subtopic?: string;
   puboptions?: IClientPublishOptions;
   suboptions?: IClientSubscribeOptions;
+  subconvert?: ConvertBuffer;
   format?: LimitsFormat;
   className?: string;
 };
@@ -42,6 +44,7 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
   subtopic = topic,
   puboptions,
   suboptions,
+  subconvert = IdentityConvert(),
   format = DefaultLimits,
   className = "",
 }) => {
@@ -55,7 +58,10 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
-      setBuffer(message);
+      const b = subconvert(message);
+      if (b) {
+        setBuffer(b);
+      }
     },
     suboptions
   );

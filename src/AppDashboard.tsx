@@ -62,7 +62,7 @@ import {
   ToIconFormat,
   ToIconValueFormat,
 } from "./format/FormatTypes";
-import { ONOFFNumber, ONOFFStr, ONOFFShelly2 } from "./format/FormatConstants";
+import { ONOFFNumber, ONOFFStr } from "./format/FormatConstants";
 import {
   MessageValueFormat,
   StringValueFormat,
@@ -112,7 +112,7 @@ import {
 } from "./format/GaugeFormat";
 import { ChartIconFormat } from "./format/ChartFormat";
 import { ImageIconFormat } from "./format/ImageFormat";
-import { JSONConvert } from "./format/ConvertTypes";
+import { JSONConvert, Shelly2Convert } from "./format/ConvertTypes";
 import AppError from "./AppError";
 import { createComponentLabeled } from "./units/ComponentLabeled";
 
@@ -181,7 +181,6 @@ const JSXCONTEXT = {
   ToIconValueFormat,
   ONOFFNumber,
   ONOFFStr,
-  ONOFFShelly2,
 
   // ValueFormats
   MessageValueFormat,
@@ -240,6 +239,7 @@ const JSXCONTEXT = {
 
   // Converters
   JSONConvert,
+  Shelly2Convert
 };
 
 const JSXCONTEXTKEYS: string[] = [];

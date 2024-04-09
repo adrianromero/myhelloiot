@@ -31,19 +31,3 @@ export const ONOFFStr: ONOFF = {
   cmd_on: Buffer.from("on"),
   cmd_off: Buffer.from("off"),
 };
-
-export const ONOFFShelly2: ONOFF = {
-  status_on: (v: Buffer) => {
-    if (v.equals(Buffer.from("on"))) {
-      return true;
-    }
-    try {
-      const status = JSON.parse(v.toString("utf8"));
-      return status.output;
-    } catch (e) {
-      return false;
-    }
-  },
-  cmd_on: Buffer.from("on"),
-  cmd_off: Buffer.from("off"),
-};

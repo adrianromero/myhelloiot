@@ -52,7 +52,10 @@ const ViewUnit: React.FC<ViewUnitProps> = ({
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
-      setBuffer(subconvert(message));
+      const b = subconvert(message);
+      if (b) {
+        setBuffer(b);
+      }
     },
     suboptions
   );
