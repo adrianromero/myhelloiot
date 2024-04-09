@@ -31,8 +31,6 @@ const updateSW = registerSW({
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
-// Now antd App manages as a hook global notifications, 
-// const { message, notification, modal } = App.useApp();
 root.render(
   <App />
 );
