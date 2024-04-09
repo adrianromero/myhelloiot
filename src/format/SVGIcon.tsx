@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2022-2023 Adrián Romero
+Copyright (C) 2022-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -31,8 +31,8 @@ const SVGIcon: React.FC<SVGIconProps> = ({
   className = "",
   style = {},
 }) => (
-  <span role="img" className={`anticon ${className}`} style={style}>
-    <FontAwesomeIcon icon={icon} />
+  <span role="img" className={`anticon ${className}`}>
+    <FontAwesomeIcon icon={icon} className="myh-svgicon" style={style} />
   </span>
 );
 

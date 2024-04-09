@@ -16,7 +16,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
-import { faStar, faBolt } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faMoon } from "@fortawesome/free-solid-svg-icons";
+import {
+  faStar as faStarRegular,
+  faMoon as faMoonRegular,
+} from "@fortawesome/free-regular-svg-icons";
+
 import {
   IconValueFormat,
   ToIconValueFormat,
@@ -34,7 +39,8 @@ import {
 } from "./ValueFormat";
 
 export type SwitchIconValueFormatProps = {
-  icon?: IconDefinition;
+  icon: IconDefinition;
+  iconoff: IconDefinition;
   onoff?: ONOFF;
 };
 export const SwitchIconValueFormat = (
@@ -42,10 +48,10 @@ export const SwitchIconValueFormat = (
 ): IconValueFormat =>
   ToIconValueFormat(SwitchValueFormat(props?.onoff), SwitchIconFormat(props));
 export const BulbIconValueFormat = SwitchIconValueFormat;
-export const ThuderboltIconValueFormat = () =>
-  SwitchIconValueFormat({ icon: faBolt });
+export const MoonIconValueFormat = () =>
+  SwitchIconValueFormat({ icon: faMoon, iconoff: faMoonRegular });
 export const StarIconValueFormat = () =>
-  SwitchIconValueFormat({ icon: faStar });
+  SwitchIconValueFormat({ icon: faStar, iconoff: faStarRegular });
 
 export const StringIconValueFormat = (): IconValueFormat =>
   ToIconValueFormat(StringValueFormat());

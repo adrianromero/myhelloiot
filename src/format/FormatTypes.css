@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021 Adrián Romero
+Copyright (C) 2021-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -31,4 +31,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .myhToIconFormat_aligncenter {
   text-align: center;
+}
+
+.icon-on > .myh-svgicon {
+  font-size: 120%;
+  color: inherit;
+}
+
+.icon-off > .myh-svgicon {
+  font-size: 120%;
+  color: #dcdcdc;
+}
+
+.dimicon-on > .myh-svgicon {
+  font-size: 200%;
+  color: inherit;
+}
+
+.dimicon-off > .myh-svgicon {
+  font-size: 200%;
+  color: #dcdcdc;
 }

@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2023 Adrián Romero
+Copyright (C) 2021-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -18,7 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { Buffer } from "buffer";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import SVGIcon from "./SVGIcon";
-import { faLightbulb, faStar, faBolt } from "@fortawesome/free-solid-svg-icons";
+import { faLightbulb, faStar, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { faLightbulb as faLightbulbRegular, faStar as faStarRegular, faMoon as faMoonRegular } from "@fortawesome/free-regular-svg-icons";
 import {
   IconFormat,
   ValueFormat,
@@ -48,22 +49,15 @@ export const DimIconFormat = (props:
         {value ? (
           <SVGIcon
             icon={icon}
+            className="dimicon-on"
             style={{
-              fontSize: "200%",
-              color: `hsl(60, ${100.0 * (value - min) / (max - min)}%, 60%)`,
-              stroke: "darkgray",
-              strokeWidth: "16px",
+              filter: `saturate(${100.0 * (value - min) / (max - min)}%`,
             }}
           />
         ) : (
           <SVGIcon
             icon={icon}
-            style={{
-              fontSize: "200%",
-              color: "hsl(60, 0%, 60%)",
-              stroke: "darkgray",
-              strokeWidth: "16px",
-            }}
+            className="dimicon-off"
           />
         )}
       </div>
@@ -72,40 +66,31 @@ export const DimIconFormat = (props:
 });
 
 export type SwitchIconFormatProps = {
-  icon?: IconDefinition;
+  icon: IconDefinition;
+  iconoff: IconDefinition;
   onoff?: ONOFF;
 };
 
 export const SwitchIconFormat = (props?: SwitchIconFormatProps): IconFormat => {
-  const { icon, onoff } = { icon: faLightbulb, onoff: ONOFFNumber, ...props };
+  const { icon, iconoff, onoff } = { icon: faLightbulb, iconoff: faLightbulbRegular, onoff: ONOFFNumber, ...props };
   return {
     toIcon: (b: Buffer) =>
       onoff.status_on(b) ? (
         <SVGIcon
           icon={icon}
-          style={{
-            fontSize: "120%",
-            color: "yellow",
-            stroke: "darkgray",
-            strokeWidth: "16px",
-          }}
+          className="icon-on"
         />
       ) : (
         <SVGIcon
-          icon={icon}
-          style={{
-            fontSize: "120%",
-            color: "#dcdcdc",
-            stroke: "darkgray",
-            strokeWidth: "16px",
-          }}
+          icon={iconoff}
+          className="icon-off"
         />
       ),
   };
 };
 export const BulbIconFormat = SwitchIconFormat;
-export const ThuderboltIconFormat = () => SwitchIconFormat({ icon: faBolt });
-export const StarIconFormat = () => SwitchIconFormat({ icon: faStar });
+export const MoonIconFormat = () => SwitchIconFormat({ icon: faMoon, iconoff: faMoonRegular });
+export const StarIconFormat = () => SwitchIconFormat({ icon: faStar, iconoff: faStarRegular });
 
 export const StringIconFormat = (
   valueformat: ValueFormat = StringValueFormat()

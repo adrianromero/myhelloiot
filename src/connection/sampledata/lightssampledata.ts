@@ -54,7 +54,7 @@ const lightssampledata = `{/* Light switches example. */}
       <div style={{flex: "0 1 40px", textAlign: "center"}}>
         <ViewUnit
           subtopic="myhelloiot/testswitch2"
-          format={SwitchIconFormat({icon:faStar})}
+          format={MoonIconFormat()}
         />
       </div>
       <div style={{flex: "1 1 auto"}}>Light test 2: </div>
@@ -70,7 +70,7 @@ const lightssampledata = `{/* Light switches example. */}
       <div style={{flex: "0 1 40px", textAlign: "center"}}>
         <ViewUnit
           subtopic="myhelloiot/testswitch3"
-          format={SwitchIconFormat({icon:faBolt})}
+          format={StarIconFormat()}
         />
       </div>
       <div style={{flex: "1 1 auto"}}>Light test 3: </div>
