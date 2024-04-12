@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2023 Adrián Romero
+Copyright (C) 2021-2024 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -23,7 +23,7 @@ import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import useAudio from "./useAudio";
 import { StringValueFormat } from "../format/ValueFormat";
 import { ValueFormat } from "../format/FormatTypes";
-const clockalarm = new URL("../assets/media/128138_1542160-lq.mp3?url", import.meta.url).href;
+const clockalarm = new URL("../assets/media/128138_1542160-lq.mp3", import.meta.url).href;
 const gameitem = new URL("../assets/media/162467_311243-lq.mp3", import.meta.url).href;
 const bottlewhoo = new URL("../assets/media/249703_3930831-lq.mp3", import.meta.url).href;
 const greek = new URL("../assets/media/322378_4397472-lq.mp3", import.meta.url).href;
