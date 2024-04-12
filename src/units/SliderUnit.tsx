@@ -66,7 +66,7 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
     suboptions
   );
 
-  const onAfterChange = (value: number) => {
+  const onChangeComplete = (value: number) => {
     const b = Buffer.from(value.toString());
     publish(pubtopic, b, puboptions);
   };
@@ -82,7 +82,7 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
       max={format.max}
       step={format.step}
       onChange={onChange}
-      onAfterChange={onAfterChange}
+      onChangeComplete={onChangeComplete}
       disabled={!connected}
       className={`myhSliderUnit ${className}`}
     />

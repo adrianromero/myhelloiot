@@ -99,7 +99,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
             className={`myhInputUnit-input ${format.getClassName()}`}
             autoComplete="off"
             readOnly={pubtopic === ""}
-            bordered={pubtopic !== ""}
+            variant={pubtopic === "" ? "borderless" : "outlined"}
             disabled={!connected}
           />
         </Form.Item>

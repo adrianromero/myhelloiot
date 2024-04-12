@@ -112,7 +112,7 @@ const MQTTApp: React.FC = () => {
         let connectInfo: ConnectInfo;
         let connectCredentials: ConnectCredentials;
         let connected: "connected" | "disconnected";
-        const configfetch = await fetch("./resources/configuration.json")
+        const configfetch = await fetch(new URL("./assets/resources/configuration.json", import.meta.url))
         const config: Configuration = await configfetch.json();
         if (config.mode === "DASHBOARD") {
           connectInfo = await loadResourceConnectInfo("dashboard");

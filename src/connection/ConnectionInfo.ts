@@ -67,9 +67,15 @@ const STORECONNECTINFO = "myh-info-" + cyrb53str(window.location.href);
 export const loadResourceConnectInfo = async (
   res: string
 ): Promise<ConnectInfo> => {
-  const infofetch = fetch("./resources/" + res + "/connectinfo.json");
-  const jsxfetch = fetch("./resources/" + res + "/dashboard.jsx");
-  const cssfetch = fetch("./resources/" + res + "/dashboard.css");
+  const infofetch = fetch(
+    new URL(`../assets/resources/${res}/connectinfo.json`, import.meta.url)
+  );
+  const jsxfetch = fetch(
+    new URL(`../assets/resources/${res}/dashboardjsx.txt`, import.meta.url)
+  );
+  const cssfetch = fetch(
+    new URL(`../assets/resources/${res}/dashboardcss.txt`, import.meta.url)
+  );
   const [infobody, jsxbody, cssbody] = await Promise.all([
     infofetch,
     jsxfetch,
