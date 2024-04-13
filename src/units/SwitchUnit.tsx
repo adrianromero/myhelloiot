@@ -45,7 +45,7 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
   onoff = ONOFFNumber,
   className,
 }) => {
-  const [{ connected, ready }, { publish }] = useMQTTContext();
+  const [{ ready }, { publish }] = useMQTTContext();
   const [checked, setChecked] = useState<boolean>(false);
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const SwitchUnit: React.FC<SwitchUnitProps> = ({
     <Switch
       checked={checked}
       onChange={onChange}
-      disabled={!connected || pubtopic === ""}
+      disabled={pubtopic === ""}
       className={className}
     />
   );

@@ -114,7 +114,7 @@ const Publisher: React.FC<PublisherProps> = ({
   optionfmt = true,
   className = "",
 }) => {
-  const [{ connected, ready }, { publish }] = useMQTTContext();
+  const [{ ready }, { publish }] = useMQTTContext();
   const [form] = Form.useForm<PublisherValues>();
   useEffect(() => {
     form.setFieldsValue({
@@ -169,7 +169,7 @@ const Publisher: React.FC<PublisherProps> = ({
             <div className="myhPublisher-sendinput">
               {optiontopic && (
                 <Form.Item name="topic">
-                  <Input autoComplete="off" disabled={!connected} />
+                  <Input autoComplete="off" />
                 </Form.Item>
               )}
             </div>
@@ -178,7 +178,6 @@ const Publisher: React.FC<PublisherProps> = ({
                 <Button
                   icon={<SVGIcon icon={faPaperPlane} />}
                   type="primary"
-                  disabled={!connected}
                   htmlType="submit"
                 >
                   Send
@@ -231,7 +230,6 @@ const Publisher: React.FC<PublisherProps> = ({
               <Input.TextArea
                 rows={6}
                 autoComplete="off"
-                disabled={!connected}
               />
             </Form.Item>
           </Col>

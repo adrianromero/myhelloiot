@@ -51,7 +51,7 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
   className = "",
   children,
 }) => {
-  const [{ connected, ready }, { publish }] = useMQTTContext();
+  const [{ ready }, { publish }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const ButtonUnit: React.FC<ButtonUnitProps> = ({
       className={`myhButtonUnit ${className}`}
       type="primary"
       onClick={onClick}
-      disabled={!connected || !pubtopic}
+      disabled={!pubtopic}
       icon={theicon}
     >
       {children}

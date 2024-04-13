@@ -270,6 +270,7 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         state.client.publish(topic, message, options || {});
       }
     } else {
+      // TODO: Better just notify not connected
       throw new Error("Not connected");
     }
   };

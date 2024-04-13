@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect, useState } from "react";
 import { Buffer } from "buffer";
-import { Drawer, Button, Layout, Menu } from "antd";
+import { Drawer, Button, Layout, Menu, Spin } from "antd";
 import SVGIcon from "../format/SVGIcon";
 import { faBars, faImage } from "@fortawesome/free-solid-svg-icons";
 import { useConnectionProperty } from "../app/sliceConnectionHooks";
@@ -132,31 +132,33 @@ const Dashboard: React.FC<DashboardProps> = ({
         />
       </AppHeader>
       <Layout.Content className="myhLayoutContent">
-        {menus.length > 0 && (
-          <Drawer
-            className="myhDashboard-drawermenu"
-            placement="left"
-            closable={false}
-            onClose={hideDrawer}
-            open={visibleDrawer}
-          >
-            <Menu
-              theme="light"
-              mode="inline"
-              disabled={!connected}
-              selectedKeys={keyvisible ? [keyvisible] : []}
-              onSelect={handleSelect}
+        <Spin spinning={!connected}>
+          {menus.length > 0 && (
+            <Drawer
+              className="myhDashboard-drawermenu"
+              placement="left"
+              closable={false}
+              onClose={hideDrawer}
+              open={visibleDrawer}
             >
-              {menus}
-            </Menu>
-          </Drawer>
-        )}
-        {dcchildren.map((c) => (
-          <div key={c.key} style={c === cvisible ? {} : { display: "none" }}>
-            {c}
-          </div>
-        ))}
-        {remainingchildren}
+              <Menu
+                theme="light"
+                mode="inline"
+                disabled={!connected}
+                selectedKeys={keyvisible ? [keyvisible] : []}
+                onSelect={handleSelect}
+              >
+                {menus}
+              </Menu>
+            </Drawer>
+          )}
+          {dcchildren.map((c) => (
+            <div key={c.key} style={c === cvisible ? {} : { display: "none" }}>
+              {c}
+            </div>
+          ))}
+          {remainingchildren}
+        </Spin>
       </Layout.Content>
     </Layout>
   );

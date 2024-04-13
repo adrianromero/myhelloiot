@@ -48,7 +48,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
   format = StringValueFormat(),
   className,
 }) => {
-  const [{ connected, ready }, { publish }] = useMQTTContext();
+  const [{ ready }, { publish }] = useMQTTContext();
   const [form] = Form.useForm<MQTTValue>();
   useEffect(() => {
     form.setFieldsValue({
@@ -100,7 +100,6 @@ const InputUnit: React.FC<InputUnitProps> = ({
             autoComplete="off"
             readOnly={pubtopic === ""}
             variant={pubtopic === "" ? "borderless" : "outlined"}
-            disabled={!connected}
           />
         </Form.Item>
         {pubtopic !== "" && (
@@ -109,7 +108,6 @@ const InputUnit: React.FC<InputUnitProps> = ({
               className="myhInputUnit-button"
               icon={<SVGIcon icon={faPaperPlane} />}
               type="primary"
-              disabled={!connected}
               htmlType="submit"
             ></Button>
           </Form.Item>

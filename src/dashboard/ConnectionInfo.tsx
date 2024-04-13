@@ -17,8 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
 import SVGIcon from "../format/SVGIcon";
-import { faPowerOff, faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck, faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { Row, Col, Typography, Button, Divider, Popover } from "antd";
 import { useMQTTContext } from "../mqtt/MQTTHooks";
 import { useAppDispatch } from "../app/hooks";
@@ -58,10 +58,9 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
     : {
       label: status,
       icon: <SVGIcon
-        icon={faSpinner}
+        icon={faCircleXmark}
         style={{
-          color: "#ffffff",
-          animation: "loadingCircle 1s infinite linear",
+          color: "red"
         }}
       />
     };

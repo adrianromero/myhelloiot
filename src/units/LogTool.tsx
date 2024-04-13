@@ -56,7 +56,7 @@ const LogTool: React.FC<LogToolProps> = ({
   suboptions,
   className,
 }) => {
-  const [{ connected, ready }] = useMQTTContext();
+  const [{ ready }] = useMQTTContext();
   const [[paused, messages], setTool] = useState<[boolean, MQTTMessage[]]>([
     false,
     [],
@@ -84,12 +84,10 @@ const LogTool: React.FC<LogToolProps> = ({
           <Button
             type="primary"
             icon={<SVGIcon icon={paused ? faPause : faPlay} />}
-            disabled={!connected}
             onClick={() => setTool(([p, msgs]) => [!p, msgs])}
           />
           <Button
             icon={<SVGIcon icon={faBan} />}
-            disabled={!connected}
             onClick={() => setTool(([p]) => [p, []])}
           />
           <Radio.Group

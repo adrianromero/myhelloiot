@@ -43,7 +43,7 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
   format = StringValueFormat(),
   className = "",
 }) => {
-  const [{ connected, ready }, { publish }] = useMQTTContext();
+  const [{ ready }, { publish }] = useMQTTContext();
   const [value, setValue] = useState<string>("");
   useEffect(() => {
     setValue("");
@@ -69,7 +69,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
     <div className={`myhKeypad ${className}`}>
       <Input.Password
         value={value}
-        disabled={!connected}
         onChange={(ev: ChangeEvent<HTMLInputElement>) =>
           setValue(ev.target.value)
         }
@@ -80,7 +79,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       <Button
         type="primary"
         onClick={onClickKey("1")}
-        disabled={!connected}
         className="btn btn-1"
       >
         1
@@ -88,7 +86,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       <Button
         type="primary"
         onClick={onClickKey("2")}
-        disabled={!connected}
         className="btn btn-2"
       >
         2
@@ -96,7 +93,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       <Button
         type="primary"
         onClick={onClickKey("3")}
-        disabled={!connected}
         className="btn btn-3"
       >
         3
@@ -104,7 +100,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       <Button
         type="primary"
         onClick={onClickKey("4")}
-        disabled={!connected}
         className="btn btn-4"
       >
         4
@@ -112,7 +107,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       <Button
         type="primary"
         onClick={onClickKey("5")}
-        disabled={!connected}
         className="btn btn-5"
       >
         5
@@ -120,7 +114,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       <Button
         type="primary"
         onClick={onClickKey("6")}
-        disabled={!connected}
         className="btn btn-6"
       >
         6
@@ -128,7 +121,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       <Button
         type="primary"
         onClick={onClickKey("7")}
-        disabled={!connected}
         className="btn btn-7"
       >
         7
@@ -136,7 +128,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       <Button
         type="primary"
         onClick={onClickKey("8")}
-        disabled={!connected}
         className="btn btn-8"
       >
         8
@@ -144,7 +135,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       <Button
         type="primary"
         onClick={onClickKey("9")}
-        disabled={!connected}
         className="btn btn-9"
       >
         9
@@ -152,7 +142,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       <Button
         type="primary"
         onClick={onClickKey("0")}
-        disabled={!connected}
         className="btn btn-0"
       >
         0
@@ -160,7 +149,6 @@ const KeypadUnit: React.FC<KeypadUnitProps> = ({
       <Button
         type="primary"
         onClick={onClickOK}
-        disabled={!connected}
         icon={
           <SVGIcon icon={faTurnDown} style={{ transform: "rotate(90deg)" }} />
         }

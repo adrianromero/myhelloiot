@@ -48,7 +48,7 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
   format = DefaultLimits,
   className = "",
 }) => {
-  const [{ connected, ready }, { publish }] = useMQTTContext();
+  const [{ ready }, { publish }] = useMQTTContext();
   const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
 
   useEffect(() => {
@@ -83,7 +83,6 @@ const SliderUnit: React.FC<SliderUnitProps> = ({
       step={format.step}
       onChange={onChange}
       onChangeComplete={onChangeComplete}
-      disabled={!connected}
       className={`myhSliderUnit ${className}`}
     />
   );
