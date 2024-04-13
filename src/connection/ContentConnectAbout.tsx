@@ -327,7 +327,7 @@ const ContentConnectAbout: React.FC<{
           MYHELLOIOT is licensed under the GNU General Public License, Version
           3, 29 June 2007.
         </Paragraph>
-        <Paragraph>Copyright (C) 2021-2022 Adrián Romero.</Paragraph>
+        <Paragraph>Copyright (C) 2021-2024 Adrián Romero.</Paragraph>
       </Typography>
     </>
   );

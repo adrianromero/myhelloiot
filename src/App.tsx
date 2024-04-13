@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect } from "react";
-import { ConfigProvider } from 'antd';
+import { App as AntApp, ConfigProvider } from 'antd';
 import { Provider } from "react-redux";
 import { Buffer } from "buffer";
 import { store } from "./app/store";
@@ -32,6 +32,8 @@ import { statusLoading, statusReady } from "./app/sliceConnection";
 import AppError from "./AppError";
 import "antd/dist/reset.css";
 import "./assets/main.css";
+import AppLoading from "./AppLoading";
+import AppErrorLoad from "./AppErrorLoad";
 
 type Configuration = {
   mode: ApplicationMode
@@ -44,11 +46,13 @@ const App: React.FC = () => (
       // algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
     }}
   >
-    <MQTTProvider>
-      <Provider store={store}>
-        <MQTTApp />
-      </Provider>
-    </MQTTProvider>
+    <AntApp>
+      <MQTTProvider>
+        <Provider store={store}>
+          <MQTTApp />
+        </Provider>
+      </MQTTProvider>
+    </AntApp>
   </ConfigProvider>
 );
 
@@ -138,13 +142,11 @@ const MQTTApp: React.FC = () => {
   }, [status]);
 
   if (status.name === "INITIAL" || status.name === "LOADING") {
-    // TODO: improve loading component
-    return "Loading application..."; // Loading application
+    return <AppLoading />;
   }
 
   if (status.name === "ERROR") {
-    // TODO: Improve error component and   in general improve error management
-    return "Error loading application..." + status.error;
+    return <AppErrorLoad title="Error loading MYHELLOIOT" error={status.error} />;
   }
 
   // Now status === "READY"
