@@ -18,7 +18,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .myhButtonUnit.ant-btn {
   font-size: 140%;
   font-weight: 800;
-  width: 100%;
   height: unset;
+}
+
+.myhButtonCard.myhButtonUnit.ant-btn {
+  width: 100%;
+}
+
+.myhButtonCard.myhButtonUnit.ant-btn:not(:last-child) {
   margin-bottom: 4px;
+}
+
+.myhButtonDash.myhButtonUnit.ant-btn > .ant-btn-icon {
+  display: block;
+  margin-inline-end: unset;
 }

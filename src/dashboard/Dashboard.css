@@ -40,6 +40,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   flex-shrink: 1;
   flex-basis: 300px;
 }
+.myhDashboardPage > .myhDashboardComponent {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 300px;
+}
 
 .myhDashboardPage > div.myhDashboardPage-all,
 .myhDashboardPage > h1.myhDashboardPage-all,

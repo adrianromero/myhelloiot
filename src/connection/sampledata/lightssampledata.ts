@@ -18,22 +18,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const lightssampledata = `{/* Light switches example. */}
 
 <DashboardPage title="Light switches">
-  <ButtonCard title="Light test 1"
+  <ButtonUnit  
+    className="myhDashboardComponent myhButtonDash"
     topic="myhelloiot/testswitch1"
     puboptions={{ retain: true }}
     format={SwitchIconValueFormat()}
-  />
-  <ButtonCard title="Light test 2"
+  >Light 1</ButtonUnit>
+  <ButtonUnit
+    className="myhDashboardComponent myhButtonDash"
     topic="myhelloiot/testswitch2"
     puboptions={{ retain: true }}
     format={SwitchIconValueFormat({icon:faStar})}
-  />
-  <ButtonCard title="Light test 3"
+  >Light 2</ButtonUnit>
+  <ButtonUnit
+    className="myhDashboardComponent myhButtonDash"
     topic="myhelloiot/testswitch3"
     puboptions={{ retain: true }}
     format={SwitchIconValueFormat({icon:faBolt})}
-  />
-  <Card title="Light switches">
+  >Light 3</ButtonUnit>
+  <Card className="myhDashboardPage-all" title="Light switches">
     <div style={{display: "flex", margin: "4px"}}>
       <div style={{flex: "0 1 40px", textAlign: "center"}}>
         <ViewUnit

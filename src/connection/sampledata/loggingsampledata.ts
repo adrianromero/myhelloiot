@@ -28,9 +28,9 @@ const loggingsampledata = `{/* Logging example. */}
     puboptions={{ retain: true }}
   />
   <Card title="myhelloiot/testing/topic3">
-    <ButtonUnit pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 0 }} format={MessageValueFormat("QoS Zero")}>Qos Zero</ButtonUnit>
-    <ButtonUnit pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 1 }} format={MessageValueFormat("QoS One")}>Qos One</ButtonUnit>
-    <ButtonUnit pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 2 }} format={MessageValueFormat("QoS Two")}>Qos Two</ButtonUnit>
+    <ButtonUnit className="myhButtonCard" pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 0 }} format={MessageValueFormat("QoS Zero")}>Qos Zero</ButtonUnit>
+    <ButtonUnit className="myhButtonCard" pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 1 }} format={MessageValueFormat("QoS One")}>Qos One</ButtonUnit>
+    <ButtonUnit className="myhButtonCard" pubtopic="myhelloiot/testing/topic3" puboptions={{ qos: 2 }} format={MessageValueFormat("QoS Two")}>Qos Two</ButtonUnit>
   </Card>
   <Card title="myhelloiot/testing/topic4">
     <div style={{display: "flex", margin: "4px"}}>

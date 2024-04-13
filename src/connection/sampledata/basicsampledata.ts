@@ -37,12 +37,14 @@ const pubsubsampledata = `{/* Basic units example. */}
   </Card>
   <Card title="Temperature buttons">
     <ButtonUnit
+      className="myhButtonCard"
       topic="myhelloiot/temperature"
       puboptions={{ retain: true }}
       format={Celsius()}
       icon="+"
     />
     <ButtonUnit
+      className="myhButtonCard"
       topic="myhelloiot/temperature"
       puboptions={{ retain: true }}
       format={Celsius({ step: -1 })}
