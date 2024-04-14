@@ -19,19 +19,19 @@ const lightssampledata = `{/* Light switches example. */}
 
 <DashboardPage title="Light switches">
   <ButtonUnit  
-    className="myhDashboardComponent myhButtonDash"
+    className="dash-unit btn-icontop"
     topic="myhelloiot/testswitch1"
     puboptions={{ retain: true }}
     format={SwitchIconValueFormat()}
   >Light 1</ButtonUnit>
   <ButtonUnit
-    className="myhDashboardComponent myhButtonDash"
+    className="dash-unit btn-icontop"
     topic="myhelloiot/testswitch2"
     puboptions={{ retain: true }}
     format={SwitchIconValueFormat({icon:faStar})}
   >Light 2</ButtonUnit>
   <ButtonUnit
-    className="myhDashboardComponent myhButtonDash"
+    className="dash-unit btn-icontop"
     topic="myhelloiot/testswitch3"
     puboptions={{ retain: true }}
     format={SwitchIconValueFormat({icon:faBolt})}

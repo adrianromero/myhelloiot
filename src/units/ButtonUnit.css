@@ -16,9 +16,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .myhButtonUnit.ant-btn {
-  font-size: 140%;
   font-weight: 800;
   height: unset;
+}
+
+.myhButtonUnit.ant-btn > .ant-btn-icon {
+  height: unset;
+}
+
+.myhButtonUnit.ant-btn > .ant-btn-icon > .anticon {
+  font-size: 200%;
 }
 
 .myhButtonCard.myhButtonUnit.ant-btn {
@@ -29,7 +36,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   margin-bottom: 4px;
 }
 
-.myhButtonDash.myhButtonUnit.ant-btn > .ant-btn-icon {
+.btn-icontop.myhButtonUnit.ant-btn {
+  padding: 15px 15px;
+}
+
+.btn-icontop.myhButtonUnit.ant-btn > .ant-btn-icon {
   display: block;
   margin-inline-end: unset;
+}
+
+.myhButtonUnit.ant-btn-primary:not(:disabled):not(.ant-btn-disabled) {
+  background: #1677ff;
+}
+.myhButtonUnit.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+  background: #1677ff;
+}
+.myhButtonUnit.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):active {
+  background: #0958d9;
 }
