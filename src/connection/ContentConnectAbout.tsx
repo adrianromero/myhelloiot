@@ -23,7 +23,7 @@ import {
   faPencil,
   faPowerOff,
 } from "@fortawesome/free-solid-svg-icons";
-import { Typography, Tag, Button, Image, message } from "antd";
+import { Typography, Tag, Button, Image, App } from "antd";
 import { FormInstance } from "antd/lib/form";
 import basicsampledata from "./sampledata/basicsampledata";
 import loggingsampledata from "./sampledata/loggingsampledata";
@@ -43,10 +43,9 @@ const { Title, Paragraph, Link } = Typography;
 const ContentConnectAbout: React.FC<{
   form: FormInstance<ConnectInfoForm>;
 }> = ({ form }) => {
-  const [messageApi, contextHolder] = message.useMessage();
+  const { message } = App.useApp();
   return (
     <>
-      {contextHolder}
       <Link
         href="https://github.com/adrianromero/myhelloiot"
         target="_blank"
@@ -105,7 +104,7 @@ const ContentConnectAbout: React.FC<{
             size="small"
             icon={<SVGIcon icon={faPencil} />}
             onClick={() => {
-              messageApi.info("url: wss://broker.hivemq.com:8884/mqtt");
+              message.info("url: wss://broker.hivemq.com:8884/mqtt");
               form.setFieldsValue({
                 url: "wss://broker.hivemq.com:8884/mqtt",
                 username: "",
@@ -121,7 +120,7 @@ const ContentConnectAbout: React.FC<{
             size="small"
             icon={<SVGIcon icon={faPencil} />}
             onClick={() => {
-              messageApi.info("url: wss://broker.emqx.io:8084/mqtt");
+              message.info("url: wss://broker.emqx.io:8084/mqtt");
               form.setFieldsValue({
                 url: "wss://broker.emqx.io:8084/mqtt",
                 username: "",
@@ -137,7 +136,7 @@ const ContentConnectAbout: React.FC<{
             size="small"
             icon={<SVGIcon icon={faPencil} />}
             onClick={() => {
-              messageApi.info("url: wss://test.mosquitto.org:8081");
+              message.info("url: wss://test.mosquitto.org:8081");
               form.setFieldsValue({
                 url: "wss://test.mosquitto.org:8081",
                 username: "",
@@ -167,7 +166,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  messageApi.info("dashboard: basic.jsx");
+                  message.info("dashboard: basic.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "basic.jsx",
@@ -188,7 +187,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  messageApi.info("dashboard: inputtext.jsx");
+                  message.info("dashboard: inputtext.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "inputtext.jsx",
@@ -209,7 +208,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  messageApi.info("dashboard: lights.jsx");
+                  message.info("dashboard: lights.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "lights.jsx",
@@ -230,7 +229,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  messageApi.info("dashboard: gauges.jsx");
+                  message.info("dashboard: gauges.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "gauges.jsx",
@@ -251,7 +250,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  messageApi.info("dashboard: logging.jsx");
+                  message.info("dashboard: logging.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "logging.jsx",
@@ -272,7 +271,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  messageApi.info("dashboard: pubsub.jsx");
+                  message.info("dashboard: pubsub.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "pubsub.jsx",
@@ -293,7 +292,7 @@ const ContentConnectAbout: React.FC<{
                 size="small"
                 icon={<SVGIcon icon={faPencil} />}
                 onClick={() => {
-                  messageApi.info("dashboard: mosquitto.jsx");
+                  message.info("dashboard: mosquitto.jsx");
                   form.setFieldsValue({
                     dashboard: {
                       name: "mosquitto.jsx",
