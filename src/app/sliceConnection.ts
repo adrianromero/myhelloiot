@@ -17,17 +17,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { ConnectCredentials, ConnectInfo } from "../connection/ConnectionInfo";
+import {
+  ConnectCredentials,
+  ConnectedStatus,
+  ConnectInfo,
+} from "../connection/ConnectionInfo";
 //import { cyrb53str } from "../CryptFunctions";
 
-export type ApplicationMode = "STANDARD" | "DASHBOARD";
-export type ApplicationConnected = "connected" | "disconnected";
+export type ApplicationConnected = ConnectedStatus;
 
 export type StatusInitial = { name: "INITIAL" };
 export type StatusLoading = { name: "LOADING" };
 export type StatusReady = {
   name: "READY";
-  mode: ApplicationMode;
   connectInfo: ConnectInfo;
   connectCredentials: ConnectCredentials;
   connected: ApplicationConnected;
@@ -47,7 +49,6 @@ export interface ConnectionState {
 }
 
 export type StatusReadyAction = {
-  mode: ApplicationMode;
   connectInfo: ConnectInfo;
   connectCredentials: ConnectCredentials;
   connected: ApplicationConnected;
@@ -86,7 +87,6 @@ export const connectionSlice = createSlice({
     statusReady: (state, action: PayloadAction<StatusReadyAction>) => {
       state.status = {
         name: "READY",
-        mode: action.payload.mode,
         connected: action.payload.connected,
         connectCredentials: action.payload.connectCredentials,
         connectInfo: action.payload.connectInfo,
@@ -103,7 +103,7 @@ export const connectionSlice = createSlice({
     },
     connect: (state) => {
       if (state.status.name === "READY") {
-        state.status.connected = "connected";
+        state.status.connected = ConnectedStatus.CONNECTED;
       } else {
         state.status = {
           name: "ERROR",
@@ -121,7 +121,7 @@ export const connectionSlice = createSlice({
     },
     disconnect: (state) => {
       if (state.status.name === "READY") {
-        state.status.connected = "disconnected";
+        state.status.connected = ConnectedStatus.DISCONNECTED;
       } else {
         state.status = {
           name: "ERROR",

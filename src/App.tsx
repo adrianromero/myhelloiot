@@ -23,11 +23,11 @@ import { store } from "./app/store";
 import ConnectStored from "./connection/ConnectStored";
 import ConnectRemote from "./connection/ConnectRemote";
 import AppDashboard from "./AppDashboard";
-import { ConnectInfo, loadStoreConnectInfo, loadStoreConnectCredentials, loadStoreConnected, loadResourceConnectInfo, ConnectCredentials, defaultConnectInfo, defaultConnectCredentials } from "./connection/ConnectionInfo";
+import { ConnectInfo, loadStoreConnectInfo, loadStoreConnectCredentials, loadStoreConnected, loadResourceConnectInfo, ConnectCredentials, ConnectedStatus } from "./connection/ConnectionInfo";
 import { useMQTTContext } from "./mqtt/MQTTHooks";
 import MQTTProvider from "./mqtt/MQTTProvider";
 import { useAppSelector, useAppDispatch } from "./app/hooks";
-import { selectStatus, ApplicationMode, statusError } from "./app/sliceConnection";
+import { selectStatus, statusError } from "./app/sliceConnection";
 import { statusLoading, statusReady } from "./app/sliceConnection";
 import AppError from "./AppError";
 import "antd/dist/reset.css";
@@ -35,8 +35,20 @@ import "./assets/main.css";
 import AppLoading from "./AppLoading";
 import AppErrorLoad from "./AppErrorLoad";
 
-type Configuration = {
-  mode: ApplicationMode
+
+enum AppMode {
+  DASHBOARD,
+  STANDARD
+}
+const appmodekeys = Object.keys(AppMode);
+
+const appmode = import.meta.env.VITE_MYH_APPMODE as keyof typeof AppMode;
+
+let APPMODE: AppMode;
+if (appmodekeys.includes(appmode)) {
+  APPMODE = AppMode[appmode] as unknown as AppMode;
+} else {
+  APPMODE = AppMode.STANDARD;
 }
 
 const App: React.FC = () => (
@@ -63,7 +75,7 @@ const MQTTApp: React.FC = () => {
 
   useEffect(() => {
     if (status.name === "READY") {
-      if (status.connected === "connected") {
+      if (status.connected === ConnectedStatus.CONNECTED) {
         const {
           clientId,
           url,
@@ -102,7 +114,7 @@ const MQTTApp: React.FC = () => {
           },
         });
       } else {
-        // "disconnected";
+        // ConnectedStatus.DISCONNECTED;
         brokerdisconnect();
       }
     }
@@ -115,24 +127,25 @@ const MQTTApp: React.FC = () => {
       const loadConfiguration = async (): Promise<void> => {
         let connectInfo: ConnectInfo;
         let connectCredentials: ConnectCredentials;
-        let connected: "connected" | "disconnected";
-        const configfetch = await fetch(new URL("./assets/resources/configuration.json", import.meta.url))
-        const config: Configuration = await configfetch.json();
-        if (config.mode === "DASHBOARD") {
+        let connected: ConnectedStatus;
+        if (APPMODE === AppMode.DASHBOARD) {
           connectInfo = await loadResourceConnectInfo("dashboard");
           connectCredentials = loadStoreConnectCredentials();
           connected = loadStoreConnected();
-        } else if (config.mode === "STANDARD") {
+          // } else if (config.mode === "URLQUERY") {
+          //   const params = new URL(document.location.href).searchParams;
+          //   let isDashboard = params.get("dashboard") !== null;
+          //   let isStandard = params.get("standard") !== null;
+          //   connectInfo = loadStoreConnectInfo();
+          //   connectCredentials = loadStoreConnectCredentials();
+          //   connected = loadStoreConnected();
+        } else {// STANDARD (Default)
           connectInfo = loadStoreConnectInfo();
           connectCredentials = loadStoreConnectCredentials();
           connected = loadStoreConnected();
-        } else {
-          connectInfo = defaultConnectInfo;
-          connectCredentials = defaultConnectCredentials;
-          connected = "disconnected";
         }
 
-        dispatch(statusReady({ mode: config.mode, connectInfo, connectCredentials, connected }));
+        dispatch(statusReady({ connectInfo, connectCredentials, connected }));
       };
       loadConfiguration().catch((error) => {
         dispatch(statusError({ message: "Cannot load the application configuration", error }));
@@ -151,19 +164,20 @@ const MQTTApp: React.FC = () => {
 
   // Now status === "READY"
 
-  if (status.connected === "disconnected") {
+  if (status.connected === ConnectedStatus.DISCONNECTED) {
     // Connection Component
-    if (status.mode === "STANDARD") {
+    if (APPMODE === AppMode.DASHBOARD) {
       return (
-        <ConnectStored
+        <ConnectRemote
           connectInfo={status.connectInfo}
           connectCredentials={status.connectCredentials}
         />
       );
+
     }
-    // mode === "DASHBOARD"
+    // mode === STANDARD (Default)
     return (
-      <ConnectRemote
+      <ConnectStored
         connectInfo={status.connectInfo}
         connectCredentials={status.connectCredentials}
       />

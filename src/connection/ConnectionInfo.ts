@@ -133,18 +133,28 @@ export const saveStoreConnectCredentials = (
   );
 };
 
+export enum ConnectedStatus {
+  CONNECTED,
+  DISCONNECTED,
+}
+const connectedstatuskeys = Object.keys(ConnectedStatus);
+
 const STORECONNECTED = "myh-connected-" + cyrb53str(window.location.href);
 
-export const loadStoreConnected = (): "connected" | "disconnected" => {
+export const loadStoreConnected = (): ConnectedStatus => {
   try {
-    return JSON.parse(localStorage.getItem(STORECONNECTED) ?? "");
+    const connectedstatus = localStorage.getItem(
+      STORECONNECTED
+    ) as keyof typeof ConnectedStatus;
+    if (connectedstatuskeys.includes(connectedstatus)) {
+      return ConnectedStatus[connectedstatus] as unknown as ConnectedStatus;
+    }
+    return ConnectedStatus.DISCONNECTED;
   } catch (e) {
-    return "disconnected";
+    return ConnectedStatus.DISCONNECTED;
   }
 };
 
-export const saveStoreConnectConnected = (
-  connected: "connected" | "disconnected"
-): void => {
-  localStorage.setItem(STORECONNECTED, JSON.stringify(connected));
+export const saveStoreConnectConnected = (connected: ConnectedStatus): void => {
+  localStorage.setItem(STORECONNECTED, ConnectedStatus[connected]);
 };

@@ -19,7 +19,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Row, Col, Layout, Tabs } from "antd";
 import { useAppDispatch } from "../app/hooks";
 import { connect, loadConnectionCredentials } from "../app/sliceConnection";
-import { ConnectCredentials, ConnectInfo, saveStoreConnectConnected, saveStoreConnectCredentials } from "./ConnectionInfo";
+import { ConnectCredentials, ConnectInfo, ConnectedStatus, saveStoreConnectConnected, saveStoreConnectCredentials } from "./ConnectionInfo";
 import { ConnectInfoForm } from "./ConnectInfoForm";
 import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
@@ -73,7 +73,7 @@ const ConnectRemote: React.FC<{
 
           try {
             saveStoreConnectCredentials(connectCredentialsNew);
-            saveStoreConnectConnected("connected")
+            saveStoreConnectConnected(ConnectedStatus.CONNECTED)
             dispatch(loadConnectionCredentials({ connectCredentials: connectCredentialsNew }));
             dispatch(connect());
           } catch (error) {

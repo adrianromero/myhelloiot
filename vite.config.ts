@@ -12,7 +12,7 @@ export default defineConfig({
     VitePWA({
       workbox: {
         globPatterns: [
-          "**/*.{js,css,html,ico,png,jpg,jpeg,svg,webp,wav,mp3,gltf,bin,eot,ttf,woff,woff2,json,txt}",
+          "**/*.{js,css,html,ico,png,jpg,jpeg,svg,webp,wav,mp3,gltf,bin,eot,ttf,woff,woff2,txt,json}",
         ],
         maximumFileSizeToCacheInBytes: 25097152,
       },

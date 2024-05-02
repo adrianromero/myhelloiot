@@ -32,7 +32,7 @@ import {
 import type { QoS } from "mqtt-packet";
 import { useAppDispatch } from "../app/hooks";
 import { connect, loadConnectionCredentials, loadConnectionInfo } from "../app/sliceConnection";
-import { ConnectCredentials, ConnectInfo, saveStoreConnectConnected, saveStoreConnectCredentials, saveStoreConnectInfo } from "./ConnectionInfo";
+import { ConnectCredentials, ConnectInfo, ConnectedStatus, saveStoreConnectConnected, saveStoreConnectCredentials, saveStoreConnectInfo } from "./ConnectionInfo";
 import { ConnectInfoForm } from "./ConnectInfoForm";
 import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
@@ -109,7 +109,7 @@ const ConnectStored: React.FC<{
           try {
             saveStoreConnectInfo(connectInfoNew);
             saveStoreConnectCredentials(connectCredentialsNew);
-            saveStoreConnectConnected("connected")
+            saveStoreConnectConnected(ConnectedStatus.CONNECTED);
             dispatch(loadConnectionInfo({ connectInfo: connectInfoNew }));
             dispatch(loadConnectionCredentials({ connectCredentials: connectCredentialsNew }));
             dispatch(connect());

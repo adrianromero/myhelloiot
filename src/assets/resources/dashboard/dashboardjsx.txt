@@ -1,6 +1,4 @@
-{
-  /* Basic units example. */
-}
+{/* cocoloco units example. */}
 
 <DashboardPage title="Basic units">
   <InputCard
@@ -10,7 +8,10 @@
     format={Celsius()}
   />
   <Card title="Select temperature">
-    <ViewUnit topic="myhelloiot/temperature" format={Celsius()} />
+    <ViewUnit
+      topic="myhelloiot/temperature"
+      format={Celsius()}
+    />
     <SliderUnit
       topic="myhelloiot/temperature"
       puboptions={{ retain: true }}
@@ -19,24 +20,26 @@
   </Card>
   <Card title="Temperature buttons">
     <ButtonUnit
+      className="myhButtonCard"
       topic="myhelloiot/temperature"
       puboptions={{ retain: true }}
       format={Celsius()}
       icon="+"
     />
     <ButtonUnit
+      className="myhButtonCard"
       topic="myhelloiot/temperature"
       puboptions={{ retain: true }}
       format={Celsius({ step: -1 })}
       icon="-"
     />
   </Card>
-  <ViewCard
+  <ViewCard 
     title="Dashboard gauge card"
     topic="myhelloiot/temperature"
     format={DashboardIconFormat({
-      title: "Dashboard gauge",
-      ...Celsius(),
+      title: "Dashboard gauge", 
+      ...Celsius()
     })}
   />
 </DashboardPage>

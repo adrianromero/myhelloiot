@@ -25,7 +25,7 @@ import { useAppDispatch } from "../app/hooks";
 import { disconnect } from "../app/sliceConnection";
 
 import "./ConnectionInfo.css";
-import { saveStoreConnectConnected } from "../connection/ConnectionInfo";
+import { ConnectedStatus, saveStoreConnectConnected } from "../connection/ConnectionInfo";
 
 const { Text } = Typography;
 
@@ -157,7 +157,7 @@ const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
             type="primary"
             icon={<SVGIcon icon={faPowerOff} />}
             onClick={() => {
-              saveStoreConnectConnected("disconnected")
+              saveStoreConnectConnected(ConnectedStatus.DISCONNECTED)
               dispatch(disconnect());
             }}
           >

@@ -23,7 +23,7 @@ import { disconnect } from "../app/sliceConnection";
 import { MQTTMessage } from "../mqtt/MQTTProvider";
 import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import { StringValueFormat } from "../format/ValueFormat";
-import { saveStoreConnectConnected } from "../connection/ConnectionInfo";
+import { ConnectedStatus, saveStoreConnectConnected } from "../connection/ConnectionInfo";
 
 type DisconnectUnitProps = {
   subtopic?: string;
@@ -43,7 +43,7 @@ const DisconnectUnit: React.FC<DisconnectUnitProps> = ({
     subtopic,
     ({ message }: MQTTMessage) => {
       if (keyvalue === format.toDisplay(message)) {
-        saveStoreConnectConnected("disconnected")
+        saveStoreConnectConnected(ConnectedStatus.DISCONNECTED)
         dispatch(disconnect());
       } else {
         notificationInstance.warning({
