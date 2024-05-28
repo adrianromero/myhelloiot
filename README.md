@@ -43,4 +43,4 @@ Creative Commons 0 Licensed sound effects obtained from https://freesound.org/
 
 MYHELLOIOT is licensed under the GNU General Public License, Version 3, 29 June 2007.
 
-Copyright (C) 2021 Adrián Romero.
+Copyright (C) 2021-2024 Adrián Romero.
