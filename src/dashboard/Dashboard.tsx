@@ -122,9 +122,8 @@ const Dashboard: React.FC<DashboardProps> = ({
               ghost
               hidden={menDisabled}
               disabled={!connected}
-            >
-              <SVGIcon icon={faBars} />
-            </Button>
+              icon={<SVGIcon icon={faBars} />}
+            />
           </div>
         )}
         <ConnectionInfo
