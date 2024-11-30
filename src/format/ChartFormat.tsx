@@ -42,7 +42,7 @@ export const ChartIconFormat = ({
       if (!Array.isArray(data) || data.length === 0) {
         data = [null];
       }
-    } catch (error) {
+    } catch {
       data = [null];
     }
 

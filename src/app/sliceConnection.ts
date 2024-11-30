@@ -16,13 +16,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./store";
+
 import {
   ConnectCredentials,
   ConnectedStatus,
   ConnectInfo,
 } from "../connection/ConnectionInfo";
-//import { cyrb53str } from "../CryptFunctions";
 
 export type ApplicationConnected = ConnectedStatus;
 
@@ -73,13 +72,13 @@ export type LoadConnectionCredentialsAction = {
   connectCredentials: ConnectCredentials;
 };
 
-const INITIALCONNECTIONSTATE: ConnectionState = {
+const initialState: ConnectionState = {
   status: { name: "INITIAL" },
 };
 
 export const connectionSlice = createSlice({
   name: "connection",
-  initialState: INITIALCONNECTIONSTATE,
+  initialState,
   reducers: {
     statusLoading: (state) => {
       state.status = { name: "LOADING" };
@@ -180,6 +179,15 @@ export const connectionSlice = createSlice({
       }
     },
   },
+  selectors: {
+    selectStatus: (connection: ConnectionState) => connection.status,
+    selectProperty: (connection: ConnectionState, name: string) => {
+      if (connection.status.name === "READY") {
+        return connection.status.attrs[name];
+      }
+      return;
+    },
+  },
 });
 
 export const {
@@ -193,13 +201,4 @@ export const {
   loadConnectionCredentials,
 } = connectionSlice.actions;
 
-export const selectStatus = (state: RootState) => state.connection.status;
-
-export const selectProperty = (name: string) => (state: RootState) => {
-  if (state.connection.status.name === "READY") {
-    return state.connection.status.attrs[name];
-  }
-  return;
-};
-
-export default connectionSlice.reducer;
+export const { selectStatus, selectProperty } = connectionSlice.selectors;

@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect, useState } from "react";
 import { IClientSubscribeOptions } from "mqtt";
-import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import type { MQTTMessage } from "../mqtt/MQTTContext";
 import { useMQTTContext } from "../mqtt/MQTTHooks";
 import { ValueFormat } from "../format/FormatTypes";
 import { StringValueFormat } from "../format/ValueFormat";

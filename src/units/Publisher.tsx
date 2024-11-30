@@ -127,7 +127,8 @@ const Publisher: React.FC<PublisherProps> = ({
   }, [ready, topic, value, retain, qos, fmt]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [formFmt, setFormFmt] = useState<FMT>(FMT.PLAIN);
-  const [notificationInstance, notificationContext] = notification.useNotification();
+  const [notificationInstance, notificationContext] =
+    notification.useNotification();
 
   useEffect(() => {
     form.validateFields(["value"]);
@@ -193,10 +194,11 @@ const Publisher: React.FC<PublisherProps> = ({
                   options={[
                     { label: "Plain", value: FMT.PLAIN },
                     { label: "HEX", value: FMT.HEX },
-                    { label: "Base64", value: FMT.BASE64 }
+                    { label: "Base64", value: FMT.BASE64 },
                   ]}
                   onChange={(e: RadioChangeEvent) => setFormFmt(e.target.value)}
-                  optionType="button" />
+                  optionType="button"
+                />
               </Form.Item>
             </div>
           )}
@@ -215,11 +217,11 @@ const Publisher: React.FC<PublisherProps> = ({
                         StringValueFormat();
                       format.fromDisplay(value);
                       return Promise.resolve();
-                    } catch (error) {
+                    } catch {
                       return Promise.reject(
                         new Error(
                           FMTValueFormat.get(formFmt)?.message ??
-                          "Value cannot be formatted."
+                            "Value cannot be formatted."
                         )
                       );
                     }
@@ -227,67 +229,67 @@ const Publisher: React.FC<PublisherProps> = ({
                 },
               ]}
             >
-              <Input.TextArea
-                rows={6}
-                autoComplete="off"
-              />
+              <Input.TextArea rows={6} autoComplete="off" />
             </Form.Item>
           </Col>
         </Row>
         {(optionretain || optionqos) && (
           <Row className="ant-form-item" gutter={8}>
             <Col xs={0} sm={0} md={0} lg={4} />
-            {optionqos && (<>
-              <Col
-                xs={12}
-                sm={6}
-                md={6}
-                lg={4}
-                className="ant-form-item-label"
-              >
-                <label
-                  htmlFor="qos"
-                  className="ant-form-item-required"
-                  title="QoS"
+            {optionqos && (
+              <>
+                <Col
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  lg={4}
+                  className="ant-form-item-label"
                 >
-                  QoS
-                </label>
-              </Col>
-              <Col xs={12} sm={18} md={6} lg={4}>
-                <Form.Item name="qos">
-                  <Select<QoS>
-                    style={{ width: 120 }}
-                    options={[
-                      { value: 0, label: "0" },
-                      { value: 1, label: "1" },
-                      { value: 2, label: "2" }
-                    ]}
-                  />
-                </Form.Item>
-              </Col>
-            </>)}
-            {optionretain && (<>
-              <Col
-                xs={12}
-                sm={6}
-                md={6}
-                lg={4}
-                className="ant-form-item-label"
-              >
-                <label
-                  htmlFor="retail"
-                  className="ant-form-item-required"
-                  title="Retain"
+                  <label
+                    htmlFor="qos"
+                    className="ant-form-item-required"
+                    title="QoS"
+                  >
+                    QoS
+                  </label>
+                </Col>
+                <Col xs={12} sm={18} md={6} lg={4}>
+                  <Form.Item name="qos">
+                    <Select<QoS>
+                      style={{ width: 120 }}
+                      options={[
+                        { value: 0, label: "0" },
+                        { value: 1, label: "1" },
+                        { value: 2, label: "2" },
+                      ]}
+                    />
+                  </Form.Item>
+                </Col>
+              </>
+            )}
+            {optionretain && (
+              <>
+                <Col
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  lg={4}
+                  className="ant-form-item-label"
                 >
-                  Retain
-                </label>
-              </Col>
-              <Col xs={12} sm={18} md={6} lg={4}>
-                <Form.Item name="retain" valuePropName="checked">
-                  <Switch />
-                </Form.Item>
-              </Col>
-            </>
+                  <label
+                    htmlFor="retail"
+                    className="ant-form-item-required"
+                    title="Retain"
+                  >
+                    Retain
+                  </label>
+                </Col>
+                <Col xs={12} sm={18} md={6} lg={4}>
+                  <Form.Item name="retain" valuePropName="checked">
+                    <Switch />
+                  </Form.Item>
+                </Col>
+              </>
             )}
             <Col xs={0} sm={0} md={0} lg={4} />
           </Row>

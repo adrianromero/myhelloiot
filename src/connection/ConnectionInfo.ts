@@ -94,7 +94,7 @@ export const loadResourceConnectInfo = async (
 export const loadStoreConnectInfo = (): ConnectInfo => {
   try {
     return JSON.parse(localStorage.getItem(STORECONNECTINFO) ?? "");
-  } catch (e) {
+  } catch {
     return defaultConnectInfo;
   }
 };
@@ -119,7 +119,7 @@ const STORECONNECTCREDENTIALS =
 export const loadStoreConnectCredentials = (): ConnectCredentials => {
   try {
     return JSON.parse(localStorage.getItem(STORECONNECTCREDENTIALS) ?? "");
-  } catch (e) {
+  } catch {
     return defaultConnectCredentials;
   }
 };
@@ -150,7 +150,7 @@ export const loadStoreConnected = (): ConnectedStatus => {
       return ConnectedStatus[connectedstatus] as unknown as ConnectedStatus;
     }
     return ConnectedStatus.DISCONNECTED;
-  } catch (e) {
+  } catch {
     return ConnectedStatus.DISCONNECTED;
   }
 };

@@ -20,10 +20,13 @@ import { notification } from "antd";
 import { IClientSubscribeOptions } from "mqtt";
 import { useAppDispatch } from "../app/hooks";
 import { disconnect } from "../app/sliceConnection";
-import { MQTTMessage } from "../mqtt/MQTTProvider";
+import { MQTTMessage } from "../mqtt/MQTTContext";
 import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import { StringValueFormat } from "../format/ValueFormat";
-import { ConnectedStatus, saveStoreConnectConnected } from "../connection/ConnectionInfo";
+import {
+  ConnectedStatus,
+  saveStoreConnectConnected,
+} from "../connection/ConnectionInfo";
 
 type DisconnectUnitProps = {
   subtopic?: string;
@@ -38,17 +41,18 @@ const DisconnectUnit: React.FC<DisconnectUnitProps> = ({
 }) => {
   const format = StringValueFormat();
   const dispatch = useAppDispatch();
-  const [notificationInstance, notificationContext] = notification.useNotification();
+  const [notificationInstance, notificationContext] =
+    notification.useNotification();
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
       if (keyvalue === format.toDisplay(message)) {
-        saveStoreConnectConnected(ConnectedStatus.DISCONNECTED)
+        saveStoreConnectConnected(ConnectedStatus.DISCONNECTED);
         dispatch(disconnect());
       } else {
         notificationInstance.warning({
           message: "Disconnection key not valid.",
-          placement: "bottomRight"
+          placement: "bottomRight",
         });
       }
     },

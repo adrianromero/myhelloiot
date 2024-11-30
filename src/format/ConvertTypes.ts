@@ -29,7 +29,7 @@ export const JSONConvert = (c: (json: unknown) => unknown) => (b: Buffer) => {
     const conversion = c(json);
     const convertedjson = JSON.stringify(conversion);
     return Buffer.from(convertedjson);
-  } catch (exception) {
+  } catch {
     return null;
   }
 };
@@ -42,7 +42,7 @@ export const Shelly2Convert = (relay: string) => (b: Buffer) => {
       return s ? ONOFFStr.cmd_on : ONOFFStr.cmd_off;
     }
     return null;
-  } catch (exception) {
+  } catch {
     return null;
   }
 };

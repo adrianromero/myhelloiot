@@ -19,7 +19,7 @@ import React, { useState } from "react";
 import { notification } from "antd";
 import { Buffer } from "buffer";
 import { IClientSubscribeOptions } from "mqtt";
-import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import type { MQTTMessage } from "../mqtt/MQTTContext";
 import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import { ValueFormat } from "../format/FormatTypes";
 import { StringValueFormat } from "../format/ValueFormat";
@@ -41,9 +41,16 @@ const NotifyUnit: React.FC<NotifyUnitProps> = ({
   duration = 2.5,
   className,
 }) => {
-  const [notificationInstance, notificationContext] = notification.useNotification();
-  const [[bounceTime, bounceMessage], setBouncing] = useState([Number.MIN_SAFE_INTEGER, Buffer.from("")]);
-  const [[currentTime, currentMessage], setCurrent] = useState([Number.MIN_SAFE_INTEGER, Buffer.from("")]);
+  const [notificationInstance, notificationContext] =
+    notification.useNotification();
+  const [[bounceTime, bounceMessage], setBouncing] = useState([
+    Number.MIN_SAFE_INTEGER,
+    Buffer.from(""),
+  ]);
+  const [[currentTime, currentMessage], setCurrent] = useState([
+    Number.MIN_SAFE_INTEGER,
+    Buffer.from(""),
+  ]);
   useMQTTSubscribe(
     subtopic,
     ({ message }: MQTTMessage) => {
@@ -57,7 +64,7 @@ const NotifyUnit: React.FC<NotifyUnitProps> = ({
       message: format.toDisplay(currentMessage),
       duration,
       className,
-      placement: "bottomRight"
+      placement: "bottomRight",
     });
     setBouncing([currentTime, currentMessage]);
   }

@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useEffect, useState } from "react";
 import { Switch } from "antd";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
-import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import type { MQTTMessage } from "../mqtt/MQTTContext";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import type { ONOFF } from "../format/FormatTypes";
 import { ONOFFNumber } from "../format/FormatConstants";

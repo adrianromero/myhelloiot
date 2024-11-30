@@ -17,8 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { useEffect, useContext } from "react";
 import { IClientSubscribeOptions } from "mqtt";
-import type { MQTTMessage } from "./MQTTProvider";
-import { MQTTContext } from "./MQTTProvider";
+import type { MQTTMessage } from "./MQTTContext";
+import { MQTTContext } from "./MQTTContext";
 
 export const useMQTTContext = () => useContext(MQTTContext);
 

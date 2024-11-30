@@ -19,7 +19,7 @@ import React, { useEffect, useState } from "react";
 import { Buffer } from "buffer";
 import { Button } from "antd";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
-import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import type { MQTTMessage } from "../mqtt/MQTTContext";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import { ValueFormat, IconValueFormat } from "../format/FormatTypes";
 import "./ButtonUnit.css";

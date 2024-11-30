@@ -19,7 +19,7 @@ import React, { useEffect, useState } from "react";
 import { Buffer } from "buffer";
 import { Slider } from "antd";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
-import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import type { MQTTMessage } from "../mqtt/MQTTContext";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import type { LimitsFormat } from "../format/FormatTypes";
 import { DefaultLimits } from "../format/FormatConstants";
@@ -28,7 +28,7 @@ import "./SliderUnit.css";
 import { ConvertBuffer, IdentityConvert } from "../format/ConvertTypes";
 
 type SliderUnitProps = {
-  topic?: string
+  topic?: string;
   pubtopic?: string;
   subtopic?: string;
   puboptions?: IClientPublishOptions;
