@@ -77,7 +77,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
       onFinish={onFinish}
       className={className}
     >
-      <Space.Compact>
+      <Space.Compact block>
         <Form.Item
           name="mqttValue"
           rules={[
