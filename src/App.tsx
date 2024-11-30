@@ -16,14 +16,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import React, { useEffect } from "react";
-import { App as AntApp, ConfigProvider } from 'antd';
+import { App as AntApp, ConfigProvider } from "antd";
 import { Provider } from "react-redux";
 import { Buffer } from "buffer";
 import { store } from "./app/store";
 import ConnectStored from "./connection/ConnectStored";
 import ConnectRemote from "./connection/ConnectRemote";
 import AppDashboard from "./AppDashboard";
-import { ConnectInfo, loadStoreConnectInfo, loadStoreConnectCredentials, loadStoreConnected, loadResourceConnectInfo, ConnectCredentials, ConnectedStatus } from "./connection/ConnectionInfo";
+import {
+  ConnectInfo,
+  loadStoreConnectInfo,
+  loadStoreConnectCredentials,
+  loadStoreConnected,
+  loadResourceConnectInfo,
+  ConnectCredentials,
+  ConnectedStatus,
+} from "./connection/ConnectionInfo";
 import { useMQTTContext } from "./mqtt/MQTTHooks";
 import MQTTProvider from "./mqtt/MQTTProvider";
 import { useAppSelector, useAppDispatch } from "./app/hooks";
@@ -35,10 +43,9 @@ import "./assets/main.css";
 import AppLoading from "./AppLoading";
 import AppErrorLoad from "./AppErrorLoad";
 
-
 enum AppMode {
   DASHBOARD,
-  STANDARD
+  STANDARD,
 }
 const appmodekeys = Object.keys(AppMode);
 
@@ -53,10 +60,12 @@ if (appmodekeys.includes(appmode)) {
 
 const App: React.FC = () => (
   <ConfigProvider
-    theme={{
-      // algorithm: theme.darkAlgorithm,
-      // algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
-    }}
+    theme={
+      {
+        // algorithm: theme.darkAlgorithm,
+        // algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
+      }
+    }
   >
     <AntApp>
       <MQTTProvider>
@@ -88,11 +97,9 @@ const MQTTApp: React.FC = () => {
           willtopic,
           willqos,
           willretain,
-          willpayload
+          willpayload,
         } = status.connectInfo;
-        const {
-          username, password
-        } = status.connectCredentials;
+        const { username, password } = status.connectCredentials;
         brokerconnect({
           url,
           options: {
@@ -105,12 +112,14 @@ const MQTTApp: React.FC = () => {
             clean,
             connectTimeout,
             reconnectPeriod,
-            will: will ? {
-              topic: willtopic,
-              qos: willqos,
-              retain: willretain,
-              payload: Buffer.from(willpayload || '')
-            } : undefined
+            will: will
+              ? {
+                  topic: willtopic,
+                  qos: willqos,
+                  retain: willretain,
+                  payload: Buffer.from(willpayload || ""),
+                }
+              : undefined,
           },
         });
       } else {
@@ -139,7 +148,8 @@ const MQTTApp: React.FC = () => {
           //   connectInfo = loadStoreConnectInfo();
           //   connectCredentials = loadStoreConnectCredentials();
           //   connected = loadStoreConnected();
-        } else {// STANDARD (Default)
+        } else {
+          // STANDARD (Default)
           connectInfo = loadStoreConnectInfo();
           connectCredentials = loadStoreConnectCredentials();
           connected = loadStoreConnected();
@@ -148,7 +158,12 @@ const MQTTApp: React.FC = () => {
         dispatch(statusReady({ connectInfo, connectCredentials, connected }));
       };
       loadConfiguration().catch((error) => {
-        dispatch(statusError({ message: "Cannot load the application configuration", error }));
+        dispatch(
+          statusError({
+            message: "Cannot load the application configuration",
+            error,
+          })
+        );
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,7 +174,9 @@ const MQTTApp: React.FC = () => {
   }
 
   if (status.name === "ERROR") {
-    return <AppErrorLoad title="Error loading MYHELLOIOT" error={status.error} />;
+    return (
+      <AppErrorLoad title="Error loading MYHELLOIOT" error={status.error} />
+    );
   }
 
   // Now status === "READY"
@@ -173,7 +190,6 @@ const MQTTApp: React.FC = () => {
           connectCredentials={status.connectCredentials}
         />
       );
-
     }
     // mode === STANDARD (Default)
     return (

@@ -21,7 +21,9 @@ import { selectProperty, putProperties } from "./sliceConnection";
 export const useConnectionProperty = (
   name: string
 ): [string | undefined, (value: string) => void] => {
-  const property: string | undefined = useAppSelector(selectProperty(name));
+  const property: string | undefined = useAppSelector((state) =>
+    selectProperty(state, name)
+  );
 
   const dispatch = useAppDispatch();
   const setProperty = (value: string) =>

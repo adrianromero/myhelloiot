@@ -22,7 +22,7 @@ import SVGIcon from "../format/SVGIcon";
 import { faBars, faImage } from "@fortawesome/free-solid-svg-icons";
 import { useConnectionProperty } from "../app/sliceConnectionHooks";
 import AppHeader from "../AppHeader";
-import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import type { MQTTMessage } from "../mqtt/MQTTContext";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import DashboardContent from "./DashboardContent";
 import ConnectionInfo from "./ConnectionInfo";

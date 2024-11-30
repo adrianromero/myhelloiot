@@ -19,7 +19,7 @@ import React from "react";
 import { Buffer } from "buffer";
 import { IClientSubscribeOptions } from "mqtt";
 import { Modal } from "antd";
-import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import type { MQTTMessage } from "../mqtt/MQTTContext";
 import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import type { ONOFF } from "../format/FormatTypes";
 import { ONOFFNumber } from "../format/FormatConstants";

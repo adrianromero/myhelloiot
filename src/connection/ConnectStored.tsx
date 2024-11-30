@@ -31,8 +31,19 @@ import {
 } from "antd";
 import type { QoS } from "mqtt-packet";
 import { useAppDispatch } from "../app/hooks";
-import { connect, loadConnectionCredentials, loadConnectionInfo } from "../app/sliceConnection";
-import { ConnectCredentials, ConnectInfo, ConnectedStatus, saveStoreConnectConnected, saveStoreConnectCredentials, saveStoreConnectInfo } from "./ConnectionInfo";
+import {
+  connect,
+  loadConnectionCredentials,
+  loadConnectionInfo,
+} from "../app/sliceConnection";
+import {
+  ConnectCredentials,
+  ConnectInfo,
+  ConnectedStatus,
+  saveStoreConnectConnected,
+  saveStoreConnectCredentials,
+  saveStoreConnectInfo,
+} from "./ConnectionInfo";
 import { ConnectInfoForm } from "./ConnectInfoForm";
 import ModalError from "../ModalError";
 import AppHeader from "../AppHeader";
@@ -55,7 +66,11 @@ const ConnectStored: React.FC<{
   const [form] = Form.useForm<ConnectInfoForm>();
   const will = Form.useWatch("will", form);
   const dispatch = useAppDispatch();
-  const HIDDEN: ModalErrorInfo = { visible: false, title: "", errorMessage: "" };
+  const HIDDEN: ModalErrorInfo = {
+    visible: false,
+    title: "",
+    errorMessage: "",
+  };
   const [errorinf, showError] = useState<ModalErrorInfo>(HIDDEN);
 
   useEffect(() => {
@@ -103,7 +118,7 @@ const ConnectStored: React.FC<{
           };
           const connectCredentialsNew: ConnectCredentials = {
             username: connectInfoForm.username,
-            password: connectInfoForm.password
+            password: connectInfoForm.password,
           };
 
           try {
@@ -111,13 +126,18 @@ const ConnectStored: React.FC<{
             saveStoreConnectCredentials(connectCredentialsNew);
             saveStoreConnectConnected(ConnectedStatus.CONNECTED);
             dispatch(loadConnectionInfo({ connectInfo: connectInfoNew }));
-            dispatch(loadConnectionCredentials({ connectCredentials: connectCredentialsNew }));
+            dispatch(
+              loadConnectionCredentials({
+                connectCredentials: connectCredentialsNew,
+              })
+            );
             dispatch(connect());
-          } catch (error) {
+          } catch {
             showError({
               visible: true,
               title: "Connection error",
-              errorMessage: "Connection values cannot be stored locally. Please review the application permissions.",
+              errorMessage:
+                "Connection values cannot be stored locally. Please review the application permissions.",
             });
           }
         }}
@@ -136,274 +156,24 @@ const ConnectStored: React.FC<{
           </AppHeader>
           <Layout.Content className="myhLayoutContent">
             <div className="myhLayoutContent-panel">
-              <Tabs defaultActiveKey="1" items={[{
-                label: "About",
-                key: "1",
-                children: <ContentConnectAbout form={form} />
-              }, {
-                label: "MQTT Connection",
-                key: "3",
-                forceRender: true,
-                children: <Row className="ant-form-item" gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col
-                    xs={24}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label
-                      htmlFor="url"
-                      className="ant-form-item-required"
-                      title="URL"
-                    >
-                      URL
-                    </label>
-                  </Col>
-                  <Col xs={24} sm={18} md={18} lg={12}>
-                    <Form.Item
-                      name="url"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input the url of the MQTT broker.",
-                        },
-                      ]}
-                    >
-                      <Input autoComplete="off" />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col
-                    xs={24}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label htmlFor="username" title="User">
-                      User
-                    </label>
-                  </Col>
-                  <Col xs={24} sm={18} md={6} lg={4}>
-                    <Form.Item name="username">
-                      <Input autoComplete="off" />
-                    </Form.Item>
-                  </Col>
-                  <Col
-                    xs={24}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label htmlFor="password" title="Password">
-                      Password
-                    </label>
-                  </Col>
-                  <Col xs={24} sm={18} md={6} lg={4}>
-                    <Form.Item name="password">
-                      <Input.Password />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col
-                    xs={24}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label
-                      htmlFor="clientId"
-                      title="Client ID"
-                    >
-                      Client ID
-                    </label>
-                  </Col>
-                  <Col xs={24} sm={18} md={6} lg={4}>
-                    <Form.Item name="clientId"                    >
-                      <Input autoComplete="off" />
-                    </Form.Item>
-                  </Col>
-                  <Col
-                    xs={12}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label
-                      htmlFor="keepalive"
-                      className="ant-form-item-required"
-                      title="Keep alive"
-                    >
-                      Keep alive
-                    </label>
-                  </Col>
-                  <Col xs={12} sm={18} md={6} lg={4}>
-                    <Form.Item
-                      name="keepalive"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please define a Keep alive value.",
-                        },
-                      ]}
-                    >
-                      <InputNumber autoComplete="off" />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col
-                    xs={12}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label
-                      htmlFor="protocolVersion"
-                      className="ant-form-item-required"
-                      title="Protocol version"
-                    >
-                      Protocol version
-                    </label>
-                  </Col>
-                  <Col xs={12} sm={18} md={6} lg={4}>
-                    <Form.Item
-                      name="protocolVersion"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please define a Protocol version.",
-                        },
-                      ]}
-                    >
-                      <Select<number>
-                        style={{ width: 120 }}
-                        options={[
-                          { value: 3, label: 'MQIsdp 3.1' },
-                          { value: 4, label: 'MQTT 3.1.1' },
-                          { value: 5, label: 'MQTT 5.0' }
-                        ]}
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col
-                    xs={12}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label
-                      htmlFor="clean"
-                      className="ant-form-item-required"
-                      title="Clean session"
-                    >
-                      Clean session
-                    </label>
-                  </Col>
-                  <Col xs={12} sm={18} md={6} lg={4}>
-                    <Form.Item
-                      name="clean"
-                      valuePropName="checked"
-                    >
-                      <Switch />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col
-                    xs={12}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label
-                      htmlFor="connectTimeout"
-                      className="ant-form-item-required"
-                      title="Connection timeout"
-                    >
-                      Connection timeout
-                    </label>
-                  </Col>
-                  <Col xs={12} sm={18} md={6} lg={4}>
-                    <Form.Item
-                      name="connectTimeout"
-                      rules={[
-                        {
-                          required: true,
-                          message:
-                            "Please define a Connection timeout value.",
-                        },
-                      ]}
-                    >
-                      <InputNumber autoComplete="off" />
-                    </Form.Item>
-                  </Col>
-                  <Col
-                    xs={12}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                    className="ant-form-item-label"
-                  >
-                    <label
-                      htmlFor="reconnectPeriod"
-                      className="ant-form-item-required"
-                      title="Reconnect period"
-                    >
-                      Reconnect period
-                    </label>
-                  </Col>
-                  <Col xs={12} sm={18} md={6} lg={4}>
-                    <Form.Item
-                      name="reconnectPeriod"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please define a Reconnect period value.",
-                        },
-                      ]}
-                    >
-                      <InputNumber autoComplete="off" />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-
-                  <Col
-                    xs={24}
-                    sm={6}
-                    md={6}
-                    lg={8}
-                  >
-                  </Col>
-                  <Col xs={24} sm={18} md={18} lg={12}>
-                    <Form.Item
-                      name="will"
-                      valuePropName="checked"
-                    >
-                      <Checkbox>Last will message</Checkbox>
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-
-                  <Form.Item noStyle shouldUpdate>
-                    {({ getFieldValue }) => {
-                      const disabled = !getFieldValue("will");
-
-                      return (<><Col xs={0} sm={0} md={0} lg={4} />
+              <Tabs
+                defaultActiveKey="1"
+                items={[
+                  {
+                    label: "About",
+                    key: "1",
+                    children: <ContentConnectAbout form={form} />,
+                  },
+                  {
+                    label: "MQTT Connection",
+                    key: "3",
+                    forceRender: true,
+                    children: (
+                      <Row
+                        className="ant-form-item"
+                        gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}
+                      >
+                        <Col xs={0} sm={0} md={0} lg={4} />
                         <Col
                           xs={24}
                           sm={6}
@@ -411,18 +181,26 @@ const ConnectStored: React.FC<{
                           lg={4}
                           className="ant-form-item-label"
                         >
-                          <label htmlFor="willtopic" className="ant-form-item-required" title="Topic">
-                            Topic
+                          <label
+                            htmlFor="url"
+                            className="ant-form-item-required"
+                            title="URL"
+                          >
+                            URL
                           </label>
                         </Col>
                         <Col xs={24} sm={18} md={18} lg={12}>
-                          <Form.Item name="willtopic" rules={[
-                            {
-                              required: !disabled,
-                              message: "Please input the url of the topic for the last will message.",
-                            },
-                          ]}>
-                            <Input disabled={disabled} autoComplete="off" />
+                          <Form.Item
+                            name="url"
+                            rules={[
+                              {
+                                required: true,
+                                message:
+                                  "Please input the url of the MQTT broker.",
+                              },
+                            ]}
+                          >
+                            <Input autoComplete="off" />
                           </Form.Item>
                         </Col>
                         <Col xs={0} sm={0} md={0} lg={4} />
@@ -435,13 +213,76 @@ const ConnectStored: React.FC<{
                           lg={4}
                           className="ant-form-item-label"
                         >
-                          <label htmlFor="willpayload" title="Payload">
-                            Payload
+                          <label htmlFor="username" title="User">
+                            User
                           </label>
                         </Col>
-                        <Col xs={24} sm={18} md={18} lg={12}>
-                          <Form.Item name="willpayload">
-                            <Input disabled={disabled} autoComplete="off" />
+                        <Col xs={24} sm={18} md={6} lg={4}>
+                          <Form.Item name="username">
+                            <Input autoComplete="off" />
+                          </Form.Item>
+                        </Col>
+                        <Col
+                          xs={24}
+                          sm={6}
+                          md={6}
+                          lg={4}
+                          className="ant-form-item-label"
+                        >
+                          <label htmlFor="password" title="Password">
+                            Password
+                          </label>
+                        </Col>
+                        <Col xs={24} sm={18} md={6} lg={4}>
+                          <Form.Item name="password">
+                            <Input.Password />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={0} sm={0} md={0} lg={4} />
+
+                        <Col xs={0} sm={0} md={0} lg={4} />
+                        <Col
+                          xs={24}
+                          sm={6}
+                          md={6}
+                          lg={4}
+                          className="ant-form-item-label"
+                        >
+                          <label htmlFor="clientId" title="Client ID">
+                            Client ID
+                          </label>
+                        </Col>
+                        <Col xs={24} sm={18} md={6} lg={4}>
+                          <Form.Item name="clientId">
+                            <Input autoComplete="off" />
+                          </Form.Item>
+                        </Col>
+                        <Col
+                          xs={12}
+                          sm={6}
+                          md={6}
+                          lg={4}
+                          className="ant-form-item-label"
+                        >
+                          <label
+                            htmlFor="keepalive"
+                            className="ant-form-item-required"
+                            title="Keep alive"
+                          >
+                            Keep alive
+                          </label>
+                        </Col>
+                        <Col xs={12} sm={18} md={6} lg={4}>
+                          <Form.Item
+                            name="keepalive"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please define a Keep alive value.",
+                              },
+                            ]}
+                          >
+                            <InputNumber autoComplete="off" />
                           </Form.Item>
                         </Col>
                         <Col xs={0} sm={0} md={0} lg={4} />
@@ -455,27 +296,29 @@ const ConnectStored: React.FC<{
                           className="ant-form-item-label"
                         >
                           <label
-                            htmlFor="willqos"
+                            htmlFor="protocolVersion"
                             className="ant-form-item-required"
-                            title="QoS"
+                            title="Protocol version"
                           >
-                            QoS
+                            Protocol version
                           </label>
                         </Col>
                         <Col xs={12} sm={18} md={6} lg={4}>
-                          <Form.Item name="willqos" rules={[
-                            {
-                              required: !disabled,
-                              message: "Please input the QoS for the last will message.",
-                            },
-                          ]}>
-                            <Select<QoS>
-                              disabled={disabled}
+                          <Form.Item
+                            name="protocolVersion"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please define a Protocol version.",
+                              },
+                            ]}
+                          >
+                            <Select<number>
                               style={{ width: 120 }}
                               options={[
-                                { value: 0, label: "0" },
-                                { value: 1, label: "1" },
-                                { value: 2, label: "2" }
+                                { value: 3, label: "MQIsdp 3.1" },
+                                { value: 4, label: "MQTT 3.1.1" },
+                                { value: 5, label: "MQTT 5.0" },
                               ]}
                             />
                           </Form.Item>
@@ -488,81 +331,286 @@ const ConnectStored: React.FC<{
                           className="ant-form-item-label"
                         >
                           <label
-                            htmlFor="willretail"
+                            htmlFor="clean"
                             className="ant-form-item-required"
-                            title="Retain"
+                            title="Clean session"
                           >
-                            Retain
+                            Clean session
+                          </label>
+                        </Col>
+                        <Col xs={12} sm={18} md={6} lg={4}>
+                          <Form.Item name="clean" valuePropName="checked">
+                            <Switch />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={0} sm={0} md={0} lg={4} />
+
+                        <Col xs={0} sm={0} md={0} lg={4} />
+                        <Col
+                          xs={12}
+                          sm={6}
+                          md={6}
+                          lg={4}
+                          className="ant-form-item-label"
+                        >
+                          <label
+                            htmlFor="connectTimeout"
+                            className="ant-form-item-required"
+                            title="Connection timeout"
+                          >
+                            Connection timeout
                           </label>
                         </Col>
                         <Col xs={12} sm={18} md={6} lg={4}>
                           <Form.Item
-                            name="willretain"
-                            valuePropName="checked" rules={[
+                            name="connectTimeout"
+                            rules={[
                               {
-                                required: !disabled,
-                                message: "Please input the retain value for the last will message.",
+                                required: true,
+                                message:
+                                  "Please define a Connection timeout value.",
                               },
                             ]}
                           >
-                            <Switch disabled={disabled} />
+                            <InputNumber autoComplete="off" />
                           </Form.Item>
                         </Col>
-                        <Col xs={0} sm={0} md={0} lg={4} /></>);
-                    }}
-                  </Form.Item>
-                </Row>
-              }, {
-                label: "Dashboard",
-                key: "4",
-                forceRender: true,
-                children: <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col xs={24} sm={24} md={24} lg={16}>
-                    <Form.Item
-                      name="dashboard"
-                      rules={[
-                        {
-                          validator: (_, value) =>
-                            value?.data?.trim()
-                              ? Promise.resolve()
-                              : Promise.reject(
-                                new Error(
-                                  "Please upload a dashboard definition file."
-                                )
-                              ),
-                        },
-                      ]}
-                    >
-                      <UploadRaw
-                        accept=".jsx"
-                        className="myhConnectionForm-dashboard"
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                </Row>
-              }, {
-                label: "Styles",
-                key: "5",
-                forceRender: true,
-                children: <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                  <Col xs={24} sm={24} md={24} lg={16}>
-                    <Form.Item name="dashboardcss">
-                      <UploadRaw
-                        accept=".css"
-                        className="myhConnectionForm-dashboardcss"
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={0} sm={0} md={0} lg={4} />
-                </Row>
-              }]} />
+                        <Col
+                          xs={12}
+                          sm={6}
+                          md={6}
+                          lg={4}
+                          className="ant-form-item-label"
+                        >
+                          <label
+                            htmlFor="reconnectPeriod"
+                            className="ant-form-item-required"
+                            title="Reconnect period"
+                          >
+                            Reconnect period
+                          </label>
+                        </Col>
+                        <Col xs={12} sm={18} md={6} lg={4}>
+                          <Form.Item
+                            name="reconnectPeriod"
+                            rules={[
+                              {
+                                required: true,
+                                message:
+                                  "Please define a Reconnect period value.",
+                              },
+                            ]}
+                          >
+                            <InputNumber autoComplete="off" />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={0} sm={0} md={0} lg={4} />
+
+                        <Col xs={24} sm={6} md={6} lg={8}></Col>
+                        <Col xs={24} sm={18} md={18} lg={12}>
+                          <Form.Item name="will" valuePropName="checked">
+                            <Checkbox>Last will message</Checkbox>
+                          </Form.Item>
+                        </Col>
+                        <Col xs={0} sm={0} md={0} lg={4} />
+
+                        <Form.Item noStyle shouldUpdate>
+                          {({ getFieldValue }) => {
+                            const disabled = !getFieldValue("will");
+
+                            return (
+                              <>
+                                <Col xs={0} sm={0} md={0} lg={4} />
+                                <Col
+                                  xs={24}
+                                  sm={6}
+                                  md={6}
+                                  lg={4}
+                                  className="ant-form-item-label"
+                                >
+                                  <label
+                                    htmlFor="willtopic"
+                                    className="ant-form-item-required"
+                                    title="Topic"
+                                  >
+                                    Topic
+                                  </label>
+                                </Col>
+                                <Col xs={24} sm={18} md={18} lg={12}>
+                                  <Form.Item
+                                    name="willtopic"
+                                    rules={[
+                                      {
+                                        required: !disabled,
+                                        message:
+                                          "Please input the url of the topic for the last will message.",
+                                      },
+                                    ]}
+                                  >
+                                    <Input
+                                      disabled={disabled}
+                                      autoComplete="off"
+                                    />
+                                  </Form.Item>
+                                </Col>
+                                <Col xs={0} sm={0} md={0} lg={4} />
+
+                                <Col xs={0} sm={0} md={0} lg={4} />
+                                <Col
+                                  xs={24}
+                                  sm={6}
+                                  md={6}
+                                  lg={4}
+                                  className="ant-form-item-label"
+                                >
+                                  <label htmlFor="willpayload" title="Payload">
+                                    Payload
+                                  </label>
+                                </Col>
+                                <Col xs={24} sm={18} md={18} lg={12}>
+                                  <Form.Item name="willpayload">
+                                    <Input
+                                      disabled={disabled}
+                                      autoComplete="off"
+                                    />
+                                  </Form.Item>
+                                </Col>
+                                <Col xs={0} sm={0} md={0} lg={4} />
+
+                                <Col xs={0} sm={0} md={0} lg={4} />
+                                <Col
+                                  xs={12}
+                                  sm={6}
+                                  md={6}
+                                  lg={4}
+                                  className="ant-form-item-label"
+                                >
+                                  <label
+                                    htmlFor="willqos"
+                                    className="ant-form-item-required"
+                                    title="QoS"
+                                  >
+                                    QoS
+                                  </label>
+                                </Col>
+                                <Col xs={12} sm={18} md={6} lg={4}>
+                                  <Form.Item
+                                    name="willqos"
+                                    rules={[
+                                      {
+                                        required: !disabled,
+                                        message:
+                                          "Please input the QoS for the last will message.",
+                                      },
+                                    ]}
+                                  >
+                                    <Select<QoS>
+                                      disabled={disabled}
+                                      style={{ width: 120 }}
+                                      options={[
+                                        { value: 0, label: "0" },
+                                        { value: 1, label: "1" },
+                                        { value: 2, label: "2" },
+                                      ]}
+                                    />
+                                  </Form.Item>
+                                </Col>
+                                <Col
+                                  xs={12}
+                                  sm={6}
+                                  md={6}
+                                  lg={4}
+                                  className="ant-form-item-label"
+                                >
+                                  <label
+                                    htmlFor="willretail"
+                                    className="ant-form-item-required"
+                                    title="Retain"
+                                  >
+                                    Retain
+                                  </label>
+                                </Col>
+                                <Col xs={12} sm={18} md={6} lg={4}>
+                                  <Form.Item
+                                    name="willretain"
+                                    valuePropName="checked"
+                                    rules={[
+                                      {
+                                        required: !disabled,
+                                        message:
+                                          "Please input the retain value for the last will message.",
+                                      },
+                                    ]}
+                                  >
+                                    <Switch disabled={disabled} />
+                                  </Form.Item>
+                                </Col>
+                                <Col xs={0} sm={0} md={0} lg={4} />
+                              </>
+                            );
+                          }}
+                        </Form.Item>
+                      </Row>
+                    ),
+                  },
+                  {
+                    label: "Dashboard",
+                    key: "4",
+                    forceRender: true,
+                    children: (
+                      <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+                        <Col xs={0} sm={0} md={0} lg={4} />
+                        <Col xs={24} sm={24} md={24} lg={16}>
+                          <Form.Item
+                            name="dashboard"
+                            rules={[
+                              {
+                                validator: (_, value) =>
+                                  value?.data?.trim()
+                                    ? Promise.resolve()
+                                    : Promise.reject(
+                                        new Error(
+                                          "Please upload a dashboard definition file."
+                                        )
+                                      ),
+                              },
+                            ]}
+                          >
+                            <UploadRaw
+                              accept=".jsx"
+                              className="myhConnectionForm-dashboard"
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={0} sm={0} md={0} lg={4} />
+                      </Row>
+                    ),
+                  },
+                  {
+                    label: "Styles",
+                    key: "5",
+                    forceRender: true,
+                    children: (
+                      <Row gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}>
+                        <Col xs={0} sm={0} md={0} lg={4} />
+                        <Col xs={24} sm={24} md={24} lg={16}>
+                          <Form.Item name="dashboardcss">
+                            <UploadRaw
+                              accept=".css"
+                              className="myhConnectionForm-dashboardcss"
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={0} sm={0} md={0} lg={4} />
+                      </Row>
+                    ),
+                  },
+                ]}
+              />
             </div>
           </Layout.Content>
         </Layout>
-      </Form >
+      </Form>
     </>
   );
 };

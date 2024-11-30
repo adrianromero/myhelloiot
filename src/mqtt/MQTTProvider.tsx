@@ -15,105 +15,25 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, {
-  createContext,
-  useState,
-  ReactNode,
-  Context,
-} from "react";
+import React, { useState, ReactNode } from "react";
 import { Buffer } from "buffer";
 import mqtt from "mqtt";
 import {
   MqttClient,
-  IClientOptions,
   IClientSubscribeOptions,
   IClientPublishOptions,
-  IPublishPacket
+  IPublishPacket,
 } from "mqtt";
-import type { QoS } from "mqtt-packet";
 import match from "mqtt-match";
 
-export type MQTTStatus =
-  | "Disconnected"
-  | "Connecting"
-  | "Closed"
-  | "Offline"
-  | "Connected"
-  | "Error"
-  | "Reconnecting"
-  | "Disconnecting";
-
-
-export type MQTTConnectInfo = {
-  url: string;
-  options?: IClientOptions;
-};
-
-export type MQTTConnectionOptions = {
-  protocol?: string;
-  hostname?: string;
-  port?: number;
-  path?: string;
-  protocolId?: string;
-  protocolVersion?: number;
-  username?: string;
-  clientId?: string;
-};
-
-export type MQTTContextValue = [
-  {
-    status: MQTTStatus;
-    error?: Error;
-    ready: boolean;
-    connected: boolean;
-    options: MQTTConnectionOptions;
-  },
-  {
-    brokerconnect: ({ url, options }: MQTTConnectInfo) => void;
-    brokerdisconnect: () => void;
-    subscribe: (
-      topic: string,
-      callback: (mqttmessage: MQTTMessage) => void,
-      options?: IClientSubscribeOptions
-    ) => SubscribeHandler | null;
-    unsubscribe: (handler: SubscribeHandler | null) => void;
-    publish: (
-      topic: string,
-      message: Buffer | string,
-      options?: IClientPublishOptions
-    ) => void;
-  }
-];
-
-export type MQTTMessage = {
-  topic: string;
-  message: Buffer;
-  time: number;
-  qos?: QoS;
-  retain?: boolean;
-  dup?: boolean;
-};
-
-export type SubscribeHandler = {
-  topic: string;
-  listener: (mqttmessage: MQTTMessage) => void;
-};
-
-export const MQTTContext: Context<MQTTContextValue> = createContext<MQTTContextValue>([
-  {
-    status: "Disconnected",
-    ready: false,
-    connected: false,
-    options: {},
-  },
-  {
-    brokerconnect: () => { },
-    brokerdisconnect: () => { },
-    subscribe: () => null,
-    unsubscribe: () => { },
-    publish: () => { },
-  },
-]);
+import type {
+  MQTTStatus,
+  MQTTConnectInfo,
+  MQTTContextValue,
+  MQTTMessage,
+  SubscribeHandler,
+} from "./MQTTContext";
+import { MQTTContext } from "./MQTTContext";
 
 const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, setState] = useState<{
@@ -220,7 +140,10 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     } catch (error) {
       setState((s) => ({
         status: "Error",
-        error: (error instanceof Error) ? error : new Error("Unknown MQTT connection error."),
+        error:
+          error instanceof Error
+            ? error
+            : new Error("Unknown MQTT connection error."),
         client: s.client,
         _subscriptions: s._subscriptions,
       }));
@@ -293,7 +216,13 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         clientId: clientoptions?.clientId,
       },
     },
-    { brokerconnect: connect, brokerdisconnect: disconnect, subscribe, unsubscribe, publish },
+    {
+      brokerconnect: connect,
+      brokerdisconnect: disconnect,
+      subscribe,
+      unsubscribe,
+      publish,
+    },
   ];
   return <MQTTContext.Provider value={value}>{children}</MQTTContext.Provider>;
 };

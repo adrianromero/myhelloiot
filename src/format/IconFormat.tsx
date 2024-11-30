@@ -19,7 +19,11 @@ import { Buffer } from "buffer";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import SVGIcon from "./SVGIcon";
 import { faLightbulb, faStar, faMoon } from "@fortawesome/free-solid-svg-icons";
-import { faLightbulb as faLightbulbRegular, faStar as faStarRegular, faMoon as faMoonRegular } from "@fortawesome/free-regular-svg-icons";
+import {
+  faLightbulb as faLightbulbRegular,
+  faStar as faStarRegular,
+  faMoon as faMoonRegular,
+} from "@fortawesome/free-regular-svg-icons";
 import {
   IconFormat,
   ValueFormat,
@@ -36,9 +40,10 @@ import {
 
 import "./FormatTypes.css";
 
-export const DimIconFormat = (props:
-  { icon?: IconDefinition } & Partial<LimitsFormat>
-  = { icon: faLightbulb }
+export const DimIconFormat = (
+  props: { icon?: IconDefinition } & Partial<LimitsFormat> = {
+    icon: faLightbulb,
+  }
 ): IconFormat => ({
   toIcon: (b: Buffer) => {
     const value = parseInt(b.toString());
@@ -51,14 +56,11 @@ export const DimIconFormat = (props:
             icon={icon}
             className="dimicon-on"
             style={{
-              filter: `saturate(${100.0 * (value - min) / (max - min)}%`,
+              filter: `saturate(${(100.0 * (value - min)) / (max - min)}%`,
             }}
           />
         ) : (
-          <SVGIcon
-            icon={icon}
-            className="dimicon-off"
-          />
+          <SVGIcon icon={icon} className="dimicon-off" />
         )}
       </div>
     );
@@ -72,25 +74,26 @@ export type SwitchIconFormatProps = {
 };
 
 export const SwitchIconFormat = (props?: SwitchIconFormatProps): IconFormat => {
-  const { icon, iconoff, onoff } = { icon: faLightbulb, iconoff: faLightbulbRegular, onoff: ONOFFNumber, ...props };
+  const { icon, iconoff, onoff } = {
+    icon: faLightbulb,
+    iconoff: faLightbulbRegular,
+    onoff: ONOFFNumber,
+    ...props,
+  };
   return {
     toIcon: (b: Buffer) =>
       onoff.status_on(b) ? (
-        <SVGIcon
-          icon={icon}
-          className="icon-on"
-        />
+        <SVGIcon icon={icon} className="icon-on" />
       ) : (
-        <SVGIcon
-          icon={iconoff}
-          className="icon-off"
-        />
+        <SVGIcon icon={iconoff} className="icon-off" />
       ),
   };
 };
 export const BulbIconFormat = SwitchIconFormat;
-export const MoonIconFormat = () => SwitchIconFormat({ icon: faMoon, iconoff: faMoonRegular });
-export const StarIconFormat = () => SwitchIconFormat({ icon: faStar, iconoff: faStarRegular });
+export const MoonIconFormat = () =>
+  SwitchIconFormat({ icon: faMoon, iconoff: faMoonRegular });
+export const StarIconFormat = () =>
+  SwitchIconFormat({ icon: faStar, iconoff: faStarRegular });
 
 export const StringIconFormat = (
   valueformat: ValueFormat = StringValueFormat()
@@ -104,14 +107,14 @@ export type MapBuffer = (b: Buffer) => Buffer;
 
 export const MapJSONBuffer =
   (map: (m: unknown) => unknown): MapBuffer =>
-    (b: Buffer) => {
-      try {
-        const json = JSON.parse(b.toString());
-        return Buffer.from(String(map(json)));
-      } catch (error) {
-        return Buffer.from("");
-      }
-    };
+  (b: Buffer) => {
+    try {
+      const json = JSON.parse(b.toString());
+      return Buffer.from(String(map(json)));
+    } catch {
+      return Buffer.from("");
+    }
+  };
 
 export const MapIconFormat = (
   map: MapBuffer,

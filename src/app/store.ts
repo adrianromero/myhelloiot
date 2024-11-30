@@ -15,20 +15,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import connectionReducer from "./sliceConnection";
+import { configureStore, combineSlices } from "@reduxjs/toolkit";
+import { connectionSlice } from "./sliceConnection";
+
+// Now, the combination of slides can be dynamic!!!
+const rootReducer = combineSlices(connectionSlice);
 
 export const store = configureStore({
-  reducer: {
-    connection: connectionReducer,
-  },
+  reducer: rootReducer,
 });
 
+export type AppStore = typeof store;
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;

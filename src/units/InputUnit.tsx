@@ -20,7 +20,7 @@ import { Button, Input, Form, Space } from "antd";
 import SVGIcon from "../format/SVGIcon";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { IClientPublishOptions, IClientSubscribeOptions } from "mqtt";
-import type { MQTTMessage } from "../mqtt/MQTTProvider";
+import type { MQTTMessage } from "../mqtt/MQTTContext";
 import { useMQTTContext, useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import { ValueFormat } from "../format/FormatTypes";
 import { StringValueFormat } from "../format/ValueFormat";
@@ -86,7 +86,7 @@ const InputUnit: React.FC<InputUnitProps> = ({
                 try {
                   format.fromDisplay(value);
                   return Promise.resolve();
-                } catch (error) {
+                } catch {
                   return Promise.reject(
                     new Error("Value cannot be formatted.")
                   );
