@@ -16,39 +16,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .myhToIconFormat {
-  font-size: 140%;
-  font-weight: 800;
-  padding: 4px 11px;
+    font-size: 140%;
+    font-weight: 800;
+    padding: 4px 11px;
 }
 
 .myhToIconFormat_alignright {
-  text-align: right;
+    text-align: right;
 }
 
 .myhToIconFormat_alignleft {
-  text-align: left;
+    text-align: left;
 }
 
 .myhToIconFormat_aligncenter {
-  text-align: center;
+    text-align: center;
 }
 
 .icon-on > .myh-svgicon {
-  font-size: 120%;
-  color: inherit;
+    font-size: 120%;
+    color: inherit;
 }
 
 .icon-off > .myh-svgicon {
-  font-size: 120%;
-  color: #dcdcdc;
+    font-size: 120%;
+    color: #dcdcdc;
 }
 
 .dimicon-on > .myh-svgicon {
-  font-size: 200%;
-  color: inherit;
+    font-size: 200%;
+    color: inherit;
 }
 
 .dimicon-off > .myh-svgicon {
-  font-size: 200%;
-  color: #dcdcdc;
+    font-size: 200%;
+    color: #dcdcdc;
 }

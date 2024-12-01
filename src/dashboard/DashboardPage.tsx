@@ -18,12 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React from "react";
 import Dashboard, { DashboardProps } from "./Dashboard";
 
-const DashboardPage: React.FC<DashboardProps> = (props) => (
-  <Dashboard {...props}>
-    <div className="myhLayoutContent-panel myhDashboardPage">
-      {props.children}
-    </div>
-  </Dashboard>
+const DashboardPage: React.FC<DashboardProps> = props => (
+    <Dashboard {...props}>
+        <div className="myhLayoutContent-panel myhDashboardPage">
+            {props.children}
+        </div>
+    </Dashboard>
 );
 
 export default DashboardPage;

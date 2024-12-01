@@ -19,38 +19,35 @@ import React from "react";
 import { Layout } from "antd";
 import AppHeader from "./AppHeader";
 import SVGIcon from "./format/SVGIcon";
-import {
-  faCircleExclamation,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import "./AppError.css";
 
-
 const AppErrorLoad: React.FC<{ title: string; error: unknown }> = ({
-  title,
-  error,
+    title,
+    error,
 }) => {
-  let message;
-  if (typeof error === "string") {
-    message = error;
-  } else {
-    message = "Unknown error.";
-  }
-  return (
-    <Layout className="myhLayout">
-      <AppHeader title={title} />
-      <Layout.Content className="myhLayoutContent">
-        <div className="myhLayoutContent-panel">
-          <div className="myhAppError-message">
-            <SVGIcon
-              icon={faCircleExclamation}
-              className="myhAppError-icon"
-              style={{ color: "red" }}
-            />
-            <span>{message}</span>
-          </div>
-        </div>
-      </Layout.Content>
-    </Layout>
-  );
+    let message;
+    if (typeof error === "string") {
+        message = error;
+    } else {
+        message = "Unknown error.";
+    }
+    return (
+        <Layout className="myhLayout">
+            <AppHeader title={title} />
+            <Layout.Content className="myhLayoutContent">
+                <div className="myhLayoutContent-panel">
+                    <div className="myhAppError-message">
+                        <SVGIcon
+                            icon={faCircleExclamation}
+                            className="myhAppError-icon"
+                            style={{ color: "red" }}
+                        />
+                        <span>{message}</span>
+                    </div>
+                </div>
+            </Layout.Content>
+        </Layout>
+    );
 };
 export default AppErrorLoad;

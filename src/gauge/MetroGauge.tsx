@@ -48,150 +48,160 @@ import "./MetroGauge.css";
 // ];
 
 export type MetroGaugeProps = {
-  value?: number;
-  title?: string;
-  className?: string;
-  labelstep?: number;
-  startangle?: number;
-  endangle?: number;
-  arcs?: Arc[];
+    value?: number;
+    title?: string;
+    className?: string;
+    labelstep?: number;
+    startangle?: number;
+    endangle?: number;
+    arcs?: Arc[];
 } & GaugeProps;
 
 const MetroGauge: React.FC<MetroGaugeProps> = ({
-  value,
-  title = "",
-  className = "",
-  labelstep = 5,
-  startangle = 135,
-  endangle = 405,
-  arcs = [],
-  min = 0,
-  max = 100,
-  step = 1,
-  format = DefaultGaugeFormat
+    value,
+    title = "",
+    className = "",
+    labelstep = 5,
+    startangle = 135,
+    endangle = 405,
+    arcs = [],
+    min = 0,
+    max = 100,
+    step = 1,
+    format = DefaultGaugeFormat,
 }) => {
-  const locale = navigator.language;
-  const intl = new Intl.NumberFormat(locale);
+    const locale = navigator.language;
+    const intl = new Intl.NumberFormat(locale);
 
-  const r1 = 55;
-  const centerx = 100;
-  const centery = 65;
+    const r1 = 55;
+    const centerx = 100;
+    const centery = 65;
 
-  const arctotal = endangle - startangle;
+    const arctotal = endangle - startangle;
 
-  let arcvalue: number;
-  let formatvalue: string;
-  if (typeof value === "undefined" || isNaN(value)) {
-    arcvalue = NaN;
-    formatvalue = "";
-  } else {
-    arcvalue = padvalue(min, max, arctotal)(value);
-    arcvalue += startangle - 270;
-    formatvalue = format(value);
-  }
+    let arcvalue: number;
+    let formatvalue: string;
+    if (typeof value === "undefined" || isNaN(value)) {
+        arcvalue = NaN;
+        formatvalue = "";
+    } else {
+        arcvalue = padvalue(min, max, arctotal)(value);
+        arcvalue += startangle - 270;
+        formatvalue = format(value);
+    }
 
-  const lines = [];
-  for (let index = min; index <= max; index += step) {
-    const angle = radians(
-      startangle - 360 + (arctotal * (index - min)) / (max - min)
-    );
-    const cos = Math.cos(angle);
-    const sin = Math.sin(angle);
-    lines.push(
-      <line
-        key={`la-${index}`}
-        x1={centerx + r1 * cos}
-        y1={centery + r1 * sin}
-        x2={centerx + (r1 - 3) * cos}
-        y2={centery + (r1 - 3) * sin}
-        className="metrogauge-mark"
-      />
-    );
-  }
-  for (let index = min; index <= max; index += labelstep) {
-    const angle = radians(
-      startangle - 360 + (arctotal * (index - min)) / (max - min)
-    );
-    const cos = Math.cos(angle);
-    const sin = Math.sin(angle);
-    lines.push(
-      <line
-        key={`lb-${index}`}
-        x1={centerx + r1 * cos}
-        y1={centery + r1 * sin}
-        x2={centerx + (r1 - 6) * cos}
-        y2={centery + (r1 - 6) * sin}
-        className="metrogauge-markstep"
-      />
-    );
-    lines.push(
-      <text
-        key={`t-${index}`}
-        x={centerx + (r1 - 13) * cos}
-        y={centery + 2 + (r1 - 13) * sin}
-        textAnchor="middle"
-        className="metrogauge-marklabel"
-      >
-        {intl.format(index)}
-      </text>
-    );
-  }
+    const lines = [];
+    for (let index = min; index <= max; index += step) {
+        const angle = radians(
+            startangle - 360 + (arctotal * (index - min)) / (max - min),
+        );
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
+        lines.push(
+            <line
+                key={`la-${index}`}
+                x1={centerx + r1 * cos}
+                y1={centery + r1 * sin}
+                x2={centerx + (r1 - 3) * cos}
+                y2={centery + (r1 - 3) * sin}
+                className="metrogauge-mark"
+            />,
+        );
+    }
+    for (let index = min; index <= max; index += labelstep) {
+        const angle = radians(
+            startangle - 360 + (arctotal * (index - min)) / (max - min),
+        );
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
+        lines.push(
+            <line
+                key={`lb-${index}`}
+                x1={centerx + r1 * cos}
+                y1={centery + r1 * sin}
+                x2={centerx + (r1 - 6) * cos}
+                y2={centery + (r1 - 6) * sin}
+                className="metrogauge-markstep"
+            />,
+        );
+        lines.push(
+            <text
+                key={`t-${index}`}
+                x={centerx + (r1 - 13) * cos}
+                y={centery + 2 + (r1 - 13) * sin}
+                textAnchor="middle"
+                className="metrogauge-marklabel"
+            >
+                {intl.format(index)}
+            </text>,
+        );
+    }
 
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      version="1.1"
-      viewBox="0 0 200 130"
-    >
-      <g className={className}>
-        <Arcs
-          arcs={arcs}
-          min={min}
-          max={max}
-          centerx={centerx}
-          centery={centery}
-          startangle={startangle}
-          endangle={endangle}
-        />
-        {lines}
-        <path
-          id="arc"
-          d={arcpath({
-            cx: centerx,
-            cy: centery,
-            r: r1 + 2,
-            start: radians(startangle),
-            end: radians(endangle),
-            orientation: arctotal > 180 ? 1 : 0,
-            sweep: 1,
-          })}
-          className="metrogauge-mark"
-          style={{ fill: "#00000000" }}
-        />
-        <text x={100} y={85} textAnchor="middle" className="metrogauge-value">
-          {formatvalue}
-        </text>
-        <text x={centerx} y={55} textAnchor="middle" className="metrogauge-title">
-          {title}
-        </text>
-        {!isNaN(arcvalue) && (
-          <path
-            d="M 3 10 L -3 10 L 0 -50 Z"
-            className="metrogauge-arrow"
-            style={{
-              transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
-            }}
-          />
-        )}
-        <circle
-          cx={centerx}
-          cy={centery}
-          r={1.2}
-          className="metrogauge-arrowpin"
-        />
-      </g>
-    </svg>
-  );
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            viewBox="0 0 200 130"
+        >
+            <g className={className}>
+                <Arcs
+                    arcs={arcs}
+                    min={min}
+                    max={max}
+                    centerx={centerx}
+                    centery={centery}
+                    startangle={startangle}
+                    endangle={endangle}
+                />
+                {lines}
+                <path
+                    id="arc"
+                    d={arcpath({
+                        cx: centerx,
+                        cy: centery,
+                        r: r1 + 2,
+                        start: radians(startangle),
+                        end: radians(endangle),
+                        orientation: arctotal > 180 ? 1 : 0,
+                        sweep: 1,
+                    })}
+                    className="metrogauge-mark"
+                    style={{ fill: "#00000000" }}
+                />
+                <text
+                    x={100}
+                    y={85}
+                    textAnchor="middle"
+                    className="metrogauge-value"
+                >
+                    {formatvalue}
+                </text>
+                <text
+                    x={centerx}
+                    y={55}
+                    textAnchor="middle"
+                    className="metrogauge-title"
+                >
+                    {title}
+                </text>
+                {!isNaN(arcvalue) && (
+                    <path
+                        d="M 3 10 L -3 10 L 0 -50 Z"
+                        className="metrogauge-arrow"
+                        style={{
+                            transform: `translate(${centerx}px, ${centery}px) rotate(${arcvalue}deg)`,
+                        }}
+                    />
+                )}
+                <circle
+                    cx={centerx}
+                    cy={centery}
+                    r={1.2}
+                    className="metrogauge-arrowpin"
+                />
+            </g>
+        </svg>
+    );
 };
 
 export default MetroGauge;

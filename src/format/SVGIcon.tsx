@@ -21,19 +21,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 
 export type SVGIconProps = {
-  icon: IconDefinition;
-  className?: string;
-  style?: React.CSSProperties;
+    icon: IconDefinition;
+    className?: string;
+    style?: React.CSSProperties;
 };
 
 const SVGIcon: React.FC<SVGIconProps> = ({
-  icon,
-  className = "",
-  style = {},
+    icon,
+    className = "",
+    style = {},
 }) => (
-  <span role="img" className={`anticon ${className}`}>
-    <FontAwesomeIcon icon={icon} className="myh-svgicon" style={style} />
-  </span>
+    <span role="img" className={`anticon ${className}`}>
+        <FontAwesomeIcon icon={icon} className="myh-svgicon" style={style} />
+    </span>
 );
 
 export default SVGIcon;

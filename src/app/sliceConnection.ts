@@ -18,9 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import {
-  ConnectCredentials,
-  ConnectedStatus,
-  ConnectInfo,
+    ConnectCredentials,
+    ConnectedStatus,
+    ConnectInfo,
 } from "../connection/ConnectionInfo";
 
 export type ApplicationConnected = ConnectedStatus;
@@ -28,177 +28,178 @@ export type ApplicationConnected = ConnectedStatus;
 export type StatusInitial = { name: "INITIAL" };
 export type StatusLoading = { name: "LOADING" };
 export type StatusReady = {
-  name: "READY";
-  connectInfo: ConnectInfo;
-  connectCredentials: ConnectCredentials;
-  connected: ApplicationConnected;
-  attrshash?: string;
-  attrs: { [key: string]: string };
+    name: "READY";
+    connectInfo: ConnectInfo;
+    connectCredentials: ConnectCredentials;
+    connected: ApplicationConnected;
+    attrshash?: string;
+    attrs: { [key: string]: string };
 };
 export type StatusError = { name: "ERROR"; message: string; error: unknown };
 
 export type ApplicationStatus =
-  | StatusInitial
-  | StatusLoading
-  | StatusReady
-  | StatusError;
+    | StatusInitial
+    | StatusLoading
+    | StatusReady
+    | StatusError;
 
 export interface ConnectionState {
-  status: ApplicationStatus;
+    status: ApplicationStatus;
 }
 
 export type StatusReadyAction = {
-  connectInfo: ConnectInfo;
-  connectCredentials: ConnectCredentials;
-  connected: ApplicationConnected;
+    connectInfo: ConnectInfo;
+    connectCredentials: ConnectCredentials;
+    connected: ApplicationConnected;
 };
 
 export type StatusErrorAction = {
-  message: string;
-  error: unknown;
+    message: string;
+    error: unknown;
 };
 
 export type PropertiesAction = {
-  attrs: {
-    [key: string]: string;
-  };
+    attrs: {
+        [key: string]: string;
+    };
 };
 
 export type LoadConnectionInfoAction = {
-  connectInfo: ConnectInfo;
+    connectInfo: ConnectInfo;
 };
 
 export type LoadConnectionCredentialsAction = {
-  connectCredentials: ConnectCredentials;
+    connectCredentials: ConnectCredentials;
 };
 
 const initialState: ConnectionState = {
-  status: { name: "INITIAL" },
+    status: { name: "INITIAL" },
 };
 
 export const connectionSlice = createSlice({
-  name: "connection",
-  initialState,
-  reducers: {
-    statusLoading: (state) => {
-      state.status = { name: "LOADING" };
+    name: "connection",
+    initialState,
+    reducers: {
+        statusLoading: state => {
+            state.status = { name: "LOADING" };
+        },
+        statusReady: (state, action: PayloadAction<StatusReadyAction>) => {
+            state.status = {
+                name: "READY",
+                connected: action.payload.connected,
+                connectCredentials: action.payload.connectCredentials,
+                connectInfo: action.payload.connectInfo,
+                attrs: {},
+            };
+        },
+        statusError: (state, action: PayloadAction<StatusErrorAction>) => {
+            const { message, error } = action.payload;
+            state.status = {
+                name: "ERROR",
+                message,
+                error,
+            };
+        },
+        connect: state => {
+            if (state.status.name === "READY") {
+                state.status.connected = ConnectedStatus.CONNECTED;
+            } else {
+                state.status = {
+                    name: "ERROR",
+                    message:
+                        "Reducer connect cannot be executed if status is not READY.",
+                    error: null,
+                };
+            }
+            //TODO: Load ands save attributes.
+            // const prevHash = state.attrshash;
+            // const hash = cyrb53str(state?.connectInfo?.dashboard.data ?? "");
+            // if (hash !== prevHash) {
+            //   state.attrshash = hash;
+            //   state.attrs = {};
+            // }
+        },
+        disconnect: state => {
+            if (state.status.name === "READY") {
+                state.status.connected = ConnectedStatus.DISCONNECTED;
+            } else {
+                state.status = {
+                    name: "ERROR",
+                    message:
+                        "Reducer disconnect cannot be executed if status is not READY.",
+                    error: null,
+                };
+            }
+        },
+        putProperties: (state, action: PayloadAction<PropertiesAction>) => {
+            if (state.status.name === "READY") {
+                const { attrs } = action.payload;
+                state.status.attrs = {
+                    ...state.status.attrs,
+                    ...attrs,
+                };
+            } else {
+                state.status = {
+                    name: "ERROR",
+                    message:
+                        "Reducer putProperties cannot be executed if status is not READY.",
+                    error: null,
+                };
+            }
+        },
+        loadConnectionInfo: (
+            state,
+            action: PayloadAction<LoadConnectionInfoAction>,
+        ) => {
+            if (state.status.name === "READY") {
+                const { connectInfo } = action.payload;
+                state.status.connectInfo = connectInfo;
+            } else {
+                state.status = {
+                    name: "ERROR",
+                    message:
+                        "Reducer loadConnectionInfo cannot be executed if status is not READY.",
+                    error: null,
+                };
+            }
+        },
+        loadConnectionCredentials: (
+            state,
+            action: PayloadAction<LoadConnectionCredentialsAction>,
+        ) => {
+            if (state.status.name === "READY") {
+                const { connectCredentials } = action.payload;
+                state.status.connectCredentials = connectCredentials;
+            } else {
+                state.status = {
+                    name: "ERROR",
+                    message:
+                        "Reducer loadConnectionCredentials cannot be executed if status is not READY.",
+                    error: null,
+                };
+            }
+        },
     },
-    statusReady: (state, action: PayloadAction<StatusReadyAction>) => {
-      state.status = {
-        name: "READY",
-        connected: action.payload.connected,
-        connectCredentials: action.payload.connectCredentials,
-        connectInfo: action.payload.connectInfo,
-        attrs: {},
-      };
+    selectors: {
+        selectStatus: (connection: ConnectionState) => connection.status,
+        selectProperty: (connection: ConnectionState, name: string) => {
+            if (connection.status.name === "READY") {
+                return connection.status.attrs[name];
+            }
+            return;
+        },
     },
-    statusError: (state, action: PayloadAction<StatusErrorAction>) => {
-      const { message, error } = action.payload;
-      state.status = {
-        name: "ERROR",
-        message,
-        error,
-      };
-    },
-    connect: (state) => {
-      if (state.status.name === "READY") {
-        state.status.connected = ConnectedStatus.CONNECTED;
-      } else {
-        state.status = {
-          name: "ERROR",
-          message: "Reducer connect cannot be executed if status is not READY.",
-          error: null,
-        };
-      }
-      //TODO: Load ands save attributes.
-      // const prevHash = state.attrshash;
-      // const hash = cyrb53str(state?.connectInfo?.dashboard.data ?? "");
-      // if (hash !== prevHash) {
-      //   state.attrshash = hash;
-      //   state.attrs = {};
-      // }
-    },
-    disconnect: (state) => {
-      if (state.status.name === "READY") {
-        state.status.connected = ConnectedStatus.DISCONNECTED;
-      } else {
-        state.status = {
-          name: "ERROR",
-          message:
-            "Reducer disconnect cannot be executed if status is not READY.",
-          error: null,
-        };
-      }
-    },
-    putProperties: (state, action: PayloadAction<PropertiesAction>) => {
-      if (state.status.name === "READY") {
-        const { attrs } = action.payload;
-        state.status.attrs = {
-          ...state.status.attrs,
-          ...attrs,
-        };
-      } else {
-        state.status = {
-          name: "ERROR",
-          message:
-            "Reducer putProperties cannot be executed if status is not READY.",
-          error: null,
-        };
-      }
-    },
-    loadConnectionInfo: (
-      state,
-      action: PayloadAction<LoadConnectionInfoAction>
-    ) => {
-      if (state.status.name === "READY") {
-        const { connectInfo } = action.payload;
-        state.status.connectInfo = connectInfo;
-      } else {
-        state.status = {
-          name: "ERROR",
-          message:
-            "Reducer loadConnectionInfo cannot be executed if status is not READY.",
-          error: null,
-        };
-      }
-    },
-    loadConnectionCredentials: (
-      state,
-      action: PayloadAction<LoadConnectionCredentialsAction>
-    ) => {
-      if (state.status.name === "READY") {
-        const { connectCredentials } = action.payload;
-        state.status.connectCredentials = connectCredentials;
-      } else {
-        state.status = {
-          name: "ERROR",
-          message:
-            "Reducer loadConnectionCredentials cannot be executed if status is not READY.",
-          error: null,
-        };
-      }
-    },
-  },
-  selectors: {
-    selectStatus: (connection: ConnectionState) => connection.status,
-    selectProperty: (connection: ConnectionState, name: string) => {
-      if (connection.status.name === "READY") {
-        return connection.status.attrs[name];
-      }
-      return;
-    },
-  },
 });
 
 export const {
-  statusLoading,
-  statusReady,
-  statusError,
-  connect,
-  disconnect,
-  putProperties,
-  loadConnectionInfo,
-  loadConnectionCredentials,
+    statusLoading,
+    statusReady,
+    statusError,
+    connect,
+    disconnect,
+    putProperties,
+    loadConnectionInfo,
+    loadConnectionCredentials,
 } = connectionSlice.actions;
 
 export const { selectStatus, selectProperty } = connectionSlice.selectors;

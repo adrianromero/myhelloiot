@@ -21,17 +21,17 @@ import { Layout } from "antd";
 import "./AppHeader.css";
 
 const AppHeader: React.FC<{
-  title?: string;
-  subtitle?: string;
-  children?: React.ReactNode;
+    title?: string;
+    subtitle?: string;
+    children?: React.ReactNode;
 }> = ({ title = "MYHELLOIOT", subtitle, children }) => {
-  return (
-    <Layout.Header className="myhAppHeader">
-      <span className="myhAppHeader-title">
-        {title + (subtitle ? " - " + subtitle : "")}
-      </span>
-      {children}
-    </Layout.Header>
-  );
+    return (
+        <Layout.Header className="myhAppHeader">
+            <span className="myhAppHeader-title">
+                {title + (subtitle ? " - " + subtitle : "")}
+            </span>
+            {children}
+        </Layout.Header>
+    );
 };
 export default AppHeader;

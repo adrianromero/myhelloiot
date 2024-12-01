@@ -22,7 +22,7 @@ import { connectionSlice } from "./sliceConnection";
 const rootReducer = combineSlices(connectionSlice);
 
 export const store = configureStore({
-  reducer: rootReducer,
+    reducer: rootReducer,
 });
 
 export type AppStore = typeof store;

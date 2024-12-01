@@ -21,13 +21,13 @@ import type { ONOFF } from "./FormatTypes";
 export const DefaultLimits = { min: 0, max: 100, step: 1 };
 
 export const ONOFFNumber: ONOFF = {
-  status_on: (v: Buffer) => v.equals(Buffer.from("1")),
-  cmd_on: Buffer.from("1"),
-  cmd_off: Buffer.from("0"),
+    status_on: (v: Buffer) => v.equals(Buffer.from("1")),
+    cmd_on: Buffer.from("1"),
+    cmd_off: Buffer.from("0"),
 };
 
 export const ONOFFStr: ONOFF = {
-  status_on: (v: Buffer) => v.equals(Buffer.from("on")),
-  cmd_on: Buffer.from("on"),
-  cmd_off: Buffer.from("off"),
+    status_on: (v: Buffer) => v.equals(Buffer.from("on")),
+    cmd_on: Buffer.from("on"),
+    cmd_off: Buffer.from("off"),
 };

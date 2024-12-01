@@ -18,14 +18,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { Spin } from "antd";
 import React from "react";
 
-
 const AppLoading: React.FC = () => (
-  <div style={{
-    padding: "80px 50px",
-    textAlign: "center",
-  }}>
-    <Spin size="large" />
-  </div >
+    <div
+        style={{
+            padding: "80px 50px",
+            textAlign: "center",
+        }}
+    >
+        <Spin size="large" />
+    </div>
 );
 
-export default AppLoading
+export default AppLoading;

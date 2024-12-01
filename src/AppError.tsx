@@ -22,53 +22,56 @@ import { disconnect } from "./app/sliceConnection";
 import AppHeader from "./AppHeader";
 import SVGIcon from "./format/SVGIcon";
 import {
-  faAngleLeft,
-  faCircleExclamation,
+    faAngleLeft,
+    faCircleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import "./AppError.css";
-import { ConnectedStatus, saveStoreConnectConnected } from "./connection/ConnectionInfo";
+import {
+    ConnectedStatus,
+    saveStoreConnectConnected,
+} from "./connection/ConnectionInfo";
 
-const AppError: React.FC<{ title: string; errorMessage: string; jsx?: string }> = ({
-  title,
-  errorMessage,
-  jsx,
-}) => {
-  const dispatch = useAppDispatch();
+const AppError: React.FC<{
+    title: string;
+    errorMessage: string;
+    jsx?: string;
+}> = ({ title, errorMessage, jsx }) => {
+    const dispatch = useAppDispatch();
 
-  return (
-    <Layout className="myhLayout">
-      <AppHeader title={title}>
-        <Button
-          icon={<SVGIcon icon={faAngleLeft} />}
-          type="primary"
-          onClick={() => {
-            saveStoreConnectConnected(ConnectedStatus.DISCONNECTED)
-            dispatch(disconnect());
-          }}
-        >
-          Back
-        </Button>
-      </AppHeader>
-      <Layout.Content className="myhLayoutContent">
-        <div className="myhLayoutContent-panel">
-          {jsx && (
-            <div className="myhAppError-jsx">
-              {jsx.split(/\r?\n/).map((line, index) => (
-                <pre key={index}>{line}</pre>
-              ))}
-            </div>
-          )}
-          <div className="myhAppError-message">
-            <SVGIcon
-              icon={faCircleExclamation}
-              className="myhAppError-icon"
-              style={{ color: "red" }}
-            />
-            <span>{errorMessage}</span>
-          </div>
-        </div>
-      </Layout.Content>
-    </Layout>
-  );
+    return (
+        <Layout className="myhLayout">
+            <AppHeader title={title}>
+                <Button
+                    icon={<SVGIcon icon={faAngleLeft} />}
+                    type="primary"
+                    onClick={() => {
+                        saveStoreConnectConnected(ConnectedStatus.DISCONNECTED);
+                        dispatch(disconnect());
+                    }}
+                >
+                    Back
+                </Button>
+            </AppHeader>
+            <Layout.Content className="myhLayoutContent">
+                <div className="myhLayoutContent-panel">
+                    {jsx && (
+                        <div className="myhAppError-jsx">
+                            {jsx.split(/\r?\n/).map((line, index) => (
+                                <pre key={index}>{line}</pre>
+                            ))}
+                        </div>
+                    )}
+                    <div className="myhAppError-message">
+                        <SVGIcon
+                            icon={faCircleExclamation}
+                            className="myhAppError-icon"
+                            style={{ color: "red" }}
+                        />
+                        <span>{errorMessage}</span>
+                    </div>
+                </div>
+            </Layout.Content>
+        </Layout>
+    );
 };
 export default AppError;

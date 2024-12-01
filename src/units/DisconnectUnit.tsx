@@ -24,42 +24,42 @@ import { MQTTMessage } from "../mqtt/MQTTContext";
 import { useMQTTSubscribe } from "../mqtt/MQTTHooks";
 import { StringValueFormat } from "../format/ValueFormat";
 import {
-  ConnectedStatus,
-  saveStoreConnectConnected,
+    ConnectedStatus,
+    saveStoreConnectConnected,
 } from "../connection/ConnectionInfo";
 
 type DisconnectUnitProps = {
-  subtopic?: string;
-  suboptions?: IClientSubscribeOptions;
-  keyvalue?: string;
+    subtopic?: string;
+    suboptions?: IClientSubscribeOptions;
+    keyvalue?: string;
 };
 
 const DisconnectUnit: React.FC<DisconnectUnitProps> = ({
-  subtopic = "",
-  suboptions,
-  keyvalue = "",
+    subtopic = "",
+    suboptions,
+    keyvalue = "",
 }) => {
-  const format = StringValueFormat();
-  const dispatch = useAppDispatch();
-  const [notificationInstance, notificationContext] =
-    notification.useNotification();
-  useMQTTSubscribe(
-    subtopic,
-    ({ message }: MQTTMessage) => {
-      if (keyvalue === format.toDisplay(message)) {
-        saveStoreConnectConnected(ConnectedStatus.DISCONNECTED);
-        dispatch(disconnect());
-      } else {
-        notificationInstance.warning({
-          message: "Disconnection key not valid.",
-          placement: "bottomRight",
-        });
-      }
-    },
-    suboptions
-  );
+    const format = StringValueFormat();
+    const dispatch = useAppDispatch();
+    const [notificationInstance, notificationContext] =
+        notification.useNotification();
+    useMQTTSubscribe(
+        subtopic,
+        ({ message }: MQTTMessage) => {
+            if (keyvalue === format.toDisplay(message)) {
+                saveStoreConnectConnected(ConnectedStatus.DISCONNECTED);
+                dispatch(disconnect());
+            } else {
+                notificationInstance.warning({
+                    message: "Disconnection key not valid.",
+                    placement: "bottomRight",
+                });
+            }
+        },
+        suboptions,
+    );
 
-  return <>{notificationContext}</>;
+    return <>{notificationContext}</>;
 };
 
 export default DisconnectUnit;

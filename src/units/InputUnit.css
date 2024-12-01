@@ -16,9 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .ant-input.myhInputUnit-input {
-  font-weight: 800;
+    font-weight: 800;
 }
 
 .myhInputUnit-button.ant-btn {
-  width: 50px;
+    width: 50px;
 }

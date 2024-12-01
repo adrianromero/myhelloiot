@@ -16,41 +16,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .lineargauge-bar {
-  stroke: #ff0000;
-  stroke-width: 25px;
-  stroke-linecap: butt;
-  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+    stroke: #ff0000;
+    stroke-width: 25px;
+    stroke-linecap: butt;
+    transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .lineargauge-background {
-  stroke: #cccccc;
-  stroke-width: 25px;
-  stroke-linecap: butt;
+    stroke: #cccccc;
+    stroke-width: 25px;
+    stroke-linecap: butt;
 }
 
 .lineargauge-mark {
-  stroke: #606060;
-  stroke-width: 0.6px;
-  stroke-linecap: butt;
+    stroke: #606060;
+    stroke-width: 0.6px;
+    stroke-linecap: butt;
 }
 
 .lineargauge-markstep {
-  stroke: #606060;
-  stroke-width: 1px;
-  stroke-linecap: square;
+    stroke: #606060;
+    stroke-width: 1px;
+    stroke-linecap: square;
 }
 
 .lineargauge-marklabel {
-  fill: #0000008c;
-  font: 10px sans-serif;
+    fill: #0000008c;
+    font: 10px sans-serif;
 }
 
 .lineargauge-value {
-  fill: #000000d9;
-  font: bold 14px sans-serif;
+    fill: #000000d9;
+    font: bold 14px sans-serif;
 }
 
 .lineargauge-title {
-  fill: #0000008c;
-  font: 10px sans-serif;
+    fill: #0000008c;
+    font: 10px sans-serif;
 }

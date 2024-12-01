@@ -16,27 +16,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .controlgauge-background {
-  stroke: #dddddd;
-  stroke-width: 28px;
+    stroke: #dddddd;
+    stroke-width: 28px;
 }
 
 .controlgauge-bar {
-  stroke: blueviolet;
-  stroke-width: 28px;
-  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+    stroke: blueviolet;
+    stroke-width: 28px;
+    transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .controlgauge-arrow {
-  fill: #606060;
-  transition: transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+    fill: #606060;
+    transition: transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .controlgauge-value {
-  fill: #000000d9;
-  font: bold 14px sans-serif;
+    fill: #000000d9;
+    font: bold 14px sans-serif;
 }
 
 .controlgauge-title {
-  fill: #0000008c;
-  font: 10px sans-serif;
+    fill: #0000008c;
+    font: 10px sans-serif;
 }

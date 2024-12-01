@@ -20,110 +20,110 @@ import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import SVGIcon from "./SVGIcon";
 import { faLightbulb, faStar, faMoon } from "@fortawesome/free-solid-svg-icons";
 import {
-  faLightbulb as faLightbulbRegular,
-  faStar as faStarRegular,
-  faMoon as faMoonRegular,
+    faLightbulb as faLightbulbRegular,
+    faStar as faStarRegular,
+    faMoon as faMoonRegular,
 } from "@fortawesome/free-regular-svg-icons";
 import {
-  IconFormat,
-  ValueFormat,
-  ToIconFormat,
-  ONOFF,
-  LimitsFormat,
+    IconFormat,
+    ValueFormat,
+    ToIconFormat,
+    ONOFF,
+    LimitsFormat,
 } from "./FormatTypes";
 import { ONOFFNumber } from "./FormatConstants";
 import {
-  NumberValueFormat,
-  NumberValueFormatOptions,
-  StringValueFormat,
+    NumberValueFormat,
+    NumberValueFormatOptions,
+    StringValueFormat,
 } from "./ValueFormat";
 
 import "./FormatTypes.css";
 
 export const DimIconFormat = (
-  props: { icon?: IconDefinition } & Partial<LimitsFormat> = {
-    icon: faLightbulb,
-  }
+    props: { icon?: IconDefinition } & Partial<LimitsFormat> = {
+        icon: faLightbulb,
+    },
 ): IconFormat => ({
-  toIcon: (b: Buffer) => {
-    const value = parseInt(b.toString());
-    const { icon = faLightbulb, min = 0, max = 100 } = props;
+    toIcon: (b: Buffer) => {
+        const value = parseInt(b.toString());
+        const { icon = faLightbulb, min = 0, max = 100 } = props;
 
-    return (
-      <div className="myhToIconFormat myhToIconFormat_aligncenter">
-        {value ? (
-          <SVGIcon
-            icon={icon}
-            className="dimicon-on"
-            style={{
-              filter: `saturate(${(100.0 * (value - min)) / (max - min)}%`,
-            }}
-          />
-        ) : (
-          <SVGIcon icon={icon} className="dimicon-off" />
-        )}
-      </div>
-    );
-  },
+        return (
+            <div className="myhToIconFormat myhToIconFormat_aligncenter">
+                {value ? (
+                    <SVGIcon
+                        icon={icon}
+                        className="dimicon-on"
+                        style={{
+                            filter: `saturate(${(100.0 * (value - min)) / (max - min)}%`,
+                        }}
+                    />
+                ) : (
+                    <SVGIcon icon={icon} className="dimicon-off" />
+                )}
+            </div>
+        );
+    },
 });
 
 export type SwitchIconFormatProps = {
-  icon: IconDefinition;
-  iconoff: IconDefinition;
-  onoff?: ONOFF;
+    icon: IconDefinition;
+    iconoff: IconDefinition;
+    onoff?: ONOFF;
 };
 
 export const SwitchIconFormat = (props?: SwitchIconFormatProps): IconFormat => {
-  const { icon, iconoff, onoff } = {
-    icon: faLightbulb,
-    iconoff: faLightbulbRegular,
-    onoff: ONOFFNumber,
-    ...props,
-  };
-  return {
-    toIcon: (b: Buffer) =>
-      onoff.status_on(b) ? (
-        <SVGIcon icon={icon} className="icon-on" />
-      ) : (
-        <SVGIcon icon={iconoff} className="icon-off" />
-      ),
-  };
+    const { icon, iconoff, onoff } = {
+        icon: faLightbulb,
+        iconoff: faLightbulbRegular,
+        onoff: ONOFFNumber,
+        ...props,
+    };
+    return {
+        toIcon: (b: Buffer) =>
+            onoff.status_on(b) ? (
+                <SVGIcon icon={icon} className="icon-on" />
+            ) : (
+                <SVGIcon icon={iconoff} className="icon-off" />
+            ),
+    };
 };
 export const BulbIconFormat = SwitchIconFormat;
 export const MoonIconFormat = () =>
-  SwitchIconFormat({ icon: faMoon, iconoff: faMoonRegular });
+    SwitchIconFormat({ icon: faMoon, iconoff: faMoonRegular });
 export const StarIconFormat = () =>
-  SwitchIconFormat({ icon: faStar, iconoff: faStarRegular });
+    SwitchIconFormat({ icon: faStar, iconoff: faStarRegular });
 
 export const StringIconFormat = (
-  valueformat: ValueFormat = StringValueFormat()
+    valueformat: ValueFormat = StringValueFormat(),
 ): IconFormat => ToIconFormat(valueformat);
 
 export const NumberIconFormat = (
-  options?: NumberValueFormatOptions
+    options?: NumberValueFormatOptions,
 ): IconFormat => ToIconFormat(NumberValueFormat(options));
 
 export type MapBuffer = (b: Buffer) => Buffer;
 
 export const MapJSONBuffer =
-  (map: (m: unknown) => unknown): MapBuffer =>
-  (b: Buffer) => {
-    try {
-      const json = JSON.parse(b.toString());
-      return Buffer.from(String(map(json)));
-    } catch {
-      return Buffer.from("");
-    }
-  };
+    (map: (m: unknown) => unknown): MapBuffer =>
+    (b: Buffer) => {
+        try {
+            const json = JSON.parse(b.toString());
+            return Buffer.from(String(map(json)));
+        } catch {
+            return Buffer.from("");
+        }
+    };
 
 export const MapIconFormat = (
-  map: MapBuffer,
-  format: IconFormat = StringIconFormat()
+    map: MapBuffer,
+    format: IconFormat = StringIconFormat(),
 ): IconFormat => ({
-  toIcon: (b: Buffer) => format.toIcon(map(b)),
+    toIcon: (b: Buffer) => format.toIcon(map(b)),
 });
 
 export const MapJSONIconFormat = (
-  mapjson: (m: unknown) => unknown,
-  format: IconFormat = StringIconFormat()
+    mapjson: (m: unknown) => unknown,
+    format: IconFormat = StringIconFormat(),
 ): IconFormat => MapIconFormat(MapJSONBuffer(mapjson), format);

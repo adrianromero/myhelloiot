@@ -22,73 +22,83 @@ import { DefaultGaugeFormat } from "./GaugeConstants";
 import "./CircularGauge.css";
 
 export type CircularGaugeProps = {
-  value?: number;
-  title?: string;
-  className?: string;
+    value?: number;
+    title?: string;
+    className?: string;
 } & GaugeProps;
 
 const CircularGauge: React.FC<CircularGaugeProps> = ({
-  value,
-  title = "",
-  className = "",
-  min = 0,
-  max = 100,
-  format = DefaultGaugeFormat
+    value,
+    title = "",
+    className = "",
+    min = 0,
+    max = 100,
+    format = DefaultGaugeFormat,
 }) => {
-  const r1 = 55;
-  const centerx = 100;
-  const centery = 65;
+    const r1 = 55;
+    const centerx = 100;
+    const centery = 65;
 
-  let arcvalue: number;
-  let formatvalue: string;
-  if (typeof value === "undefined" || isNaN(value)) {
-    arcvalue = NaN;
-    formatvalue = "";
-  } else {
-    arcvalue = padvalue(min, max, r1 * radians(360))(value);
-    formatvalue = format(value);
-  }
+    let arcvalue: number;
+    let formatvalue: string;
+    if (typeof value === "undefined" || isNaN(value)) {
+        arcvalue = NaN;
+        formatvalue = "";
+    } else {
+        arcvalue = padvalue(min, max, r1 * radians(360))(value);
+        formatvalue = format(value);
+    }
 
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      version="1.1"
-      viewBox="0 0 200 130"
-    >
-      <g className={className}>
-        <circle
-          cx={centerx}
-          cy={centery}
-          r={r1}
-          className="circulargauge-background"
-          style={{
-            fill: "#00000000",
-            strokeMiterlimit: 0,
-          }}
-        />
-        {!isNaN(arcvalue) && (
-          <circle
-            cx={centerx}
-            cy={centery}
-            r={r1}
-            className="circulargauge-bar"
-            style={{
-              fill: "#00000000",
-              strokeMiterlimit: 0,
-              strokeDasharray: `${arcvalue} 400`,
-              transform: `translate(${centerx}px, ${centery}px) rotate(-90deg) translate(${-centerx}px, ${-centery}px)`,
-            }}
-          />
-        )}
-        <text x={100} y={65} textAnchor="middle" className="circulargauge-value">
-          {formatvalue}
-        </text>
-        <text x={100} y={85} textAnchor="middle" className="circulargauge-title">
-          {title}
-        </text>
-      </g>
-    </svg>
-  );
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            viewBox="0 0 200 130"
+        >
+            <g className={className}>
+                <circle
+                    cx={centerx}
+                    cy={centery}
+                    r={r1}
+                    className="circulargauge-background"
+                    style={{
+                        fill: "#00000000",
+                        strokeMiterlimit: 0,
+                    }}
+                />
+                {!isNaN(arcvalue) && (
+                    <circle
+                        cx={centerx}
+                        cy={centery}
+                        r={r1}
+                        className="circulargauge-bar"
+                        style={{
+                            fill: "#00000000",
+                            strokeMiterlimit: 0,
+                            strokeDasharray: `${arcvalue} 400`,
+                            transform: `translate(${centerx}px, ${centery}px) rotate(-90deg) translate(${-centerx}px, ${-centery}px)`,
+                        }}
+                    />
+                )}
+                <text
+                    x={100}
+                    y={65}
+                    textAnchor="middle"
+                    className="circulargauge-value"
+                >
+                    {formatvalue}
+                </text>
+                <text
+                    x={100}
+                    y={85}
+                    textAnchor="middle"
+                    className="circulargauge-title"
+                >
+                    {title}
+                </text>
+            </g>
+        </svg>
+    );
 };
 
 export default CircularGauge;

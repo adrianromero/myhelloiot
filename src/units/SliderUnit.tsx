@@ -28,63 +28,63 @@ import "./SliderUnit.css";
 import { ConvertBuffer, IdentityConvert } from "../format/ConvertTypes";
 
 type SliderUnitProps = {
-  topic?: string;
-  pubtopic?: string;
-  subtopic?: string;
-  puboptions?: IClientPublishOptions;
-  suboptions?: IClientSubscribeOptions;
-  subconvert?: ConvertBuffer;
-  format?: LimitsFormat;
-  className?: string;
+    topic?: string;
+    pubtopic?: string;
+    subtopic?: string;
+    puboptions?: IClientPublishOptions;
+    suboptions?: IClientSubscribeOptions;
+    subconvert?: ConvertBuffer;
+    format?: LimitsFormat;
+    className?: string;
 };
 
 const SliderUnit: React.FC<SliderUnitProps> = ({
-  topic = "",
-  pubtopic = topic,
-  subtopic = topic,
-  puboptions,
-  suboptions,
-  subconvert = IdentityConvert(),
-  format = DefaultLimits,
-  className = "",
+    topic = "",
+    pubtopic = topic,
+    subtopic = topic,
+    puboptions,
+    suboptions,
+    subconvert = IdentityConvert(),
+    format = DefaultLimits,
+    className = "",
 }) => {
-  const [{ ready }, { publish }] = useMQTTContext();
-  const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
+    const [{ ready }, { publish }] = useMQTTContext();
+    const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
 
-  useEffect(() => {
-    setBuffer(Buffer.from([]));
-  }, [ready]);
+    useEffect(() => {
+        setBuffer(Buffer.from([]));
+    }, [ready]);
 
-  useMQTTSubscribe(
-    subtopic,
-    ({ message }: MQTTMessage) => {
-      const b = subconvert(message);
-      if (b) {
+    useMQTTSubscribe(
+        subtopic,
+        ({ message }: MQTTMessage) => {
+            const b = subconvert(message);
+            if (b) {
+                setBuffer(b);
+            }
+        },
+        suboptions,
+    );
+
+    const onChangeComplete = (value: number) => {
+        const b = Buffer.from(value.toString());
+        publish(pubtopic, b, puboptions);
+    };
+    const onChange = (value: number) => {
+        const b = Buffer.from(value.toString());
         setBuffer(b);
-      }
-    },
-    suboptions
-  );
+    };
 
-  const onChangeComplete = (value: number) => {
-    const b = Buffer.from(value.toString());
-    publish(pubtopic, b, puboptions);
-  };
-  const onChange = (value: number) => {
-    const b = Buffer.from(value.toString());
-    setBuffer(b);
-  };
-
-  return (
-    <Slider
-      value={Number(buffer.toString())}
-      min={format.min}
-      max={format.max}
-      step={format.step}
-      onChange={onChange}
-      onChangeComplete={onChangeComplete}
-      className={`myhSliderUnit ${className}`}
-    />
-  );
+    return (
+        <Slider
+            value={Number(buffer.toString())}
+            min={format.min}
+            max={format.max}
+            step={format.step}
+            onChange={onChange}
+            onChangeComplete={onChangeComplete}
+            className={`myhSliderUnit ${className}`}
+        />
+    );
 };
 export default SliderUnit;

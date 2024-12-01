@@ -16,16 +16,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 export type RequiredGaugeProps = {
-  min: number;
-  max: number;
-  step: number;
-  format: (x: number) => string;
+    min: number;
+    max: number;
+    step: number;
+    format: (x: number) => string;
 };
 
 export type GaugeProps = Partial<RequiredGaugeProps>;
 
 export const GaugeFormat = (options?: Intl.NumberFormatOptions) => {
-  const locale = navigator.language;
-  const intlvalue = new Intl.NumberFormat(locale, options);
-  return (x: number) => intlvalue.format(x);
+    const locale = navigator.language;
+    const intlvalue = new Intl.NumberFormat(locale, options);
+    return (x: number) => intlvalue.format(x);
 };

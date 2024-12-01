@@ -19,57 +19,58 @@ import React from "react";
 import { arcpath, padvalue, radians } from "./svgdraw";
 
 export type Arc = {
-  key?: string;
-  start: number;
-  end: number;
-  r: number;
-  className?: string;
-  style?: React.CSSProperties;
+    key?: string;
+    start: number;
+    end: number;
+    r: number;
+    className?: string;
+    style?: React.CSSProperties;
 };
 
 export type ArcsProps = {
-  arcs: Arc[];
-  min: number;
-  max: number;
-  centerx: number;
-  centery: number;
-  startangle: number;
-  endangle: number;
+    arcs: Arc[];
+    min: number;
+    max: number;
+    centerx: number;
+    centery: number;
+    startangle: number;
+    endangle: number;
 };
 
 const Arcs: React.FC<ArcsProps> = ({
-  arcs,
-  min,
-  max,
-  centerx,
-  centery,
-  startangle,
-  endangle,
+    arcs,
+    min,
+    max,
+    centerx,
+    centery,
+    startangle,
+    endangle,
 }) => (
-  <>
-    {arcs.map((arc) => {
-      const arctotal = endangle - startangle;
-      const arcstart = padvalue(min, max, arctotal)(arc.start) + startangle;
-      const arcend = padvalue(min, max, arctotal)(arc.end) + startangle;
-      return (
-        <path
-          id="arc"
-          key={arc.key}
-          d={arcpath({
-            cx: centerx,
-            cy: centery,
-            r: arc.r,
-            start: radians(arcstart),
-            end: radians(arcend),
-            orientation: arcend - arcstart > 180 ? 1 : 0,
-            sweep: 1,
-          })}
-          className={arc.className}
-          style={arc.style}
-        />
-      );
-    })}
-  </>
+    <>
+        {arcs.map(arc => {
+            const arctotal = endangle - startangle;
+            const arcstart =
+                padvalue(min, max, arctotal)(arc.start) + startangle;
+            const arcend = padvalue(min, max, arctotal)(arc.end) + startangle;
+            return (
+                <path
+                    id="arc"
+                    key={arc.key}
+                    d={arcpath({
+                        cx: centerx,
+                        cy: centery,
+                        r: arc.r,
+                        start: radians(arcstart),
+                        end: radians(arcend),
+                        orientation: arcend - arcstart > 180 ? 1 : 0,
+                        sweep: 1,
+                    })}
+                    className={arc.className}
+                    style={arc.style}
+                />
+            );
+        })}
+    </>
 );
 
 export default Arcs;

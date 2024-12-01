@@ -18,27 +18,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React, { createElement, Fragment } from "react";
 import { Card } from "antd";
 import {
-  faUpload,
-  faDownload,
-  faCodeBranch,
-  faBars,
-  faImage,
-  faBolt,
-  faLightbulb,
-  faStar,
-  faPaperPlane,
-  faTurnDown,
-  faCircleXmark,
-  faPlay,
-  faPause,
-  faBan,
-  faPencil,
-  faCircleExclamation,
-  faPowerOff,
-  faSpinner,
+    faUpload,
+    faDownload,
+    faCodeBranch,
+    faBars,
+    faImage,
+    faBolt,
+    faLightbulb,
+    faStar,
+    faPaperPlane,
+    faTurnDown,
+    faCircleXmark,
+    faPlay,
+    faPause,
+    faBan,
+    faPencil,
+    faCircleExclamation,
+    faPowerOff,
+    faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 
-import * as Babel from '@babel/standalone';
+import * as Babel from "@babel/standalone";
 import { Buffer } from "buffer";
 import DashboardPage from "./dashboard/DashboardPage";
 import Dashboard from "./dashboard/Dashboard";
@@ -58,57 +58,54 @@ import KeypadUnit from "./units/KeypadUnit";
 import DisconnectUnit from "./units/DisconnectUnit";
 import SoundAlarmUnit from "./units/SoundAlarmUnit";
 import ModalUnit from "./units/ModalUnit";
-import {
-  ToIconFormat,
-  ToIconValueFormat,
-} from "./format/FormatTypes";
+import { ToIconFormat, ToIconValueFormat } from "./format/FormatTypes";
 import { ONOFFNumber, ONOFFStr } from "./format/FormatConstants";
 import {
-  MessageValueFormat,
-  StringValueFormat,
-  JSONValueFormat,
-  HEXValueFormat,
-  Base64ValueFormat,
-  SwitchValueFormat,
-  NumberValueFormat,
+    MessageValueFormat,
+    StringValueFormat,
+    JSONValueFormat,
+    HEXValueFormat,
+    Base64ValueFormat,
+    SwitchValueFormat,
+    NumberValueFormat,
 } from "./format/ValueFormat";
 import {
-  DimIconFormat,
-  SwitchIconFormat,
-  BulbIconFormat,
-  MoonIconFormat,
-  StarIconFormat,
-  StringIconFormat,
-  NumberIconFormat,
-  MapIconFormat,
-  MapJSONBuffer,
-  MapJSONIconFormat,
+    DimIconFormat,
+    SwitchIconFormat,
+    BulbIconFormat,
+    MoonIconFormat,
+    StarIconFormat,
+    StringIconFormat,
+    NumberIconFormat,
+    MapIconFormat,
+    MapJSONBuffer,
+    MapJSONIconFormat,
 } from "./format/IconFormat";
 import {
-  SwitchIconValueFormat,
-  BulbIconValueFormat,
-  MoonIconValueFormat,
-  StarIconValueFormat,
-  StringIconValueFormat,
-  NumberIconValueFormat,
-  Numeric,
-  Celsius,
-  Fahrenheit,
-  KilometerPerHour,
-  Percent
+    SwitchIconValueFormat,
+    BulbIconValueFormat,
+    MoonIconValueFormat,
+    StarIconValueFormat,
+    StringIconValueFormat,
+    NumberIconValueFormat,
+    Numeric,
+    Celsius,
+    Fahrenheit,
+    KilometerPerHour,
+    Percent,
 } from "./format/IconValueFormat";
 import {
-  DashboardIconFormat,
-  LinearIconFormat,
-  SimpleIconFormat,
-  CircularIconFormat,
-  MetroIconFormat,
-  ProgressIconFormat,
-  SpaceIconFormat,
-  LiquidIconFormat,
-  DialIconFormat,
-  FuelIconFormat,
-  ControlIconFormat,
+    DashboardIconFormat,
+    LinearIconFormat,
+    SimpleIconFormat,
+    CircularIconFormat,
+    MetroIconFormat,
+    ProgressIconFormat,
+    SpaceIconFormat,
+    LiquidIconFormat,
+    DialIconFormat,
+    FuelIconFormat,
+    ControlIconFormat,
 } from "./format/GaugeFormat";
 import { ChartIconFormat } from "./format/ChartFormat";
 import { ImageIconFormat } from "./format/ImageFormat";
@@ -117,213 +114,235 @@ import AppError from "./AppError";
 import { createComponentLabeled } from "./units/ComponentLabeled";
 
 const JSXCONTEXT = {
-  //React JSX
-  createElement,
-  Fragment,
+    //React JSX
+    createElement,
+    Fragment,
 
-  //NodeObject
-  Buffer,
+    //NodeObject
+    Buffer,
 
-  // Antd Components
-  Card,
+    // Antd Components
+    Card,
 
-  // HelloIOT Components
-  Dashboard,
-  DashboardContent,
-  DashboardPage,
-  InputUnit,
-  InputCard: createComponentCard(InputUnit),
-  InputLabel: createComponentLabeled(InputUnit, "baselined"),
-  Publisher,
-  ButtonUnit,
-  ButtonCard: createComponentCard(ButtonUnit),
-  ButtonLabel: createComponentLabeled(ButtonUnit, "baselined"),
-  SwitchUnit,
-  SwitchCard: createComponentCard(SwitchUnit),
-  SwitchLabel: createComponentLabeled(SwitchUnit, "centeredunit"),
-  ViewUnit,
-  ViewCard: createComponentCard(ViewUnit),
-  ViewLabel: createComponentLabeled(ViewUnit, "baselined"),
-  SliderUnit,
-  SliderCard: createComponentCard(SliderUnit),
-  SliderLabel: createComponentLabeled(SliderUnit),
-  SoundUnit,
-  LogUnit,
-  LogTool,
-  NotifyUnit,
-  KeypadUnit,
-  DisconnectUnit,
-  SoundAlarmUnit,
-  ModalUnit,
+    // HelloIOT Components
+    Dashboard,
+    DashboardContent,
+    DashboardPage,
+    InputUnit,
+    InputCard: createComponentCard(InputUnit),
+    InputLabel: createComponentLabeled(InputUnit, "baselined"),
+    Publisher,
+    ButtonUnit,
+    ButtonCard: createComponentCard(ButtonUnit),
+    ButtonLabel: createComponentLabeled(ButtonUnit, "baselined"),
+    SwitchUnit,
+    SwitchCard: createComponentCard(SwitchUnit),
+    SwitchLabel: createComponentLabeled(SwitchUnit, "centeredunit"),
+    ViewUnit,
+    ViewCard: createComponentCard(ViewUnit),
+    ViewLabel: createComponentLabeled(ViewUnit, "baselined"),
+    SliderUnit,
+    SliderCard: createComponentCard(SliderUnit),
+    SliderLabel: createComponentLabeled(SliderUnit),
+    SoundUnit,
+    LogUnit,
+    LogTool,
+    NotifyUnit,
+    KeypadUnit,
+    DisconnectUnit,
+    SoundAlarmUnit,
+    ModalUnit,
 
-  // Icons
-  faUpload,
-  faDownload,
-  faCodeBranch,
-  faBars,
-  faImage,
-  faBolt,
-  faLightbulb,
-  faStar,
-  faPaperPlane,
-  faTurnDown,
-  faCircleXmark,
-  faPlay,
-  faPause,
-  faBan,
-  faPencil,
-  faCircleExclamation,
-  faPowerOff,
-  faSpinner,
+    // Icons
+    faUpload,
+    faDownload,
+    faCodeBranch,
+    faBars,
+    faImage,
+    faBolt,
+    faLightbulb,
+    faStar,
+    faPaperPlane,
+    faTurnDown,
+    faCircleXmark,
+    faPlay,
+    faPause,
+    faBan,
+    faPencil,
+    faCircleExclamation,
+    faPowerOff,
+    faSpinner,
 
-  // Format types
-  ToIconFormat,
-  ToIconValueFormat,
-  ONOFFNumber,
-  ONOFFStr,
+    // Format types
+    ToIconFormat,
+    ToIconValueFormat,
+    ONOFFNumber,
+    ONOFFStr,
 
-  // ValueFormats
-  MessageValueFormat,
-  StringValueFormat,
-  JSONValueFormat,
-  HEXValueFormat,
-  Base64ValueFormat,
-  SwitchValueFormat,
-  NumberValueFormat,
+    // ValueFormats
+    MessageValueFormat,
+    StringValueFormat,
+    JSONValueFormat,
+    HEXValueFormat,
+    Base64ValueFormat,
+    SwitchValueFormat,
+    NumberValueFormat,
 
-  // Units
-  Numeric,
-  Celsius,
-  Fahrenheit,
-  KilometerPerHour,
-  Percent,
+    // Units
+    Numeric,
+    Celsius,
+    Fahrenheit,
+    KilometerPerHour,
+    Percent,
 
-  // IconFormats
-  DimIconFormat,
-  SwitchIconFormat,
-  BulbIconFormat,
-  MoonIconFormat,
-  StarIconFormat,
-  StringIconFormat,
-  NumberIconFormat,
-  MapIconFormat,
-  MapJSONBuffer,
-  MapJSONIconFormat,
+    // IconFormats
+    DimIconFormat,
+    SwitchIconFormat,
+    BulbIconFormat,
+    MoonIconFormat,
+    StarIconFormat,
+    StringIconFormat,
+    NumberIconFormat,
+    MapIconFormat,
+    MapJSONBuffer,
+    MapJSONIconFormat,
 
-  // IconFormats Gauges
-  DashboardIconFormat,
-  LinearIconFormat,
-  SimpleIconFormat,
-  CircularIconFormat,
-  MetroIconFormat,
-  ProgressIconFormat,
-  SpaceIconFormat,
-  LiquidIconFormat,
-  DialIconFormat,
-  FuelIconFormat,
-  ControlIconFormat,
+    // IconFormats Gauges
+    DashboardIconFormat,
+    LinearIconFormat,
+    SimpleIconFormat,
+    CircularIconFormat,
+    MetroIconFormat,
+    ProgressIconFormat,
+    SpaceIconFormat,
+    LiquidIconFormat,
+    DialIconFormat,
+    FuelIconFormat,
+    ControlIconFormat,
 
-  // IconFormats Chart
-  ChartIconFormat,
+    // IconFormats Chart
+    ChartIconFormat,
 
-  // IconFormats Image
-  ImageIconFormat,
+    // IconFormats Image
+    ImageIconFormat,
 
-  // IconValueFormats
-  SwitchIconValueFormat,
-  BulbIconValueFormat,
-  MoonIconValueFormat,
-  StarIconValueFormat,
-  StringIconValueFormat,
-  NumberIconValueFormat,
+    // IconValueFormats
+    SwitchIconValueFormat,
+    BulbIconValueFormat,
+    MoonIconValueFormat,
+    StarIconValueFormat,
+    StringIconValueFormat,
+    NumberIconValueFormat,
 
-  // Converters
-  JSONConvert,
-  Shelly2Convert
+    // Converters
+    JSONConvert,
+    Shelly2Convert,
 };
 
 const JSXCONTEXTKEYS: string[] = [];
 const JSXCONTEXTVALUES: object[] = [];
 for (const [key, value] of Object.entries(JSXCONTEXT)) {
-  JSXCONTEXTKEYS.push(key);
-  JSXCONTEXTVALUES.push(value);
+    JSXCONTEXTKEYS.push(key);
+    JSXCONTEXTVALUES.push(value);
 }
 
 const getErrorMessage = (error: unknown, msg: string = "Unknown error") => {
-  if (error instanceof Error) {
-    return error.message;
-  }
-  return msg;
-}
+    if (error instanceof Error) {
+        return error.message;
+    }
+    return msg;
+};
 
 const JSXRender: React.FC<{ jsx: string }> = ({ jsx }) => {
+    if (!jsx || !jsx.trim()) {
+        return (
+            <AppError
+                title="Failed to compile JSX code"
+                errorMessage="JSX code is empty."
+            />
+        );
+    }
 
-  if (!jsx || !jsx.trim()) {
-    return <AppError title="Failed to compile JSX code" errorMessage="JSX code is empty." />;
-  }
+    let output;
+    try {
+        output = Babel.transform(jsx, {
+            presets: [
+                [
+                    "react",
+                    {
+                        pragma: "createElement",
+                        pragmaFrag: "Fragment",
+                    },
+                ],
+            ],
+        }).code;
+    } catch (error) {
+        return (
+            <AppError
+                title="Failed to compile JSX code"
+                errorMessage={getErrorMessage(
+                    error,
+                    "Unknown compilation error",
+                )}
+                jsx={jsx}
+            />
+        );
+    }
 
-  let output;
-  try {
-    output = Babel.transform(jsx, {
-      presets: [[
-        "react",
-        {
-          pragma: "createElement",
-          pragmaFrag: "Fragment"
-        },
-      ]]
-    }).code;
-  } catch (error) {
-    return <AppError
-      title="Failed to compile JSX code"
-      errorMessage={getErrorMessage(error, "Unknown compilation error")}
-      jsx={jsx}
-    />;
-  }
+    if (!output) {
+        return (
+            <AppError
+                title="Failed to execute JSX code"
+                errorMessage="JSX compiled code is empty"
+                jsx={jsx}
+            />
+        );
+    }
 
-  if (!output) {
-    return <AppError
-      title="Failed to execute JSX code"
-      errorMessage="JSX compiled code is empty"
-      jsx={jsx}
-    />;
-  }
+    let fn;
+    try {
+        fn = new Function(...JSXCONTEXTKEYS, "output", "return eval(output);");
+    } catch (error) {
+        return (
+            <AppError
+                title="Failed to execute JSX code"
+                errorMessage={getErrorMessage(
+                    error,
+                    "Unknown JSX evaluation error",
+                )}
+                jsx={jsx}
+            />
+        );
+    }
 
-  let fn;
-  try {
-    fn = new Function(...JSXCONTEXTKEYS, "output", "return eval(output);");
-  } catch (error) {
-    return <AppError
-      title="Failed to execute JSX code"
-      errorMessage={getErrorMessage(error, "Unknown JSX evaluation error")}
-      jsx={jsx}
-    />;
-  }
-
-  try {
-    return fn(...JSXCONTEXTVALUES, output);
-  } catch (error) {
-    return <AppError
-      title="Failed to execute JSX code"
-      errorMessage={getErrorMessage(error, "Unknown JSX execution error")}
-      jsx={jsx}
-    />;
-  }
+    try {
+        return fn(...JSXCONTEXTVALUES, output);
+    } catch (error) {
+        return (
+            <AppError
+                title="Failed to execute JSX code"
+                errorMessage={getErrorMessage(
+                    error,
+                    "Unknown JSX execution error",
+                )}
+                jsx={jsx}
+            />
+        );
+    }
 };
 
 const AppDashboard: React.FC<{ jsx: string; css?: string }> = React.memo(
-  ({ jsx, css }) => (
-    <>
-      {css && (
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href={`data:text/css;base64,${btoa(css)}`} //Buffer.from(data).toString('base64');
-        ></link>
-      )}
-      <JSXRender jsx={jsx} />
-    </>
-  )
+    ({ jsx, css }) => (
+        <>
+            {css && (
+                <link
+                    rel="stylesheet"
+                    type="text/css"
+                    href={`data:text/css;base64,${btoa(css)}`} //Buffer.from(data).toString('base64');
+                ></link>
+            )}
+            <JSXRender jsx={jsx} />
+        </>
+    ),
 );
 export default AppDashboard;
-

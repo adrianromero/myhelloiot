@@ -18,161 +18,180 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React from "react";
 import SVGIcon from "../format/SVGIcon";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
-import { faCircleCheck, faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+import {
+    faCircleCheck,
+    faCircleXmark,
+} from "@fortawesome/free-regular-svg-icons";
 import { Row, Col, Typography, Button, Divider, Popover } from "antd";
 import { useMQTTContext } from "../mqtt/MQTTHooks";
 import { useAppDispatch } from "../app/hooks";
 import { disconnect } from "../app/sliceConnection";
 
 import "./ConnectionInfo.css";
-import { ConnectedStatus, saveStoreConnectConnected } from "../connection/ConnectionInfo";
+import {
+    ConnectedStatus,
+    saveStoreConnectConnected,
+} from "../connection/ConnectionInfo";
 
 const { Text } = Typography;
 
 type ConnectionInfoProps = {
-  disconnectDisabled?: boolean;
+    disconnectDisabled?: boolean;
 };
 
 const ConnectionInfo: React.FC<ConnectionInfoProps> = ({
-  disconnectDisabled = false,
+    disconnectDisabled = false,
 }) => {
-  const [{ options, status }] = useMQTTContext();
-  const dispatch = useAppDispatch();
+    const [{ options, status }] = useMQTTContext();
+    const dispatch = useAppDispatch();
 
-  const {
-    protocol,
-    hostname,
-    port,
-    path,
-    protocolId,
-    protocolVersion,
-    username,
-    clientId,
-  } = options;
+    const {
+        protocol,
+        hostname,
+        port,
+        path,
+        protocolId,
+        protocolVersion,
+        username,
+        clientId,
+    } = options;
 
-  const { label, icon } = (status === "Connected")
-    ? {
-      label: options.hostname ?? "",
-      icon: <SVGIcon icon={faCircleCheck} style={{ color: "#52c41a" }} />
+    const { label, icon } =
+        status === "Connected"
+            ? {
+                  label: options.hostname ?? "",
+                  icon: (
+                      <SVGIcon
+                          icon={faCircleCheck}
+                          style={{ color: "#52c41a" }}
+                      />
+                  ),
+              }
+            : {
+                  label: status,
+                  icon: (
+                      <SVGIcon
+                          icon={faCircleXmark}
+                          style={{
+                              color: "red",
+                          }}
+                      />
+                  ),
+              };
+
+    let protocolVersionLabel;
+    if (protocolVersion === 3) {
+        protocolVersionLabel = "3.1";
+    } else if (protocolVersion === 4) {
+        protocolVersionLabel = "3.1.1";
+    } else if (protocolVersion === 5) {
+        protocolVersionLabel = "5.0";
+    } else {
+        protocolVersionLabel = "Unknonw";
     }
-    : {
-      label: status,
-      icon: <SVGIcon
-        icon={faCircleXmark}
-        style={{
-          color: "red"
-        }}
-      />
-    };
 
-  let protocolVersionLabel;
-  if (protocolVersion === 3) {
-    protocolVersionLabel = "3.1";
-  } else if (protocolVersion === 4) {
-    protocolVersionLabel = "3.1.1";
-  } else if (protocolVersion === 5) {
-    protocolVersionLabel = "5.0";
-  } else {
-    protocolVersionLabel = "Unknonw";
-  }
-
-  const popover = (
-    <>
-      <div style={{ width: 280 }}>
-        <Row wrap={false}>
-          <Col flex="120px">
-            <Text>User name:</Text>
-          </Col>
-          <Col flex="auto">
-            <Text type="secondary" strong>
-              {username}
-            </Text>
-          </Col>
-        </Row>
-        <Row wrap={false}>
-          <Col flex="120px">
-            <Text>Protocol:</Text>
-          </Col>
-          <Col flex="auto">
-            <Text type="secondary" strong>
-              {protocol}
-            </Text>
-          </Col>
-        </Row>
-        <Row wrap={false}>
-          <Col flex="120px">
-            <Text>Host name:</Text>
-          </Col>
-          <Col flex="auto">
-            <Text type="secondary" strong>
-              {hostname}
-            </Text>
-          </Col>
-        </Row>
-        <Row wrap={false}>
-          <Col flex="120px">
-            <Text>Port:</Text>
-          </Col>
-          <Col flex="auto">
-            <Text type="secondary" strong>
-              {port}
-            </Text>
-          </Col>
-        </Row>
-        <Row wrap={false}>
-          <Col flex="120px">
-            <Text>Path:</Text>
-          </Col>
-          <Col flex="auto">
-            <Text type="secondary" strong>
-              {path}
-            </Text>
-          </Col>
-        </Row>
-        <Row wrap={false}>
-          <Col flex="120px">
-            <Text>MQTT protocol:</Text>
-          </Col>
-          <Col flex="auto">
-            <Text type="secondary" strong>
-              {protocolId} {protocolVersionLabel}
-            </Text>
-          </Col>
-        </Row>
-        <Row wrap={false}>
-          <Col flex="120px">
-            <Text>Client Id:</Text>
-          </Col>
-          <Col flex="auto">
-            <Text type="secondary" strong>
-              {clientId}
-            </Text>
-          </Col>
-        </Row>
-      </div>
-      {!disconnectDisabled && (
+    const popover = (
         <>
-          <Divider />
-          <Button
-            type="primary"
-            icon={<SVGIcon icon={faPowerOff} />}
-            onClick={() => {
-              saveStoreConnectConnected(ConnectedStatus.DISCONNECTED)
-              dispatch(disconnect());
-            }}
-          >
-            Disconnect
-          </Button>
+            <div style={{ width: 280 }}>
+                <Row wrap={false}>
+                    <Col flex="120px">
+                        <Text>User name:</Text>
+                    </Col>
+                    <Col flex="auto">
+                        <Text type="secondary" strong>
+                            {username}
+                        </Text>
+                    </Col>
+                </Row>
+                <Row wrap={false}>
+                    <Col flex="120px">
+                        <Text>Protocol:</Text>
+                    </Col>
+                    <Col flex="auto">
+                        <Text type="secondary" strong>
+                            {protocol}
+                        </Text>
+                    </Col>
+                </Row>
+                <Row wrap={false}>
+                    <Col flex="120px">
+                        <Text>Host name:</Text>
+                    </Col>
+                    <Col flex="auto">
+                        <Text type="secondary" strong>
+                            {hostname}
+                        </Text>
+                    </Col>
+                </Row>
+                <Row wrap={false}>
+                    <Col flex="120px">
+                        <Text>Port:</Text>
+                    </Col>
+                    <Col flex="auto">
+                        <Text type="secondary" strong>
+                            {port}
+                        </Text>
+                    </Col>
+                </Row>
+                <Row wrap={false}>
+                    <Col flex="120px">
+                        <Text>Path:</Text>
+                    </Col>
+                    <Col flex="auto">
+                        <Text type="secondary" strong>
+                            {path}
+                        </Text>
+                    </Col>
+                </Row>
+                <Row wrap={false}>
+                    <Col flex="120px">
+                        <Text>MQTT protocol:</Text>
+                    </Col>
+                    <Col flex="auto">
+                        <Text type="secondary" strong>
+                            {protocolId} {protocolVersionLabel}
+                        </Text>
+                    </Col>
+                </Row>
+                <Row wrap={false}>
+                    <Col flex="120px">
+                        <Text>Client Id:</Text>
+                    </Col>
+                    <Col flex="auto">
+                        <Text type="secondary" strong>
+                            {clientId}
+                        </Text>
+                    </Col>
+                </Row>
+            </div>
+            {!disconnectDisabled && (
+                <>
+                    <Divider />
+                    <Button
+                        type="primary"
+                        icon={<SVGIcon icon={faPowerOff} />}
+                        onClick={() => {
+                            saveStoreConnectConnected(
+                                ConnectedStatus.DISCONNECTED,
+                            );
+                            dispatch(disconnect());
+                        }}
+                    >
+                        Disconnect
+                    </Button>
+                </>
+            )}
         </>
-      )}
-    </>
-  );
+    );
 
-  return (
-    <Popover placement="bottomRight" content={popover} trigger="click">
-      <Button type="text"><span style={{ color: "darkgray" }}>{label}</span><span className="connectioninfo-buttonicon">{icon}</span></Button>
-    </Popover>
-  );
+    return (
+        <Popover placement="bottomRight" content={popover} trigger="click">
+            <Button type="text">
+                <span style={{ color: "darkgray" }}>{label}</span>
+                <span className="connectioninfo-buttonicon">{icon}</span>
+            </Button>
+        </Popover>
+    );
 };
 
 export default ConnectionInfo;

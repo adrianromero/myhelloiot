@@ -27,56 +27,59 @@ import Paragraph from "antd/lib/typography/Paragraph";
 import "./LogView.css";
 
 export type LogViewProps = {
-  subtopic: string;
-  suboptions?: IClientSubscribeOptions;
-  format?: ValueFormat;
-  messages: MQTTMessage[];
-  onMessage: (mqttmessage: MQTTMessage) => void;
-  className?: string;
+    subtopic: string;
+    suboptions?: IClientSubscribeOptions;
+    format?: ValueFormat;
+    messages: MQTTMessage[];
+    onMessage: (mqttmessage: MQTTMessage) => void;
+    className?: string;
 };
 
 const LogView: React.FC<LogViewProps> = ({
-  subtopic,
-  suboptions,
-  format = StringValueFormat(),
-  messages,
-  onMessage,
-  className,
-}) => {
-  useMQTTSubscribe(
     subtopic,
-    (mqttmessage: MQTTMessage) => mqttmessage.time && onMessage(mqttmessage),
-    suboptions
-  );
+    suboptions,
+    format = StringValueFormat(),
+    messages,
+    onMessage,
+    className,
+}) => {
+    useMQTTSubscribe(
+        subtopic,
+        (mqttmessage: MQTTMessage) =>
+            mqttmessage.time && onMessage(mqttmessage),
+        suboptions,
+    );
 
-  return (
-    <List
-      size="small"
-      itemLayout="vertical"
-      className={`myhLogView ${className}`}
-      dataSource={messages}
-      renderItem={(item) => (
-        <List.Item>
-          <Paragraph className="myhLogView-message" copyable ellipsis>
-            {format.toDisplay(item.message)}
-          </Paragraph>
-          <div className="myhLogView-tags">
-            <Tag>{item.topic}</Tag>
-          </div>
-          <div className="myhLogView-tags">
-            {item.dup && <Tag color="lime">Dup</Tag>}
-            {item.retain && <Tag color="green">Retain</Tag>}
-            {typeof item.qos === "number" && (
-              <Tag color="geekblue">QoS: {item.qos}</Tag>
+    return (
+        <List
+            size="small"
+            itemLayout="vertical"
+            className={`myhLogView ${className}`}
+            dataSource={messages}
+            renderItem={item => (
+                <List.Item>
+                    <Paragraph className="myhLogView-message" copyable ellipsis>
+                        {format.toDisplay(item.message)}
+                    </Paragraph>
+                    <div className="myhLogView-tags">
+                        <Tag>{item.topic}</Tag>
+                    </div>
+                    <div className="myhLogView-tags">
+                        {item.dup && <Tag color="lime">Dup</Tag>}
+                        {item.retain && <Tag color="green">Retain</Tag>}
+                        {typeof item.qos === "number" && (
+                            <Tag color="geekblue">QoS: {item.qos}</Tag>
+                        )}
+                        <Tag color="blue">
+                            {new Date(item.time).toLocaleString()}
+                        </Tag>
+                    </div>
+                </List.Item>
             )}
-            <Tag color="blue">{new Date(item.time).toLocaleString()}</Tag>
-          </div>
-        </List.Item>
-      )}
-      bordered
-      style={{ height: 300, overflow: "auto" }}
-    ></List>
-  );
+            bordered
+            style={{ height: 300, overflow: "auto" }}
+        ></List>
+    );
 };
 
 export default LogView;

@@ -16,41 +16,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .myhButtonUnit.ant-btn {
-  font-weight: 800;
-  height: unset;
+    font-weight: 800;
+    height: unset;
 }
 
 .myhButtonUnit.ant-btn > .ant-btn-icon {
-  height: unset;
+    height: unset;
 }
 
 .myhButtonUnit.ant-btn > .ant-btn-icon > .anticon {
-  font-size: 200%;
+    font-size: 200%;
 }
 
 .myhButtonCard.myhButtonUnit.ant-btn {
-  width: 100%;
+    width: 100%;
 }
 
 .myhButtonCard.myhButtonUnit.ant-btn:not(:last-child) {
-  margin-bottom: 4px;
+    margin-bottom: 4px;
 }
 
 .btn-icontop.myhButtonUnit.ant-btn {
-  padding: 15px 15px;
+    padding: 15px 15px;
 }
 
 .btn-icontop.myhButtonUnit.ant-btn > .ant-btn-icon {
-  display: block;
-  margin-inline-end: unset;
+    display: block;
+    margin-inline-end: unset;
 }
 
 .myhButtonUnit.ant-btn-primary:not(:disabled):not(.ant-btn-disabled) {
-  background: #1677ff;
+    background: #1677ff;
 }
 .myhButtonUnit.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
-  background: #1677ff;
+    background: #1677ff;
 }
 .myhButtonUnit.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):active {
-  background: #0958d9;
+    background: #0958d9;
 }

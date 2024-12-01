@@ -18,39 +18,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { useState, useEffect } from "react";
 
 const useAudio = (
-  url: string,
-  options: { loop?: boolean; volume?: number } = {}
+    url: string,
+    options: { loop?: boolean; volume?: number } = {},
 ): [
     { playing: boolean },
-    { play: () => void; pause: () => void; resume: () => void }
-  ] => {
-  const [audio] = useState<HTMLAudioElement>(new Audio(url));
-  const [, setUpdate] = useState<boolean>(false);
-  const forceUpdate = () => setUpdate((prevState) => !prevState);
+    { play: () => void; pause: () => void; resume: () => void },
+] => {
+    const [audio] = useState<HTMLAudioElement>(new Audio(url));
+    const [, setUpdate] = useState<boolean>(false);
+    const forceUpdate = () => setUpdate(prevState => !prevState);
 
-  useEffect(() => {
-    audio.loop = options.loop ?? false;
-    audio.volume = options.volume ?? 1.0;
-    audio.addEventListener("play", forceUpdate);
-    audio.addEventListener("pause", forceUpdate);
-    audio.addEventListener("ended", forceUpdate);
+    useEffect(() => {
+        audio.loop = options.loop ?? false;
+        audio.volume = options.volume ?? 1.0;
+        audio.addEventListener("play", forceUpdate);
+        audio.addEventListener("pause", forceUpdate);
+        audio.addEventListener("ended", forceUpdate);
 
-    return () => {
-      audio.removeEventListener("play", forceUpdate);
-      audio.removeEventListener("pause", forceUpdate);
-      audio.removeEventListener("ended", forceUpdate);
+        return () => {
+            audio.removeEventListener("play", forceUpdate);
+            audio.removeEventListener("pause", forceUpdate);
+            audio.removeEventListener("ended", forceUpdate);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [audio]);
+
+    const play = () => {
+        audio.currentTime = 0;
+        audio.play();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [audio]);
+    const pause = () => audio.pause();
+    const resume = () => audio.play();
 
-  const play = () => {
-    audio.currentTime = 0;
-    audio.play();
-  };
-  const pause = () => audio.pause();
-  const resume = () => audio.play();
-
-  return [{ playing: !audio.paused }, { play, pause, resume }];
+    return [{ playing: !audio.paused }, { play, pause, resume }];
 };
 
 export default useAudio;

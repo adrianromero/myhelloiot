@@ -30,137 +30,140 @@ import ConnectionInfo from "./ConnectionInfo";
 import "./Dashboard.css";
 
 export type DashboardProps = {
-  instancekey?: string;
-  title?: string;
-  topic?: string;
-  disconnectDisabled?: boolean;
-  className?: string;
-  children?: React.ReactNode;
+    instancekey?: string;
+    title?: string;
+    topic?: string;
+    disconnectDisabled?: boolean;
+    className?: string;
+    children?: React.ReactNode;
 };
 
 const Dashboard: React.FC<DashboardProps> = ({
-  instancekey = "",
-  title,
-  topic = "",
-  disconnectDisabled = false,
-  className = "",
-  children,
+    instancekey = "",
+    title,
+    topic = "",
+    disconnectDisabled = false,
+    className = "",
+    children,
 }) => {
-  const [panelkey, setPanelkey] = useConnectionProperty(
-    instancekey + "-dashboard-panelkey"
-  );
-  const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
-  const [{ connected }, { publish }] = useMQTTContext();
-  useMQTTSubscribe(topic, (mqttmessage: MQTTMessage) => {
-    const key = mqttmessage.message.toString();
-    if (key !== panelkey) {
-      hideDrawer();
-      setPanelkey(key);
-    }
-  });
-  useEffect(() => window.scrollTo(0, 0), [panelkey]);
-
-  function handleSelect({ key }: { key: string }) {
-    hideDrawer();
-    setPanelkey(key);
-    publish(topic, Buffer.from(key), {
-      retain: true,
+    const [panelkey, setPanelkey] = useConnectionProperty(
+        instancekey + "-dashboard-panelkey",
+    );
+    const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
+    const [{ connected }, { publish }] = useMQTTContext();
+    useMQTTSubscribe(topic, (mqttmessage: MQTTMessage) => {
+        const key = mqttmessage.message.toString();
+        if (key !== panelkey) {
+            hideDrawer();
+            setPanelkey(key);
+        }
     });
-  }
+    useEffect(() => window.scrollTo(0, 0), [panelkey]);
 
-  function showDrawer() {
-    setVisibleDrawer(true);
-  }
-
-  function hideDrawer() {
-    setVisibleDrawer(false);
-  }
-
-  const menus: React.ReactElement[] = [];
-  const dcchildren: React.ReactPortal | React.ReactElement[] = [];
-  const remainingchildren: React.ReactElement[] = [];
-  let cvisible: React.ReactPortal | React.ReactElement | undefined;
-  let keyvisible: string | undefined;
-  let menDisabled: boolean = false;
-  let disDisabled: boolean = false;
-  let index = 0;
-
-  React.Children.forEach(children, (c) => {
-    if (React.isValidElement(c)) {
-      if (c.type === DashboardContent) {
-        const key: string = `menu-${index++}`;
-        if (c.props.name) {
-          menus.push(
-            <Menu.Item
-              key={key}
-              icon={c.props.icon ?? <SVGIcon icon={faImage} />}
-            >
-              {c.props.name}
-            </Menu.Item>
-          );
-        }
-        if (key === panelkey || !cvisible) {
-          cvisible = c;
-          keyvisible = key;
-          menDisabled = c.props.menuDisabled ?? false;
-          disDisabled = c.props.disconnectDisabled ?? false;
-        }
-        dcchildren.push(c);
-      } else {
-        remainingchildren.push(c);
-      }
+    function handleSelect({ key }: { key: string }) {
+        hideDrawer();
+        setPanelkey(key);
+        publish(topic, Buffer.from(key), {
+            retain: true,
+        });
     }
-  });
 
-  return (
-    <Layout className={`myhLayout ${className}`}>
-      <AppHeader title={title}>
-        {menus.length > 0 && (
-          <div className="myhDashboard-buttonmenu">
-            <Button
-              onClick={showDrawer}
-              ghost
-              hidden={menDisabled}
-              disabled={!connected}
-              icon={<SVGIcon icon={faBars} />}
-            />
-          </div>
-        )}
-        <ConnectionInfo
-          disconnectDisabled={disconnectDisabled || disDisabled}
-        />
-      </AppHeader>
-      <Layout.Content className="myhLayoutContent">
-        <Spin spinning={!connected}>
-          {menus.length > 0 && (
-            <Drawer
-              className="myhDashboard-drawermenu"
-              placement="left"
-              closable={false}
-              onClose={hideDrawer}
-              open={visibleDrawer}
-            >
-              <Menu
-                theme="light"
-                mode="inline"
-                disabled={!connected}
-                selectedKeys={keyvisible ? [keyvisible] : []}
-                onSelect={handleSelect}
-              >
-                {menus}
-              </Menu>
-            </Drawer>
-          )}
-          {dcchildren.map((c) => (
-            <div key={c.key} style={c === cvisible ? {} : { display: "none" }}>
-              {c}
-            </div>
-          ))}
-          {remainingchildren}
-        </Spin>
-      </Layout.Content>
-    </Layout>
-  );
+    function showDrawer() {
+        setVisibleDrawer(true);
+    }
+
+    function hideDrawer() {
+        setVisibleDrawer(false);
+    }
+
+    const menus: React.ReactElement[] = [];
+    const dcchildren: React.ReactPortal | React.ReactElement[] = [];
+    const remainingchildren: React.ReactElement[] = [];
+    let cvisible: React.ReactPortal | React.ReactElement | undefined;
+    let keyvisible: string | undefined;
+    let menDisabled: boolean = false;
+    let disDisabled: boolean = false;
+    let index = 0;
+
+    React.Children.forEach(children, c => {
+        if (React.isValidElement(c)) {
+            if (c.type === DashboardContent) {
+                const key: string = `menu-${index++}`;
+                if (c.props.name) {
+                    menus.push(
+                        <Menu.Item
+                            key={key}
+                            icon={c.props.icon ?? <SVGIcon icon={faImage} />}
+                        >
+                            {c.props.name}
+                        </Menu.Item>,
+                    );
+                }
+                if (key === panelkey || !cvisible) {
+                    cvisible = c;
+                    keyvisible = key;
+                    menDisabled = c.props.menuDisabled ?? false;
+                    disDisabled = c.props.disconnectDisabled ?? false;
+                }
+                dcchildren.push(c);
+            } else {
+                remainingchildren.push(c);
+            }
+        }
+    });
+
+    return (
+        <Layout className={`myhLayout ${className}`}>
+            <AppHeader title={title}>
+                {menus.length > 0 && (
+                    <div className="myhDashboard-buttonmenu">
+                        <Button
+                            onClick={showDrawer}
+                            ghost
+                            hidden={menDisabled}
+                            disabled={!connected}
+                            icon={<SVGIcon icon={faBars} />}
+                        />
+                    </div>
+                )}
+                <ConnectionInfo
+                    disconnectDisabled={disconnectDisabled || disDisabled}
+                />
+            </AppHeader>
+            <Layout.Content className="myhLayoutContent">
+                <Spin spinning={!connected}>
+                    {menus.length > 0 && (
+                        <Drawer
+                            className="myhDashboard-drawermenu"
+                            placement="left"
+                            closable={false}
+                            onClose={hideDrawer}
+                            open={visibleDrawer}
+                        >
+                            <Menu
+                                theme="light"
+                                mode="inline"
+                                disabled={!connected}
+                                selectedKeys={keyvisible ? [keyvisible] : []}
+                                onSelect={handleSelect}
+                            >
+                                {menus}
+                            </Menu>
+                        </Drawer>
+                    )}
+                    {dcchildren.map(c => (
+                        <div
+                            key={c.key}
+                            style={c === cvisible ? {} : { display: "none" }}
+                        >
+                            {c}
+                        </div>
+                    ))}
+                    {remainingchildren}
+                </Spin>
+            </Layout.Content>
+        </Layout>
+    );
 };
 
 export default Dashboard;

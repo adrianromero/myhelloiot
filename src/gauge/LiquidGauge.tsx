@@ -22,109 +22,109 @@ import { DefaultGaugeFormat } from "./GaugeConstants";
 import "./LiquidGauge.css";
 
 export type LiquidGaugeProps = {
-  value?: number;
-  title?: string;
-  className?: string;
+    value?: number;
+    title?: string;
+    className?: string;
 } & GaugeProps;
 
 const LiquidGauge: React.FC<LiquidGaugeProps> = ({
-  value,
-  title = "",
-  className = "",
-  min = 0,
-  max = 100,
-  format = DefaultGaugeFormat
+    value,
+    title = "",
+    className = "",
+    min = 0,
+    max = 100,
+    format = DefaultGaugeFormat,
 }) => {
-  const [componentId] = useState<number>(() => Math.random());
+    const [componentId] = useState<number>(() => Math.random());
 
-  const r1 = 55;
-  const r2 = 52;
-  const centerx = 100;
-  const centery = 65;
+    const r1 = 55;
+    const r2 = 52;
+    const centerx = 100;
+    const centery = 65;
 
-  let yvalue: number;
-  let formatvalue: string;
-  if (typeof value === "undefined" || isNaN(value)) {
-    yvalue = NaN;
-    formatvalue = "";
-  } else {
-    yvalue = padvalue(min, max, r2 * 2)(value);
-    yvalue = centery + r2 - yvalue;
-    formatvalue = format(value);
-  }
+    let yvalue: number;
+    let formatvalue: string;
+    if (typeof value === "undefined" || isNaN(value)) {
+        yvalue = NaN;
+        formatvalue = "";
+    } else {
+        yvalue = padvalue(min, max, r2 * 2)(value);
+        yvalue = centery + r2 - yvalue;
+        formatvalue = format(value);
+    }
 
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      version="1.1"
-      viewBox="0 0 200 130"
-    >
-      <g className={className}>
-        <defs>
-          <clipPath id={`cut-off-bottom-${componentId}`}>
-            {!isNaN(yvalue) && (
-              <rect
-                className="liquidgauge-bar"
-                x={0}
-                y={yvalue}
-                width={200}
-                height={130}
-              />
-            )}
-          </clipPath>
-        </defs>
-        <circle
-          cx={centerx}
-          cy={centery}
-          r={r1}
-          className="liquidgauge-border"
-          style={{ fill: "#00000000" }}
-        />
-        <text
-          x={100}
-          y={65}
-          textAnchor="middle"
-          className="liquidgauge-value liquidgauge-value_1"
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            viewBox="0 0 200 130"
         >
-          {formatvalue}
-        </text>
-        <text
-          x={100}
-          y={75}
-          textAnchor="middle"
-          dominantBaseline="hanging"
-          className="liquidgauge-title liquidgauge-title_1"
-        >
-          {title}
-        </text>
-        <g clipPath={`url(#cut-off-bottom-${componentId})`}>
-          <circle
-            cx={centerx}
-            cy={centery}
-            r={r2}
-            className="liquidgauge-background"
-          />
-          <text
-            x={100}
-            y={65}
-            textAnchor="middle"
-            className="liquidgauge-value liquidgauge-value_2"
-          >
-            {formatvalue}
-          </text>
-          <text
-            x={100}
-            y={75}
-            textAnchor="middle"
-            dominantBaseline="hanging"
-            className="liquidgauge-title liquidgauge-title_2"
-          >
-            {title}
-          </text>
-        </g>
-      </g>
-    </svg>
-  );
+            <g className={className}>
+                <defs>
+                    <clipPath id={`cut-off-bottom-${componentId}`}>
+                        {!isNaN(yvalue) && (
+                            <rect
+                                className="liquidgauge-bar"
+                                x={0}
+                                y={yvalue}
+                                width={200}
+                                height={130}
+                            />
+                        )}
+                    </clipPath>
+                </defs>
+                <circle
+                    cx={centerx}
+                    cy={centery}
+                    r={r1}
+                    className="liquidgauge-border"
+                    style={{ fill: "#00000000" }}
+                />
+                <text
+                    x={100}
+                    y={65}
+                    textAnchor="middle"
+                    className="liquidgauge-value liquidgauge-value_1"
+                >
+                    {formatvalue}
+                </text>
+                <text
+                    x={100}
+                    y={75}
+                    textAnchor="middle"
+                    dominantBaseline="hanging"
+                    className="liquidgauge-title liquidgauge-title_1"
+                >
+                    {title}
+                </text>
+                <g clipPath={`url(#cut-off-bottom-${componentId})`}>
+                    <circle
+                        cx={centerx}
+                        cy={centery}
+                        r={r2}
+                        className="liquidgauge-background"
+                    />
+                    <text
+                        x={100}
+                        y={65}
+                        textAnchor="middle"
+                        className="liquidgauge-value liquidgauge-value_2"
+                    >
+                        {formatvalue}
+                    </text>
+                    <text
+                        x={100}
+                        y={75}
+                        textAnchor="middle"
+                        dominantBaseline="hanging"
+                        className="liquidgauge-title liquidgauge-title_2"
+                    >
+                        {title}
+                    </text>
+                </g>
+            </g>
+        </svg>
+    );
 };
 
 export default LiquidGauge;

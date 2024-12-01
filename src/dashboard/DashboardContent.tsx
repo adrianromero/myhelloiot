@@ -18,15 +18,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React from "react";
 
 export type DashboardContentProps = {
-  name?: string;
-  icon?: React.ReactNode;
-  menuDisabled?: boolean;
-  disconnectDisabled?: boolean;
-  children?: React.ReactNode;
+    name?: string;
+    icon?: React.ReactNode;
+    menuDisabled?: boolean;
+    disconnectDisabled?: boolean;
+    children?: React.ReactNode;
 };
 
 const DashboardContent: React.FC<DashboardContentProps> = ({ children }) => (
-  <>{children}</>
+    <>{children}</>
 );
 
 export default DashboardContent;

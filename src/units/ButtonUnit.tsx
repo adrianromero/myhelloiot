@@ -27,72 +27,72 @@ import { SwitchIconValueFormat } from "../format/IconValueFormat";
 import { ConvertBuffer, IdentityConvert } from "../format/ConvertTypes";
 
 export type ButtonUnitProps = {
-  topic?: string;
-  pubtopic?: string;
-  subtopic?: string;
-  puboptions?: IClientPublishOptions;
-  suboptions?: IClientSubscribeOptions;
-  subconvert?: ConvertBuffer;
-  format?: ValueFormat | IconValueFormat;
-  icon?: React.ReactNode;
-  className?: string;
-  children?: React.ReactNode;
+    topic?: string;
+    pubtopic?: string;
+    subtopic?: string;
+    puboptions?: IClientPublishOptions;
+    suboptions?: IClientSubscribeOptions;
+    subconvert?: ConvertBuffer;
+    format?: ValueFormat | IconValueFormat;
+    icon?: React.ReactNode;
+    className?: string;
+    children?: React.ReactNode;
 };
 
 const ButtonUnit: React.FC<ButtonUnitProps> = ({
-  topic = "",
-  pubtopic = topic,
-  subtopic = topic,
-  puboptions,
-  suboptions,
-  subconvert = IdentityConvert(),
-  format = SwitchIconValueFormat(),
-  icon,
-  className = "",
-  children,
+    topic = "",
+    pubtopic = topic,
+    subtopic = topic,
+    puboptions,
+    suboptions,
+    subconvert = IdentityConvert(),
+    format = SwitchIconValueFormat(),
+    icon,
+    className = "",
+    children,
 }) => {
-  const [{ ready }, { publish }] = useMQTTContext();
-  const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
+    const [{ ready }, { publish }] = useMQTTContext();
+    const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
 
-  useEffect(() => {
-    setBuffer(Buffer.from([]));
-  }, [ready]);
+    useEffect(() => {
+        setBuffer(Buffer.from([]));
+    }, [ready]);
 
-  let theicon;
-  if (icon) {
-    theicon = icon;
-  } else if ("toIcon" in format) {
-    const f = format as IconValueFormat;
-    theicon = f.toIcon(buffer);
-  }
+    let theicon;
+    if (icon) {
+        theicon = icon;
+    } else if ("toIcon" in format) {
+        const f = format as IconValueFormat;
+        theicon = f.toIcon(buffer);
+    }
 
-  useMQTTSubscribe(
-    subtopic,
-    ({ message }: MQTTMessage) => {
-      const b = subconvert(message);
-      if (b) {
-        setBuffer(b);
-      }
-    },
-    suboptions
-  );
+    useMQTTSubscribe(
+        subtopic,
+        ({ message }: MQTTMessage) => {
+            const b = subconvert(message);
+            if (b) {
+                setBuffer(b);
+            }
+        },
+        suboptions,
+    );
 
-  const onClick = () => {
-    const next: Buffer = format.next(buffer);
-    setBuffer(next);
-    publish(pubtopic, next, puboptions);
-  };
+    const onClick = () => {
+        const next: Buffer = format.next(buffer);
+        setBuffer(next);
+        publish(pubtopic, next, puboptions);
+    };
 
-  return (
-    <Button
-      className={`myhButtonUnit ${className}`}
-      type="primary"
-      onClick={onClick}
-      disabled={!pubtopic}
-      icon={theicon}
-    >
-      {children}
-    </Button>
-  );
+    return (
+        <Button
+            className={`myhButtonUnit ${className}`}
+            type="primary"
+            onClick={onClick}
+            disabled={!pubtopic}
+            icon={theicon}
+        >
+            {children}
+        </Button>
+    );
 };
 export default ButtonUnit;

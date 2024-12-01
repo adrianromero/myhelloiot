@@ -25,50 +25,53 @@ import { ValueFormat } from "../format/FormatTypes";
 import { StringValueFormat } from "../format/ValueFormat";
 
 type NotifyUnitProps = {
-  subtopic?: string;
-  suboptions?: IClientSubscribeOptions;
-  type?: "success" | "error" | "info" | "warning" | "open";
-  format?: ValueFormat;
-  duration?: number;
-  className?: string;
+    subtopic?: string;
+    suboptions?: IClientSubscribeOptions;
+    type?: "success" | "error" | "info" | "warning" | "open";
+    format?: ValueFormat;
+    duration?: number;
+    className?: string;
 };
 
 const NotifyUnit: React.FC<NotifyUnitProps> = ({
-  subtopic = "",
-  suboptions,
-  type = "info",
-  format = StringValueFormat(),
-  duration = 2.5,
-  className,
+    subtopic = "",
+    suboptions,
+    type = "info",
+    format = StringValueFormat(),
+    duration = 2.5,
+    className,
 }) => {
-  const [notificationInstance, notificationContext] =
-    notification.useNotification();
-  const [[bounceTime, bounceMessage], setBouncing] = useState([
-    Number.MIN_SAFE_INTEGER,
-    Buffer.from(""),
-  ]);
-  const [[currentTime, currentMessage], setCurrent] = useState([
-    Number.MIN_SAFE_INTEGER,
-    Buffer.from(""),
-  ]);
-  useMQTTSubscribe(
-    subtopic,
-    ({ message }: MQTTMessage) => {
-      setCurrent([new Date().getTime(), message]);
-    },
-    suboptions
-  );
+    const [notificationInstance, notificationContext] =
+        notification.useNotification();
+    const [[bounceTime, bounceMessage], setBouncing] = useState([
+        Number.MIN_SAFE_INTEGER,
+        Buffer.from(""),
+    ]);
+    const [[currentTime, currentMessage], setCurrent] = useState([
+        Number.MIN_SAFE_INTEGER,
+        Buffer.from(""),
+    ]);
+    useMQTTSubscribe(
+        subtopic,
+        ({ message }: MQTTMessage) => {
+            setCurrent([new Date().getTime(), message]);
+        },
+        suboptions,
+    );
 
-  if (currentTime - bounceTime > 250 || !currentMessage.equals(bounceMessage)) {
-    notificationInstance[type]({
-      message: format.toDisplay(currentMessage),
-      duration,
-      className,
-      placement: "bottomRight",
-    });
-    setBouncing([currentTime, currentMessage]);
-  }
-  return <>{notificationContext}</>;
+    if (
+        currentTime - bounceTime > 250 ||
+        !currentMessage.equals(bounceMessage)
+    ) {
+        notificationInstance[type]({
+            message: format.toDisplay(currentMessage),
+            duration,
+            className,
+            placement: "bottomRight",
+        });
+        setBouncing([currentTime, currentMessage]);
+    }
+    return <>{notificationContext}</>;
 };
 
 export default NotifyUnit;

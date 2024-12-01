@@ -19,15 +19,16 @@ import React from "react";
 import { Card } from "antd";
 
 export type ComponentCardProps = {
-  title?: string;
+    title?: string;
 };
 
-export const createComponentCard = <P,>(Unit: React.FC<P>) => (props: P & ComponentCardProps) => {
-  const { title } = props;
-  return (
-    <Card title={title}>
-      <Unit {...props} />
-    </Card>
-  );
-};
-
+export const createComponentCard =
+    <P,>(Unit: React.FC<P>) =>
+    (props: P & ComponentCardProps) => {
+        const { title } = props;
+        return (
+            <Card title={title}>
+                <Unit {...props} />
+            </Card>
+        );
+    };

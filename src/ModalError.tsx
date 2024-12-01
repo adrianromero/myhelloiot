@@ -22,30 +22,30 @@ import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import "./ModalError.css";
 
 const ModalError: React.FC<{
-  title: string;
-  errorMessage: string;
-  onOk: React.MouseEventHandler<HTMLElement>;
-  visible: boolean;
+    title: string;
+    errorMessage: string;
+    onOk: React.MouseEventHandler<HTMLElement>;
+    visible: boolean;
 }> = ({ title, errorMessage, onOk, visible }) => {
-  return (
-    <Modal footer={null} closable={false} open={visible}>
-      <div className="myhModalError-container">
-        <SVGIcon
-          icon={faCircleExclamation}
-          className="myhModalError-icon"
-          style={{ color: "red" }}
-        />
-        <div>
-          <div className="myhModalError-title">{title}</div>
-          <div className="myhModalError-message">{errorMessage}</div>
-        </div>
-      </div>
-      <div className="myhModalError-ok">
-        <Button type="primary" onClick={onOk}>
-          OK
-        </Button>
-      </div>
-    </Modal>
-  );
+    return (
+        <Modal footer={null} closable={false} open={visible}>
+            <div className="myhModalError-container">
+                <SVGIcon
+                    icon={faCircleExclamation}
+                    className="myhModalError-icon"
+                    style={{ color: "red" }}
+                />
+                <div>
+                    <div className="myhModalError-title">{title}</div>
+                    <div className="myhModalError-message">{errorMessage}</div>
+                </div>
+            </div>
+            <div className="myhModalError-ok">
+                <Button type="primary" onClick={onOk}>
+                    OK
+                </Button>
+            </div>
+        </Modal>
+    );
 };
 export default ModalError;

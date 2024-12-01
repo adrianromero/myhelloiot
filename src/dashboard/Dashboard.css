@@ -16,19 +16,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .myhDashboard-buttonmenu {
-  width: 50px;
-  order: -1;
+    width: 50px;
+    order: -1;
 }
 
 .myhDashboard-drawermenu .ant-drawer-body {
-  padding: 0;
+    padding: 0;
 }
 
 .myhDashboardPage {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  gap: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 8px;
 }
 
 .myhDashboardPage > div,
@@ -36,14 +36,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .myhDashboardPage > h2,
 .myhDashboardPage > h3,
 .myhDashboardPage > h4 {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 300px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 300px;
 }
 .myhDashboardPage > .dash-unit {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 140px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 140px;
 }
 
 .myhDashboardPage > div.myhDashboardPage-all,
@@ -51,9 +51,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .myhDashboardPage > h2.myhDashboardPage-all,
 .myhDashboardPage > h3.myhDashboardPage-all,
 .myhDashboardPage > h4.myhDashboardPage-all {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100%;
 }
 
 .myhDashboardPage > div.myhDashboardPage-2,
@@ -61,7 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .myhDashboardPage > h2.myhDashboardPage-2,
 .myhDashboardPage > h3.myhDashboardPage-2,
 .myhDashboardPage > h4.myhDashboardPage-2 {
-  flex-grow: 2;
-  flex-shrink: 1;
-  flex-basis: 600px;
+    flex-grow: 2;
+    flex-shrink: 1;
+    flex-basis: 600px;
 }

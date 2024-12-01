@@ -48,70 +48,86 @@ import "./ProgressGauge.css";
 // ];
 
 export type ProgressGaugeProps = {
-  value?: number;
-  title?: string;
-  className?: string;
-  sections?: Section[];
+    value?: number;
+    title?: string;
+    className?: string;
+    sections?: Section[];
 } & GaugeProps;
 
 const ProgressGauge: React.FC<ProgressGaugeProps> = ({
-  value,
-  title = "",
-  className = "",
-  sections = [],
-  min = 0,
-  max = 100,
-  format = DefaultGaugeFormat
+    value,
+    title = "",
+    className = "",
+    sections = [],
+    min = 0,
+    max = 100,
+    format = DefaultGaugeFormat,
 }) => {
-  let width: number;
-  let formatvalue: string;
-  if (typeof value === "undefined" || isNaN(value)) {
-    width = NaN;
-    formatvalue = "";
-  } else {
-    width = padvalue(min, max, 160)(value);
-    formatvalue = format(value);
-  }
+    let width: number;
+    let formatvalue: string;
+    if (typeof value === "undefined" || isNaN(value)) {
+        width = NaN;
+        formatvalue = "";
+    } else {
+        width = padvalue(min, max, 160)(value);
+        formatvalue = format(value);
+    }
 
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      version="1.1"
-      viewBox="0 0 200 30"
-    >
-      <g className={className}>
-        <line
-          x1={20}
-          y1={20}
-          x2={180}
-          y2={20}
-          className="progressgauge-background"
-        />
-        <Sections sections={sections} min={min} max={max} start={20} len={160} />
-        {!isNaN(width) && (
-          <line
-            x1={20}
-            y1={20}
-            x2={180}
-            y2={20}
-            className="progressgauge-bar"
-            style={{
-              fill: "#00000000",
-              strokeMiterlimit: 0,
-              strokeDasharray: `${width} 400`,
-            }}
-          />
-        )}
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            viewBox="0 0 200 30"
+        >
+            <g className={className}>
+                <line
+                    x1={20}
+                    y1={20}
+                    x2={180}
+                    y2={20}
+                    className="progressgauge-background"
+                />
+                <Sections
+                    sections={sections}
+                    min={min}
+                    max={max}
+                    start={20}
+                    len={160}
+                />
+                {!isNaN(width) && (
+                    <line
+                        x1={20}
+                        y1={20}
+                        x2={180}
+                        y2={20}
+                        className="progressgauge-bar"
+                        style={{
+                            fill: "#00000000",
+                            strokeMiterlimit: 0,
+                            strokeDasharray: `${width} 400`,
+                        }}
+                    />
+                )}
 
-        <text x={180} y={12} textAnchor="end" className="progressgauge-value">
-          {formatvalue}
-        </text>
-        <text x={20} y={10} textAnchor="start" className="progressgauge-title">
-          {title}
-        </text>
-      </g>
-    </svg>
-  );
+                <text
+                    x={180}
+                    y={12}
+                    textAnchor="end"
+                    className="progressgauge-value"
+                >
+                    {formatvalue}
+                </text>
+                <text
+                    x={20}
+                    y={10}
+                    textAnchor="start"
+                    className="progressgauge-title"
+                >
+                    {title}
+                </text>
+            </g>
+        </svg>
+    );
 };
 
 export default ProgressGauge;

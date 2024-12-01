@@ -19,16 +19,27 @@ import React from "react";
 import "./ComponentLabeled.css";
 
 export type ComponentCardProps = {
-  label?: string;
+    label?: string;
 };
 
-export const createComponentLabeled = <P,>(Unit: React.FC<P>, unitClassSuffix?: string) => (props: P & ComponentCardProps) => {
-  const { label } = props;
-  return (
-    <div className={`myhComponentLabeled myhComponentLabeled-${unitClassSuffix}`}>
-      <div className={`myhComponentLabeled-label myhComponentLabeled-label-${unitClassSuffix}`}>{label}</div>
-      <div className={`myhComponentLabeled-unit myhComponentLabeled-unit-${unitClassSuffix}`}><Unit {...props} /></div>
-    </div>
-  );
-};
-
+export const createComponentLabeled =
+    <P,>(Unit: React.FC<P>, unitClassSuffix?: string) =>
+    (props: P & ComponentCardProps) => {
+        const { label } = props;
+        return (
+            <div
+                className={`myhComponentLabeled myhComponentLabeled-${unitClassSuffix}`}
+            >
+                <div
+                    className={`myhComponentLabeled-label myhComponentLabeled-label-${unitClassSuffix}`}
+                >
+                    {label}
+                </div>
+                <div
+                    className={`myhComponentLabeled-unit myhComponentLabeled-unit-${unitClassSuffix}`}
+                >
+                    <Unit {...props} />
+                </div>
+            </div>
+        );
+    };

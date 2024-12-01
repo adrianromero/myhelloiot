@@ -23,15 +23,15 @@ import { MQTTContext } from "./MQTTContext";
 export const useMQTTContext = () => useContext(MQTTContext);
 
 export const useMQTTSubscribe = (
-  topic: string,
-  callback: (mqttmessage: MQTTMessage) => void,
-  options?: IClientSubscribeOptions
+    topic: string,
+    callback: (mqttmessage: MQTTMessage) => void,
+    options?: IClientSubscribeOptions,
 ): void => {
-  const [{ ready }, { subscribe, unsubscribe }] = useMQTTContext();
-  useEffect(() => {
-    const handler = subscribe(topic, callback, options);
-    return () => {
-      unsubscribe(handler);
-    };
-  }, [ready, topic]); // eslint-disable-line react-hooks/exhaustive-deps
+    const [{ ready }, { subscribe, unsubscribe }] = useMQTTContext();
+    useEffect(() => {
+        const handler = subscribe(topic, callback, options);
+        return () => {
+            unsubscribe(handler);
+        };
+    }, [ready, topic]); // eslint-disable-line react-hooks/exhaustive-deps
 };

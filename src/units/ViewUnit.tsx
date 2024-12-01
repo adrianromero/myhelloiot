@@ -26,41 +26,41 @@ import type { ConvertBuffer } from "../format/ConvertTypes";
 import { IdentityConvert } from "../format/ConvertTypes";
 
 type ViewUnitProps = {
-  topic?: string;
-  subtopic?: string;
-  suboptions?: IClientSubscribeOptions;
-  subconvert?: ConvertBuffer;
-  format?: IconFormat;
-  className?: string;
+    topic?: string;
+    subtopic?: string;
+    suboptions?: IClientSubscribeOptions;
+    subconvert?: ConvertBuffer;
+    format?: IconFormat;
+    className?: string;
 };
 
 const ViewUnit: React.FC<ViewUnitProps> = ({
-  topic = "",
-  subtopic = topic,
-  suboptions,
-  subconvert = IdentityConvert(),
-  format = StringIconFormat(),
-  className = "",
+    topic = "",
+    subtopic = topic,
+    suboptions,
+    subconvert = IdentityConvert(),
+    format = StringIconFormat(),
+    className = "",
 }) => {
-  const [{ ready }] = useMQTTContext();
-  const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
+    const [{ ready }] = useMQTTContext();
+    const [buffer, setBuffer] = useState<Buffer>(Buffer.from([]));
 
-  useEffect(() => {
-    setBuffer(Buffer.from([]));
-  }, [ready]);
+    useEffect(() => {
+        setBuffer(Buffer.from([]));
+    }, [ready]);
 
-  useMQTTSubscribe(
-    subtopic,
-    ({ message }: MQTTMessage) => {
-      const b = subconvert(message);
-      if (b) {
-        setBuffer(b);
-      }
-    },
-    suboptions
-  );
+    useMQTTSubscribe(
+        subtopic,
+        ({ message }: MQTTMessage) => {
+            const b = subconvert(message);
+            if (b) {
+                setBuffer(b);
+            }
+        },
+        suboptions,
+    );
 
-  return <span className={className}>{format.toIcon(buffer)}</span>;
+    return <span className={className}>{format.toIcon(buffer)}</span>;
 };
 
 export default ViewUnit;

@@ -23,94 +23,104 @@ import { DefaultGaugeFormat } from "./GaugeConstants";
 import "./SpaceGauge.css";
 
 export type SpaceGaugeProps = {
-  value?: number;
-  title?: string;
-  className?: string;
+    value?: number;
+    title?: string;
+    className?: string;
 } & GaugeProps;
 
 const SpaceGauge: React.FC<SpaceGaugeProps> = ({
-  value,
-  title = "",
-  className = "",
-  min = 0,
-  max = 100,
-  format = DefaultGaugeFormat
+    value,
+    title = "",
+    className = "",
+    min = 0,
+    max = 100,
+    format = DefaultGaugeFormat,
 }) => {
-  const startangle = 90;
-  const endangle = 360;
+    const startangle = 90;
+    const endangle = 360;
 
-  const r1 = 50;
-  const centerx = 100;
-  const centery = 65;
+    const r1 = 50;
+    const centerx = 100;
+    const centery = 65;
 
-  const arctotal = endangle - startangle;
-  const arctotalrad = r1 * radians(arctotal);
+    const arctotal = endangle - startangle;
+    const arctotalrad = r1 * radians(arctotal);
 
-  let arcvaluerad: number;
-  let formatvalue: string;
-  if (typeof value === "undefined" || isNaN(value)) {
-    arcvaluerad = NaN;
-    formatvalue = "";
-  } else {
-    arcvaluerad = padvalue(min, max, arctotalrad)(value);
-    formatvalue = format(value);
-  }
+    let arcvaluerad: number;
+    let formatvalue: string;
+    if (typeof value === "undefined" || isNaN(value)) {
+        arcvaluerad = NaN;
+        formatvalue = "";
+    } else {
+        arcvaluerad = padvalue(min, max, arctotalrad)(value);
+        formatvalue = format(value);
+    }
 
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      version="1.1"
-      viewBox="0 0 200 130"
-    >
-      <g className={className}>
-        <path
-          id="path1"
-          d={arcpath({
-            cx: centerx,
-            cy: centery,
-            r: r1,
-            start: radians(startangle),
-            end: radians(endangle),
-            orientation: arctotal > 180 ? 1 : 0,
-            sweep: 1,
-          })}
-          className="spacegauge-background"
-          style={{
-            fill: "#00000000",
-            strokeMiterlimit: 0,
-            strokeDasharray: "none",
-          }}
-        />
-        {!isNaN(arcvaluerad) && (
-          <path
-            id="path2"
-            d={arcpath({
-              cx: centerx,
-              cy: centery,
-              r: r1,
-              start: radians(startangle),
-              end: radians(endangle),
-              orientation: arctotal > 180 ? 1 : 0,
-              sweep: 1,
-            })}
-            className="spacegauge-bar"
-            style={{
-              fill: "#00000000",
-              strokeMiterlimit: 0,
-              strokeDasharray: `${arcvaluerad} 400`,
-            }}
-          />
-        )}
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            viewBox="0 0 200 130"
+        >
+            <g className={className}>
+                <path
+                    id="path1"
+                    d={arcpath({
+                        cx: centerx,
+                        cy: centery,
+                        r: r1,
+                        start: radians(startangle),
+                        end: radians(endangle),
+                        orientation: arctotal > 180 ? 1 : 0,
+                        sweep: 1,
+                    })}
+                    className="spacegauge-background"
+                    style={{
+                        fill: "#00000000",
+                        strokeMiterlimit: 0,
+                        strokeDasharray: "none",
+                    }}
+                />
+                {!isNaN(arcvaluerad) && (
+                    <path
+                        id="path2"
+                        d={arcpath({
+                            cx: centerx,
+                            cy: centery,
+                            r: r1,
+                            start: radians(startangle),
+                            end: radians(endangle),
+                            orientation: arctotal > 180 ? 1 : 0,
+                            sweep: 1,
+                        })}
+                        className="spacegauge-bar"
+                        style={{
+                            fill: "#00000000",
+                            strokeMiterlimit: 0,
+                            strokeDasharray: `${arcvaluerad} 400`,
+                        }}
+                    />
+                )}
 
-        <text x={105} y={105} textAnchor="start" className="spacegauge-value">
-          {formatvalue}
-        </text>
-        <text x={105} y={80} textAnchor="start" className="spacegauge-title">
-          {title}
-        </text>
-      </g>
-    </svg>
-  );
+                <text
+                    x={105}
+                    y={105}
+                    textAnchor="start"
+                    className="spacegauge-value"
+                >
+                    {formatvalue}
+                </text>
+                <text
+                    x={105}
+                    y={80}
+                    textAnchor="start"
+                    className="spacegauge-title"
+                >
+                    {title}
+                </text>
+            </g>
+        </svg>
+    );
 };
 
 export default SpaceGauge;

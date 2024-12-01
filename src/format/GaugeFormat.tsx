@@ -31,23 +31,23 @@ import FuelGauge from "../gauge/FuelGauge";
 import ControlGauge from "../gauge/ControlGauge";
 
 export type GaugeIconFormat<GaugeProps> = (
-  gaugeprops: GaugeProps,
-  valueformat?: Intl.NumberFormatOptions
+    gaugeprops: GaugeProps,
+    valueformat?: Intl.NumberFormatOptions,
 ) => IconFormat;
 
 const CreateGaugesIconFormat =
-  <GaugeProps extends object>(
-    Component: React.FC<GaugeProps>
-  ): GaugeIconFormat<GaugeProps> =>
+    <GaugeProps extends object>(
+        Component: React.FC<GaugeProps>,
+    ): GaugeIconFormat<GaugeProps> =>
     (gaugeprops: GaugeProps): IconFormat => ({
-      toIcon: (buffer) => (
-        <Component value={readNumber(buffer)} {...gaugeprops} />
-      ),
+        toIcon: buffer => (
+            <Component value={readNumber(buffer)} {...gaugeprops} />
+        ),
     });
 
 function readNumber(buffer: Buffer): number | undefined {
-  const s: string = buffer.toString();
-  return s ? Number(s) : undefined;
+    const s: string = buffer.toString();
+    return s ? Number(s) : undefined;
 }
 
 export const FuelIconFormat = CreateGaugesIconFormat(FuelGauge);
