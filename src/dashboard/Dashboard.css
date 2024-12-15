@@ -25,43 +25,61 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .myhDashboardPage {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     align-items: stretch;
     gap: 8px;
 }
 
-.myhDashboardPage > div,
-.myhDashboardPage > h1,
-.myhDashboardPage > h2,
-.myhDashboardPage > h3,
-.myhDashboardPage > h4 {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 300px;
-}
-.myhDashboardPage > .dash-unit {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 140px;
+@media (width < 576px) {
+    .myhDashboardPage {
+        grid-template-columns: 1fr;
+    }
 }
 
-.myhDashboardPage > div.myhDashboardPage-all,
-.myhDashboardPage > h1.myhDashboardPage-all,
-.myhDashboardPage > h2.myhDashboardPage-all,
-.myhDashboardPage > h3.myhDashboardPage-all,
-.myhDashboardPage > h4.myhDashboardPage-all {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 100%;
+@media (width >= 576px) {
+    .myhDashboardPage {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .myhDashboardPage > .span-all,
+    .myhDashboardPage > h1,
+    .myhDashboardPage > h2,
+    .myhDashboardPage > h3,
+    .myhDashboardPage > h4 {
+        grid-column: 1 / span 2;
+    }
+    .myhDashboardPage > span-double {
+        grid-column-end: span 2;
+    }
 }
 
-.myhDashboardPage > div.myhDashboardPage-2,
-.myhDashboardPage > h1.myhDashboardPage-2,
-.myhDashboardPage > h2.myhDashboardPage-2,
-.myhDashboardPage > h3.myhDashboardPage-2,
-.myhDashboardPage > h4.myhDashboardPage-2 {
-    flex-grow: 2;
-    flex-shrink: 1;
-    flex-basis: 600px;
+@media (width >= 768px) {
+    .myhDashboardPage {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .myhDashboardPage > .span-all,
+    .myhDashboardPage > h1,
+    .myhDashboardPage > h2,
+    .myhDashboardPage > h3,
+    .myhDashboardPage > h4 {
+        grid-column: 1 / span 4;
+    }
+    .myhDashboardPage > span-double {
+        grid-column-end: span 2;
+    }
+}
+
+@media (width >= 992px) {
+    .myhDashboardPage {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    .myhDashboardPage > .span-all,
+    .myhDashboardPage > h1,
+    .myhDashboardPage > h2,
+    .myhDashboardPage > h3,
+    .myhDashboardPage > h4 {
+        grid-column: 1 / span 6;
+    }
+    .myhDashboardPage > span-double {
+        grid-column-end: span 2;
+    }
 }

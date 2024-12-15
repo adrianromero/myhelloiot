@@ -37,12 +37,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .btn-icontop.myhButtonUnit.ant-btn {
+    display: block;
     padding: 15px 15px;
 }
 
 .btn-icontop.myhButtonUnit.ant-btn > .ant-btn-icon {
     display: block;
-    margin-inline-end: unset;
 }
 
 .myhButtonUnit.ant-btn-primary:not(:disabled):not(.ant-btn-disabled) {

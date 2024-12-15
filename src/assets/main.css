@@ -15,6 +15,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+body {
+    background: #f5f5f5;
+}
+
+.myhLayout {
+    background: none;
+}
+
 .myhLayoutContent-panel {
     margin: 24px;
 }
