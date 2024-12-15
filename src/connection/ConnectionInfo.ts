@@ -16,7 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { FileInfo } from "./UploadRaw";
-import basicsampledata from "./sampledata/basicsampledata";
 import { cyrb53str } from "../CryptFunctions";
 import type { QoS, IConnectPacket } from "mqtt-packet";
 
@@ -35,31 +34,6 @@ export type ConnectInfo = {
     willpayload: string;
     dashboard: FileInfo;
     dashboardcss: FileInfo;
-};
-
-export const defaultConnectInfo: ConnectInfo = {
-    clientId: "",
-    url: "wss://mymqttbroker",
-    keepalive: 60,
-    protocolVersion: 4,
-    clean: true,
-    connectTimeout: 30000,
-    reconnectPeriod: 1000,
-    will: false,
-    willtopic: "",
-    willqos: 0,
-    willretain: false,
-    willpayload: "",
-    dashboard: {
-        name: "basic.jsx",
-        type: "text/jsx",
-        data: basicsampledata,
-    },
-    dashboardcss: {
-        name: "dashboard.css",
-        type: "text/css",
-        data: "",
-    },
 };
 
 const STORECONNECTINFO = "myh-info-" + cyrb53str(window.location.href);
@@ -91,11 +65,37 @@ export const loadResourceConnectInfo = async (
     return infodata;
 };
 
-export const loadStoreConnectInfo = (): ConnectInfo => {
+export const loadStoreConnectInfo = async (): Promise<ConnectInfo> => {
     try {
         return JSON.parse(localStorage.getItem(STORECONNECTINFO) ?? "");
     } catch {
-        return defaultConnectInfo;
+        const basicsampledata = await fetch(
+            new URL("../assets/sampledata/basic.jsx.txt", import.meta.url),
+        );
+        return {
+            clientId: "",
+            url: "wss://mymqttbroker",
+            keepalive: 60,
+            protocolVersion: 4,
+            clean: true,
+            connectTimeout: 30000,
+            reconnectPeriod: 1000,
+            will: false,
+            willtopic: "",
+            willqos: 0,
+            willretain: false,
+            willpayload: "",
+            dashboard: {
+                name: "basic.jsx",
+                type: "text/jsx",
+                data: await basicsampledata.text(),
+            },
+            dashboardcss: {
+                name: "dashboard.css",
+                type: "text/css",
+                data: "",
+            },
+        };
     }
 };
 

@@ -19,24 +19,24 @@ const lightssampledata = `{/* Light switches example. */}
 
 <DashboardPage title="Light switches">
   <ButtonUnit  
-    className="dash-unit btn-icontop"
+    className="span-double btn-icontop"
     topic="myhelloiot/testswitch1"
     puboptions={{ retain: true }}
     format={SwitchIconValueFormat()}
   >Light 1</ButtonUnit>
   <ButtonUnit
-    className="dash-unit btn-icontop"
+    className="span-double btn-icontop"
     topic="myhelloiot/testswitch2"
     puboptions={{ retain: true }}
     format={MoonIconValueFormat()}
   >Light 2</ButtonUnit>
   <ButtonUnit
-    className="dash-unit btn-icontop"
+    className="span-double btn-icontop"
     topic="myhelloiot/testswitch3"
     puboptions={{ retain: true }}
     format={StarIconValueFormat()}
   >Light 3</ButtonUnit>
-  <Card className="myhDashboardPage-all" title="Light switches">
+  <Card className="span-all" title="Light switches">
     <div style={{display: "flex", margin: "4px"}}>
       <div style={{flex: "0 1 40px", textAlign: "center"}}>
         <ViewUnit

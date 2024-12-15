@@ -150,7 +150,7 @@ const MQTTApp: React.FC = () => {
                     //   connected = loadStoreConnected();
                 } else {
                     // STANDARD (Default)
-                    connectInfo = loadStoreConnectInfo();
+                    connectInfo = await loadStoreConnectInfo();
                     connectCredentials = loadStoreConnectCredentials();
                     connected = loadStoreConnected();
                 }

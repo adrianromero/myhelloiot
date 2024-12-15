@@ -25,13 +25,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Typography, Tag, Button, Image, App } from "antd";
 import { FormInstance } from "antd/lib/form";
-import basicsampledata from "./sampledata/basicsampledata";
-import loggingsampledata from "./sampledata/loggingsampledata";
-import pubsubsampledata from "./sampledata/pubsubsampledata";
-import inputtextsampledata from "./sampledata/inputtextsampledata";
-import lightssampledata from "./sampledata/lightssampledata";
-import gaugessampledata from "./sampledata/gaugessampledata";
-import mosquittosampledata from "./sampledata/mosquittosampledata";
 import GitHubRibbon from "../assets/svg/github.svg?react";
 import { ConnectInfoForm } from "./ConnectInfoForm";
 import { VERSION } from "../version";
@@ -44,6 +37,14 @@ const ContentConnectAbout: React.FC<{
     form: FormInstance<ConnectInfoForm>;
 }> = ({ form }) => {
     const { message } = App.useApp();
+
+    const sampleData = async (name: string): Promise<string> => {
+        const data = await fetch(
+            new URL(`../assets/sampledata/${name}.jsx.txt`, import.meta.url),
+        );
+        return data.text();
+    };
+
     return (
         <>
             <Link
@@ -181,13 +182,13 @@ const ContentConnectAbout: React.FC<{
                                 type="link"
                                 size="small"
                                 icon={<SVGIcon icon={faPencil} />}
-                                onClick={() => {
+                                onClick={async () => {
                                     message.info("dashboard: basic.jsx");
                                     form.setFieldsValue({
                                         dashboard: {
                                             name: "basic.jsx",
                                             type: "text/jsx",
-                                            data: basicsampledata,
+                                            data: await sampleData("basic"),
                                         },
                                     });
                                 }}
@@ -202,13 +203,13 @@ const ContentConnectAbout: React.FC<{
                                 type="link"
                                 size="small"
                                 icon={<SVGIcon icon={faPencil} />}
-                                onClick={() => {
+                                onClick={async () => {
                                     message.info("dashboard: inputtext.jsx");
                                     form.setFieldsValue({
                                         dashboard: {
                                             name: "inputtext.jsx",
                                             type: "text/jsx",
-                                            data: inputtextsampledata,
+                                            data: await sampleData("inputtext"),
                                         },
                                     });
                                 }}
@@ -223,13 +224,13 @@ const ContentConnectAbout: React.FC<{
                                 type="link"
                                 size="small"
                                 icon={<SVGIcon icon={faPencil} />}
-                                onClick={() => {
+                                onClick={async () => {
                                     message.info("dashboard: lights.jsx");
                                     form.setFieldsValue({
                                         dashboard: {
                                             name: "lights.jsx",
                                             type: "text/jsx",
-                                            data: lightssampledata,
+                                            data: await sampleData("lights"),
                                         },
                                     });
                                 }}
@@ -244,13 +245,13 @@ const ContentConnectAbout: React.FC<{
                                 type="link"
                                 size="small"
                                 icon={<SVGIcon icon={faPencil} />}
-                                onClick={() => {
+                                onClick={async () => {
                                     message.info("dashboard: gauges.jsx");
                                     form.setFieldsValue({
                                         dashboard: {
                                             name: "gauges.jsx",
                                             type: "text/jsx",
-                                            data: gaugessampledata,
+                                            data: await sampleData("gauges"),
                                         },
                                     });
                                 }}
@@ -265,13 +266,13 @@ const ContentConnectAbout: React.FC<{
                                 type="link"
                                 size="small"
                                 icon={<SVGIcon icon={faPencil} />}
-                                onClick={() => {
+                                onClick={async () => {
                                     message.info("dashboard: logging.jsx");
                                     form.setFieldsValue({
                                         dashboard: {
                                             name: "logging.jsx",
                                             type: "text/jsx",
-                                            data: loggingsampledata,
+                                            data: await sampleData("logging"),
                                         },
                                     });
                                 }}
@@ -286,13 +287,13 @@ const ContentConnectAbout: React.FC<{
                                 type="link"
                                 size="small"
                                 icon={<SVGIcon icon={faPencil} />}
-                                onClick={() => {
+                                onClick={async () => {
                                     message.info("dashboard: pubsub.jsx");
                                     form.setFieldsValue({
                                         dashboard: {
                                             name: "pubsub.jsx",
                                             type: "text/jsx",
-                                            data: pubsubsampledata,
+                                            data: await sampleData("pubsub"),
                                         },
                                     });
                                 }}
@@ -307,13 +308,13 @@ const ContentConnectAbout: React.FC<{
                                 type="link"
                                 size="small"
                                 icon={<SVGIcon icon={faPencil} />}
-                                onClick={() => {
+                                onClick={async () => {
                                     message.info("dashboard: mosquitto.jsx");
                                     form.setFieldsValue({
                                         dashboard: {
                                             name: "mosquitto.jsx",
                                             type: "text/jsx",
-                                            data: mosquittosampledata,
+                                            data: await sampleData("mosquitto"),
                                         },
                                     });
                                 }}

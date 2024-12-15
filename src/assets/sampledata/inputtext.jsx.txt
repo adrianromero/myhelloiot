@@ -1,0 +1,21 @@
+{/* Input text example. */}
+
+<DashboardPage title="Input text">
+  <InputCard
+    title="Testing topic publication"
+    pubtopic="myhelloiot/testingtopic"
+  />
+  <InputCard
+    title="Testing topic subscription"
+    subtopic="myhelloiot/testingtopic"
+  />
+  <InputCard
+    title="Testing topic pub/sub"
+    topic="myhelloiot/testingtopic"
+  />
+  <InputCard
+    title="Testing topic Hexadecimal"
+    topic="myhelloiot/testingtopic"
+    format={HEXValueFormat()}
+  />
+</DashboardPage>
