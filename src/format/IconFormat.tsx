@@ -18,11 +18,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { Buffer } from "buffer";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import SVGIcon from "./SVGIcon";
-import { faLightbulb, faStar, faMoon } from "@fortawesome/free-solid-svg-icons";
+import {
+    faLightbulb,
+    faStar,
+    faMoon,
+    faHeart,
+} from "@fortawesome/free-solid-svg-icons";
 import {
     faLightbulb as faLightbulbRegular,
     faStar as faStarRegular,
     faMoon as faMoonRegular,
+    faHeart as faHeartRegular,
 } from "@fortawesome/free-regular-svg-icons";
 import {
     IconFormat,
@@ -94,6 +100,8 @@ export const MoonIconFormat = () =>
     SwitchIconFormat({ icon: faMoon, iconoff: faMoonRegular });
 export const StarIconFormat = () =>
     SwitchIconFormat({ icon: faStar, iconoff: faStarRegular });
+export const HeartIconFormat = () =>
+    SwitchIconFormat({ icon: faHeart, iconoff: faHeartRegular });
 
 export const StringIconFormat = (
     valueformat: ValueFormat = StringValueFormat(),

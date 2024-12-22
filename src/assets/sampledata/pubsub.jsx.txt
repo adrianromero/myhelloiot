@@ -3,11 +3,11 @@
 <Dashboard title="Publish / subscribe">
   <Publisher
     className="myhLayoutContent-panel"
-    prefixtopic="myhelloiot/testing/"
+    prefixtopic="myhelloiot/test/"
   />
   <LogTool
     className="myhLayoutContent-panel"
-    subtopic="myhelloiot/testing/#"
+    subtopic="myhelloiot/test/#"
     suboptions={{ qos: 2 }}
   />
 </Dashboard>

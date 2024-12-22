@@ -2,19 +2,19 @@
 
 <DashboardPage title="Input text">
   <InputCard
-    title="Testing topic publication"
+    title="Topic publication"
     pubtopic="myhelloiot/testingtopic"
   />
   <InputCard
-    title="Testing topic subscription"
+    title="Topic subscription"
     subtopic="myhelloiot/testingtopic"
   />
   <InputCard
-    title="Testing topic pub/sub"
+    title="Topic pub/sub"
     topic="myhelloiot/testingtopic"
   />
   <InputCard
-    title="Testing topic Hexadecimal"
+    title="Topic Hexadecimal"
     topic="myhelloiot/testingtopic"
     format={HEXValueFormat()}
   />

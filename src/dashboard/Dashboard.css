@@ -47,12 +47,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     .myhDashboardPage > h4 {
         grid-column: 1 / span 2;
     }
-    .myhDashboardPage > span-double {
+    .myhDashboardPage > .span-double {
         grid-column-end: span 2;
     }
 }
 
-@media (width >= 768px) {
+@media (width >= 1024px) {
     .myhDashboardPage {
         grid-template-columns: repeat(4, 1fr);
     }
@@ -63,12 +63,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     .myhDashboardPage > h4 {
         grid-column: 1 / span 4;
     }
-    .myhDashboardPage > span-double {
+    .myhDashboardPage > .span-double {
         grid-column-end: span 2;
     }
 }
 
-@media (width >= 992px) {
+@media (width >= 1600px) {
     .myhDashboardPage {
         grid-template-columns: repeat(6, 1fr);
     }
@@ -79,7 +79,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     .myhDashboardPage > h4 {
         grid-column: 1 / span 6;
     }
-    .myhDashboardPage > span-double {
+    .myhDashboardPage > .span-double {
         grid-column-end: span 2;
     }
 }

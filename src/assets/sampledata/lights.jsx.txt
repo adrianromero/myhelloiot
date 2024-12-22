@@ -2,23 +2,29 @@
 
 <DashboardPage title="Light switches">
   <ButtonUnit  
-    className="span-double btn-icontop"
+    className="btn-icontop"
     topic="myhelloiot/testswitch1"
     puboptions={{ retain: true }}
     format={SwitchIconValueFormat()}
   >Light 1</ButtonUnit>
   <ButtonUnit
-    className="span-double btn-icontop"
+    className="btn-icontop"
     topic="myhelloiot/testswitch2"
     puboptions={{ retain: true }}
     format={MoonIconValueFormat()}
   >Light 2</ButtonUnit>
   <ButtonUnit
-    className="span-double btn-icontop"
+    className="btn-icontop"
     topic="myhelloiot/testswitch3"
     puboptions={{ retain: true }}
     format={StarIconValueFormat()}
   >Light 3</ButtonUnit>
+  <ButtonUnit
+    className="btn-icontop"
+    topic="myhelloiot/testswitch4"
+    puboptions={{ retain: true }}
+    format={HeartIconValueFormat()}
+  >Light 4</ButtonUnit>
   <Card className="span-all" title="Light switches">
     <div style={{display: "flex", margin: "4px"}}>
       <div style={{flex: "0 1 40px", textAlign: "center"}}>
@@ -67,6 +73,22 @@
           subtopic="myhelloiot/testswitch3"
         />
       </div>
-    </div>      
+    </div>
+        <div style={{display: "flex", margin: "4px"}}>
+      <div style={{flex: "0 1 40px", textAlign: "center"}}>
+        <ViewUnit
+          subtopic="myhelloiot/testswitch4"
+          format={HeartIconFormat()}
+        />
+      </div>
+      <div style={{flex: "1 1 auto"}}>Light test 4: </div>
+      <div style={{flex: "0 1 auto"}}>
+        <SwitchUnit
+          pubtopic="myhelloiot/testswitch4"
+          puboptions={{ retain: true }}
+          subtopic="myhelloiot/testswitch4"
+        />
+      </div>
+    </div>
   </Card>
 </DashboardPage>
