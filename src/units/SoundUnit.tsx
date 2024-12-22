@@ -24,137 +24,140 @@ import useAudio from "./useAudio";
 import { StringValueFormat } from "../format/ValueFormat";
 import { ValueFormat } from "../format/FormatTypes";
 const clockalarm = new URL(
-  "../assets/media/128138_1542160-lq.mp3",
-  import.meta.url
+    "../assets/media/128138_1542160-lq.mp3",
+    import.meta.url,
 ).href;
 const gameitem = new URL(
-  "../assets/media/162467_311243-lq.mp3",
-  import.meta.url
+    "../assets/media/162467_311243-lq.mp3",
+    import.meta.url,
 ).href;
 const bottlewhoo = new URL(
-  "../assets/media/249703_3930831-lq.mp3",
-  import.meta.url
+    "../assets/media/249703_3930831-lq.mp3",
+    import.meta.url,
 ).href;
 const greek = new URL("../assets/media/322378_4397472-lq.mp3", import.meta.url)
-  .href;
+    .href;
 const bell = new URL("../assets/media/333695_1187042-lq.mp3", import.meta.url)
-  .href;
+    .href;
 const smokealarm = new URL(
-  "../assets/media/369848_1480854-lq.mp3",
-  import.meta.url
+    "../assets/media/369848_1480854-lq.mp3",
+    import.meta.url,
 ).href;
 const chimes = new URL("../assets/media/405548_6436863-lq.mp3", import.meta.url)
-  .href;
+    .href;
 const harp = new URL("../assets/media/486952_6657415-lq.mp3", import.meta.url)
-  .href;
+    .href;
 const messagepop = new URL(
-  "../assets/media/537061_7117640-lq.mp3",
-  import.meta.url
+    "../assets/media/537061_7117640-lq.mp3",
+    import.meta.url,
 ).href;
 
 type SoundUnitProps = {
-  subtopic?: string;
-  suboptions?: IClientSubscribeOptions;
-  volume?: number;
+    subtopic?: string;
+    suboptions?: IClientSubscribeOptions;
+    volume?: number;
 };
 
 const FORMAT: ValueFormat = StringValueFormat();
 
 const SoundUnit: React.FC<SoundUnitProps> = ({
-  subtopic = "",
-  suboptions,
-  volume = 1.0,
+    subtopic = "",
+    suboptions,
+    volume = 1.0,
 }) => {
-  const [, { play: playClockalarm, pause: pauseClockAlarm }] = useAudio(
-    clockalarm,
-    { volume }
-  );
-  const [, { play: playGameitem, pause: pauseGameitem }] = useAudio(gameitem, {
-    volume,
-  });
-  const [, { play: playBottlewhoo, pause: pauseBottlewhoo }] = useAudio(
-    bottlewhoo,
-    { volume }
-  );
-  const [, { play: playGreek, pause: pauseGreek }] = useAudio(greek, {
-    volume,
-  });
-  const [, { play: playBell, pause: pauseBell }] = useAudio(bell, { volume });
-  const [, { play: playSmokealarm, pause: pauseSmokealarm }] = useAudio(
-    smokealarm,
-    { volume }
-  );
-  const [, { play: playChimes, pause: pauseChimes }] = useAudio(chimes, {
-    volume,
-  });
-  const [, { play: playHarp, pause: pauseHarp }] = useAudio(harp, { volume });
-  const [, { play: playMessagepop, pause: pauseMessagepop }] = useAudio(
-    messagepop,
-    { volume }
-  );
-  const [notificationInstance, notificationContext] =
-    notification.useNotification();
+    const [, { play: playClockalarm, pause: pauseClockAlarm }] = useAudio(
+        clockalarm,
+        { volume },
+    );
+    const [, { play: playGameitem, pause: pauseGameitem }] = useAudio(
+        gameitem,
+        {
+            volume,
+        },
+    );
+    const [, { play: playBottlewhoo, pause: pauseBottlewhoo }] = useAudio(
+        bottlewhoo,
+        { volume },
+    );
+    const [, { play: playGreek, pause: pauseGreek }] = useAudio(greek, {
+        volume,
+    });
+    const [, { play: playBell, pause: pauseBell }] = useAudio(bell, { volume });
+    const [, { play: playSmokealarm, pause: pauseSmokealarm }] = useAudio(
+        smokealarm,
+        { volume },
+    );
+    const [, { play: playChimes, pause: pauseChimes }] = useAudio(chimes, {
+        volume,
+    });
+    const [, { play: playHarp, pause: pauseHarp }] = useAudio(harp, { volume });
+    const [, { play: playMessagepop, pause: pauseMessagepop }] = useAudio(
+        messagepop,
+        { volume },
+    );
+    const [notificationInstance, notificationContext] =
+        notification.useNotification();
 
-  useMQTTSubscribe(
-    subtopic,
-    ({ message }: MQTTMessage) => {
-      try {
-        switch (FORMAT.toDisplay(message)) {
-          case "clockalarm":
-            playClockalarm();
-            break;
-          case "botlewhoo":
-            playBottlewhoo();
-            break;
-          case "greek":
-            playGreek();
-            break;
-          case "bell":
-            playBell();
-            break;
-          case "smokealarm":
-            playSmokealarm();
-            break;
-          case "chimes":
-            playChimes();
-            break;
-          case "harp":
-            playHarp();
-            break;
-          case "messagepop":
-            playMessagepop();
-            break;
-          default:
-            playGameitem();
-        }
-      } catch {
-        notificationInstance.warning({
-          message: "Play audio",
-          description:
-            "Audio cannot be played. Please review the application permissions.",
-          placement: "bottomRight",
-        });
-      }
-    },
-    suboptions
-  );
+    useMQTTSubscribe(
+        subtopic,
+        ({ message }: MQTTMessage) => {
+            try {
+                switch (FORMAT.toDisplay(message)) {
+                    case "clockalarm":
+                        playClockalarm();
+                        break;
+                    case "botlewhoo":
+                        playBottlewhoo();
+                        break;
+                    case "greek":
+                        playGreek();
+                        break;
+                    case "bell":
+                        playBell();
+                        break;
+                    case "smokealarm":
+                        playSmokealarm();
+                        break;
+                    case "chimes":
+                        playChimes();
+                        break;
+                    case "harp":
+                        playHarp();
+                        break;
+                    case "messagepop":
+                        playMessagepop();
+                        break;
+                    default:
+                        playGameitem();
+                }
+            } catch {
+                notificationInstance.warning({
+                    message: "Play audio",
+                    description:
+                        "Audio cannot be played. Please review the application permissions.",
+                    placement: "bottomRight",
+                });
+            }
+        },
+        suboptions,
+    );
 
-  useEffect(
-    () => () => {
-      pauseClockAlarm();
-      pauseGameitem();
-      pauseBottlewhoo();
-      pauseGreek();
-      pauseBell();
-      pauseSmokealarm();
-      pauseChimes();
-      pauseHarp();
-      pauseMessagepop();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-  return <>{notificationContext}</>;
+    useEffect(
+        () => () => {
+            pauseClockAlarm();
+            pauseGameitem();
+            pauseBottlewhoo();
+            pauseGreek();
+            pauseBell();
+            pauseSmokealarm();
+            pauseChimes();
+            pauseHarp();
+            pauseMessagepop();
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [],
+    );
+    return <>{notificationContext}</>;
 };
 
 export default SoundUnit;

@@ -16,70 +16,70 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 export type ArcArgs = {
-  cx: number;
-  cy: number;
-  r: number;
-  start: number;
-  end: number;
-  orientation?: number;
-  sweep?: number;
+    cx: number;
+    cy: number;
+    r: number;
+    start: number;
+    end: number;
+    orientation?: number;
+    sweep?: number;
 };
 
 export const piepath = ({
-  cx,
-  cy,
-  r,
-  start,
-  end,
-  orientation = 0,
-  sweep = 0,
+    cx,
+    cy,
+    r,
+    start,
+    end,
+    orientation = 0,
+    sweep = 0,
 }: ArcArgs): string => {
-  return `M${cx + Math.cos(start) * r} ${
-    cy + Math.sin(start) * r
-  } A ${r} ${r} 1 ${orientation} ${sweep} ${cx + Math.cos(end) * r} ${
-    cy + Math.sin(end) * r
-  } L ${cx} ${cy} Z`;
+    return `M${cx + Math.cos(start) * r} ${
+        cy + Math.sin(start) * r
+    } A ${r} ${r} 1 ${orientation} ${sweep} ${cx + Math.cos(end) * r} ${
+        cy + Math.sin(end) * r
+    } L ${cx} ${cy} Z`;
 };
 
 export const arcpath = ({
-  cx,
-  cy,
-  r,
-  start,
-  end,
-  orientation = 0,
-  sweep = 0,
+    cx,
+    cy,
+    r,
+    start,
+    end,
+    orientation = 0,
+    sweep = 0,
 }: ArcArgs): string => {
-  return `M${cx + Math.cos(start) * r} ${
-    cy + Math.sin(start) * r
-  } A ${r} ${r} 1 ${orientation} ${sweep} ${cx + Math.cos(end) * r} ${
-    cy + Math.sin(end) * r
-  }`;
+    return `M${cx + Math.cos(start) * r} ${
+        cy + Math.sin(start) * r
+    } A ${r} ${r} 1 ${orientation} ${sweep} ${cx + Math.cos(end) * r} ${
+        cy + Math.sin(end) * r
+    }`;
 };
 
 export const padvalue =
-  (min: number, max: number, length: number) =>
-  (value: number): number => {
-    const lengthvalue = (length * (value - min)) / (max - min);
-    if (lengthvalue < 0) {
-      return 0;
-    }
-    if (lengthvalue > length) {
-      return length;
-    }
-    return lengthvalue;
-  };
+    (min: number, max: number, length: number) =>
+    (value: number): number => {
+        const lengthvalue = (length * (value - min)) / (max - min);
+        if (lengthvalue < 0) {
+            return 0;
+        }
+        if (lengthvalue > length) {
+            return length;
+        }
+        return lengthvalue;
+    };
 
 export const padsegment =
-  (min: number, max: number) =>
-  (value: number): number => {
-    if (value < min) {
-      return min;
-    }
-    if (value > max) {
-      return max;
-    }
-    return value;
-  };
+    (min: number, max: number) =>
+    (value: number): number => {
+        if (value < min) {
+            return min;
+        }
+        if (value > max) {
+            return max;
+        }
+        return value;
+    };
 
 export const radians = (angle: number): number => (angle * Math.PI) / 180;

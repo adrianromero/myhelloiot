@@ -1,0 +1,31 @@
+{/* Logging example. */}
+
+<DashboardPage title="Logging">
+  <InputCard
+    title="myhelloiot/test/1"
+    pubtopic="myhelloiot/test/1"
+  />
+  <InputCard
+    title="myhelloiot/test/2 (Retain)"
+    pubtopic="myhelloiot/test/2"
+    puboptions={{ retain: true }}
+  />
+  <Card title="myhelloiot/test/3">
+    <ButtonUnit className="myhButtonCard" pubtopic="myhelloiot/test/3" puboptions={{ qos: 0 }} format={MessageValueFormat("QoS Zero")}>Qos Zero</ButtonUnit>
+    <ButtonUnit className="myhButtonCard" pubtopic="myhelloiot/test/3" puboptions={{ qos: 1 }} format={MessageValueFormat("QoS One")}>Qos One</ButtonUnit>
+    <ButtonUnit className="myhButtonCard" pubtopic="myhelloiot/test/3" puboptions={{ qos: 2 }} format={MessageValueFormat("QoS Two")}>Qos Two</ButtonUnit>
+  </Card>
+  <Card title="myhelloiot/test/4">
+    <div style={{display: "flex", margin: "4px"}}>
+      <div style={{flex: "1 1 auto"}}>Test 4: </div>
+      <div style={{flex: "0 1 auto"}}>
+        <SwitchUnit
+          pubtopic="myhelloiot/test/4"
+        />
+      </div>
+    </div>
+  </Card>
+  <Card className="span-all">
+    <LogTool subtopic="myhelloiot/test/#" suboptions={{ qos: 2 }}/>
+  </Card>
+</DashboardPage>

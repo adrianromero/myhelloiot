@@ -16,27 +16,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .dashboardgauge-bar {
-  stroke: #0000ff;
-  stroke-width: 40px;
-  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+    stroke: #0000ff;
+    stroke-width: 40px;
+    transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .dashboardgauge-background {
-  stroke: #cccccc;
-  stroke-width: 40px;
+    stroke: #cccccc;
+    stroke-width: 40px;
 }
 
 .dashboardgauge-labels {
-  fill: #606060;
-  font: 10px sans-serif;
+    fill: #606060;
+    font: 10px sans-serif;
 }
 
 .dashboardgauge-value {
-  fill: #000000d9;
-  font: bold 22px sans-serif;
+    fill: #000000d9;
+    font: bold 22px sans-serif;
 }
 
 .dashboardgauge-title {
-  fill: #0000008c;
-  font: 12px sans-serif;
+    fill: #0000008c;
+    font: 12px sans-serif;
 }

@@ -16,109 +16,112 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
-import { faStar, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faMoon, faHeart } from "@fortawesome/free-solid-svg-icons";
 import {
-  faStar as faStarRegular,
-  faMoon as faMoonRegular,
+    faStar as faStarRegular,
+    faMoon as faMoonRegular,
+    faHeart as faHeartRegular,
 } from "@fortawesome/free-regular-svg-icons";
 
 import {
-  IconValueFormat,
-  ToIconValueFormat,
-  ONOFF,
-  LimitsFormat,
-  NumberFormat,
-  ToIconFormat,
+    IconValueFormat,
+    ToIconValueFormat,
+    ONOFF,
+    LimitsFormat,
+    NumberFormat,
+    ToIconFormat,
 } from "./FormatTypes";
 import { SwitchIconFormat } from "./IconFormat";
 import {
-  SwitchValueFormat,
-  StringValueFormat,
-  NumberValueFormat,
-  NumberValueFormatOptions,
+    SwitchValueFormat,
+    StringValueFormat,
+    NumberValueFormat,
+    NumberValueFormatOptions,
 } from "./ValueFormat";
 
 export type SwitchIconValueFormatProps = {
-  icon: IconDefinition;
-  iconoff: IconDefinition;
-  onoff?: ONOFF;
+    icon: IconDefinition;
+    iconoff: IconDefinition;
+    onoff?: ONOFF;
 };
 export const SwitchIconValueFormat = (
-  props?: SwitchIconValueFormatProps
+    props?: SwitchIconValueFormatProps,
 ): IconValueFormat =>
-  ToIconValueFormat(SwitchValueFormat(props?.onoff), SwitchIconFormat(props));
+    ToIconValueFormat(SwitchValueFormat(props?.onoff), SwitchIconFormat(props));
 export const BulbIconValueFormat = SwitchIconValueFormat;
 export const MoonIconValueFormat = () =>
-  SwitchIconValueFormat({ icon: faMoon, iconoff: faMoonRegular });
+    SwitchIconValueFormat({ icon: faMoon, iconoff: faMoonRegular });
 export const StarIconValueFormat = () =>
-  SwitchIconValueFormat({ icon: faStar, iconoff: faStarRegular });
+    SwitchIconValueFormat({ icon: faStar, iconoff: faStarRegular });
+export const HeartIconValueFormat = () =>
+    SwitchIconValueFormat({ icon: faHeart, iconoff: faHeartRegular });
 
 export const StringIconValueFormat = (): IconValueFormat =>
-  ToIconValueFormat(StringValueFormat());
+    ToIconValueFormat(StringValueFormat());
 
 export const NumberIconValueFormat = (
-  options?: NumberValueFormatOptions
+    options?: NumberValueFormatOptions,
 ): IconValueFormat & LimitsFormat & NumberFormat => {
-  const valueformat = NumberValueFormat(options);
-  const iconformat = ToIconFormat(valueformat);
-  return {
-    ...valueformat,
-    ...iconformat,
-  };
+    const valueformat = NumberValueFormat(options);
+    const iconformat = ToIconFormat(valueformat);
+    return {
+        ...valueformat,
+        ...iconformat,
+    };
 };
 
 export const Numeric = (limits: Partial<LimitsFormat>) =>
-  NumberIconValueFormat({
-    min: Number.MIN_SAFE_INTEGER,
-    max: Number.MAX_SAFE_INTEGER,
-    step: 1,
-    ...limits,
-  });
+    NumberIconValueFormat({
+        min: Number.MIN_SAFE_INTEGER,
+        max: Number.MAX_SAFE_INTEGER,
+        step: 1,
+        ...limits,
+    });
 
 export const Celsius = (limits: Partial<LimitsFormat>) =>
-  NumberIconValueFormat({
-    style: "unit",
-    unit: "celsius",
-    maximumFractionDigits: 1,
-    minimumFractionDigits: 1,
-    min: -10,
-    max: 60,
-    step: 1,
-    ...limits,
-  });
+    NumberIconValueFormat({
+        style: "unit",
+        unit: "celsius",
+        maximumFractionDigits: 1,
+        minimumFractionDigits: 1,
+        min: -10,
+        max: 60,
+        step: 1,
+        ...limits,
+    });
 
 export const Fahrenheit = (limits: Partial<LimitsFormat>) =>
-  NumberIconValueFormat({
-    style: "unit",
-    unit: "fahrenheit",
-    maximumFractionDigits: 1,
-    minimumFractionDigits: 1,
-    min: 14,
-    max: 140,
-    step: 1,
-    ...limits,
-  });
+    NumberIconValueFormat({
+        style: "unit",
+        unit: "fahrenheit",
+        maximumFractionDigits: 1,
+        minimumFractionDigits: 1,
+        min: 14,
+        max: 140,
+        step: 1,
+        ...limits,
+    });
 
 export const KilometerPerHour = (limits: Partial<LimitsFormat>) =>
-  NumberIconValueFormat({
-    style: "unit",
-    unit: "kilometer-per-hour",
-    maximumFractionDigits: 0,
-    minimumFractionDigits: 0,
-    min: 0,
-    max: 180,
-    step: 10,
-    ...limits,
-  });
+    NumberIconValueFormat({
+        style: "unit",
+        unit: "kilometer-per-hour",
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+        min: 0,
+        max: 180,
+        step: 10,
+        ...limits,
+    });
 
 export const Percent = (limits: Partial<LimitsFormat>) =>
-  NumberIconValueFormat({
-    style: "unit",
-    unit: "percent",
-    maximumFractionDigits: 0,
-    minimumFractionDigits: 0,
-    min: 0,
-    max: 100,
-    step: 1,
-    ...limits,
-  });
+    NumberIconValueFormat({
+        style: "unit",
+        unit: "percent",
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+        min: 0,
+        max: 100,
+        step: 1,
+        ...limits,
+    });

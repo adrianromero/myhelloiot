@@ -21,9 +21,9 @@ import type { MQTTMessage } from "../mqtt/MQTTContext";
 import { useMQTTContext } from "../mqtt/MQTTHooks";
 import { ValueFormat } from "../format/FormatTypes";
 import {
-  Base64ValueFormat,
-  HEXValueFormat,
-  StringValueFormat,
+    Base64ValueFormat,
+    HEXValueFormat,
+    StringValueFormat,
 } from "../format/ValueFormat";
 import LogView from "./LogView";
 import { Button, CheckboxOptionType, Radio, Tag } from "antd";
@@ -34,82 +34,86 @@ import Title from "antd/lib/typography/Title";
 import "./LogTool.css";
 
 export type LogToolProps = {
-  subtopic?: string;
-  suboptions?: IClientSubscribeOptions;
-  className?: string;
+    subtopic?: string;
+    suboptions?: IClientSubscribeOptions;
+    className?: string;
 };
 
 const FMTOPTIONS: Map<string, ValueFormat> = new Map([
-  ["StringValueFormat", StringValueFormat()],
-  ["HEXValueFormat", HEXValueFormat()],
-  ["Base64ValueFormat", Base64ValueFormat()],
+    ["StringValueFormat", StringValueFormat()],
+    ["HEXValueFormat", HEXValueFormat()],
+    ["Base64ValueFormat", Base64ValueFormat()],
 ]);
 
 const OPTIONS: CheckboxOptionType[] = [
-  { label: "Plain", value: "StringValueFormat" },
-  { label: "HEX", value: "HEXValueFormat" },
-  { label: "Base64", value: "Base64ValueFormat" },
+    { label: "Plain", value: "StringValueFormat" },
+    { label: "HEX", value: "HEXValueFormat" },
+    { label: "Base64", value: "Base64ValueFormat" },
 ];
 
 const LogTool: React.FC<LogToolProps> = ({
-  subtopic = "",
-  suboptions,
-  className,
+    subtopic = "",
+    suboptions,
+    className,
 }) => {
-  const [{ ready }] = useMQTTContext();
-  const [[paused, messages], setTool] = useState<[boolean, MQTTMessage[]]>([
-    false,
-    [],
-  ]);
-  const [strformat, setStrformat] = useState<string>("StringValueFormat");
+    const [{ ready }] = useMQTTContext();
+    const [[paused, messages], setTool] = useState<[boolean, MQTTMessage[]]>([
+        false,
+        [],
+    ]);
+    const [strformat, setStrformat] = useState<string>("StringValueFormat");
 
-  useEffect(() => {
-    setTool([false, []]);
-  }, [ready]);
+    useEffect(() => {
+        setTool([false, []]);
+    }, [ready]);
 
-  const format: ValueFormat = FMTOPTIONS.get(strformat) ?? StringValueFormat();
+    const format: ValueFormat =
+        FMTOPTIONS.get(strformat) ?? StringValueFormat();
 
-  return (
-    <div className={`myhLogTool ${className}`}>
-      <div className="myhLogTool-header">
-        <Title className="myhLogTool-title" level={5}>
-          {subtopic}
-        </Title>
-        <div className="myhLogTool-options">
-          {typeof suboptions?.qos === "number" && (
-            <Tag color="geekblue">QoS: {suboptions?.qos}</Tag>
-          )}
+    return (
+        <div className={`myhLogTool ${className}`}>
+            <div className="myhLogTool-header">
+                <Title className="myhLogTool-title" level={5}>
+                    {subtopic}
+                </Title>
+                <div className="myhLogTool-options">
+                    {typeof suboptions?.qos === "number" && (
+                        <Tag color="geekblue">QoS: {suboptions?.qos}</Tag>
+                    )}
+                </div>
+                <div className="myhLogTool-toolbar">
+                    <Button
+                        type="primary"
+                        icon={<SVGIcon icon={paused ? faPause : faPlay} />}
+                        onClick={() => setTool(([p, msgs]) => [!p, msgs])}
+                    />
+                    <Button
+                        icon={<SVGIcon icon={faBan} />}
+                        onClick={() => setTool(([p]) => [p, []])}
+                    />
+                    <Radio.Group
+                        options={OPTIONS}
+                        onChange={e => setStrformat(e.target.value)}
+                        value={strformat}
+                        optionType="button"
+                    />
+                </div>
+            </div>
+            <LogView
+                subtopic={subtopic}
+                suboptions={suboptions}
+                messages={messages}
+                onMessage={(mqttmessage: MQTTMessage) =>
+                    setTool(([p, msgs]) => [
+                        p,
+                        p ? msgs : [mqttmessage, ...msgs],
+                    ])
+                }
+                format={format}
+                className={!ready ? "myhDisabled" : ""}
+            />
         </div>
-        <div className="myhLogTool-toolbar">
-          <Button
-            type="primary"
-            icon={<SVGIcon icon={paused ? faPause : faPlay} />}
-            onClick={() => setTool(([p, msgs]) => [!p, msgs])}
-          />
-          <Button
-            icon={<SVGIcon icon={faBan} />}
-            onClick={() => setTool(([p]) => [p, []])}
-          />
-          <Radio.Group
-            options={OPTIONS}
-            onChange={(e) => setStrformat(e.target.value)}
-            value={strformat}
-            optionType="button"
-          />
-        </div>
-      </div>
-      <LogView
-        subtopic={subtopic}
-        suboptions={suboptions}
-        messages={messages}
-        onMessage={(mqttmessage: MQTTMessage) =>
-          setTool(([p, msgs]) => [p, p ? msgs : [mqttmessage, ...msgs]])
-        }
-        format={format}
-        className={!ready ? "myhDisabled" : ""}
-      />
-    </div>
-  );
+    );
 };
 
 export default LogTool;

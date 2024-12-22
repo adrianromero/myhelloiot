@@ -28,92 +28,95 @@ import { StringValueFormat } from "../format/ValueFormat";
 import "./InputUnit.css";
 
 export type InputUnitProps = {
-  topic?: string;
-  pubtopic?: string;
-  subtopic?: string;
-  puboptions?: IClientPublishOptions;
-  suboptions?: IClientSubscribeOptions;
-  format?: ValueFormat;
-  className?: string;
+    topic?: string;
+    pubtopic?: string;
+    subtopic?: string;
+    puboptions?: IClientPublishOptions;
+    suboptions?: IClientSubscribeOptions;
+    format?: ValueFormat;
+    className?: string;
 };
 
 type MQTTValue = { mqttValue: string };
 
 const InputUnit: React.FC<InputUnitProps> = ({
-  topic = "",
-  pubtopic = topic,
-  subtopic = topic,
-  puboptions,
-  suboptions,
-  format = StringValueFormat(),
-  className,
+    topic = "",
+    pubtopic = topic,
+    subtopic = topic,
+    puboptions,
+    suboptions,
+    format = StringValueFormat(),
+    className,
 }) => {
-  const [{ ready }, { publish }] = useMQTTContext();
-  const [form] = Form.useForm<MQTTValue>();
-  useEffect(() => {
-    form.setFieldsValue({
-      mqttValue: "",
-    });
-  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+    const [{ ready }, { publish }] = useMQTTContext();
+    const [form] = Form.useForm<MQTTValue>();
+    useEffect(() => {
+        form.setFieldsValue({
+            mqttValue: "",
+        });
+    }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useMQTTSubscribe(
-    subtopic,
-    ({ message }: MQTTMessage) => {
-      form.setFieldsValue({
-        mqttValue: format.toDisplay(message),
-      });
-    },
-    suboptions
-  );
+    useMQTTSubscribe(
+        subtopic,
+        ({ message }: MQTTMessage) => {
+            form.setFieldsValue({
+                mqttValue: format.toDisplay(message),
+            });
+        },
+        suboptions,
+    );
 
-  const onFinish = (values: MQTTValue) => {
-    publish(pubtopic, format.fromDisplay(values.mqttValue), puboptions);
-  };
+    const onFinish = (values: MQTTValue) => {
+        publish(pubtopic, format.fromDisplay(values.mqttValue), puboptions);
+    };
 
-  return (
-    <Form
-      form={form}
-      name={`inputcard_${Math.random().toString(16).substr(2).padEnd(13, "0")}`}
-      onFinish={onFinish}
-      className={className}
-    >
-      <Space.Compact>
-        <Form.Item
-          name="mqttValue"
-          rules={[
-            {
-              validator: (_, value) => {
-                try {
-                  format.fromDisplay(value);
-                  return Promise.resolve();
-                } catch {
-                  return Promise.reject(
-                    new Error("Value cannot be formatted.")
-                  );
-                }
-              },
-            },
-          ]}
+    return (
+        <Form
+            form={form}
+            name={`inputcard_${Math.random()
+                .toString(16)
+                .substring(2)
+                .padEnd(13, "0")}`}
+            onFinish={onFinish}
+            className={className}
         >
-          <Input
-            className={`myhInputUnit-input ${format.getClassName()}`}
-            autoComplete="off"
-            readOnly={pubtopic === ""}
-            variant={pubtopic === "" ? "borderless" : "outlined"}
-          />
-        </Form.Item>
-        {pubtopic !== "" && (
-          <Form.Item>
-            <Button
-              className="myhInputUnit-button"
-              icon={<SVGIcon icon={faPaperPlane} />}
-              type="primary"
-              htmlType="submit"
-            ></Button>
-          </Form.Item>
-        )}
-      </Space.Compact>
-    </Form>
-  );
+            <Space.Compact block>
+                <Form.Item
+                    name="mqttValue"
+                    rules={[
+                        {
+                            validator: (_, value) => {
+                                try {
+                                    format.fromDisplay(value);
+                                    return Promise.resolve();
+                                } catch {
+                                    return Promise.reject(
+                                        new Error("Value cannot be formatted."),
+                                    );
+                                }
+                            },
+                        },
+                    ]}
+                >
+                    <Input
+                        className={`myhInputUnit-input ${format.getClassName()}`}
+                        autoComplete="off"
+                        readOnly={pubtopic === ""}
+                        variant={pubtopic === "" ? "borderless" : "outlined"}
+                    />
+                </Form.Item>
+                {pubtopic !== "" && (
+                    <Form.Item>
+                        <Button
+                            className="myhInputUnit-button"
+                            icon={<SVGIcon icon={faPaperPlane} />}
+                            type="primary"
+                            htmlType="submit"
+                        ></Button>
+                    </Form.Item>
+                )}
+            </Space.Compact>
+        </Form>
+    );
 };
 export default InputUnit;

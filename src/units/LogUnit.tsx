@@ -24,39 +24,39 @@ import { StringValueFormat } from "../format/ValueFormat";
 import LogView from "./LogView";
 
 export type LogUnitProps = {
-  subtopic?: string;
-  suboptions?: IClientSubscribeOptions;
-  format?: ValueFormat;
-  className?: string;
+    subtopic?: string;
+    suboptions?: IClientSubscribeOptions;
+    format?: ValueFormat;
+    className?: string;
 };
 
 const LogUnit: React.FC<LogUnitProps> = ({
-  subtopic = "",
-  suboptions,
-  format = StringValueFormat(),
-  className,
+    subtopic = "",
+    suboptions,
+    format = StringValueFormat(),
+    className,
 }) => {
-  const [{ ready }] = useMQTTContext();
-  const [messages, setMessages] = useState<MQTTMessage[]>([]);
+    const [{ ready }] = useMQTTContext();
+    const [messages, setMessages] = useState<MQTTMessage[]>([]);
 
-  useEffect(() => {
-    setMessages([]);
-  }, [ready]);
+    useEffect(() => {
+        setMessages([]);
+    }, [ready]);
 
-  return (
-    <div className={`myhLogUnit ${className}`}>
-      <LogView
-        subtopic={subtopic}
-        suboptions={suboptions}
-        messages={messages}
-        onMessage={(mqttmessage: MQTTMessage) => {
-          setMessages((msgs) => [mqttmessage, ...msgs]);
-        }}
-        format={format}
-        className={`${!ready ? "myhDisabled" : ""}`}
-      />
-    </div>
-  );
+    return (
+        <div className={`myhLogUnit ${className}`}>
+            <LogView
+                subtopic={subtopic}
+                suboptions={suboptions}
+                messages={messages}
+                onMessage={(mqttmessage: MQTTMessage) => {
+                    setMessages(msgs => [mqttmessage, ...msgs]);
+                }}
+                format={format}
+                className={`${!ready ? "myhDisabled" : ""}`}
+            />
+        </div>
+    );
 };
 
 export default LogUnit;

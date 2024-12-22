@@ -21,41 +21,41 @@ import { VictoryStyleInterface, DomainPropType } from "victory-core";
 import { VictoryArea } from "victory";
 
 type ChartIconFormatParameters = {
-  style?: VictoryStyleInterface;
-  domain?: DomainPropType;
+    style?: VictoryStyleInterface;
+    domain?: DomainPropType;
 };
 export const ChartIconFormat = ({
-  style = {
-    data: {
-      fill: "#0019ac66",
-      stroke: "#0019ac",
-      strokeWidth: 2,
-      strokeLinecap: "round",
+    style = {
+        data: {
+            fill: "#0019ac66",
+            stroke: "#0019ac",
+            strokeWidth: 2,
+            strokeLinecap: "round",
+        },
     },
-  },
-  domain = { y: [0, 100] },
+    domain = { y: [0, 100] },
 }: ChartIconFormatParameters): IconFormat => ({
-  toIcon: (b: Buffer) => {
-    let data;
-    try {
-      data = JSON.parse(b.toString());
-      if (!Array.isArray(data) || data.length === 0) {
-        data = [null];
-      }
-    } catch {
-      data = [null];
-    }
+    toIcon: (b: Buffer) => {
+        let data;
+        try {
+            data = JSON.parse(b.toString());
+            if (!Array.isArray(data) || data.length === 0) {
+                data = [null];
+            }
+        } catch {
+            data = [null];
+        }
 
-    return (
-      <VictoryArea
-        width={200}
-        height={100}
-        padding={2}
-        domain={domain}
-        style={style}
-        interpolation="monotoneX"
-        data={data}
-      />
-    );
-  },
+        return (
+            <VictoryArea
+                width={200}
+                height={100}
+                padding={2}
+                domain={domain}
+                style={style}
+                interpolation="monotoneX"
+                data={data}
+            />
+        );
+    },
 });

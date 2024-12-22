@@ -25,56 +25,56 @@ import { ONOFFNumber } from "../format/FormatConstants";
 import { ConvertBuffer, IdentityConvert } from "../format/ConvertTypes";
 
 type SwitchUnitProps = {
-  topic?: string;
-  pubtopic?: string;
-  subtopic?: string;
-  subconvert?: ConvertBuffer;
-  puboptions?: IClientPublishOptions;
-  suboptions?: IClientSubscribeOptions;
-  onoff?: ONOFF;
-  className?: string;
+    topic?: string;
+    pubtopic?: string;
+    subtopic?: string;
+    subconvert?: ConvertBuffer;
+    puboptions?: IClientPublishOptions;
+    suboptions?: IClientSubscribeOptions;
+    onoff?: ONOFF;
+    className?: string;
 };
 
 const SwitchUnit: React.FC<SwitchUnitProps> = ({
-  topic = "",
-  pubtopic = topic,
-  subtopic = topic,
-  puboptions,
-  suboptions,
-  subconvert = IdentityConvert(),
-  onoff = ONOFFNumber,
-  className,
+    topic = "",
+    pubtopic = topic,
+    subtopic = topic,
+    puboptions,
+    suboptions,
+    subconvert = IdentityConvert(),
+    onoff = ONOFFNumber,
+    className,
 }) => {
-  const [{ ready }, { publish }] = useMQTTContext();
-  const [checked, setChecked] = useState<boolean>(false);
+    const [{ ready }, { publish }] = useMQTTContext();
+    const [checked, setChecked] = useState<boolean>(false);
 
-  useEffect(() => {
-    setChecked(false);
-  }, [ready]);
+    useEffect(() => {
+        setChecked(false);
+    }, [ready]);
 
-  useMQTTSubscribe(
-    subtopic,
-    ({ message }: MQTTMessage) => {
-      const b = subconvert(message);
-      if (b) {
-        setChecked(onoff.status_on(message));
-      }
-    },
-    suboptions
-  );
+    useMQTTSubscribe(
+        subtopic,
+        ({ message }: MQTTMessage) => {
+            const b = subconvert(message);
+            if (b) {
+                setChecked(onoff.status_on(message));
+            }
+        },
+        suboptions,
+    );
 
-  const onChange = (value: boolean) => {
-    setChecked(value);
-    publish(pubtopic, value ? onoff.cmd_on : onoff.cmd_off, puboptions);
-  };
+    const onChange = (value: boolean) => {
+        setChecked(value);
+        publish(pubtopic, value ? onoff.cmd_on : onoff.cmd_off, puboptions);
+    };
 
-  return (
-    <Switch
-      checked={checked}
-      onChange={onChange}
-      disabled={pubtopic === ""}
-      className={className}
-    />
-  );
+    return (
+        <Switch
+            checked={checked}
+            onChange={onChange}
+            disabled={pubtopic === ""}
+            className={className}
+        />
+    );
 };
 export default SwitchUnit;

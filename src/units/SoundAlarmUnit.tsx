@@ -25,117 +25,117 @@ import { StringValueFormat } from "../format/ValueFormat";
 import { ValueFormat } from "../format/FormatTypes";
 import { useConnectionProperty } from "../app/sliceConnectionHooks";
 const clockalarm = new URL(
-  "../assets/media/128138_1542160-lq.mp3",
-  import.meta.url
+    "../assets/media/128138_1542160-lq.mp3",
+    import.meta.url,
 ).href;
 const gameitem = new URL(
-  "../assets/media/162467_311243-lq.mp3",
-  import.meta.url
+    "../assets/media/162467_311243-lq.mp3",
+    import.meta.url,
 ).href;
 const bottlewhoo = new URL(
-  "../assets/media/249703_3930831-lq.mp3",
-  import.meta.url
+    "../assets/media/249703_3930831-lq.mp3",
+    import.meta.url,
 ).href;
 const greek = new URL("../assets/media/322378_4397472-lq.mp3", import.meta.url)
-  .href;
+    .href;
 const bell = new URL("../assets/media/333695_1187042-lq.mp3", import.meta.url)
-  .href;
+    .href;
 const smokealarm = new URL(
-  "../assets/media/369848_1480854-lq.mp3",
-  import.meta.url
+    "../assets/media/369848_1480854-lq.mp3",
+    import.meta.url,
 ).href;
 const chimes = new URL("../assets/media/405548_6436863-lq.mp3", import.meta.url)
-  .href;
+    .href;
 const harp = new URL("../assets/media/486952_6657415-lq.mp3", import.meta.url)
-  .href;
+    .href;
 const messagepop = new URL(
-  "../assets/media/537061_7117640-lq.mp3",
-  import.meta.url
+    "../assets/media/537061_7117640-lq.mp3",
+    import.meta.url,
 ).href;
 
 type SoundAlarmUnitProps = {
-  instancekey?: string;
-  subtopic?: string;
-  suboptions?: IClientSubscribeOptions;
-  sound?: string;
-  volume?: number;
-  loop?: boolean;
+    instancekey?: string;
+    subtopic?: string;
+    suboptions?: IClientSubscribeOptions;
+    sound?: string;
+    volume?: number;
+    loop?: boolean;
 };
 
 const FORMAT: ValueFormat = StringValueFormat();
 
 const SoundAlarmUnit: React.FC<SoundAlarmUnitProps> = ({
-  instancekey = "",
-  subtopic = "",
-  suboptions,
-  sound = "gameitem",
-  volume = 1.0,
-  loop = true,
+    instancekey = "",
+    subtopic = "",
+    suboptions,
+    sound = "gameitem",
+    volume = 1.0,
+    loop = true,
 }) => {
-  let url: string;
-  switch (sound) {
-    case "clockalarm":
-      url = clockalarm;
-      break;
-    case "botlewhoo":
-      url = bottlewhoo;
-      break;
-    case "greek":
-      url = greek;
-      break;
-    case "bell":
-      url = bell;
-      break;
-    case "smokealarm":
-      url = smokealarm;
-      break;
-    case "chimes":
-      url = chimes;
-      break;
-    case "harp":
-      url = harp;
-      break;
-    case "messagepop":
-      url = messagepop;
-      break;
-    default:
-      url = gameitem;
-  }
-  const [isPlaying, setPlaying] = useConnectionProperty(
-    instancekey + "-soundalarm-playing"
-  );
-
-  const [, { play, pause }] = useAudio(url, { volume, loop });
-  const [notificationInstance, notificationContext] =
-    notification.useNotification();
-
-  useMQTTSubscribe(
-    subtopic,
-    ({ message }: MQTTMessage) => setPlaying(FORMAT.toDisplay(message)),
-    suboptions
-  );
-
-  useEffect(() => {
-    try {
-      if (isPlaying === "1") {
-        play();
-      } else {
-        pause();
-      }
-    } catch {
-      notificationInstance.warning({
-        message: "Play audio",
-        description:
-          "Audio cannot be played. Please review the application permissions.",
-        placement: "bottomRight",
-      });
+    let url: string;
+    switch (sound) {
+        case "clockalarm":
+            url = clockalarm;
+            break;
+        case "botlewhoo":
+            url = bottlewhoo;
+            break;
+        case "greek":
+            url = greek;
+            break;
+        case "bell":
+            url = bell;
+            break;
+        case "smokealarm":
+            url = smokealarm;
+            break;
+        case "chimes":
+            url = chimes;
+            break;
+        case "harp":
+            url = harp;
+            break;
+        case "messagepop":
+            url = messagepop;
+            break;
+        default:
+            url = gameitem;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying]);
+    const [isPlaying, setPlaying] = useConnectionProperty(
+        instancekey + "-soundalarm-playing",
+    );
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => pause, []);
-  return <>{notificationContext}</>;
+    const [, { play, pause }] = useAudio(url, { volume, loop });
+    const [notificationInstance, notificationContext] =
+        notification.useNotification();
+
+    useMQTTSubscribe(
+        subtopic,
+        ({ message }: MQTTMessage) => setPlaying(FORMAT.toDisplay(message)),
+        suboptions,
+    );
+
+    useEffect(() => {
+        try {
+            if (isPlaying === "1") {
+                play();
+            } else {
+                pause();
+            }
+        } catch {
+            notificationInstance.warning({
+                message: "Play audio",
+                description:
+                    "Audio cannot be played. Please review the application permissions.",
+                placement: "bottomRight",
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isPlaying]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => pause, []);
+    return <>{notificationContext}</>;
 };
 
 export default SoundAlarmUnit;

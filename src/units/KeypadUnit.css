@@ -16,86 +16,93 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .myhKeypad {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto;
-  grid-template-areas:
-    "input input input"
-    "btn-1 btn-2 btn-3"
-    "btn-4 btn-5 btn-6"
-    "btn-7 btn-8 btn-9"
-    "btn-0 btn-ok btn-ok";
-  grid-gap: 4px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "input input input"
+        "btn-1 btn-2 btn-3"
+        "btn-4 btn-5 btn-6"
+        "btn-7 btn-8 btn-9"
+        "btn-0 btn-ok btn-ok";
+    grid-gap: 4px;
 }
 
 .myhKeypad > .btn {
-  font-size: 140%;
-  min-width: 100px;
-  height: unset;
-  width: unset;
-  text-shadow: 1px 1px 0 #4074b5, 1px -1px 0 #4074b5, -1px 1px 0 #4074b5,
-    -1px -1px 0 #4074b5, 1px 0px 0 #4074b5, 0px 1px 0 #4074b5,
-    -1px 0px 0 #4074b5, 0px -1px 0 #4074b5, -21px -21px 0px rgba(206, 89, 55, 0);
+    font-size: 140%;
+    min-width: 100px;
+    height: unset;
+    width: unset;
+    text-shadow:
+        1px 1px 0 #4074b5,
+        1px -1px 0 #4074b5,
+        -1px 1px 0 #4074b5,
+        -1px -1px 0 #4074b5,
+        1px 0px 0 #4074b5,
+        0px 1px 0 #4074b5,
+        -1px 0px 0 #4074b5,
+        0px -1px 0 #4074b5,
+        -21px -21px 0px rgba(206, 89, 55, 0);
 }
 
 .myhKeypad > .btn > .icon {
-  font-size: 100%;
+    font-size: 100%;
 }
 
 .myhKeypad > .btn-1 {
-  grid-area: btn-1;
+    grid-area: btn-1;
 }
 
 .myhKeypad > .btn-2 {
-  grid-area: btn-2;
+    grid-area: btn-2;
 }
 
 .myhKeypad > .btn-3 {
-  grid-area: btn-3;
+    grid-area: btn-3;
 }
 
 .myhKeypad > .btn-4 {
-  grid-area: btn-4;
+    grid-area: btn-4;
 }
 
 .myhKeypad > .btn-5 {
-  grid-area: btn-5;
+    grid-area: btn-5;
 }
 
 .myhKeypad > .btn-6 {
-  grid-area: btn-6;
+    grid-area: btn-6;
 }
 
 .myhKeypad > .btn-7 {
-  grid-area: btn-7;
+    grid-area: btn-7;
 }
 
 .myhKeypad > .btn-8 {
-  grid-area: btn-8;
+    grid-area: btn-8;
 }
 
 .myhKeypad > .btn-9 {
-  grid-area: btn-9;
+    grid-area: btn-9;
 }
 
 .myhKeypad > .btn-0 {
-  grid-area: btn-0;
+    grid-area: btn-0;
 }
 
 .myhKeypad > .btn-ok {
-  grid-area: btn-ok;
+    grid-area: btn-ok;
 }
 
 .myhKeypad > .myhInput {
-  font-size: 140%;
-  font-weight: 800;
-  grid-area: input;
+    font-size: 140%;
+    font-weight: 800;
+    grid-area: input;
 }
 
 .myhKeypad > .myhInput .ant-input-clear-icon {
-  font-size: 70%;
+    font-size: 70%;
 }
 
 .myhKeypad > .btn-ok .anticon {
-  font-size: 70%;
+    font-size: 70%;
 }

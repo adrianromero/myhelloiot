@@ -19,14 +19,14 @@ import { useAppSelector, useAppDispatch } from "./hooks";
 import { selectProperty, putProperties } from "./sliceConnection";
 
 export const useConnectionProperty = (
-  name: string
+    name: string,
 ): [string | undefined, (value: string) => void] => {
-  const property: string | undefined = useAppSelector((state) =>
-    selectProperty(state, name)
-  );
+    const property: string | undefined = useAppSelector(state =>
+        selectProperty(state, name),
+    );
 
-  const dispatch = useAppDispatch();
-  const setProperty = (value: string) =>
-    dispatch(putProperties({ attrs: { [name]: value } }));
-  return [property, setProperty];
+    const dispatch = useAppDispatch();
+    const setProperty = (value: string) =>
+        dispatch(putProperties({ attrs: { [name]: value } }));
+    return [property, setProperty];
 };

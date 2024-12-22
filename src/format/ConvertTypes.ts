@@ -24,25 +24,25 @@ export type ConvertBuffer = (b: Buffer) => Buffer | null;
 export const IdentityConvert = () => (b: Buffer) => b;
 
 export const JSONConvert = (c: (json: unknown) => unknown) => (b: Buffer) => {
-  try {
-    const json = JSON.parse(b.toString("utf8"));
-    const conversion = c(json);
-    const convertedjson = JSON.stringify(conversion);
-    return Buffer.from(convertedjson);
-  } catch {
-    return null;
-  }
+    try {
+        const json = JSON.parse(b.toString("utf8"));
+        const conversion = c(json);
+        const convertedjson = JSON.stringify(conversion);
+        return Buffer.from(convertedjson);
+    } catch {
+        return null;
+    }
 };
 
 export const Shelly2Convert = (relay: string) => (b: Buffer) => {
-  try {
-    const status = JSON.parse(b.toString("utf8"));
-    const s = status?.params?.[relay]?.output;
-    if (typeof s === "boolean") {
-      return s ? ONOFFStr.cmd_on : ONOFFStr.cmd_off;
+    try {
+        const status = JSON.parse(b.toString("utf8"));
+        const s = status?.params?.[relay]?.output;
+        if (typeof s === "boolean") {
+            return s ? ONOFFStr.cmd_on : ONOFFStr.cmd_off;
+        }
+        return null;
+    } catch {
+        return null;
     }
-    return null;
-  } catch {
-    return null;
-  }
 };

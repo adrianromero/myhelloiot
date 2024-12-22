@@ -16,22 +16,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .spacegauge-bar {
-  stroke: #c93636;
-  stroke-width: 12px;
-  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+    stroke: #c93636;
+    stroke-width: 12px;
+    transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .spacegauge-background {
-  stroke: #c0c0c0;
-  stroke-width: 12px;
+    stroke: #c0c0c0;
+    stroke-width: 12px;
 }
 
 .spacegauge-value {
-  fill: #000000d9;
-  font: bold 22px sans-serif;
+    fill: #000000d9;
+    font: bold 22px sans-serif;
 }
 
 .spacegauge-title {
-  fill: #0000008c;
-  font: 12px sans-serif;
+    fill: #0000008c;
+    font: 12px sans-serif;
 }

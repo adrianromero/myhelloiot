@@ -16,38 +16,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .liquidgauge-background {
-  fill: #0099ff;
+    fill: #0099ff;
 }
 
 .liquidgauge-bar {
-  transition: y 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+    transition: y 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .liquidgauge-border {
-  stroke: #0099ff;
-  stroke-width: 2px;
+    stroke: #0099ff;
+    stroke-width: 2px;
 }
 
 .liquidgauge-value {
-  font: bold 22px sans-serif;
+    font: bold 22px sans-serif;
 }
 
 .liquidgauge-value_1 {
-  fill: #000000d9;
+    fill: #000000d9;
 }
 
 .liquidgauge-value_2 {
-  fill: #ffffffe9;
+    fill: #ffffffe9;
 }
 
 .liquidgauge-title {
-  font: 10px sans-serif;
+    font: 10px sans-serif;
 }
 
 .liquidgauge-title_1 {
-  fill: #0000008c;
+    fill: #0000008c;
 }
 
 .liquidgauge-title_2 {
-  fill: #ffffffac;
+    fill: #ffffffac;
 }

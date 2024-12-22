@@ -16,27 +16,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .myhPublisher-header {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 8px;
-  align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 8px;
+    align-items: baseline;
 }
 
 .myhPublisher-send {
-  flex-grow: 1;
-  display: flex;
-  column-gap: 8px;
-  align-items: baseline;
+    flex-grow: 1;
+    display: flex;
+    column-gap: 8px;
+    align-items: baseline;
 }
 
 .myhPublisher-sendinput {
-  flex-grow: 1;
+    flex-grow: 1;
 }
 
 .myhPublisher-options {
-  flex-grow: 1;
+    flex-grow: 1;
 }
 
 .myhPublisher-toolbar .ant-radio-group {
-  margin-bottom: 12px;
+    margin-bottom: 12px;
 }

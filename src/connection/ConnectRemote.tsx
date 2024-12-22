@@ -20,11 +20,11 @@ import { Form, Input, Button, Row, Col, Layout, Tabs } from "antd";
 import { useAppDispatch } from "../app/hooks";
 import { connect, loadConnectionCredentials } from "../app/sliceConnection";
 import {
-  ConnectCredentials,
-  ConnectInfo,
-  ConnectedStatus,
-  saveStoreConnectConnected,
-  saveStoreConnectCredentials,
+    ConnectCredentials,
+    ConnectInfo,
+    ConnectedStatus,
+    saveStoreConnectConnected,
+    saveStoreConnectCredentials,
 } from "./ConnectionInfo";
 import { ConnectInfoForm } from "./ConnectInfoForm";
 import ModalError from "../ModalError";
@@ -34,193 +34,266 @@ import SVGIcon from "../format/SVGIcon";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 
 type ModalErrorInfo = {
-  title: string;
-  errorMessage: string;
-  visible: boolean;
+    title: string;
+    errorMessage: string;
+    visible: boolean;
 };
 
 const ConnectRemote: React.FC<{
-  connectInfo: ConnectInfo;
-  connectCredentials: ConnectCredentials;
+    connectInfo: ConnectInfo;
+    connectCredentials: ConnectCredentials;
 }> = ({ connectInfo, connectCredentials }) => {
-  const [form] = Form.useForm<ConnectInfoForm>();
-  const dispatch = useAppDispatch();
-  const HIDDEN: ModalErrorInfo = {
-    visible: false,
-    title: "",
-    errorMessage: "",
-  };
-  const [errorinf, showError] = useState<ModalErrorInfo>(HIDDEN);
-
-  useEffect(() => {
-    const connectInfoForm: ConnectInfoForm = {
-      ...connectInfo,
-      ...connectCredentials,
+    const [form] = Form.useForm<ConnectInfoForm>();
+    const dispatch = useAppDispatch();
+    const HIDDEN: ModalErrorInfo = {
+        visible: false,
+        title: "",
+        errorMessage: "",
     };
-    form.setFieldsValue(connectInfoForm);
-    window.scrollTo(0, 0);
-  }, [form, connectInfo, connectCredentials]);
+    const [errorinf, showError] = useState<ModalErrorInfo>(HIDDEN);
 
-  const handleFail = (): void => {
-    showError({
-      visible: true,
-      title: "Connection values error",
-      errorMessage: "Please fix the values with validation messages.",
-    });
-  };
+    useEffect(() => {
+        const connectInfoForm: ConnectInfoForm = {
+            ...connectInfo,
+            ...connectCredentials,
+        };
+        form.setFieldsValue(connectInfoForm);
+        window.scrollTo(0, 0);
+    }, [form, connectInfo, connectCredentials]);
 
-  return (
-    <>
-      <ModalError {...errorinf} onOk={() => showError(HIDDEN)} />
-      <Form
-        form={form}
-        name="connection"
-        onFinish={(connectInfoForm) => {
-          const connectCredentialsNew: ConnectCredentials = {
-            username: connectInfoForm.username,
-            password: connectInfoForm.password,
-          };
+    const handleFail = (): void => {
+        showError({
+            visible: true,
+            title: "Connection values error",
+            errorMessage: "Please fix the values with validation messages.",
+        });
+    };
 
-          try {
-            saveStoreConnectCredentials(connectCredentialsNew);
-            saveStoreConnectConnected(ConnectedStatus.CONNECTED);
-            dispatch(
-              loadConnectionCredentials({
-                connectCredentials: connectCredentialsNew,
-              })
-            );
-            dispatch(connect());
-          } catch {
-            showError({
-              visible: true,
-              title: "Connection error",
-              errorMessage:
-                "Connection values cannot be stored locally. Please review the application permissions.",
-            });
-          }
-        }}
-        onFinishFailed={handleFail}
-        className="myhConnectionForm"
-      >
-        <Layout className="myhLayout">
-          <AppHeader title="Dashboard connection">
-            <Button
-              icon={<SVGIcon icon={faPowerOff} />}
-              type="primary"
-              htmlType="submit"
+    return (
+        <>
+            <ModalError {...errorinf} onOk={() => showError(HIDDEN)} />
+            <Form
+                form={form}
+                name="connection"
+                onFinish={connectInfoForm => {
+                    const connectCredentialsNew: ConnectCredentials = {
+                        username: connectInfoForm.username,
+                        password: connectInfoForm.password,
+                    };
+
+                    try {
+                        saveStoreConnectCredentials(connectCredentialsNew);
+                        saveStoreConnectConnected(ConnectedStatus.CONNECTED);
+                        dispatch(
+                            loadConnectionCredentials({
+                                connectCredentials: connectCredentialsNew,
+                            }),
+                        );
+                        dispatch(connect());
+                    } catch {
+                        showError({
+                            visible: true,
+                            title: "Connection error",
+                            errorMessage:
+                                "Connection values cannot be stored locally. Please review the application permissions.",
+                        });
+                    }
+                }}
+                onFinishFailed={handleFail}
+                className="myhConnectionForm"
             >
-              Connect
-            </Button>
-          </AppHeader>
-          <Layout.Content className="myhLayoutContent">
-            <div className="myhLayoutContent-panel">
-              <Tabs
-                defaultActiveKey="1"
-                items={[
-                  {
-                    label: "MQTT Connection",
-                    key: "2",
-                    forceRender: true,
-                    children: (
-                      <Row
-                        className="ant-form-item"
-                        gutter={[8, { xs: 2, sm: 2, md: 8, lg: 8 }]}
-                      >
-                        <Col xs={0} sm={0} md={0} lg={4} />
-                        <Col
-                          xs={24}
-                          sm={6}
-                          md={6}
-                          lg={4}
-                          className="ant-form-item-label"
+                <Layout className="myhLayout">
+                    <AppHeader title="Dashboard connection">
+                        <Button
+                            icon={<SVGIcon icon={faPowerOff} />}
+                            type="primary"
+                            htmlType="submit"
                         >
-                          <label
-                            htmlFor="url"
-                            className="ant-form-item-required"
-                            title="URL"
-                          >
-                            URL
-                          </label>
-                        </Col>
-                        <Col xs={24} sm={18} md={18} lg={12}>
-                          <Form.Item
-                            name="url"
-                            rules={[
-                              {
-                                required: true,
-                                message:
-                                  "Please input the url of the MQTT broker.",
-                              },
-                            ]}
-                          >
-                            <Input autoComplete="off" disabled />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={0} sm={0} md={0} lg={4} />
+                            Connect
+                        </Button>
+                    </AppHeader>
+                    <Layout.Content className="myhLayoutContent">
+                        <div className="myhLayoutContent-panel">
+                            <Tabs
+                                defaultActiveKey="1"
+                                items={[
+                                    {
+                                        label: "MQTT Connection",
+                                        key: "2",
+                                        forceRender: true,
+                                        children: (
+                                            <Row
+                                                className="ant-form-item"
+                                                gutter={[
+                                                    8,
+                                                    {
+                                                        xs: 2,
+                                                        sm: 2,
+                                                        md: 8,
+                                                        lg: 8,
+                                                    },
+                                                ]}
+                                            >
+                                                <Col
+                                                    xs={0}
+                                                    sm={0}
+                                                    md={0}
+                                                    lg={4}
+                                                />
+                                                <Col
+                                                    xs={24}
+                                                    sm={6}
+                                                    md={6}
+                                                    lg={4}
+                                                    className="ant-form-item-label"
+                                                >
+                                                    <label
+                                                        htmlFor="url"
+                                                        className="ant-form-item-required"
+                                                        title="URL"
+                                                    >
+                                                        URL
+                                                    </label>
+                                                </Col>
+                                                <Col
+                                                    xs={24}
+                                                    sm={18}
+                                                    md={18}
+                                                    lg={12}
+                                                >
+                                                    <Form.Item
+                                                        name="url"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message:
+                                                                    "Please input the url of the MQTT broker.",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Input
+                                                            autoComplete="off"
+                                                            disabled
+                                                        />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col
+                                                    xs={0}
+                                                    sm={0}
+                                                    md={0}
+                                                    lg={4}
+                                                />
 
-                        <Col xs={0} sm={0} md={0} lg={4} />
-                        <Col
-                          xs={24}
-                          sm={6}
-                          md={6}
-                          lg={4}
-                          className="ant-form-item-label"
-                        >
-                          <label htmlFor="username" title="User">
-                            User
-                          </label>
-                        </Col>
-                        <Col xs={24} sm={18} md={6} lg={4}>
-                          <Form.Item name="username">
-                            <Input autoComplete="off" />
-                          </Form.Item>
-                        </Col>
-                        <Col
-                          xs={24}
-                          sm={6}
-                          md={6}
-                          lg={4}
-                          className="ant-form-item-label"
-                        >
-                          <label htmlFor="password" title="Password">
-                            Password
-                          </label>
-                        </Col>
-                        <Col xs={24} sm={18} md={6} lg={4}>
-                          <Form.Item name="password">
-                            <Input.Password />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={0} sm={0} md={0} lg={4} />
+                                                <Col
+                                                    xs={0}
+                                                    sm={0}
+                                                    md={0}
+                                                    lg={4}
+                                                />
+                                                <Col
+                                                    xs={24}
+                                                    sm={6}
+                                                    md={6}
+                                                    lg={4}
+                                                    className="ant-form-item-label"
+                                                >
+                                                    <label
+                                                        htmlFor="username"
+                                                        title="User"
+                                                    >
+                                                        User
+                                                    </label>
+                                                </Col>
+                                                <Col
+                                                    xs={24}
+                                                    sm={18}
+                                                    md={6}
+                                                    lg={4}
+                                                >
+                                                    <Form.Item name="username">
+                                                        <Input autoComplete="off" />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col
+                                                    xs={24}
+                                                    sm={6}
+                                                    md={6}
+                                                    lg={4}
+                                                    className="ant-form-item-label"
+                                                >
+                                                    <label
+                                                        htmlFor="password"
+                                                        title="Password"
+                                                    >
+                                                        Password
+                                                    </label>
+                                                </Col>
+                                                <Col
+                                                    xs={24}
+                                                    sm={18}
+                                                    md={6}
+                                                    lg={4}
+                                                >
+                                                    <Form.Item name="password">
+                                                        <Input.Password />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col
+                                                    xs={0}
+                                                    sm={0}
+                                                    md={0}
+                                                    lg={4}
+                                                />
 
-                        <Col xs={0} sm={0} md={0} lg={4} />
-                        <Col
-                          xs={24}
-                          sm={6}
-                          md={6}
-                          lg={4}
-                          className="ant-form-item-label"
-                        >
-                          <label htmlFor="clientId" title="Client ID">
-                            Client ID
-                          </label>
-                        </Col>
-                        <Col xs={24} sm={18} md={6} lg={4}>
-                          <Form.Item name="clientId">
-                            <Input autoComplete="off" disabled />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={0} sm={0} md={12} lg={12} />
-                      </Row>
-                    ),
-                  },
-                ]}
-              />
-            </div>
-          </Layout.Content>
-        </Layout>
-      </Form>
-    </>
-  );
+                                                <Col
+                                                    xs={0}
+                                                    sm={0}
+                                                    md={0}
+                                                    lg={4}
+                                                />
+                                                <Col
+                                                    xs={24}
+                                                    sm={6}
+                                                    md={6}
+                                                    lg={4}
+                                                    className="ant-form-item-label"
+                                                >
+                                                    <label
+                                                        htmlFor="clientId"
+                                                        title="Client ID"
+                                                    >
+                                                        Client ID
+                                                    </label>
+                                                </Col>
+                                                <Col
+                                                    xs={24}
+                                                    sm={18}
+                                                    md={6}
+                                                    lg={4}
+                                                >
+                                                    <Form.Item name="clientId">
+                                                        <Input
+                                                            autoComplete="off"
+                                                            disabled
+                                                        />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col
+                                                    xs={0}
+                                                    sm={0}
+                                                    md={12}
+                                                    lg={12}
+                                                />
+                                            </Row>
+                                        ),
+                                    },
+                                ]}
+                            />
+                        </div>
+                    </Layout.Content>
+                </Layout>
+            </Form>
+        </>
+    );
 };
 export default ConnectRemote;

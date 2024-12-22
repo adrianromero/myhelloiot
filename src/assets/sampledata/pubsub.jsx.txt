@@ -1,0 +1,13 @@
+{/* Publish / subscribe example. */}
+
+<Dashboard title="Publish / subscribe">
+  <Publisher
+    className="myhLayoutContent-panel"
+    prefixtopic="myhelloiot/test/"
+  />
+  <LogTool
+    className="myhLayoutContent-panel"
+    subtopic="myhelloiot/test/#"
+    suboptions={{ qos: 2 }}
+  />
+</Dashboard>

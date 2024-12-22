@@ -20,47 +20,47 @@ import { Buffer } from "buffer";
 import "./FormatTypes.css";
 
 export type IconFormat = {
-  toIcon: (b: Buffer) => React.ReactNode;
+    toIcon: (b: Buffer) => React.ReactNode;
 };
 
 export type ValueFormat = {
-  toDisplay: (b: Buffer) => string;
-  fromDisplay: (s: string) => Buffer;
-  getClassName: () => string;
-  next: (b: Buffer) => Buffer;
-  prev: (b: Buffer) => Buffer;
+    toDisplay: (b: Buffer) => string;
+    fromDisplay: (s: string) => Buffer;
+    getClassName: () => string;
+    next: (b: Buffer) => Buffer;
+    prev: (b: Buffer) => Buffer;
 };
 
 export type LimitsFormat = {
-  min: number;
-  max: number;
-  step: number;
+    min: number;
+    max: number;
+    step: number;
 };
 
 export type NumberFormat = {
-  format: (x: number) => string;
+    format: (x: number) => string;
 };
 
 export type IconValueFormat = IconFormat & ValueFormat;
 
 export type ONOFF = {
-  status_on: (v: Buffer) => boolean;
-  cmd_on: Buffer;
-  cmd_off: Buffer;
+    status_on: (v: Buffer) => boolean;
+    cmd_on: Buffer;
+    cmd_off: Buffer;
 };
 
 export const ToIconFormat = (format: ValueFormat): IconFormat => ({
-  toIcon: (b: Buffer) => (
-    <div className={`myhToIconFormat ${format.getClassName()}`}>
-      {format.toDisplay(b) || "\u00A0"}
-    </div>
-  ),
+    toIcon: (b: Buffer) => (
+        <div className={`myhToIconFormat ${format.getClassName()}`}>
+            {format.toDisplay(b) || "\u00A0"}
+        </div>
+    ),
 });
 
 export const ToIconValueFormat = (
-  valueformat: ValueFormat,
-  iconformat: IconFormat = ToIconFormat(valueformat)
+    valueformat: ValueFormat,
+    iconformat: IconFormat = ToIconFormat(valueformat),
 ): IconValueFormat => ({
-  ...valueformat,
-  ...iconformat,
+    ...valueformat,
+    ...iconformat,
 });

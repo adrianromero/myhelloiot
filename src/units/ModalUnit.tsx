@@ -26,70 +26,72 @@ import { ONOFFNumber } from "../format/FormatConstants";
 import { useConnectionProperty } from "../app/sliceConnectionHooks";
 
 type ModalUnitProps = {
-  instancekey?: string;
-  subtopic?: string;
-  suboptions?: IClientSubscribeOptions;
-  onoff?: ONOFF;
-  title?: string;
-  cancelable?: boolean;
-  className?: string;
-  children?: React.ReactNode;
+    instancekey?: string;
+    subtopic?: string;
+    suboptions?: IClientSubscribeOptions;
+    onoff?: ONOFF;
+    title?: string;
+    cancelable?: boolean;
+    className?: string;
+    children?: React.ReactNode;
 };
 
 const ModalUnit: React.FC<ModalUnitProps> = ({
-  instancekey = "",
-  subtopic = "",
-  suboptions,
-  onoff = ONOFFNumber,
-  title,
-  cancelable = true,
-  className = "",
-  children,
+    instancekey = "",
+    subtopic = "",
+    suboptions,
+    onoff = ONOFFNumber,
+    title,
+    cancelable = true,
+    className = "",
+    children,
 }) => {
-  const [isModalVisible, setIsModalVisible] = useConnectionProperty(
-    instancekey + "-modal-visible"
-  );
+    const [isModalVisible, setIsModalVisible] = useConnectionProperty(
+        instancekey + "-modal-visible",
+    );
 
-  useMQTTSubscribe(
-    subtopic,
-    ({ message }: MQTTMessage) => setIsModalVisible(message.toString()),
-    suboptions
-  );
+    useMQTTSubscribe(
+        subtopic,
+        ({ message }: MQTTMessage) => setIsModalVisible(message.toString()),
+        suboptions,
+    );
 
-  // const handleOk = () => {
-  //   setIsModalVisible(onoff.off.toString());
-  // };
+    // const handleOk = () => {
+    //   setIsModalVisible(onoff.off.toString());
+    // };
 
-  const handleCancel = () => {
-    setIsModalVisible(onoff.cmd_off.toString());
-  };
+    const handleCancel = () => {
+        setIsModalVisible(onoff.cmd_off.toString());
+    };
 
-  return (
-    <Modal
-      title={title}
-      maskClosable={cancelable}
-      closable={cancelable}
-      keyboard={cancelable}
-      open={
-        isModalVisible ? onoff.status_on(Buffer.from(isModalVisible)) : false
-      }
-      onCancel={handleCancel}
-      footer={
-        null
-        // [
-        //   <Button key="cancel" onClick={handleCancel}>
-        //     Cancel
-        //   </Button>,
-        //   <Button key="ok" type="primary" onClick={handleOk}>
-        //     Close
-        //   </Button>,
-        // ]
-      }
-      className={`myhModalUnit ${className}`}
-    >
-      {children}
-    </Modal>
-  );
+    return (
+        <Modal
+            title={title}
+            maskClosable={cancelable}
+            closable={cancelable}
+            keyboard={cancelable}
+            open={
+                isModalVisible
+                    ? onoff.status_on(Buffer.from(isModalVisible))
+                    : false
+            }
+            onCancel={handleCancel}
+            footer={
+                null
+                // [
+                //   <Button key="cancel" onClick={handleCancel}>
+                //     Cancel
+                //   </Button>,
+                //   <Button key="ok" type="primary" onClick={handleOk}>
+                //     Close
+                //   </Button>,
+                // ]
+            }
+            className={`myhModalUnit ${className}`}
+        >
+            {children}
+        </Modal>
+    );
 };
 
 export default ModalUnit;

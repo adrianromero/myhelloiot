@@ -16,17 +16,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .myhComponentLabeled {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 4px;
-  margin: 4px 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4px;
+    margin: 4px 0px;
 }
 
 .myhComponentLabeled.myhComponentLabeled-baselined {
-  align-items: baseline;
+    align-items: baseline;
 }
 
 .myhComponentLabeled > .myhComponentLabeled-unit-centeredunit {
-  justify-self: center;
+    justify-self: center;
 }

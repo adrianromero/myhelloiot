@@ -16,21 +16,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .myhLogView .ant-list-items {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 .myhLogView-tags {
-  text-align: right;
+    text-align: right;
 }
 
 .myhLogView-tags .ant-tag {
-  margin-bottom: 4px;
+    margin-bottom: 4px;
 }
 
 .myhLogView-message {
-  margin: 0 0.2em;
-  padding: 0.2em 0.4em 0.1em;
-  font-size: 85%;
-  font-family: monospace;
-  max-width: 350px;
+    margin: 0 0.2em;
+    padding: 0.2em 0.4em 0.1em;
+    font-size: 85%;
+    font-family: monospace;
+    max-width: 350px;
 }

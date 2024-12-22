@@ -16,24 +16,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .progressgauge-bar {
-  stroke: #008f00;
-  stroke-width: 8px;
-  stroke-linecap: butt;
-  transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+    stroke: #008f00;
+    stroke-width: 8px;
+    stroke-linecap: butt;
+    transition: stroke-dasharray 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .progressgauge-background {
-  stroke: #cccccc;
-  stroke-width: 8px;
-  stroke-linecap: butt;
+    stroke: #cccccc;
+    stroke-width: 8px;
+    stroke-linecap: butt;
 }
 
 .progressgauge-value {
-  fill: #000000d9;
-  font: bold 10px sans-serif;
+    fill: #000000d9;
+    font: bold 10px sans-serif;
 }
 
 .progressgauge-title {
-  fill: #0000008c;
-  font: 8px sans-serif;
+    fill: #0000008c;
+    font: 8px sans-serif;
 }

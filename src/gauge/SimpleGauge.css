@@ -16,41 +16,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .simplegauge-labels {
-  fill: #606060;
-  font: 10px sans-serif;
+    fill: #606060;
+    font: 10px sans-serif;
 }
 
 .simplegauge-background {
-  fill: #cccccc;
+    fill: #cccccc;
 }
 
 .simplegauge-mark {
-  stroke: #606060;
-  stroke-width: 2px;
-  stroke-linejoin: miter;
-  fill: #00000000;
+    stroke: #606060;
+    stroke-width: 2px;
+    stroke-linejoin: miter;
+    fill: #00000000;
 }
 
 .simplegauge-arrow {
-  fill: #ffffff;
-  stroke: #606060;
-  stroke-width: 2px;
-  stroke-linejoin: miter;
-  transition: transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+    fill: #ffffff;
+    stroke: #606060;
+    stroke-width: 2px;
+    stroke-linejoin: miter;
+    transition: transform 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
 }
 
 .simplegauge-value {
-  fill: #000000d9;
-  font: bold 14px sans-serif;
+    fill: #000000d9;
+    font: bold 14px sans-serif;
 }
 
 .simplegauge-title {
-  fill: #0000008c;
-  font: 10px sans-serif;
+    fill: #0000008c;
+    font: 10px sans-serif;
 }
 
 .simplegauge-section {
-  stroke-width: 30px;
-  stroke-linecap: butt;
-  stroke: rgb(25, 25, 173);
+    stroke-width: 30px;
+    stroke-linecap: butt;
+    stroke: rgb(25, 25, 173);
 }
