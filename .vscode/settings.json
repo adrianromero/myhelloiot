@@ -2,6 +2,7 @@
     "editor.formatOnSave": true,
     "editor.tabSize": 4,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.autoClosingBrackets": "never",
     "editor.stickyTabStops": true,
     "editor.detectIndentation": false
 }
