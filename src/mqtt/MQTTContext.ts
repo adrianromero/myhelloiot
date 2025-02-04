@@ -20,8 +20,9 @@ import {
     IClientOptions,
     IClientSubscribeOptions,
     IClientPublishOptions,
+    MqttClient,
 } from "mqtt";
-import type { QoS } from "mqtt-packet";
+import type { IPublishPacket, QoS } from "mqtt-packet";
 
 export type SubscribeHandler = {
     topic: string;
@@ -104,3 +105,22 @@ export const MQTTContext: Context<MQTTContextValue> =
             publish: () => {},
         },
     ]);
+
+export type Subscribe = (
+    subtopic: string,
+    listener: (mqttmessage: MQTTMessage) => void,
+    options?: IClientSubscribeOptions,
+) => SubscribeHandler | null;
+
+export interface TopicManager {
+    disconnect(): void;
+    connect(): void;
+    subscribe(
+        subscription: SubscribeHandler,
+        subscribe: Subscribe,
+        client: MqttClient,
+        options: IClientSubscribeOptions,
+    ): boolean;
+    unsubscribe(subscription: SubscribeHandler, client: MqttClient): boolean;
+    onMessage(topic: string, message: Buffer, packet: IPublishPacket): boolean;
+}

@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2024 Adrián Romero
+Copyright (C) 2021-2025 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { useState, ReactNode } from "react";
+import React, { useState, ReactNode, useRef } from "react";
 import { Buffer } from "buffer";
 import mqtt from "mqtt";
 import {
@@ -32,19 +32,73 @@ import type {
     MQTTContextValue,
     MQTTMessage,
     SubscribeHandler,
+    TopicManager,
+    Subscribe,
 } from "./MQTTContext";
 import { MQTTContext } from "./MQTTContext";
+import { Timing } from "./Timing";
+
+class MQTTTopics implements TopicManager {
+    subscriptions: SubscribeHandler[];
+    constructor() {
+        this.subscriptions = [];
+    }
+    disconnect() {}
+    connect() {}
+    subscribe(
+        subscription: SubscribeHandler,
+        _: Subscribe,
+        client: MqttClient,
+        options: IClientSubscribeOptions,
+    ): boolean {
+        if (!this.subscriptions.some(s => s.topic === subscription.topic)) {
+            client.subscribe(subscription.topic, options);
+        }
+        this.subscriptions.push(subscription);
+        return true;
+    }
+    unsubscribe(subscription: SubscribeHandler, client: MqttClient): boolean {
+        const inx: number = this.subscriptions.findIndex(
+            s => s === subscription,
+        );
+        if (inx < 0) {
+            throw new Error("Not subscribed");
+        }
+        this.subscriptions.splice(inx, 1);
+        if (!this.subscriptions.some(s => s.topic === subscription.topic)) {
+            client.unsubscribe(subscription.topic);
+        }
+        return true;
+    }
+    onMessage(topic: string, message: Buffer, packet: IPublishPacket): boolean {
+        this.subscriptions.forEach(s => {
+            if (match(s.topic, topic)) {
+                s.listener({
+                    topic,
+                    message,
+                    time: new Date().getTime(),
+                    qos: packet.qos,
+                    retain: packet.retain,
+                    dup: packet.dup,
+                });
+            }
+        });
+        return true;
+    }
+}
 
 const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [state, setState] = useState<{
         status: MQTTStatus;
         error?: Error;
         client?: MqttClient;
-        _subscriptions: SubscribeHandler[];
     }>({
         status: "Disconnected",
-        _subscriptions: [],
     });
+
+    const topicsManager: React.MutableRefObject<TopicManager>[] = [];
+    topicsManager.push(useRef<TopicManager>(new Timing()));
+    topicsManager.push(useRef<TopicManager>(new MQTTTopics()));
 
     const pubsubTopic = (topic: string): string => {
         const clientoptions = state.client?.options;
@@ -56,10 +110,10 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const disconnect = () => {
         state.client?.end();
         state.client?.removeAllListeners();
-        setState(s => ({
+        setState({
             status: "Disconnected",
-            _subscriptions: s._subscriptions,
-        }));
+        });
+        topicsManager.forEach(tm => tm.current.disconnect());
     };
 
     const connect = ({ url, options }: MQTTConnectInfo) => {
@@ -72,70 +126,58 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                     return {
                         status: "Connected",
                         client: s.client,
-                        _subscriptions: s._subscriptions,
                     };
                 });
+                topicsManager.forEach(tm => tm.current.connect());
             });
             client.on("error", () => {
                 setState(s => ({
                     status: "Error",
                     client: s.client,
-                    _subscriptions: s._subscriptions,
                 }));
+                topicsManager.forEach(tm => tm.current.disconnect());
             });
             client.on("reconnect", () => {
                 setState(s => ({
                     status: "Reconnecting",
                     client: s.client,
-                    _subscriptions: s._subscriptions,
                 }));
+                topicsManager.forEach(tm => tm.current.disconnect());
             });
             client.on("close", () => {
                 setState(s => ({
                     status: "Closed",
                     client: s.client,
-                    _subscriptions: s._subscriptions,
                 }));
+                topicsManager.forEach(tm => tm.current.disconnect());
             });
             client.on("offline", () => {
                 setState(s => ({
                     status: "Offline",
                     client: s.client,
-                    _subscriptions: s._subscriptions,
                 }));
+                topicsManager.forEach(tm => tm.current.disconnect());
             });
             client.on("disconnect", () => {
                 setState(s => ({
                     status: "Disconnecting",
                     client: s.client,
-                    _subscriptions: s._subscriptions,
                 }));
+                topicsManager.forEach(tm => tm.current.disconnect());
             });
             client.on(
                 "message",
                 (topic: string, message: Buffer, packet: IPublishPacket) => {
-                    state._subscriptions.forEach(subs => {
-                        if (match(subs.topic, topic)) {
-                            subs.listener({
-                                topic,
-                                message,
-                                time: new Date().getTime(),
-                                qos: packet.qos,
-                                retain: packet.retain,
-                                dup: packet.dup,
-                            });
-                        }
-                    });
+                    topicsManager.some(tm =>
+                        tm.current.onMessage(topic, message, packet),
+                    );
                 },
             );
 
-            setState(s => {
-                s._subscriptions.length = 0;
-                return {
-                    status: "Connecting",
-                    client,
-                    _subscriptions: s._subscriptions,
-                };
+            // TODO: Clear all subscriptions???
+            setState({
+                status: "Connecting",
+                client,
             });
         } catch (error) {
             setState(s => ({
@@ -145,27 +187,29 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                         ? error
                         : new Error("Unknown MQTT connection error."),
                 client: s.client,
-                _subscriptions: s._subscriptions,
             }));
         }
     };
 
-    const subscribe = (
+    const subscribe: Subscribe = (
         subtopic: string,
         listener: (mqttmessage: MQTTMessage) => void,
         options?: IClientSubscribeOptions,
     ): SubscribeHandler | null => {
         const topic = pubsubTopic(subtopic);
         if (state.client && topic !== "") {
-            const handler = { topic, listener };
-            state._subscriptions.push(handler);
-            if (
-                !state._subscriptions.some(
-                    s => s !== handler && s.topic === topic,
-                )
-            ) {
-                state.client.subscribe(topic, options || { qos: 0 });
-            }
+            const handler: SubscribeHandler = {
+                topic,
+                listener,
+            };
+            topicsManager.some(tm =>
+                tm.current.subscribe(
+                    handler,
+                    subscribe,
+                    state.client!,
+                    options || { qos: 0 },
+                ),
+            );
             return handler;
         }
         return null;
@@ -173,16 +217,9 @@ const MQTTProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     const unsubscribe = (handler: SubscribeHandler | null) => {
         if (state.client && handler) {
-            const inx: number = state._subscriptions.findIndex(
-                s => s === handler,
+            topicsManager.some(tm =>
+                tm.current.unsubscribe(handler, state.client!),
             );
-            if (inx < 0) {
-                throw new Error("Not subscribed");
-            }
-            state._subscriptions.splice(inx, 1);
-            if (!state._subscriptions.some(s => s.topic === handler.topic)) {
-                state.client.unsubscribe(handler.topic);
-            }
         }
     };
 
