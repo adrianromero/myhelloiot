@@ -1,6 +1,6 @@
 /*
 MYHELLOIOT
-Copyright (C) 2021-2024 Adrián Romero
+Copyright (C) 2021-2025 Adrián Romero
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -29,7 +29,6 @@ import {
     loadStoreConnectCredentials,
     loadStoreConnected,
     loadResourceConnectInfo,
-    ConnectCredentials,
     ConnectedStatus,
 } from "./connection/ConnectionInfo";
 import { useMQTTContext } from "./mqtt/MQTTHooks";
@@ -49,7 +48,7 @@ enum AppMode {
 }
 const appmodekeys = Object.keys(AppMode);
 
-const appmode = import.meta.env.VITE_MYH_APPMODE as keyof typeof AppMode;
+const appmode = import.meta.env.VITE_MYH_APPMODE;
 
 let APPMODE: AppMode;
 if (appmodekeys.includes(appmode)) {
@@ -135,24 +134,18 @@ const MQTTApp: React.FC = () => {
             dispatch(statusLoading());
             const loadConfiguration = async (): Promise<void> => {
                 let connectInfo: ConnectInfo;
-                let connectCredentials: ConnectCredentials;
-                let connected: ConnectedStatus;
+                const connectCredentials = loadStoreConnectCredentials();
+                const connected = loadStoreConnected();
                 if (APPMODE === AppMode.DASHBOARD) {
                     connectInfo = await loadResourceConnectInfo("dashboard");
-                    connectCredentials = loadStoreConnectCredentials();
-                    connected = loadStoreConnected();
                     // } else if (config.mode === "URLQUERY") {
                     //   const params = new URL(document.location.href).searchParams;
                     //   let isDashboard = params.get("dashboard") !== null;
                     //   let isStandard = params.get("standard") !== null;
                     //   connectInfo = loadStoreConnectInfo();
-                    //   connectCredentials = loadStoreConnectCredentials();
-                    //   connected = loadStoreConnected();
                 } else {
                     // STANDARD (Default)
                     connectInfo = await loadStoreConnectInfo();
-                    connectCredentials = loadStoreConnectCredentials();
-                    connected = loadStoreConnected();
                 }
 
                 dispatch(
